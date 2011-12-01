@@ -98,7 +98,7 @@ return;
 		}
 		inputs = $('#rawoutput').val();
 		if(inputs){
-			$('#rawoutput2').val( '' ); $('#rawoutput3').val( '' );	$('#rawoutput4').val( '' );//reset all output fields
+			$('#rawoutput2').val( '' ); $('#rawoutput3').val( '' );	$('#rawoutput4').val( '' ); $('#rawoutput5').val(''); //reset all output fields
 			inputsArr = inputs.split('\n');
 			for(l=0; l < inputsArr.length; ++l){
 				ref = inputsArr[l]; if(!ref) continue;
@@ -218,7 +218,11 @@ return;
 				if( map1[ rootsArr[t] ] )map2[ rootsArr[t] ] = map1[ rootsArr[t] ] = map1[ rootsArr[t] ] + 1; 
 				else map1[ rootsArr[t] ] = 1;
 			}
-		}obj = map1; console.log(name);
+		}obj = map1; var log=name.toUpperCase() + ':\n'; 
+		for (var key in obj) {
+			log += ([key, obj[key]].join("\t")) + '\n';
+		}
+		console.log( log ); $('#rawoutput5').val( $('#rawoutput5').val() +'\n==UNIQUES==\n'+ log + '\n'  );
 		console.log(map2); console.log(map1);
 	}
 	
@@ -260,12 +264,12 @@ return;
 		if(!_wordsdata){ 
 			_wordsdataArr = (_wordsdata = _prefixData( document.getElementById('rawdata2').innerHTML ) ).split('\n');
 		} if(typeof(DEBUG) != 'undefined' && DEBUG) debugger;
-		pattern = new RegExp( ".*" + keyword + ".*(?:\r?\n)", "mg");
+		pattern = new RegExp( ".*" + keyword + ".*(?:\r?\n)", "img");
 		arr = _wordsdata.match( pattern );
 		raw =( arr ? arr.join('\n') : 'no hits for ' + keyword );
 		
-		if(arr) for(var k=0; k<arr.length; ++k){
-			wordno = arr[k].split(keyword)[0].split('$').length;
+		if(arr) for(var k=0; k<arr.length; ++k){ if(typeof(DEBUG) != 'undefined' && DEBUG) debugger;
+			wordno = arr[k].toLowerCase().split(keyword.toLowerCase())[0].split('$').length;
 			if(arr[k]) refs += mapLinenoToRef( arr[k].split('|')[0] ) + (wordno?(':'+wordno) : '') + '\n';
 			if(wordno){ 
 				temp2 = arr[k].split('$')[wordno-1];
