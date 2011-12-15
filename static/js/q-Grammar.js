@@ -46,7 +46,7 @@
                 return "-";
             else {
 				tempValue = value; //value.replace("LEM:", "").replace("ROOT:", "");
-                return "<span style='color:green;font-weight:bold;' class='arr'>" + EnToAr(unescape(tempValue)) +'</span><span style="font-size:0.8em;" class="small">&nbsp;&nbsp;'+ value + "</span>";
+                return "<span style='color:green;font-weight:bold;' class='arr2'>" + EnToAr(unescape(tempValue)) +'</span><span style="font-size:1em;" class="small">&nbsp;&nbsp;'+ value + "</span>";
 			}
         }
 
@@ -82,6 +82,28 @@
 			}
         }
 
+		var arabicRootsFormatter = function(row, cell, value, columnDef, dataContext) {
+            if (value == null || value === "")
+                return "-";
+            else {
+				var tempValue = EnToAr(unescape(value));
+				if(!tempValue) return "-";
+				tempValue = '<span class="r1">' +tempValue[0]+ '</span>-<span class="r2">' +tempValue[1]+ '</span>-<span class="r3">'+tempValue[2]+ '</span>';
+				return "<span class='arr3'>" + tempValue +'</span><span style="font-size:0.8em;" class="small">&nbsp;&nbsp;'+ value + "</span>";
+			}
+        }
+
+		var arabicLemsFormatter = function(row, cell, value, columnDef, dataContext) {
+            if (value == null || value === "")
+                return "-";
+            else {
+				var tempValue;
+				tempValue = value.replace("LEM:", "");
+				tempValue = EnToAr(unescape(tempValue));
+				return "<span style='color:Xgreen;font-weight:bold;' class='arr2'>" + tempValue +'</span><span style="font-size:0.8em;" class="small">&nbsp;&nbsp;'+ value + "</span>";
+			}
+        }
+
 		
 		var posFormatter = function(row, cell, value, columnDef, dataContext) {
             if (value == null || value === "")
@@ -103,14 +125,14 @@
 		var columns = [
 			{id:"ref", name:"Location", field:"ref", formatter:urlFormatter, sortable: true},
 			{id:"buck", name:"Form", field:"buck", formatter:arabicFormatter, sortable: true},
-			{id:"pos", name:"Tag", field:"pos", formatter:posFormatter, sortable: true},
+			{id:"pos", name:"Tag", field:"pos",  formatter:posFormatter, sortable: true},
 			{id:"tags", name:"Features", field:"tags", sortable: true},
-			{id:"f0", name:"field0", field:"f0", sortable: true},
-			{id:"f1", name:"field1", field:"f1", sortable: true},
-			{id:"f2", name:"field2", field:"f2", formatter:arabicRootsFormatter2, sortable: true},
-			{id:"f3", name:"field3", field:"f3", formatter:arabicRootsFormatter2, sortable: true},
-			{id:"f4", name:"field4", field:"f4", formatter:arabicRootsFormatter2, sortable: true},
-			{id:"f5", name:"field5", field:"f5", formatter:arabicRootsFormatter2, sortable: true},
+			{id:"f0", name:"field0", field:"f0", formatter:arabicLemsFormatter, sortable: true},
+			{id:"f1", name:"field1", field:"f1", formatter:arabicRootsFormatter, sortable: true},
+			{id:"f2", name:"field2", field:"f2", sortable: true},
+			{id:"f3", name:"field3", field:"f3", sortable: true},
+			{id:"f4", name:"field4", field:"f4", sortable: true},
+			{id:"f5", name:"field5", field:"f5", sortable: true},
 			{id:"f6", name:"field6", field:"f6", sortable: true},
 			{id:"f7", name:"field7", field:"f7", sortable: true},
 			{id:"f8", name:"field8", field:"f8", sortable: true},
@@ -139,7 +161,25 @@
             }
         }
 
+		var _regex;
         function filter(item) {
+			if(!searchString) return true; //return all records
+			else
+			if(searchString && (searchString[0] == '!' || searchString[0] == '^')){
+				//searchString = searchString.substring(1); //do reverse logic
+				if ( !item["tags"] || item["tags"].indexOf(searchString.substring(1) ) != -1	)
+					return false;
+			}
+			else
+			if(searchString != "" && parseInt(searchString) ){ //make sure you match on starting references only. not in middle. ex: 2:
+				if(!item["tags"] ) return false; if(typeof(DEBUG) != "undefined" && DEBUG) debugger;
+				var pattern, regex;
+				pattern = '^'+searchString;
+				if(!regex)
+					_regex = new RegExp( pattern, "igm" ); //ISSUE: make sure _regex made null, if not parseInt
+				return _regex.test( item["ref"] );
+			}
+			else
 			if (searchString != "" && (	( !item["tags"] || item["tags"].indexOf(searchString) == -1)
 									  && (!item["ref"] || item["ref"].indexOf(searchString) == -1 )  //&& item["buck"].indexOf(searchString) == -1
 								   )
@@ -202,43 +242,66 @@
                 new Slick.Data.Aggregators.Avg("percentComplete")
             ], false);
         }
-		
-		var _rawdata;		
+
+	var _regexParse =		/(.*?)?(?:STEM)(?:\|POS:([^\|\n]*))?(?:\|((?:ACT|PASS)\|PCPL))?(?:\|(IMPF|IMPV|PERF))?(?:\|(PASS))?(?:\|(VN))?(?:\|(\([IVX]*\)))?(?:\|LEM:([^\|\n]*))?(?:\|ROOT:([^\|\n]*))?(?:\|(.*?))?$/;
+
+	// /(.*?)?(?:STEM)(?:\|POS:([^\|\n]*))?(?:\|((?:ACT|PASS)\|PCPL))?(?:\|(IMPF|IMPV|PERF))?(?:\|(PASS))?(?:\|(\([IVX]*\)))?(?:\|LEM:([^\|\n]*))?(?:\|ROOT:([^\|\n]*))?(?:\|(.*?))?$/;
+	
+	// /(.*?)?(?:STEM)(?:\|POS:([^\|\n]*))?(?:\|(ACT\|PCPL))?(?:\|(IMPF|IMPV|PERF))?(?:\|(\([IVX]*\)))?(?:\|LEM:([^\|\n]*))?(?:\|ROOT:([^\|\n]*))?(?:\|(.*?))?$/;
+	var regexParse = function(teststring){
+		return _regexParse.exec( teststring );
+	}
+	//SAMPLE OUTPUT of regexParse
+	//0,1,2 ["(9:1:9:2)	mu$orikiyna	N	STEM|POS:N|ACT|PCPL|(IV)|LEM:mu$orik|ROOT:$rk|MP|GEN", "(9:1:9:2)	mu$orikiyna	N	", "N", 
+	//3,4 "ACT|PCPL", undefined, 
+	//5 6 7 8      "(IV)", "mu$orik", "$rk", "MP|GEN"]
+	
+		var LEMMA = 8, ROOT = 9, FORM = 7, PERSONGS = 10, MISC = 6;
+		var _rawdata, _rawdataArr, _regexStems = /.*?STEM[^\n]*/g;	
 		$(function() {
             var data = [];
 			/////////////////////////////////////////////////////
-			if(!_rawdata){
-				_rawdata = document.getElementById('dataisland').innerHTML.replace(/\|PCPL\|/g, '*PCPL|').replace(/\|INDEF\|/g, '*INDEF|').replace(/\|PASS\|/g, '*PASS|');
+			if(!_rawdataArr){
+				_rawdata = document.getElementById('dataisland').innerHTML; //.replace(/\|PCPL\|/g, '*PCPL|').replace(/\|INDEF\|/g, '*INDEF|').replace(/\|PASS\|/g, '*PASS|');
+				_rawdataArr = _rawdata.match( _regexStems ); //.split("\n");
 			}
-			var qdata = [], rawdataArr = _rawdata.split("\n"), temp, temp2, ref;
-			for(var i=0; i<rawdataArr.length-1; ++i){//if(i>10  && rawdataArr[i].indexOf('STEM')==-1) continue; //ignore prefix, suffix for now.
-				temp = rawdataArr[i].split("\t");	
+			var qdata = [], temp, ref, oParsed, lemma, root, form, personGenderSingular, misc=MISC;
+			for(var i=0; i<_rawdataArr.length-1; ++i, misc=MISC){
+				temp = _rawdataArr[i].split("\t");	
 				ref = temp[0].replace('(', '').replace(')', '');
 				temp[1] = escape(temp[1]);	//escape temp1
 				temp[3] = escape(temp[3]);	//escape temp1
 				
-				if(temp[3] != null && temp[3].indexOf("|") != -1)
-					temp2 = temp[3].split("|");
-				if(!temp2) temp2 = ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-" ];
-				else for(var k=temp2.length; k < 10; k++)
-						temp2[k] = "-";
-
+//				if(temp[3] != null && temp[3].indexOf("|") != -1)
+//					temp2 = temp[3].split("|");
+				oParsed = regexParse( _rawdataArr[i] ); if(typeof(DEBUG) != 'undefined' && DEBUG) debugger;
+				if(oParsed == null){debugger; oParsed = ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-" ]; }
+				else{
+					lemma = oParsed[ LEMMA ];
+					root  = oParsed[ ROOT ];
+					form  = oParsed[ FORM ];
+					personGenderSingular = oParsed[ PERSONGS ];
+					for(var k=oParsed.length; k < 10; k++)
+						oParsed[k] = "-";
+				}
+				if(i<20) console.log(oParsed);
+				
 				qdata[i] = {
 					id: i,
                     ref: ref,
                     buck: temp[1],
                     pos: temp[2],
                     tags: temp[3],
-                    f0: temp2[0],
-                    f1: temp2[1],
-					f2: temp2[2],
-					f3: temp2[3],
-					f4: temp2[4],
-					f5: temp2[5],
-					f6: temp2[6],
-					f7: temp2[7],
-					f8: temp2[8],
-					f9: temp2[9]
+                    f0: escape( lemma ), //lemma  7/8/9/10
+                    f1: escape( root ), //root
+					f2: (form ? form : '(I)'), //form
+					f3: escape(personGenderSingular), //3MS, 2f etc. + all others. Ex: SP:
+					f4: oParsed[misc--],  //ACT PCPL
+					f5: oParsed[misc--],
+					f6: oParsed[misc--],
+					f7: oParsed[misc--],
+					f8: escape( oParsed[misc--] ),
+					f9: escape( oParsed[misc--] )
                 };
 			}
 			data = qdata;
@@ -291,7 +354,7 @@
 				if (e.which == 27)
 					this.value = "";
 
-				searchString = this.value;
+				searchString = escape( this.value ); //Need to escape. for ex: searches like: LEM:bada>a
 				dataView.refresh();
 			});
 
@@ -542,6 +605,7 @@
 			if( root != null && root.length > 0) $('#txtSearch').val( 'ROOT:'+root ).keyup();
 			if( lemma != null && lemma.length > 0) $('#txtSearch').val( 'LEM:'+lemma ).keyup();
 			if( stem != null && stem.length > 0) $('#txtSearch').val( 'STEM:'+stem ).keyup();
+			
             // Execute search.
 	        console.info(query +'\n'+ encodeURIComponent(query) );//document.location.href = "/search.jsp?q=" + encodeURIComponent(query);
 			return false;

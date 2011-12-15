@@ -113,8 +113,12 @@ return;
 						if(arr[t].indexOf('STEM') == -1) continue; //ignore the PREFIX and SUFFIXes if any
 						else{
 							if(arr[t].indexOf('ROOT') == -1) 
-								if(arr[t].indexOf('LEM') == -1) 
-									grammar += '**'+arr.length +' parts\n'+ arr.join('');
+								if(arr[t].indexOf('LEM') == -1) {
+									//grammar += '**'+arr.length +' parts\n'+ arr.join('');
+									grammar += arr[t];
+									roots += '---\n';
+									lems += '---\n';			
+								}									
 								else{
 									grammar += arr[t];
 									roots += '---\n';
@@ -286,7 +290,7 @@ return;
 	}
 
 	function go4( isRecursive ){ //this is mapping from references to either verse word2word meanings or else one word meaning.
-		var refs, refsArr, result='', index, temparr, temp, _arr, temp2;
+		var refs, refsArr, result='', index, temparr, temp, _arr, temp2, raw='';
 		refs = $('#words').val(); if(!refs) { alert('enter valid references ex: 1:7'); return;}
 		if( typeof(isRecursive) == 'undefined') $('#words2').val('-'); $('#words3').val();
 		if(!_wordsdata){ 
@@ -304,8 +308,9 @@ return;
 				if( temp2.indexOf('|') != -1) temp2 = temp2.split('|')[1];
 				result +=  temp2 + '\n';
 			}
-			else result += _wordsdataArr[ index ] + '\n';
+			else raw += _wordsdataArr[ index ] + '\n';
 		}
+		$('#words2').val( raw );
 		$('#words3').val( result );
 	}
 	
@@ -423,3 +428,54 @@ var linesIndexes = new Array(-1, 1, 30, 6146, 9627, 13374, 16178, 19228, 22548, 
 
 	var escape = function(input){ if(!input) return; return input.replace(/\</g, '&lt;').replace(/\>/g, '&gt;'); }
 	var unescape = function(input){ if(!input) return; return input.replace(/\&lt\;/g, '<').replace(/\&gt\;/g, '>'); }
+
+	
+	
+	
+	////////////////////////// IGNORE - EXPERIMENTAL ONLY ////////////////////////////////
+	var pattern, arr, rawdata, surano=2, versno, verscount=256, _log1, _log2;	
+	var searchGrammarDupes = function(){
+		if(!_rawdata){
+			_rawdata = document.getElementById('dataisland').innerHTML;
+		}
+		var _log = '';
+		for(versno=1; versno < verscount; ++versno){
+			//pattern = new RegExp( "\\(" + ref + ":.*\\).*(?:\r?\n)", "mg");			
+			pattern = new RegExp( "\\(" + surano +':'+versno + ":.*?STEM", "mg");
+			arr = _rawdata.match( pattern );
+			_log += arr.length + ',\t'; //console.log(surano +':'+versno + '\tmatches\t' + arr.length );	
+		}
+		console.log( _log ); _log1 = _log;
+	}
+	
+	var wordsCount = function(){
+		if(!_wordsdata){ 
+			_wordsdataArr = (_wordsdata = _prefixData( document.getElementById('rawdata2').innerHTML ) ).split('\n');
+		}
+		var _log = '';
+		for(k=7; k<(7+256); ++k){
+			_log += (_wordsdataArr[k].split('$').length-1) + ',\t'; 
+		}
+		console.log('\n\n'+_log); _log2 = _log;
+	}
+	searchGrammarDupes(); wordsCount();
+	
+	
+	var regexParse = function(){
+		var regex = /(.*?)?(?:STEM)(?:\|POS:([^\|\n]*))?(?:\|(ACT\|PCPL))?(?:\|(IMPF|IMPV|PERF))?(?:\|(.*?))?(?:\|LEM:([^\|\n]*))?(?:\|ROOT:([^\|\n]*))?(?:\|(.*?))?$/mg;
+		var refs = '#rawoutput', input = '#rawoutput2', output = '#words2', teststring, result, arr;
+		$(refs).val('55');
+		$('input:checked').attr('checked', false);
+		go();
+		$(output).val('');
+		teststring = $(input).val();
+
+		//Now test the regex and output result
+		//arr = regex.exec( teststring );
+		//arr = teststring.match( regex );
+		//result = arr.join('\n')
+		result = teststring.replace( regex, 'x' );
+		result = result.split('\n').join(' ');
+		$(output).val( result );
+	}
+	regexParse();
