@@ -9,21 +9,23 @@ var WORDBYWORD = {
 		//WORDBYWORD._rawdataArr = WORDBYWORD._rawdata.split('\n');
 		WORDBYWORD.isInitialized = true;
 	},
-	separator: '•|', //'·|', « ☞ ◊
+	separator:	'·|', //  •· ‣ « ☞ ◊	 '་', //
 	fetchLine: function(verseNo, surah, ayah){
 		try{
 			if(!WORDBYWORD.isInitialized){ WORDBYWORD.init(); WORDBYWORD.isInitialized = true;}
 			var lineAr, lineEn, obj, arr1, arr2; 		lineAr = lineEn = '';
 			lineAr = BUCKSDATA.fetchLineRaw(verseNo); //returns raw string
-			obj = WORDSMEANING.fetchLine(verseNo); //returns object
-			if(obj){
-				lineEn = obj.verse; //.ayah and .surah also there
+			lineEn = WORDSMEANING.fetchLineRaw(verseNo); //returns object
+			if(lineAr && lineEn){
 				arr1   = lineAr.split(' ');
 				arr2   = lineEn.split('$');
 				if(!arr1 || !arr2 || (arr1.length != arr2.length-1) ){ debugger; return;}
 				$.each(arr1, function(index, value){
 					arr2[index] = EnToAr( value )+ WORDBYWORD.separator + arr2[index];  //arr2[index] = value + '|'+ arr2[index];
 				});
+				var obj = {};
+				obj.surah = surah ? surah : Quran.ayah.fromVerse(verseNo).surah;
+				obj.ayah  = ayah  ? ayah  : Quran.ayah.fromVerse(verseNo).ayah;
 				obj.verse = arr2.join('$');
 			}
 			return obj;
@@ -37,6 +39,7 @@ var WORDBYWORD = {
 var WORDSMEANING = {
 	isInitialized: false,
 	DATAISLAND:		'dataislandmeaning',
+	separator: '· ',
 	
 	init: function(){ 
 		if(WORDSMEANING.isInitialized) return;
@@ -49,15 +52,18 @@ var WORDSMEANING = {
 	},
 
 	fetchLine: function(verseNo, surah, ayah){
+		var obj = {}, verseline = WORDSMEANING.fetchLineRaw(verseNo, surah, ayah);
+		obj.surah = surah ? surah : Quran.ayah.fromVerse(verseNo).surah;
+		obj.ayah  = ayah  ? ayah  : Quran.ayah.fromVerse(verseNo).ayah;
+		obj.verse = verseline ? verseline.split('$').join(WORDSMEANING.separator) : verseline;
+		return obj;
+	},
+
+	fetchLineRaw: function(verseNo, surah, ayah){
 		try{
 			if(!WORDSMEANING.isInitialized){ WORDSMEANING.init(); WORDSMEANING.isInitialized = true;}
 			if(parseInt(verseNo) && WORDSMEANING._rawdataArr){
-				var obj = {}, verseline;
-				verseline = WORDSMEANING._rawdataArr[verseNo];
-				obj.surah = surah ? surah : Quran.ayah.fromVerse(verseNo).surah;
-				obj.ayah  = ayah  ? ayah  : Quran.ayah.fromVerse(verseNo).ayah;
-				obj.verse = verseline; //console.log(obj);
-				return obj;
+				return WORDSMEANING._rawdataArr[verseNo];
 			}
 		}catch(err){ console.log(err.message); console.log(err);
 		}
@@ -70,6 +76,7 @@ var WORDSMEANING = {
 var BUCKSDATA = {
 	isInitialized: false,
 	DATAISLAND:		'dataislandbuck',
+	separator: '· ',
 	init: function(){ 
 		if(BUCKSDATA.isInitialized) return;
 		try{
@@ -80,15 +87,17 @@ var BUCKSDATA = {
 		BUCKSDATA.isInitialized = true;
 	},
 
-	fetchLine: function(verseNo, surah, ayah){
+	fetchLine: function(verseNo, surah, ayah, convertToArabic){
 		try{
 			if(!BUCKSDATA.isInitialized){ BUCKSDATA.init(); BUCKSDATA.isInitialized = true;}
+			if(convertToArabic == null) convertToArabic = true;
 			if(parseInt(verseNo) && BUCKSDATA._rawdataArr){
 				var obj = {}, verseline;
-				verseline = BUCKSDATA._rawdataArr[verseNo];
+				verseline = BUCKSDATA.fetchLineRaw(verseNo, surah, ayah);
 				obj.surah = surah ? surah : Quran.ayah.fromVerse(verseNo).surah;
 				obj.ayah  = ayah  ? ayah  : Quran.ayah.fromVerse(verseNo).ayah;
-				obj.verse = verseline; //console.log(obj);
+				verseline = ( convertToArabic ? EnToAr(verseline) : escape(verseline) );
+				obj.verse = verseline + BUCKSDATA.separator;
 				return obj;
 			}
 		}catch(err){ console.log(err.message); console.log(err);
@@ -150,11 +159,7 @@ var OFFLINEDATA = {
 					q.quran[ quranBy ][m] = WORDSMEANING.fetchLine( m );
 				}
 				else if(bUthmani || bEnSahih){
-					verseline = (bUthmani ? EnToAr( BUCKSDATA.fetchLineRaw(m) )+' *' : escape( BUCKSDATA.fetchLineRaw(m) ) ); 
-					q.quran[ quranBy ][m] = {};
-					q.quran[ quranBy ][m].surah = Quran.ayah.fromVerse(m).surah;
-					q.quran[ quranBy ][m].ayah  = Quran.ayah.fromVerse(m).ayah;
-					q.quran[ quranBy ][m].verse = verseline;
+					q.quran[ quranBy ][m] = BUCKSDATA.fetchLine( m, null, null, bUthmani );
 				}
 			}
 		}

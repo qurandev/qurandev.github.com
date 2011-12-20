@@ -317,7 +317,10 @@ var self = {
 					if (verse)
 					{
 						var verse = verse.split('|');
-					    
+						var ref = (value?value.surah:'?') +':'+ (value?value.ayah:'?') + ':'+ (1+i);
+						var urlTemplate = '<A HREF=http://corpus.quran.com/wordmorphology.jsp?location=($1) target=_>$1</A>'; 
+						var refHtml = urlTemplate.replace(/\$1/g, ref);
+					    refHtml = '<span color=green class=corpusref>' + refHtml + '</span>';
 						if (self.settings.wbwDirection == 'english2arabic')
 						{
 							if (self.settings.wbwMouseOver)
@@ -330,7 +333,9 @@ var self = {
 							if (self.settings.wbwMouseOver)
 								verse_html += '<span class="word"><span class="ar quranText tipsWord" title="'+verse[1]+'">'+verse[0]+'</span></span>';
 							else
-								verse_html += '<span class="word staticWord"><span class="ar quranText top first rtl" dir="rtl">'+verse[0]+'</span><span class="en second ltr" dir="ltr">'+verse[1]+'</span></span>'; 
+								//verse_html += '<span class="word staticWord"><span class="ar quranText top first rtl" dir="rtl">'+verse[0]+'</span><span class="en second ltr" dir="ltr">'+verse[1]+'</span></span>'; 
+								verse_html   += '<span class="word staticWord"><span class="ar quranText top first rtl tipsWord" dir="rtl" title="' + refHtml + '">'+
+									verse[0]+'</span><span class="en second ltr" dir="ltr">'+verse[1]+'</span></span>';
 						}
 					}
 				});
