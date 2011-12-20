@@ -1,35 +1,78 @@
-﻿//alert('OFFLINE DATA');
+﻿
 
 var WORDSMEANING = {
 	isInitialized: false,
+	DATAISLAND:		'dataislandmeaning',
 	
 	init: function(){ 
 		if(WORDSMEANING.isInitialized) return;
 		try{
-			WORDSMEANING._rawdata = document.getElementById('dataislandmeaning').innerHTML; 
+			WORDSMEANING._rawdata = document.getElementById( WORDSMEANING.DATAISLAND ).innerHTML; 
 		}catch(err){ console.log(err.message); console.log(err); }
 		if(!WORDSMEANING._rawdata){ debugger; return; }
 		WORDSMEANING._rawdataArr = WORDSMEANING._rawdata.split('\n');
 		WORDSMEANING.isInitialized = true;
 	},
 
-	fetchLine: function(lineno, surah, ayah){
+	fetchLine: function(verseNo, surah, ayah){
 		try{
-			if(parseInt(lineno) && WORDSMEANING._rawdataArr){
+			if(!WORDSMEANING.isInitialized){ WORDSMEANING.init(); WORDSMEANING.isInitialized = true;}
+			if(parseInt(verseNo) && WORDSMEANING._rawdataArr){
 				var obj = {}, verseline;
-				verseline = WORDSMEANING._rawdataArr[lineno];
+				verseline = WORDSMEANING._rawdataArr[verseNo];
 				obj.surah = surah ? surah : Quran.ayah.fromVerse(verseNo).surah;
-				obj.ayah  = ayah  ? ayah  : Quran.ayah.fromVerse(verrseNo).ayah;
-				obj.verse = verseline;
+				obj.ayah  = ayah  ? ayah  : Quran.ayah.fromVerse(verseNo).ayah;
+				obj.verse = verseline; console.log(obj);
 				return obj;
 			}
-		}catch(err){ console.write(err.message); console.write(err);
+		}catch(err){ console.log(err.message); console.log(err);
 		}
 	},
 	
 	n: 0
 }
 
+
+var BUCKSDATA = {
+	isInitialized: false,
+	DATAISLAND:		'dataislandbuck',
+	init: function(){ 
+		if(BUCKSDATA.isInitialized) return;
+		try{
+			BUCKSDATA._rawdata = document.getElementById( BUCKSDATA.DATAISLAND ).innerHTML; 
+		}catch(err){ console.log(err.message); console.log(err); }
+		if(!BUCKSDATA._rawdata){ debugger; return; }
+		BUCKSDATA._rawdataArr = BUCKSDATA._rawdata.split('\n');
+		BUCKSDATA.isInitialized = true;
+	},
+
+	fetchLine: function(verseNo, surah, ayah){
+		try{
+			if(!BUCKSDATA.isInitialized){ BUCKSDATA.init(); BUCKSDATA.isInitialized = true;}
+			if(parseInt(verseNo) && BUCKSDATA._rawdataArr){
+				var obj = {}, verseline;
+				verseline = BUCKSDATA._rawdataArr[verseNo];
+				obj.surah = surah ? surah : Quran.ayah.fromVerse(verseNo).surah;
+				obj.ayah  = ayah  ? ayah  : Quran.ayah.fromVerse(verseNo).ayah;
+				obj.verse = verseline; console.log(obj);
+				return obj;
+			}
+		}catch(err){ console.log(err.message); console.log(err);
+		}
+	},
+	
+	fetchLineRaw: function(verseNo, surah, ayah){
+		try{
+			if(!BUCKSDATA.isInitialized){ BUCKSDATA.init(); BUCKSDATA.isInitialized = true;}
+			if(parseInt(verseNo) && BUCKSDATA._rawdataArr){
+				return BUCKSDATA._rawdataArr[verseNo];
+			}
+		}catch(err){ console.log(err.message); console.log(err);
+		}
+	},
+	
+	n: 0
+}
 
 	
 var OFFLINEDATA = {
@@ -38,10 +81,8 @@ var OFFLINEDATA = {
 	init: function(){ 
 		if(OFFLINEDATA.isInitialized) return;
 		try{
-			OFFLINEDATA._rawdata = document.getElementById('dataislandbuck').innerHTML; 
+			BUCKSDATA.init(); //WORDSMEANING.init();
 		}catch(err){ console.log(err.message); console.log(err); }
-		if(!OFFLINEDATA._rawdata){ debugger; return; }
-		OFFLINEDATA._rawdataArr = OFFLINEDATA._rawdata.split('\n');
 		OFFLINEDATA.isInitialized = true;
 	},
 		
@@ -57,8 +98,7 @@ var OFFLINEDATA = {
 		}
 		else{
 			self_data2 = $.extend(true, self_data, OFFLINEDATA.fetch(quranBy, fromVerseNo, toVerseNo, self_data) ); result=true; //notCached.push(quranBy);	
-		}
-		//console.log(quranBy + '\t'+ fromVerseNo +'-'+ toVerseNo + self_data); console.log(obj); console.log(self_data2);  
+		}//console.log(quranBy + '\t'+ fromVerseNo +'-'+ toVerseNo + self_data); console.log(obj); console.log(self_data2);  
 		if(!result) return;
 		return self_data2; //$.extend(true, self.data, response);
 	},
@@ -67,40 +107,26 @@ var OFFLINEDATA = {
 		var q = {}, verseline='', bUthmani = (quranBy == 'quran-uthmani'), bEnSahih = (quranBy == 'en.sahih'), bWordMeaning = (quranBy == 'bs.mlivo');
 		q.quran = {};
 		q.quran[ quranBy ] = {};
-		//q = OFFLINEDATA.fetchStubbedForTesting(quranBy, fromVerseNo, toVerseNo, self_data);
-		if((bUthmani || bEnSahih || bWordMeaning) && OFFLINEDATA._rawdataArr){
+		if((bUthmani || bEnSahih || bWordMeaning)){
 			for(var m=fromVerseNo; m<toVerseNo; ++m){
-				if(bUthmani || bEnSahih)
-					verseline = (bUthmani ? EnToAr( OFFLINEDATA._rawdataArr[ m ] )+' *' : escape( OFFLINEDATA._rawdataArr[m] ) ); 
-				q.quran[ quranBy ][m] = {};
-				q.quran[ quranBy ][m].surah = Quran.ayah.fromVerse(m).surah;
-				q.quran[ quranBy ][m].ayah  = Quran.ayah.fromVerse(m).ayah;
-				q.quran[ quranBy ][m].verse = verseline;
+				if(bUthmani || bEnSahih){
+					verseline = (bUthmani ? EnToAr( BUCKSDATA.fetchLineRaw(m) )+' *' : escape( BUCKSDATA.fetchLineRaw(m) ) ); 
+					q.quran[ quranBy ][m] = {};
+					q.quran[ quranBy ][m].surah = Quran.ayah.fromVerse(m).surah;
+					q.quran[ quranBy ][m].ayah  = Quran.ayah.fromVerse(m).ayah;
+					q.quran[ quranBy ][m].verse = verseline;
+				}
+				else if(bWordMeaning){
+					q.quran[ quranBy ][m] = WORDSMEANING.fetchLine( m );
+				}
 			}
 		}
-		return q;
-	},
-
-	fetchStubbedForTesting: function(quranBy, fromVerseNo, toVerseNo, self_data){
-		var q = {};
-		q.quran = {};
-		//q = {"quran":{"en.sahih":{"91":{"surah":2,"ayah":84,"verse":"And [recall] when We took your covenant, [saying], \"Do not shed each other's blood or evict one another from your homes.\" Then you acknowledged [this] while you were witnessing."},"92":{"surah":2,"ayah":85,"verse":"Then, you are those [same ones who are] killing one another and evicting a party of your people from their homes, cooperating against them in sin and aggression. And if they come to you as captives, you ransom them, although their eviction was forbidden to you. So do you believe in part of the Scripture and disbelieve in part? Then what is the recompense for those who do that among you except disgrace in worldly life; and on the Day of Resurrection they will be sent back to the severest of punishment. And Allah is not unaware of what you do."},"93":{"surah":2,"ayah":86,"verse":"Those are the ones who have bought the life of this world [in exchange] for the Hereafter, so the punishment will not be lightened for them, nor will they be aided."},"94":{"surah":2,"ayah":87,"verse":"And We did certainly give Moses the Torah and followed up after him with messengers. And We gave Jesus, the son of Mary, clear proofs and supported him with the Pure Spirit. But is it [not] that every time a messenger came to you, [O Children of Israel], with what your souls did not desire, you were arrogant? And a party [of messengers] you denied and another party you killed."},"95":{"surah":2,"ayah":88,"verse":"And they said, \"Our hearts are wrapped.\" But, [in fact], Allah has cursed them for their disbelief, so little is it that they believe."}}}};
-		if(!q.quran[quranBy]) q.quran[quranBy] = {};
-		for(var k=fromVerseNo; k<toVerseNo; ++k)
-			q.quran[quranBy][k] = {};
-		$.each(q.quran[quranBy], function(key, value){
-			console.log( q.quran[quranBy][key]["verse"] );
-			q.quran[quranBy][key]["verse"] = "THIS IS FROM PRELOADED OFFLINE DATA. ENJOY!";
-			if(!q.quran[quranBy][key]["surah"]) q.quran[quranBy][key]["surah"] = 2;
-			if(!q.quran[quranBy][key]["ayah"]) q.quran[quranBy][key]["ayah"] = key;
-		});
 		return q;
 	},
 	
 	x: 0 //just dummy to put at end
 };
 
-//OFFLINEDATA.preload(quranBy, fromVerseNo, toVerseNo, self.data.quran);
 
 
 

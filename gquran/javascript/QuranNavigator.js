@@ -153,8 +153,13 @@ var self = {
 			var notCached = [];
 			var selected = this.selected();
 			var fromVerseNo = Quran.verseNo.page(self.settings.page);
-					
+			var toVerseNo 	= Quran.verseNo.page(1+self.settings.page);
+			
 			$.each(selected, function(i, quranBy) {
+				if(typeof(OFFLINEDATA) == 'object' && OFFLINEDATA){
+					var obj = OFFLINEDATA.preload(quranBy, fromVerseNo, toVerseNo, self.data); //Try first to load from OFFLINE if enabled & data available
+					if(obj) self.data = obj; //this returns the passed in object with preloaded data, if its avbl
+				}
 
 				if (self.data.quran[quranBy])
 				{	
