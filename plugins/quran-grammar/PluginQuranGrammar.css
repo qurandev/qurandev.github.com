@@ -1,3 +1,10 @@
+.quranText{
+	word-spacing: 6px;
+	//text-align: justify;
+	line-height: 50px;
+	//vertical-align: middle;
+}
+
 span.r1, span.r2, span.r3{
 	//font-size: 1.5em !important;
 	font-weight:bold !important;
