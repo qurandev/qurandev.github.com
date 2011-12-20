@@ -1,4 +1,38 @@
 ﻿
+var WORDBYWORD = {
+	isInitialized: false,
+	init: function(){ 
+		if(WORDBYWORD.isInitialized) return;
+		try{
+			WORDSMEANING.init(); BUCKSDATA.init(); //WORDBYWORD._rawdata = document.getElementById( WORDBYWORD.DATAISLAND ).innerHTML; 
+		}catch(err){ console.log(err.message); console.log(err); debugger; return; }
+		//WORDBYWORD._rawdataArr = WORDBYWORD._rawdata.split('\n');
+		WORDBYWORD.isInitialized = true;
+	},
+	separator: '•|', //'·|', « ☞ ◊
+	fetchLine: function(verseNo, surah, ayah){
+		try{
+			if(!WORDBYWORD.isInitialized){ WORDBYWORD.init(); WORDBYWORD.isInitialized = true;}
+			var lineAr, lineEn, obj, arr1, arr2; 		lineAr = lineEn = '';
+			lineAr = BUCKSDATA.fetchLineRaw(verseNo); //returns raw string
+			obj = WORDSMEANING.fetchLine(verseNo); //returns object
+			if(obj){
+				lineEn = obj.verse; //.ayah and .surah also there
+				arr1   = lineAr.split(' ');
+				arr2   = lineEn.split('$');
+				if(!arr1 || !arr2 || (arr1.length != arr2.length-1) ){ debugger; return;}
+				$.each(arr1, function(index, value){
+					arr2[index] = EnToAr( value )+ WORDBYWORD.separator + arr2[index];  //arr2[index] = value + '|'+ arr2[index];
+				});
+				obj.verse = arr2.join('$');
+			}
+			return obj;
+		}catch(err){ console.log(err.message); console.log(err);
+		}
+	},	
+	n: 0
+}
+
 
 var WORDSMEANING = {
 	isInitialized: false,
@@ -22,7 +56,7 @@ var WORDSMEANING = {
 				verseline = WORDSMEANING._rawdataArr[verseNo];
 				obj.surah = surah ? surah : Quran.ayah.fromVerse(verseNo).surah;
 				obj.ayah  = ayah  ? ayah  : Quran.ayah.fromVerse(verseNo).ayah;
-				obj.verse = verseline; console.log(obj);
+				obj.verse = verseline; //console.log(obj);
 				return obj;
 			}
 		}catch(err){ console.log(err.message); console.log(err);
@@ -54,7 +88,7 @@ var BUCKSDATA = {
 				verseline = BUCKSDATA._rawdataArr[verseNo];
 				obj.surah = surah ? surah : Quran.ayah.fromVerse(verseNo).surah;
 				obj.ayah  = ayah  ? ayah  : Quran.ayah.fromVerse(verseNo).ayah;
-				obj.verse = verseline; console.log(obj);
+				obj.verse = verseline; //console.log(obj);
 				return obj;
 			}
 		}catch(err){ console.log(err.message); console.log(err);
@@ -104,20 +138,23 @@ var OFFLINEDATA = {
 	},
 	
 	fetch: function(quranBy, fromVerseNo, toVerseNo, self_data){
-		var q = {}, verseline='', bUthmani = (quranBy == 'quran-uthmani'), bEnSahih = (quranBy == 'en.sahih'), bWordMeaning = (quranBy == 'bs.mlivo');
+		var q = {}, verseline='', bUthmani = (quranBy == 'quran-uthmani'), bEnSahih = (quranBy == 'en.sahih'), bWordMeaning = (quranBy == 'bs.mlivo'), bWordToWord = (quranBy == 'quran-wordbyword');
 		q.quran = {};
 		q.quran[ quranBy ] = {};
-		if((bUthmani || bEnSahih || bWordMeaning)){
+		if((bUthmani || bEnSahih || bWordMeaning || bWordToWord)){
 			for(var m=fromVerseNo; m<toVerseNo; ++m){
-				if(bUthmani || bEnSahih){
+				if(bWordToWord){
+					q.quran[ quranBy ][m] = WORDBYWORD.fetchLine( m );
+				}
+				else if(bWordMeaning){
+					q.quran[ quranBy ][m] = WORDSMEANING.fetchLine( m );
+				}
+				else if(bUthmani || bEnSahih){
 					verseline = (bUthmani ? EnToAr( BUCKSDATA.fetchLineRaw(m) )+' *' : escape( BUCKSDATA.fetchLineRaw(m) ) ); 
 					q.quran[ quranBy ][m] = {};
 					q.quran[ quranBy ][m].surah = Quran.ayah.fromVerse(m).surah;
 					q.quran[ quranBy ][m].ayah  = Quran.ayah.fromVerse(m).ayah;
 					q.quran[ quranBy ][m].verse = verseline;
-				}
-				else if(bWordMeaning){
-					q.quran[ quranBy ][m] = WORDSMEANING.fetchLine( m );
 				}
 			}
 		}

@@ -309,7 +309,7 @@ var self = {
 			    return text;
 			},
 			
-			parseWordByWord: function (quranBy, text)
+			parseWordByWord: function (quranBy, text, value)
 			{
 				var words = text.split('$');
 				var verse_html = '';
@@ -348,7 +348,7 @@ var self = {
 					{
 						var verse = verse.split('|');
 					    var ref = (value?value.surah:'?') +':'+ (value?value.ayah:'?') + ':'+ (1+i);
-						var refHtml='', refPOS='', corpus;
+						var refHtml=ref, refPOS='', corpus;
 						if(typeof(CORPUS) == 'object' && CORPUS){//Play safe, incase grammar plugin disabled or grammar data not yet loaded..
 							corpus = CORPUS.UIgetWordGrammarDisplay(ref)
 							if(corpus && typeof(corpus) == 'object'){
@@ -369,7 +369,9 @@ var self = {
 							if (self.settings.wbwMouseOver)
 								verse_html += '<span class="word wordColor'+color+'"><span class="ar quranText tipsWord" title="'+verse[1]+'">'+verse[0]+'</span></span>';
 							else
-								verse_html += '<span class="word wordColorXXX'+color+ ' POS-'+ refPOS + ' staticWord"><span class="ar quranText top first rtl tipsWord" dir="rtl" title="' + refHtml + /*'<br/>' + verse[1]+verse[0]+*/'">'+verse[0]+'</span><span class="en second ltr" dir="ltr">'+verse[1]+'</span></span>'; //+
+								verse_html += '<span class="word wordColorXXX'+color+ ' POS-'+ refPOS + 
+									' staticWord"><span class="ar quranText top first rtl tipsWord" dir="rtl" title="' + refHtml + /*'<br/>' + verse[1]+verse[0]+*/'">'+
+									verse[0]+'</span><span class="en second ltr" dir="ltr">'+verse[1]+'</span></span>';
 								//'<span class="currentAyah tips" title="Surah Al Nas" data-tips-position="bottom center" data-tips-dynamic="true">00:00</span>'; 
 						}
 					}

@@ -5,6 +5,10 @@
 	//vertical-align: middle;
 }
 
+.quranText.top.first{
+	word-spacing: 0px;
+} //For word2word dont use word-spacing.
+
 span.r1, span.r2, span.r3{
 	//font-size: 1.5em !important;
 	font-weight:bold !important;
