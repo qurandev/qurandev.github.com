@@ -8,7 +8,7 @@ var CORPUS = {
 	TemplateRefLink:	"$3<A HREF=$1 TARGET=_>$2</A>",
 	TemplateRootLink:	"$3<A HREF=$1 TARGET=_>$2</A>",
 	TemplateRootDecoratedLink:	"<SPAN CLASS=r1 style=color:red>$1</SPAN>&zwnj;<SPAN CLASS=r2 style=color:green>$2</SPAN>&zwnj;<SPAN CLASS=r3 style=color:blue>$3</SPAN>",
-	TemplateLemmaLink:	"$3<A HREF=$1 TARGET=_>$2</A>",
+	TemplateLemmaLink:	"$3<A HREF='$1' TARGET=_>$2</A>",
 	
 	UIgetRefLink:		function(ref, linkname, linkprefix){
 		var link = CORPUS.LinkWordMorphology.replace(/\$1/, ref);
@@ -40,7 +40,7 @@ var CORPUS = {
 	},
 	
 	UIgetMiscLink:		function(misc, linkname, linkprefix){
-		return '<span style=font-size:8px>' + (linkprefix?linkprefix : 'Misc: ') + escape(misc) + '</span>';
+		return '<span style=font-size:8px>' + (linkprefix?linkprefix : 'Misc: ') + escapeMisc(misc) + '</span>';
 	},
 	
 	UIgetWordGrammarDisplay: function(ref)
@@ -57,7 +57,7 @@ var CORPUS = {
 			if(corpus.root)			str += '&nbsp;&nbsp;&nbsp;&nbsp;' + CORPUS.UIgetRootDecoratedLink(corpus.root, EnToAr(corpus.root)); //If u dont want colored, use UIgetRootLink
 			if(corpus.misc)			str += '<BR/>' + CORPUS.UIgetMiscLink(corpus.misc);
 		}
-		str += '<BR/>' + CORPUS.UIgetRefLink(ref,'more info');
+		str += '<xBR/>' + CORPUS.UIgetRefLink(ref,'more info');
 		var obj = {};
 		obj.corpus = corpus;
 		obj.html   = str;
@@ -304,9 +304,14 @@ initializeMapper();
 
 
 
-	var escape = function(input){ if(!input) return; return input.replace(/\</g, '&lt;').replace(/\>/g, '&gt;'); }
-	var unescape = function(input){ if(!input) return; return input.replace(/\&lt\;/g, '<').replace(/\&gt\;/g, '>'); }
+	var Escape = function(input){ if(!input) return; return input.replace(/\</g, '&lt;').replace(/\>/g, '&gt;'); }
+	var Unescape = function(input){ if(!input) return; return input.replace(/\&lt\;/g, '<').replace(/\&gt\;/g, '>'); }
 
+	var escapeMisc = function(input){ var output='';
+		if(!input) return; output = input.replace(/\</g, '&#171;').replace(/\>/g, '&gt;').replace(/\"/g, '&#9674;');  //&#60; for <. 9668 for left diamond like.
+		if(input.indexOf('<') != -1 || input.indexOf('>') != -1){ console.log(input +'\t\t'+ output ); if(typeof(DEBUG) != 'undefined')debugger; }
+		return output;
+	}
 
 	
 //DELETE THIS BELOW
