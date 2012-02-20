@@ -30,7 +30,7 @@
             text-align: right;
             font-size: 10px;
         }
-		span.r1, span.r2, span.r3{
+		span.r1, span.r2, span.r3, span.r4{
 			font-size: 2.2em !important;
 			font-weight:bold !important;
 		}
@@ -42,6 +42,9 @@
 		}
 		span.r3 {
 			color: blue;
+		}
+		span.r4 {
+			color: purple;
 		}
 		*{
 			font-size: 1em !important;
@@ -133,9 +136,11 @@
 		if (value == null || value === "")
 			return "-";
 		else {
-			var tempValue = EnToAr(unescape(value));
+			var tempValue = EnToAr(unescape(value)), temp1='';
 			if(!tempValue) return "-";
-			tempValue = '<span class="r1">' +tempValue[0]+ '</span>-<span class="r2">' +tempValue[1]+ '</span>-<span class="r3">'+tempValue[2]+ '</span>';
+			temp1 = '<span class="r1">' +tempValue[0]+ '</span>-<span class="r2">' +tempValue[1]+ '</span>-<span class="r3">'+tempValue[2]+ '</span>';
+			if(tempValue.length >= 4 && tempValue[3]) tempValue = temp1 + '-<span class=r4>' + tempValue[3] + '</span>';
+			else tempValue = temp1;
 			return "<span class='arr3' title='" + value + "' >" + tempValue +'</span><span style="display: none; font-size:0.8em;" class="small">&nbsp;&nbsp;'+ value + "</span>";
 		}
 	}
@@ -360,6 +365,11 @@
 			"Al-Bari;		AalobaAri};			brA;		baraApN;			;				The Purifier. Occurs once in quran: 59:24. <BR/>Ref: 9:114, 6:19. related attributes: 59:24. ; 39; ",
 			
 			"Al-MuSawwir;	AalomuSaw~iro;		Swr;		SuworapN;			;				The Fashioner. Occurs once in quran: 59:24. <BR/>Ref: 40:64, 69:13-17. related attributes: 59:24.; 40; ",
+			
+			"Al-Mumin;	Aalomu&omino;		Amn;		AamaAnapN AamonN AiyomaAnN;			;				Granter of security. Occurs once in quran: 59:23. <BR/>Ref: 2:239, 4:91, 7:97, 12:11, 2:283, 2:260, 2:177, 26:107. <BR/>related: 33:22, 4:147, 10:84, 2:103, 6:48, 19:60, 2:137, 3:200, 13:28, 19:96, 57:12, 58:22, 48:4. opposite: 40:12, 57:13, 38:28, 3:110, 2:13, 63:3, 106:4, 40:58, 61:2, 83:29, 6:12, 29:67, 29:67, 3:154, 3:154, 6:83, 10:99.; 25; ",
+
+			"Al-Muhaimin;	Aalomuhayomino;		hymn;		hayomanap;			;				The Guardian. Occurs once in quran: 59:23. <BR/>Ref: 5:48.; 29; ",
+
 		];
 
 		
