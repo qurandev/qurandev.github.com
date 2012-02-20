@@ -123,14 +123,6 @@
 		<script src="static/js/controls/slick.pager.js"></script>		
 		<script src="static/js/controls/slick.columnpicker.js"></script>
 		<script src="static/js/q-Mapper.js"></script>
-<!--
-		<script src="static/js/q-Grammar.js"></script>
-<script src="static/js/slick.core.js"></script>
-<script src="static/js/slick.editors.js"></script>
-<script src="static/js/slick.grid.js"></script>
-<script src="static/js/slick.dataview.js"></script>
-<script src="static/js/controls/slick.pager.js"></script> -->
-
 <script>
     var dataView;
     var grid;
@@ -160,23 +152,49 @@
 	}
 	
 	
+	var qInfoFormatter = function(row, cell, value, columnDef, dataContext){  //(value, val2) {//return "wait...";
+		if (!value) return "-"; //row=rowNo, cell=cellNo, dataContext has all the row data
+		//whichever token is like 59:24, then linkify it
+		var tokens = value.split(' ');
+		for(var k=0; k<tokens.length; ++k){
+			if(!tokens[k] || tokens[k].indexOf(':') == -1 || !parseInt(tokens[k]) ) continue;
+			if(tokens[k].indexOf(':') == 0 || tokens[k].indexOf(':') == (-1+tokens[k].length) ) continue; //discount the first and last char.
+			var parts = tokens[k].split(':');
+			var url = 'http://beta.quran.com/' + parseInt(parts[0]) +'/'+ parseInt(parts[1]);
+			var html = '<a href=' + url + ' target=_>'+ tokens[k] + '</a>';
+			tokens[k] = html;
+		}
+		value = tokens.join(' ');
+		return value;
+		
+		
+		var buck = dataContext["buck"], bare, str = '', corpus;
+		var ref = dataContext["ref"], index = dataContext["id"], tokens = [], i=0;
+		if( corpus = lookupCorpusFeatures(index, ref, buck)){
+			if(corpus.lemma)	tokens[i++] = 'Lemma: ' 	  + linkifyCorpusFeature(0, corpus.lemma);
+			if(corpus.root)		tokens[i++] = 'Root: '        + linkifyCorpusFeature(1, corpus.root);
+			if(corpus.form)		tokens[i++] = 'form: '        + linkifyCorpusFeature(2, corpus.form);
+			if(corpus.pos)		tokens[i++] = 'pos: '         + linkifyCorpusFeature(3, corpus.pos);
+			if(corpus.features)	tokens[i++] = 'features: '    + corpus.features;
+			if(corpus.misc)		tokens[i++] = 'misc: '    	  + corpus.misc;
+		}
+		tokens[i++] = bare = 'Bare: ' 	  + lookupBare( ref, buck );
+		//tokens[i++] = bare = 'Translit: ' + lookupTranslit( ref, buck );
+		str = '<ul><li>' + tokens.join('</li><li>') + '</li></ul>';
+		return ( '<span>'+ str + '</span>' );
+	}
+	
+
     var columns = [
 		{id:"col0", name:"#", field:"col0", cssClass: "VCenter", width: 30},
-		{id:"col1", name:"col1", field:"col1", width: 120, cssClass: "VCenter"},
-		{id:"col2", name:"col2", field:"col2", formatter:arabicLemsFormatter, cssClass: "VCenter", width: 200},
-		{id:"col3", name:"col3", field:"col3", formatter:arabicRootsFormatter, cssClass: "VCenter", width: 160},
-		{id:"col4", name:"col4", field:"col4", formatter:arabicLemsFormatter, cssClass: "VCenter", width: 200},
-		{id:"col5", name:"col5", field:"col5", formatter:arabicLemsFormatter, cssClass: "VCenter", width: 200},
-		{id:"col6", name:"col6", field:"col6", cssClass: "VCenter", width: 100},
-		{id:"col7", name:"col7", field:"col7", cssClass: "VCenter", width: 100},
-		{id:"col8", name:"col8", field:"col8", cssClass: "VCenter", width: 100}
-	/*
-		{id:"num", name:"#", field:"num"},
-		{id:"root", name:"root", field:"root"},
-		{id:"ref", name:"Location", field:"ref"},
-		{id:"buck", name:"Form", field:"buck"},
-		{id:"pos", name:"Tag", field:"pos"},
-		{id:"tags", name:"Features", field:"tags"}*/
+		{id:"col1", name:"Attribute", field:"col1", width: 120, cssClass: "VCenter"},
+		{id:"col2", name:"in arabic", field:"col2", formatter:arabicLemsFormatter, cssClass: "VCenter", width: 180},
+		{id:"col3", name:"root letters", field:"col3", formatter:arabicRootsFormatter, cssClass: "VCenter", width: 127},
+		{id:"col4", name:"associated nouns", field:"col4", formatter:arabicLemsFormatter, cssClass: "VCenter", width: 170},
+		{id:"col5", name:"opposites", field:"col5", formatter:arabicLemsFormatter, cssClass: "VCenter", width: 140},
+		{id:"col6", name:"meaning, quranic verses explaining associated word", field:"col6", cssClass: "xVCenter", formatter:qInfoFormatter, width: 510},
+		{id:"col7", name:"pg#", field:"col7", cssClass: "xVCenter", formatter:qInfoFormatter, width: 40},
+		{id:"col8", name:"-", field:"col8", cssClass: "xVCenter", width: 10}
     ];
 	var columnFilters = {};
 	var searchString = "", searchFilter = false;
@@ -326,16 +344,22 @@
 	function qLoadData(){
 		var data=[], temp={};
 		var qd = [
-			"Al-MuhSiy;		AalomuHoSiYo;		HSY;		>aHoS`Yo;			nasuwohu;		115; ",
-			"Al-Mubdi;		AalomubodiYo;		bdA;		Aibotada>a;			;				117; ",
-			"Al-Mueed;		AalomuEiyod;		Ewd;		EaAdN Eawdap;		fa{ntahaY`;		118; ",
-			"Al-MuHyi Al-Hayy;		AalomuHoyiYo AaloHaY~;		HYY;		HayaAp;				;				119; ",
-			"Al-Muqeet;		Aalomuqiyoto;		qwt;		Aaloquwtu;			;				84; ",
-			"Al-Haseeb;		AaloHasiyobo;		Hsb;		HisaAbN HasobN; 	;				85; ",
-			"Al-Bais;		AalobaAEivo;		bEv;		baEov;				;				99; ",
-			"Al-Khaliq Al-Khallaq;		AaloxaAliqo Aaloxal~aAqo;		xlq;		xiloqt;	;	36; 36:68 30:40; ",
-			"Al-Bari;		AalobaAri};			brA;		baraApN;			;				39; ",
-			"Al-MuSawwir;	AalomuSaw~iro;		Swr;		SuworapN;			;				40; ",
+			"Al-MuhSiy;		AalomuHoSiYo;		HSY;		>aHoS`Yo;			nasuwohu;		One who computes and preserves. Only in hadees. <BR/>Ref: 14:34, 36:12, 18:12. related: 72:28. opposite: 58:6.; 115; ",
+			"Al-Mubdi;		AalomubodiYo;		bdA;		Aibotada>a;			;				One who begins or starts. Only in hadees. <BR/>Ref: 21:104, 32:7, 12:76.; 117; ",
+			"Al-Mueed;		AalomuEiyod;		Ewd;		EaAdN Eawdap;		fa{ntahaY`;		One who gets things reproduced. Only in hadees. <BR/>Ref: 17:69, 20:21, 36:39. related: 10:4. opposite: 2:275.; 118; ",
+			"Al-MuHyi Al-Hayy;		AalomuHoyiYo AaloHaY~;		HYY;		HayaAp;	;			The Giver of life. The Living. See details under Al-Mumeet pg 120. <BR/>Occurs 2 times and 5 times respectively.; 119; ",
+			
+			"Al-Muqeet;		Aalomuqiyoto;		qwt;		Aaloquwtu;			;				The Controller Provider of raw material. Occurs once in quran 4:85 <BR/>Ref: 41:10. ; 84; ",
+			
+			"Al-Haseeb;		AaloHasiyobo;		Hsb;		HisaAbN HasobN; 	;				One who keeps account. One who is sufficient (for help). Occurs <BR/>3 times in Quran. see: 4:86, 2:202, 3:173, 65:3. Ref: 29:2, 24:39, <BR/>3:169, 59:2, 2:212, 6:97, 55:5, 2:284, 2:206, 5:104, 18:40.; 85; ",
+			
+			"Al-Bais;		AalobaAEivo;		bEv;		baEov;				;				One who raises. only in hadees. <BR/>ref: 4:35, 2:213, 17:79, 6:60, 22:7, 30:56. ; 99; ",
+			
+			"Al-Khaliq Al-Khallaq;		AaloxaAliqo Aaloxal~aAqo;		xlq;		xiloqt;	;	The Creator. The Great Creator. occurs 7x and 2x times. <BR/> ref: 24:45, 25:54, 55:14-15, 16:4, 39:6, 3:49, 22:5. 29:17, 21:37, 68:4, 26:137, 23:17. 2:102.  <BR/>related: 59:24, 7:54. opposites: 36:68 30:40. <BR/>See also 28:68, 6:102, 10:4, 67:3-4.; 36;",
+			
+			"Al-Bari;		AalobaAri};			brA;		baraApN;			;				The Purifier. Occurs once in quran: 59:24. <BR/>Ref: 9:114, 6:19. related attributes: 59:24. ; 39; ",
+			
+			"Al-MuSawwir;	AalomuSaw~iro;		Swr;		SuworapN;			;				The Fashioner. Occurs once in quran: 59:24. <BR/>Ref: 40:64, 69:13-17. related attributes: 59:24.; 40; ",
 		];
 
 		
