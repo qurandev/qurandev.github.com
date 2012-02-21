@@ -240,6 +240,7 @@
 <!-- for production - use GlobalQuran.js and remove following three js files -->
 <script src="javascript/Quran.js"></script>
 <script src="javascript/GQ.js"></script>
+<script src="javascript/GQ-Custom.js"></script>
 <script src="javascript/Layout.js"></script>
 
 <script type="text/javascript">
@@ -253,6 +254,8 @@
 	var po2 = document.createElement('link'); po2.type = 'text/css'; po2.rel = 'stylesheet'; //po2.async = true;
 	po2.src = urlprefix + '../plugins/quran-grammar/PluginQuranGrammar.css';//'http://localhost:8080/GlobalQuran.com-code/plugins/quran-grammar/PluginQuranGrammar.css';
 	var s2 = document.getElementsByTagName('head')[0]; s.parentNode.insertBefore(po2, s2);
+	
+	corpusInit();
   })();
 </script>
 

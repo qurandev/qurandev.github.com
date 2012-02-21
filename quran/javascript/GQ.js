@@ -272,8 +272,8 @@ var gq = {
 					return this.parseWordByWord(quranBy, text, value);
 				else if (type == 'quran' && /kids/.test(quranBy))
 					return this.parseKidsWordByWord(quranBy, text, value);
-				else if (type == 'quran' && /grammar/.test(quranBy))
-					return this.parseGrammarWordByWord(quranBy, text, value);
+				else if (type == 'quran' && /corpus/.test(quranBy))
+					return this.parseCorpus(quranBy, text, value);
 				else if (type == 'quran')
 					return this.parseQuran(quranBy, text);
 				else
@@ -350,7 +350,7 @@ var gq = {
 			},
 
 			
-			parseGrammarWordByWord: function (quranBy, text, value)
+			parseCorpus: function (quranBy, text, value)
 			{
 				var words = text.split('$');
 				var verse_html = '';
@@ -1905,6 +1905,7 @@ var gq = {
 				});
 				
 				this.url.save(); // cause defaultQuranBy set here
+		corpusInit();
 			}
 
 			gq.layout.displayStartup((typeof(response) == 'object'));
@@ -2134,3 +2135,24 @@ if (!Object.keys)
         return keys;
     };
 }
+
+
+	var corpusInit = function(){ return;
+	debugger;
+		//HARDCODE the metadata for now
+		gq.data.quranList['quran-corpus'] = {
+			"language_code": "ar",
+			"english_name": "Corpus",
+			"native_name": "",
+			"format": "text",
+			"type": "quran",
+			"source": "Hafidh.com",
+			"default": null,
+			"last_update": "1969-12-31"
+		};
+
+		gq.data['quran-corpus'] = {'verseNo1': {surah: 1, ayah:1, verse: 'text'}, 2: {surah: 1, ayah:1, verse: 'text'}, 3: {surah: 1, ayah:1, verse: 'text'}, 4: {surah: 1, ayah:1, verse: 'text'}, 5: {surah: 1, ayah:1, verse: 'text'}, 6: {surah: 1, ayah:1, verse: 'text'}, 7: {surah: 1, ayah:1, verse: 'text'}, 8: {surah: 1, ayah:1, verse: 'text'}, 9: {surah: 1, ayah:1, verse: 'text'}} // add all 6236 verses here. 
+			
+		// now we will select quran data
+		gq.quran.add('quran-corpus'); // selecting corpus data
+	}
