@@ -32,8 +32,10 @@
 			<div id="playerNavBox">
 				<ul id="pageNav">
 					<li class="page"><span class="pageOn">1</span> <span class="sep">of</span> <span class="totalPages">604</span></li>
-					<li id="prevPage"><a href="#!/ur.junagarhi|quran-tajweed/1:1" class="prevPage button rndL tips" data-tips-position="left center"><span class="icon prevPage">Previous Page</span></a></li>
-					<li id="nextPage"><a href="#!/ur.junagarhi|quran-tajweed/1:1" class="nextPage button rndR tips" data-tips-position="right center"><span class="icon nextPage">Next Page</span></a></li>
+					<li id="prevPage"><a href="#!/quran-uthmani|en.sahih/1:1" class="prevPage button rndL tips" data-tips-position="left center"><span class="icon prevPage">Previous Page</span></a></li>
+					<li id="nextPage"><a href="#!/quran-uthmani|en.sahih/1:1" class="nextPage button rndR tips" data-tips-position="right center"><span class="icon nextPage">Next Page</span></a></li>
+				<!--<li id="prevPage"><a href="#!/ur.junagarhi|quran-tajweed/1:1" class="prevPage button rndL tips" data-tips-position="left center"><span class="icon prevPage">Previous Page</span></a></li>
+					<li id="nextPage"><a href="#!/ur.junagarhi|quran-tajweed/1:1" class="nextPage button rndR tips" data-tips-position="right center"><span class="icon nextPage">Next Page</span></a></li>-->
 				</ul>
 				<ul id="playerNav">
 					<li id="recitor" class="dropOption" style="display:none;"><a href="#" class="dropLink tips" data-tips-position="right center"><span class="icon recitor">Select Recitor</span></a>
@@ -239,6 +241,21 @@
 <script src="javascript/Quran.js"></script>
 <script src="javascript/GQ.js"></script>
 <script src="javascript/Layout.js"></script>
+
+<script type="text/javascript">
+  var PLUGIN = PLUGIN_grammar = true; var SHARE=false;//make false, to disable grammar plugin
+  if(PLUGIN && PLUGIN_grammar) (function() {
+	var urlprefix = (location.href.split('#')[0]).match('.*\/'), url = urlprefix + '../plugins/quran-grammar/PluginQuranGrammar.js';
+	var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+	po.src = url; if(console) console.log(po.src);
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	
+	var po2 = document.createElement('link'); po2.type = 'text/css'; po2.rel = 'stylesheet'; //po2.async = true;
+	po2.src = urlprefix + '../plugins/quran-grammar/PluginQuranGrammar.css';//'http://localhost:8080/GlobalQuran.com-code/plugins/quran-grammar/PluginQuranGrammar.css';
+	var s2 = document.getElementsByTagName('head')[0]; s.parentNode.insertBefore(po2, s2);
+  })();
+</script>
+
 <script type="text/javascript">
 //<![CDATA[
 	if (typeof(apiURL) != 'undefined' && apiURL)

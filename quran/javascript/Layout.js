@@ -191,7 +191,7 @@ var layout = {
 					lastSurahTitle = val.surah;
 				}
 				
-				body += '<p class="ayah '+val.surah+'-'+val.ayah+'" '+fontFamily+'><span class="'+quranClass+'">'+layout.verseParse(quranBy, val.verse)+'</span> <a href="'+gq.url.hashless()+'#!/'+quranBy+'/'+val.surah+':'+val.ayah+'" class="ayahNumber" data-verse="'+verseNo+'"><span class="icon leftBracket"> </span>'+val.ayah+'<span class="icon rightBracket"> </span></a></p>';
+				body += '<p class="ayah '+val.surah+'-'+val.ayah+'" '+fontFamily+'><span class="'+quranClass+'">'+layout.verseParse(quranBy, val.verse, val)+'</span> <a href="'+gq.url.hashless()+'#!/'+quranBy+'/'+val.surah+':'+val.ayah+'" class="ayahNumber" data-verse="'+verseNo+'"><span class="icon leftBracket"> </span>'+val.ayah+'<span class="icon rightBracket"> </span></a></p>';
 			});
 			body += '</div><div class="hr"><hr /></div>';
 		});
@@ -245,7 +245,7 @@ var layout = {
 					lastSurahTitle = val.surah;
 				}
 				
-				body += '<p class="ayah '+val.surah+'-'+val.ayah+'" '+fontFamily+'><span class="'+quranClass+'">'+layout.verseParse(quranBy, val.verse)+'</span> <a href="'+gq.url.hashless()+'#!/'+quranBy+'/'+val.surah+':'+val.ayah+'" class="ayahNumber" data-verse="'+verseNo+'"><span class="icon leftBracket"> </span>'+val.ayah+'<span class="icon rightBracket"> </span></a></p>';
+				body += '<p class="ayah '+val.surah+'-'+val.ayah+'" '+fontFamily+'><span class="'+quranClass+'">'+layout.verseParse(quranBy, val.verse, val)+'</span> <a href="'+gq.url.hashless()+'#!/'+quranBy+'/'+val.surah+':'+val.ayah+'" class="ayahNumber" data-verse="'+verseNo+'"><span class="icon leftBracket"> </span>'+val.ayah+'<span class="icon rightBracket"> </span></a></p>';
 			});
 			
 			body += '</div><div class="hr"><hr /></div>';
@@ -283,7 +283,7 @@ var layout = {
 					lastSurahTitle = val.surah;
 				}
 				
-				body += '<p class="ayah '+val.surah+'-'+val.ayah+'" '+fontFamily+'><span class="'+quranClass+'">'+layout.verseParse(quranBy, val.verse)+'</span> <a href="'+gq.url.hashless()+'#!/'+quranBy+'/'+val.surah+':'+val.ayah+'" class="ayahNumber" data-verse="'+verseNo+'"><span class="icon leftBracket"> </span>'+val.ayah+'<span class="icon rightBracket"> </span></a></p>';
+				body += '<p class="ayah '+val.surah+'-'+val.ayah+'" '+fontFamily+'><span class="'+quranClass+'">'+layout.verseParse(quranBy, val.verse, val)+'</span> <a href="'+gq.url.hashless()+'#!/'+quranBy+'/'+val.surah+':'+val.ayah+'" class="ayahNumber" data-verse="'+verseNo+'"><span class="icon leftBracket"> </span>'+val.ayah+'<span class="icon rightBracket"> </span></a></p>';
 			});
 			
 			body += '</div><div class="hr"><hr /></div>';
@@ -350,7 +350,7 @@ var layout = {
 					direction = (gq.quran.direction(quranBy) == 'right') ? 'rtl' : 'ltr';
 					fontFamily = "style=\"font-family: '"+gq.font.getFamily(quranBy)+"';\"";
 					quranClass = (quranBy != 'quran-wordbyword' && quranBy != 'quran-kids') ?  'quranText' : '';
-					body += '<p class="ayah '+quranClass+' '+direction+'" dir="'+direction+'" '+fontFamily+'>'+layout.verseParse(quranBy, val.verse)+'</p>';
+					body += '<p class="ayah '+quranClass+' '+direction+'" dir="'+direction+'" '+fontFamily+'>'+layout.verseParse(quranBy, val.verse, val)+'</p>';
 					//<a href="'+gq.url.hashless()+'#!/'+quranBy+'/'+val.surah+':'+val.ayah+'" class="quranID">'+name+'</a> 
 				}
 				
@@ -1020,8 +1020,8 @@ var layout = {
 		this.afterAyahChanged();
 	},
 	
-	verseParse: function (quranBy, text) {
-		return gq.quran.parse.load(quranBy, text);
+	verseParse: function (quranBy, text, value) {
+		return gq.quran.parse.load(quranBy, text, value);
 	},	
 	
 	message: function (type, message)
@@ -1775,6 +1775,13 @@ var layout = {
 					ready: true
 				},
 			
+			 	hide: {
+					delay: 150,
+					fixed: true,
+					solo: true,
+					event: "mouseleave"
+				},
+				
 				position: {
 					my: positionTooptip,
 					at: positionTarget,
