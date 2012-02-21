@@ -1046,7 +1046,7 @@ var gq = {
 						token2 = verse[1];
 						token3 = ( verse[2] ).replace(/\</g, '&#171;').replace(/\>/g, '&gt;').replace(/\"/g, '&#9674;');;
 						if(verse[2])
-							refPOS = verse[2].split('|')[0];
+							refPOS = $.trim( verse[2].split('|')[0] );
 						refHtml += '<BR/><span style=font-size:0.5em;>' + ( token3 ) + '</span>';
 						/*if(typeof(CORPUS) == 'object' && CORPUS){//Play safe, incase grammar plugin disabled or grammar data not yet loaded..
 							corpus = CORPUS.UIgetWordGrammarDisplay(ref)
