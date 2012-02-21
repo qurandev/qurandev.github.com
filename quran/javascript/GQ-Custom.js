@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 
  */
 
@@ -90,3 +90,5 @@ gq.load = function (surah, ayah)
 	
 	return false;
 };
+
+gq.quran.parse.cookdata();

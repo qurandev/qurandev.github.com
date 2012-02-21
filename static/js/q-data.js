@@ -1,4 +1,4 @@
-$(function(){
+﻿$(function(){
 	surano = 112;
 	$('#crunchdata').click( crunchdata );
 	crunchdata();
@@ -75,17 +75,26 @@ $(function(){
 		$('#status6').html( numLines +' lines; '+ numWords + ' words');
 		
 		//For step7, splice together data from each 4, 5, 6
-		var line4, line5, line6, arr4, arr5, arr6, line7='', arr7=[], SEP1 = '|,', SEP2 = '|;'; debugger;
+		var line4, line5, line6, arr4, arr5, arr6, line7='', arr7=[], SEP1 = '|,', SEP2 = '|;'; //debugger;
+		SEP2 = '★'; SEP1 = '⚓';
 		var XnumLines=-1, lineNum = 0;
-		for(lineNum=0; lineNum < numLines; ++lineNum){
+		for(lineNum=0; lineNum < numLines; ++lineNum){ arr4 = []; arr5=[]; arr6=[]; arr7=[];
 			line4 = step4.split('\n')[lineNum]; line5 = step5.split('\n')[lineNum]; line6 = step6.split('\n')[lineNum];
 			arr4 = line4.split(' '); arr5 = line5.split('$'); arr6 = line6.split('$$');
 			for(var j=0; j<arr5.length-1; ++j){
 				arr7[j] = arr4[j] + SEP1 + arr5[j] + SEP1 + arr6[j];
 			}
-			line7 += arr7.join( SEP2 ) + '\n';
+			line7 += arr7.join( SEP2 ) + SEP2 + '\n';
 		}
 		$('#step7').val( line7 );
+		numLines = line7.split('\n').length - 1; numWords = line7.split(SEP2).length-1;
+		$('#status7').html( numLines + ' lines; ' + numWords + ' words');
+		
+		//For step8, format it for programmatic consumption
+		var step8 = line7.split('\n');
+		step8 = step8.join('",\n"');
+		step8 = '"' + step8 + '",\n\n';
+		$('#step8').val( step8 );
 	}
 	
 	var verseIndexes = new Array(-1, 1, 8, 294, 494, 670, 790, 955, 1161, 1236, 1365, 1474, 1597, 1708, 1751, 1803, 1902, 2030, 2141, 2251, 2349, 2484, 
