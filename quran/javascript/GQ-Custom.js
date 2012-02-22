@@ -1807,12 +1807,30 @@ gq.load = function (surah, ayah)
 
 	if (notCachedQuranID)
 	{
+		if (firstLoad) {
+			$.getJSON('quran-all.json', function(response) {      
+			  gq._loadResponse(response, firstLoad);
+			});
+			//$.getJSON('quran-corpus.json', function(response) {      
+			// gq._loadResponse(response, firstLoad);
+			//});
+		}
+		else 
+		{
+			$jsonp = $.support.cors ? '' : '.jsonp?callback=?';
+			$.ajaxSetup({ cache: true, jsonpCallback: 'quranData' });
+			$.getJSON(requestUrl+$jsonp, function(response) {      
+			  gq._loadResponse(response, firstLoad);
+			});
+		}
+			
+			
 		//$jsonp = $.support.cors ? '' : '.jsonp?callback=?';
 		//$.ajaxSetup({ cache: true, jsonpCallback: 'quranData' });
 
-		$.getJSON('quran-all.json', function(response) {			
-			gq._loadResponse(response, firstLoad);
-		});
+		///$.getJSON('quran-all.json', function(response) {			
+		///	gq._loadResponse(response, firstLoad);
+		///});
 		//$.getJSON('quran-corpus.json', function(response) {			
 		//	gq._loadResponse(response, firstLoad);
 		//});

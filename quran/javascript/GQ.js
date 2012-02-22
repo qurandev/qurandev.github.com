@@ -359,13 +359,24 @@ var gq = {
 				else words = text.split( SEP0 ); 
 				var verse_html = '';
 				var color = this._color;
+				var unicodeSupported = true, isTablet = false;
+				
 				$.each(words, function(i, verse) {
 					if (verse)
 					{
 						var verse = verse.split( SEP );
 					    var ref = (value?value.surah:'?') +':'+ (value?value.ayah:'?') + ':'+ (1+i);
 						var refHtml='<span style=font-size:0.7em;color:blue;>' + ref + '</span>', refPOS='', corpus, token1, token2, token3;
-						token1 = EnToAr( verse[0] );
+						var wordImageLink = '<span class=wordimage><img src="http://corpus.quran.com/wordimage?id=$1" ></img></span>';
+						wordImageLink = wordImageLink.replace( /\$1/, i);
+						if(ref == "9:1:1"){
+							isTablet = (navigator.userAgent.indexOf('tablet') != -1);
+							unicodeSupported = (document.getElementById('char-to-check').offsetWidth === document.getElementById('not-renderable').offsetWidth);
+							alert( 'isTablet: ' + isTablet +'; '+ (unicodeSupported?'unicode supported': 'unicode not supported') +' ' 
+							    + document.getElementById('char-to-check').offsetWidth +' '+ document.getElementById('not-renderable').offsetWidth
+								+ '; wordImageLink: ' + wordImageLink);
+						}
+						token1 = EnToAr( verse[0] ); if(isTablet) token1 = wordImageLink;
 						token2 = verse[1] ? verse[1] : '-';
 						token3 = verse[2] ? ( verse[2] ).replace(/\</g, '&#171;').replace(/\>/g, '&gt;').replace(/\"/g, '&#9674;') : '-' ;
 						if(!verse[1]) token1 = token2 = token3 = verse[0];
@@ -390,7 +401,7 @@ var gq = {
 							else
 								verse_html += '<span class="word staticWord">' + 
 												'<span class="ar quranText top first rtl tipsWord POS-'+ refPOS + '" dir="rtl" title="' + refHtml + '" >'+
-													token1 + '</span>'+ 
+													token1 + '</span>'+ //wordImageLink +  
 												'<span class="en second ltr" dir="ltr" style="font-size:0.5em;" >' + token2 + '</span></span>';
 								//'<span class="currentAyah tips" title="Surah Al Nas" data-tips-position="bottom center" data-tips-dynamic="true">00:00</span>'; 
 						}
@@ -1867,6 +1878,12 @@ var gq = {
 			$.getJSON(requestUrl+$jsonp, function(response) {			
 				gq._loadResponse(response, firstLoad);
 			});
+			
+			//$.getJSON('quran-all.json', function(response) {			
+			//	gq._loadResponse(response, firstLoad);
+			//});
+		//});
+
 		}
 		else
 		{
