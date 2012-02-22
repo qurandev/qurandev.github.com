@@ -1,0 +1,72 @@
+application: globalquran
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+
+- url: /
+  static_files: quran/index.html
+  upload: quran/index.html
+
+- url: /quran/(.*)
+  static_files: quran/\1
+  upload: quran/(.*)
+  
+- url: /plugins
+  static_dir: plugins
+
+- url: /images
+  static_dir: quran/images
+
+- url: /javascript
+  static_dir: quran/javascript
+
+- url: /static
+  static_dir: static
+
+- url: /static2
+  static_dir: static2
+
+- url: /tools
+  static_files: tools/index.html
+  upload: tools/index.html
+  
+- url: /tools/(.*)
+  static_files: tools/\1
+  upload: tools/(.*)
+
+- url: /wiki
+  static_files: wiki/index.html
+  upload: wiki/index.html
+  
+- url: /wiki/(.*)
+  static_files: wiki/\1
+  upload: wiki/(.*)
+
+- url: /json
+  static_dir: json
+  mime_type: application/json
+  
+- url: /
+  static_files: index.html
+  upload: index.html
+
+
+- url: /test
+  script: globalquran.py
+
+- url: /(.*)\.html
+  static_files: \1.html
+  upload: (.*).html
+
+  
+- url: /(.*)\.txt
+  static_files: \1.txt
+  upload: (.*).txt
+  
+ 
+- url: /(.*)\.json
+  static_files: \1.json
+  upload: (.*).json
+  mime_type: application/json

@@ -1,0 +1,3 @@
+mozilla/5.0 hp-tablet
+Touchpad/1.0
+wOSBrowser/234.40.1
