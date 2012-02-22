@@ -82,7 +82,6 @@ var layout = {
 		gq.init();
 		gq.load(); // display default languages
 		this.binds();
-	//corpusInit();
 		this.afterLoad();
 	},
 	
