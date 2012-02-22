@@ -353,7 +353,7 @@ var gq = {
 			parseCorpus: function (quranBy, text, value)
 			{
 				var SEP = '|,', SEP2 = '|;', SEP0 = ' ', words;
-				SEP = '⚓'; SEP2 = '★'; console.log(value); if(!text){ console.log('no data ' + value.surah +':'+ value.ayah); if(text!="") debugger;};
+				SEP = '⚓'; SEP2 = '★'; if(!text){ console.log('no data ' + value.surah +':'+ value.ayah); if(text!="") debugger;};
 				if(text.indexOf(SEP2) != -1)
 					words = text.split( SEP2 ); 
 				else words = text.split( SEP0 ); 
@@ -1883,7 +1883,10 @@ var gq = {
 		{
 			gq.data = $.extend(true, gq.data, response);
 			gq.data.loaded = true;
-		gq.cookdata();
+			
+		gq.data = $.extend(true, gq.data, EMPTYQURANJSON); //loadup the empty base structure
+		gq.cookdata();  //*********** HARDCODING THE DATA
+		
 		}
 		
 		if (gq.search.isActive())

@@ -42,8 +42,19 @@
 		$('#status1').html( (step1?step1.split('\n').length : 0) +' lines');
 		
 		//step2: strip out all non-stems
-		var step2 = step1.match(/.*STEM.*/g).join('\n');
-		$('#step2').val( step2 ); $('#status2').html( step2.split('\n').length +' lines');
+		var step2arr = step1.match(/.*STEM.*/g), step2 = step2arr.join('\n');
+		$('#step2').val( step2 ); $('#status2').html( step2arr.length +' lines');
+
+
+		var step2arrfinal, dupemsg = '', dupescount=-1;
+		step2arrfinal = eliminateDuplicates( step2arr ); 
+		if( (dupescount = step2arr.length - step2arrfinal.length) != 0 ){
+			dupemsg = dupescount + ' duplicates found. ' + step2arr.length + ' '+ step2arrfinal.length;
+			step2 = step2arrfinal.join('\n');
+			$('#step2').val( step2 ); $('#status2').html( step2arrfinal.length +' lines' + '.&nbsp;&nbsp;<span style=color:red;font-size:1.3em; >Dupes removed ' + dupescount +'</span>');
+		}else{ console.log('no dupes found'); $('#status2').html( $('#status2').html() + '. &nbsp;&nbsp;<span style=color:green >No dupes</span>') }
+		
+		
 		
 		//step3: lay it out verse by verse
 		// ?? some words have multiple stems. how handle???
@@ -90,11 +101,42 @@
 		numLines = line7.split('\n').length - 1; numWords = line7.split(SEP2).length-1;
 		$('#status7').html( numLines + ' lines; ' + numWords + ' words');
 		
+		
+		//SANITY CHECK 1. make sure all linenumbers and wordcounts match!!
+		var a, b, c, sno; a = $('#status4').html(); b = $('#status5').html(); c = $('#status6').html(); sno=$('#surano').val();
+		if( a!=b || b != c || a!=c){ alert(sno + ' Surah: MISMATCH IN lines or words count!!'); debugger;}
+		else console.log(sno + ' sura sanity test1: PASS'); 
 		//For step8, format it for programmatic consumption
 		var step8 = line7.split('\n');
 		step8 = step8.join('",\n"');
 		step8 = '"' + step8 + '",\n\n';
 		$('#step8').val( step8 );
+	}
+
+
+	/* FUNCTIONS TO FIND DUPLICATES */	
+	function eliminateDuplicates(arr) {
+		var i, len=arr.length, out=[], obj={}, key;
+
+		for (i=0; i<len; i++) {
+			if (!obj[ key = getKey(arr[i]) ]){
+				obj[ key ]={};
+				out.push( arr[i] );
+			}else console.log('discard dupe: ' + arr[i]);
+		}
+		return out;
+	}
+	function getKey(token){
+		var temp = token.split(':').splice(0, 3).join(':'); return temp;
+	}
+
+	
+	/* Function to nullify out Quran json data */
+	function trimjson(){ //assume json object. 6236 ayahs in it
+		for(var k=1; k<=6236; ++k)
+			json.quran['quran-corpus'][ k ].verse = "";
+		console.log(json);
+		console.log( JSON.stringify(json) );
 	}
 	
 	var verseIndexes = new Array(-1, 1, 8, 294, 494, 670, 790, 955, 1161, 1236, 1365, 1474, 1597, 1708, 1751, 1803, 1902, 2030, 2141, 2251, 2349, 2484, 
