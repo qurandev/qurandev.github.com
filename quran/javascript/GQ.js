@@ -378,6 +378,7 @@ var gq = {
 						token2 = verse[1] ? verse[1] : '-';
 						token3 = verse[2] ? UI_grammarEscape( verse[2] ) : '-'; //( verse[2] ).replace(/\</g, '&#171;').replace(/\>/g, '&gt;').replace(/\"/g, '&#9674;') : '-' ;
 						token3_1 = verse[2] ? UI_grammarEscapeUIFriendly( verse[2] ) : '-'; 
+						token1 += wordImageLink;
 						if(!verse[1]) token1 = token2 = token3 = verse[0];
 						if(verse[2])
 							refPOS = $.trim( verse[2].split('|')[0] );
