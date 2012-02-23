@@ -1,6 +1,7 @@
 ﻿$(function(){
 	surano = 112;
 	$('#crunchdata').click( crunchdata );
+	$('#crunchdataworkflow').click( automateworkflow );
 	crunchdata();
 });
 
@@ -117,12 +118,27 @@ var quranpart1 = {"quran":{"quran-corpus":{} } };
 		//For step8, format it for programmatic consumption
 		var step8 = line7.split('\n');
 		step8 = step8.join('",\n"');
-		step8 = '"' + step8 + '",\n\n';
-		$('#step8').val( step8 );
+		step8 = '"' + step8;
+		$('#step8').val( step8.substring(0, step8.length-2 ) ); //drop the last 2 chars. not needed.
 		
-		//Step 10. Lets populate up the JSON object finally!!
+		//Step 10. Lets populate up the JSON object finally!! hookup events to workflow buttons
+		$('#automateworkflow').click( automateworkflow );
 	}
-
+	
+	var automateworkflow = function(sura, suraend){ 
+		if(!sura || !parseInt(sura) ){ sura = $('#suranoworkflow').val(); suraend = $('#suranoendworkflow').val(); }//crunchdataworkflow
+		if(!parseInt(sura) ){ debugger; return;} if(!parseInt(suraend) ) suraend = parseInt(sura) + 1;
+		var out = '', SEP2, SEP1; SEP2 = '★'; SEP1 = '⚓';//var sura = 56, suraend = 57;
+		$('#statusworkflow').html( '' ); //blank out status
+		for(j=sura; j < suraend; ++j){ $('#step8').val('');
+			$('#surano').val( j );
+			$('#crunchdata').click();
+			out += $('#step8').val() + '\n'; console.log(j +' sura done. '); $('#statusworkflow').html( $('#statusworkflow').html() + j + ' sura done. ' ); 
+		}
+		$('#step10').val( out );
+		var numLines = out.split('\n').length - 1, numWords = out.split(SEP2).length-1;
+		$('#status10').html( numLines + ' lines; ' + numWords + ' words');
+	}
 
 	/* FUNCTIONS TO FIND DUPLICATES */	
 	function eliminateDuplicates(arr) {
