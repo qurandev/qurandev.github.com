@@ -354,19 +354,16 @@ var gq = {
 			{
 				var SEP = '|,', SEP2 = '|;', SEP0 = ' ', words;
 				SEP = '⚓'; SEP2 = '★'; if(!text){ console.log('no data ' + value.surah +':'+ value.ayah); if(text!="") debugger;};
-				if(text.indexOf(SEP2) != -1)
+				if(text.indexOf(SEP2) != -1) 
 					words = text.split( SEP2 ); 
 				else words = text.split( SEP0 ); 
-				var verse_html = '';
-				var color = this._color;
-				var unicodeSupported = true, isTablet = false;
-				
+				var verse_html = '', verse_template=''; var unicodeSupported = true, isTablet = false;
+
 				$.each(words, function(i, verse) {
-					if (verse)
-					{
+					if (verse){
 						var verse = verse.split( SEP );
 					    var ref = (value?value.surah:'?') +':'+ (value?value.ayah:'?') + ':'+ (1+i);
-						var refHtml='<span style=font-size:0.7em;color:blue;>' + ref + '</span>', refPOS='', corpus, token1, token2, token3;
+						var refPOS='', corpus, token1, token2, token3, tooltip='';
 						var wordImageLink = '<span class=wordimage><img src="http://corpus.quran.com/wordimage?id=$1" ></img></span>';
 						wordImageLink = wordImageLink.replace( /\$1/, i);
 						if(ref == "9:1:1"){
@@ -378,42 +375,33 @@ var gq = {
 						}
 						token1 = EnToAr( verse[0] ); if(isTablet) token1 = wordImageLink;
 						token2 = verse[1] ? verse[1] : '-';
-						token3 = verse[2] ? ( verse[2] ).replace(/\</g, '&#171;').replace(/\>/g, '&gt;').replace(/\"/g, '&#9674;') : '-' ;
+						token3 = verse[2] ? UI_grammarEscape( verse[2] ) : '-'; //( verse[2] ).replace(/\</g, '&#171;').replace(/\>/g, '&gt;').replace(/\"/g, '&#9674;') : '-' ;
 						if(!verse[1]) token1 = token2 = token3 = verse[0];
 						if(verse[2])
 							refPOS = $.trim( verse[2].split('|')[0] );
-						refHtml += '&nbsp;&nbsp;<span style=font-size:0.5em;>' + ( token3 ) + '</span>';
+						tooltip = '<span class=hotlink grmr><span class=ref style=font-size:0.7em;color:blue;>' + ref + '&nbsp;&nbsp;</span>' +
+								  '<span class=grammar style=font-size:0.5em;>' + ( token3 ) + '</span></span>';
+						verse_template = '<span class="word staticWord">' +
+											'<span class="ar quranText top first rtl tipsWord POS-$POS" dir="rtl" title="$TOOLTIP" >$TOKEN1</span>'+  //data-tips-position="bottom center" data-tips-dynamic="true"
+											'<span class="en second ltr" dir="ltr" style="font-size:0.5em;" >$TOKEN2</span></span>';
 						/*if(typeof(CORPUS) == 'object' && CORPUS){//Play safe, incase grammar plugin disabled or grammar data not yet loaded..
 							corpus = CORPUS.UIgetWordGrammarDisplay(ref)
 							if(corpus && typeof(corpus) == 'object'){refHtml = corpus.html; refPOS = corpus.pos;}
 						}//else just show the plain words... on mouseover shows arabic word.						*/
-						if (gq.settings.wbwDirection == 'english2arabic')
-						{
+						if (gq.settings.wbwDirection == 'english2arabic'){
 							if (gq.settings.wbwMouseOver)
 								verse_html += '<span class="word wordColor'+color+'"><span class="en tipsWord" title="'+verse[0]+'">'+verse[1]+'</span></span>';
 							else
 								verse_html += '<span class="word wordColor'+color+' staticWord"><span class="en first ltr" dir="ltr">'+verse[1]+'</span><span class="ar quranText second rtl" dir="rtl">'+verse[0]+'</span></span>';
 						}
-						else
-						{
+						else{
 							if (gq.settings.wbwMouseOver)
 								verse_html += '<span class="word wordColor'+color+'"><span class="ar quranText tipsWord" title="'+verse[1]+'">'+verse[0]+'</span></span>';
-							else
-								verse_html += '<span class="word staticWord">' + 
-												'<span class="ar quranText top first rtl tipsWord POS-'+ refPOS + '" dir="rtl" title="' + refHtml + '" >'+
-													token1 + '</span>'+ //wordImageLink +  
-												'<span class="en second ltr" dir="ltr" style="font-size:0.5em;" >' + token2 + '</span></span>';
-								//'<span class="currentAyah tips" title="Surah Al Nas" data-tips-position="bottom center" data-tips-dynamic="true">00:00</span>'; 
+							else //*** THIS IS THE TYPICAL CASE BELOW.
+								verse_html += verse_template.replace(/\$TOKEN1/, token1).replace(/\$TOKEN2/, token2).replace(/\$TOOLTIP/, tooltip).replace(/\$POS/, refPOS);
 						}
 					}
-					
-					if (color == 10)
-						color = 1;
-					++color;
 				});
-				
-				this._color = color;
-				
 				return verse_html;
 			},
 			

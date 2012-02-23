@@ -28,13 +28,16 @@ handlers:
 - url: /static2
   static_dir: static2
 
+#- url: /tools
+#  static_files: tools/index.html
+#  upload: tools/index.html
+
+#- url: /tools/(.*)\.html
+#  static_files: tools/\1.html
+#  upload: tools/(.*).html
+
 - url: /tools
-  static_files: tools/index.html
-  upload: tools/index.html
-  
-- url: /tools/(.*)
-  static_files: tools/\1
-  upload: tools/(.*)
+  static_dir: tools
 
 - url: /wiki
   static_files: wiki/index.html

@@ -1030,6 +1030,7 @@ var layout = {
 	
 	binds: function ()
 	{	
+		UI_initLiveQueries(); //Do binding for showing smart tooltips for grammar etc.
 		this.bindExtra();
 		
 		$('[href="#home"]').live('click', function()
@@ -1204,7 +1205,6 @@ var layout = {
 				gq.settings.view = 'book';
 				layout.fullScreen(true);
 			}
-			
 			gq.quran.load();
 		});
 		
@@ -1857,3 +1857,74 @@ $.ajaxSetup({"error":function(XMLHttpRequest,textStatus, errorThrown) {
 	layout.message('error', 'Oopss!!!, Something went wrong. please refresh your browser or try again.');
 	gq._gaqPush(['_trackEvent', 'Error', 'Oopss!!!, Something went wrong.']);
 }});
+
+var UI_HOTLINK_TOOLTIPS_ENABLE = true;
+var UI_initLiveQueries = function(){ var selector = '.hotlink'; if(!UI_HOTLINK_TOOLTIPS_ENABLE) return;
+	$(selector).livequery( function(){ 
+		window.status = 'NEW element added: ' + selector;
+		UI_dohotlink( this );
+		$(this).removeClass( 'hotlink' ).addClass( 'hotlinked' );
+	} );
+	selector = '.hotlinked';
+	//$(selector).livequery( function(){
+		//_log('hotlinked');//doSearchHighlight();
+	//} );
+	//selector = 'span.w2w';
+	//$(selector).livequery( 'click', function (){
+	//	$(this).css("background-color","Chartreuse"); 
+	//	searchSet( $(this).text() ); //searchGo();
+	//} );
+}
+
+var UI_dohotlink = function( obj ){
+	var txt = $(obj).text(), _class, text, o;
+	var URL = "<A HREF='http://corpus.quran.com/wordmorphology.jsp?location=($1)' TARGET=_>$1</A>";
+	//step1: restore back to original content. some of it might have been escaped.
+	token3 = verse[2] ? ( verse[2] ).replace(/\</g, '&#171;').replace(/\>/g, '&gt;').replace(/\"/g, '&#9674;') : '-' ;
+
+	//step2: iterate over the children and process 
+	o = $(obj).children();
+	$(o).each( function(){
+		_class = $(this).attr('class'); text = $(this).text(); console.log(this); console.log(_class +' '+ text);
+		if(_class == 'ref'){ 
+			$(this).html( '' ); //( URL.replace(/\$1/g, text ) );
+		}
+		else if(_class == 'grammar'){
+			text = UI_grammarUnenscape(text);
+			$(this).html( UI_grammarHtml(text) );
+		}
+	});
+}
+
+
+var UI_grammarHtml = function( text ){ CORPUS.isInitialized = true;
+	var html = '', corpus, refHtml='--';
+	if(typeof(CORPUS) == 'object' && CORPUS){//Play safe, incase grammar plugin disabled or grammar data not yet loaded..
+		corpus = CORPUS.UIgetWordGrammarDisplay(text); console.log(corpus);
+		if(corpus && typeof(corpus) == 'object'){
+			refHtml = corpus.html; //refPOS = corpus.pos;
+		}
+	}else debugger; //else just show the plain words... on mouseover shows arabic word.						*/
+	html = refHtml;// +'<BR/>'+ text;
+	return html;
+}
+
+var UI_grammarUnenscape = function(text){
+	return decodeURIComponent(text);
+	//if(text.indexOf('&#9674;') != -1){ debugger; }
+	//if(text.indexOf('&gt;') != -1){ debugger; }
+	//if(text.indexOf('&#171;') != -1){ debugger; }
+	//return text.replace(/\&\#171\;/g, '\<').replace(/\&gt\;/g, '>').replace(/\&\#9674\;/g, '\"');
+}
+
+var UI_grammarEscape = function(text){
+	if(decodeURIComponent( encodeURIComponent( text ) ) != text ){ console.log('encodeURIComponent and rountrip after decode DONT MATCH!'); debugger; }
+	return encodeURIComponent(text);
+	//return text.replace(/\</g, '&#171;').replace(/\>/g, '&gt;').replace(/\"/g, '&#9674;');
+}
+
+var escape = function(input){ if(!input) return; return input.replace(/\</g, '&lt;').replace(/\>/g, '&gt;'); }
+var br = function(input){ if(!input) return; return '<span class="E GRMR">'+input.replace(/\n/g, '<br/>') + '</span>'; }
+var hotlinkify = function(input){ if(!input) return; return '<span class=hotlink>' + input + '</span>'; }
+var A = function(href, title, target){ if(!href) return; if(typeof(title)==NULL || !title) title=href; if(typeof(target)==NULL || !target) target=href; return '<a href="'+ href +'" target="'+ target + '" >'+title+'</a>';}
+

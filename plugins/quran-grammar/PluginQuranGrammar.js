@@ -5,7 +5,7 @@ var CORPUS = {
 	LinkQuranDictionary: "http://corpus.quran.com/qurandictionary.jsp?q=$1",
 	LinkLemmaSearch:	 "http://corpus.quran.com/search.jsp?q=lem:$1",
 
-	TemplateRefLink:	"$3<A HREF=$1 TARGET=_>$2</A>",
+	TemplateRefLink:	"$3<A HREF=$1 TARGET=_>$2</A><IMG SRC=images/external_link.gif></IMG>",
 	TemplateRootLink:	"$3<A HREF=$1 TARGET=_>$2</A>",
 	TemplateRootDecoratedLink:	"<SPAN CLASS=r1 style=color:red>$1</SPAN>&zwnj;<SPAN CLASS=r2 style=color:green>$2</SPAN>&zwnj;<SPAN CLASS=r3 style=color:blue>$3</SPAN>",
 	TemplateLemmaLink:	"$3<A HREF='$1' TARGET=_>$2</A>",
@@ -32,7 +32,7 @@ var CORPUS = {
 	},
 	
 	UIgetPOSLink:		function(pos, linkname, linkprefix){
-		return (linkprefix?linkprefix : 'Part-of-speech: ') + pos;
+		return (linkprefix?linkprefix : '') + pos;
 	},
 	
 	UIgetFeaturesLink:	function(features, linkname, linkprefix){
@@ -45,24 +45,55 @@ var CORPUS = {
 	
 	UIgetWordGrammarDisplay: function(ref)
 	{
-		var corpus, str = '', root='Sbr', lemma = 'liHoyat', pos = 'V', features='3FS GEN MOOD:JUS PASS IMPF VN ACT|PCPL'; //hard coded root etc for now.
+		var corpus, str = '', root='', lemma = '', pos = '', features='';
 		
 		try{
 			corpus = CORPUS.parse( ref ); //console.log(corpus);
 		}catch(err){ console.log(err.message); console.log(err); debugger; }
 		if(corpus){
-			if(corpus.pos) 			str +=			 CORPUS.UIgetPOSLink(corpus.pos) + ' form: ' + corpus.form;
-			if(corpus.features) 	str += '<BR/>' + CORPUS.UIgetFeaturesLink(corpus.features);
-			if(corpus.lemma)		str += '<BR/>' + CORPUS.UIgetLemmaLink(corpus.lemma, EnToAr(corpus.lemma));
-			if(corpus.root)			str += '&nbsp;&nbsp;&nbsp;&nbsp;' + CORPUS.UIgetRootDecoratedLink(corpus.root, EnToAr(corpus.root)); //If u dont want colored, use UIgetRootLink
-			if(corpus.misc)			str += '<BR/>' + CORPUS.UIgetMiscLink(corpus.misc);
+			str = '<ul style="line-height:1.2em !important;">';
+			if(corpus.pos) 			str +=	'<li>'+ '<span style=font-size:1.3em; class=POS-'+ corpus.pos + '>'+ corpus.pos +'</span> – '+
+											//CORPUS.UIgetPOSLink(corpus.pos) + 
+											(corpus.vn ? ' Verbal Noun ' : '' ) + 
+											(corpus.activepassivepcpl ? ' '+ CORPUS.ACTIVEPASSIVEPCPL_MAPPING[corpus.activepassivepcpl] + ' ' : '') + 
+											(corpus.passive ? ' '+(corpus.passive == 'PASS' ? 'Passive' : corpus.passive )+' ' : '') +
+											(corpus.form != '(I)' ? (' Form '+corpus.form+' ') : '') + // form: ' + corpus.form +
+											(corpus.tense ? ' ' + CORPUS.TENSE_MAPPING[ corpus.tense ] + ' ' : '') + 
+											'<span style=font-size:1.3em; class=POS-'+ corpus.pos + '>'+ CORPUS.UIlookupPOS(corpus.pos) +'</span></li>';
+			if(corpus.features) 	str += '<li>' + CORPUS.UIgetFeaturesLink(corpus.features) + '</li>';
+			str += '<li>';
+			if(corpus.lemma)		str += CORPUS.UIgetLemmaLink(corpus.lemma, EnToAr(corpus.lemma)) + '&nbsp;';
+			if(corpus.root)			str += CORPUS.UIgetRootDecoratedLink(corpus.root, EnToAr(corpus.root)); //If u dont want colored, use UIgetRootLink
+			//if(corpus.misc)			str += '</li><li>' + CORPUS.UIgetMiscLink(corpus.misc) + CORPUS.UIgetRefLink(ref,'more info');
+			str += '</li></ul>';
 		}
-		str += '<xBR/>' + CORPUS.UIgetRefLink(ref,'more info');
 		var obj = {};
 		obj.corpus = corpus;
 		obj.html   = str;
 		obj.pos    = corpus.pos;
 		return obj;
+	},
+	
+	TENSE_MAPPING: {"IMPV": "Imperative", "IMPF": "Imperfect", "PERF": "Perfect"},
+					//{"IMPV": "Imperative (commanding etc tense)", "IMPF": "Imperfect (present, future tense)", "PERF": "Perfect (past tense)"},
+					
+	ACTIVEPASSIVEPCPL_MAPPING: {"PASS|PCPL": "Passive participle", "ACT|PCPL": "Active participle"},
+	
+	POS_MAPPING: { "N": "NOUN", "V": "VERB", 'PN': 'Proper Name', 'ADJ': 'Adjective', 'REL': 'Relative pronoun', 
+						'PRON': 'Pronoun', 'CONJ': 'Conjunction', 'NEG': 'Negative particle', 'P': 'Preposition',
+						'INL': 'Quranic initials', 'DEM': 'Demonstrative pronoun', 'ACC': 'accusative particle',
+						'RES': 'restriction particle', 'T': 'time adverb', 'PRO': 'prohibition particle', 'PREV': 'preventive particle',
+						'INC': 'inceptive particle', 'AMD': 'amendment particle', 'SUB': 'subordinating conjunction', 'LOC': 'Location adverb', 'COND': 'conditional particle'
+					},
+		//REM: prefixed resumption particle
+		//EQ: prefixed equalization particle
+		//INTG: prefixed interrogative alif
+		//EMPH: emphatic prefix lām
+		//VOC: prefixed vocative particle ya
+					
+	UIlookupPOS: function(pos){
+		if( CORPUS.POS_MAPPING[pos]) return CORPUS.POS_MAPPING[pos];
+		else return pos;
 	}
 			
 };
@@ -98,14 +129,37 @@ var CORPUS = {
 	CORPUS.isInitialized = false;
 	CORPUS._regexStems = /.*?STEM[^\n]*/g;
 	CORPUS._regexMatchRef = "\\($REF.*$"; //Ex: "\\(1:7:9.*$";
-	CORPUS._regexParse =		/(.*?)?(?:STEM)(?:\|POS:([^\|\n]*))?(?:\|((?:ACT|PASS)\|PCPL))?(?:\|(IMPF|IMPV|PERF))?(?:\|(PASS))?(?:\|(VN))?(?:\|(\([IVX]*\)))?(?:\|LEM:([^\|\n]*))?(?:\|ROOT:([^\|\n]*))?(?:\|(.*?))?$/;	
+	CORPUS._regexParse =							   /(([^\|\n]*))?(?:\|((?:ACT|PASS)\|PCPL))?(?:\|(IMPF|IMPV|PERF))?(?:\|(PASS))?(?:\|(VN))?(?:\|(\([IVX]*\)))?(?:\|LEM:([^\|\n]*))?(?:\|ROOT:([^\|\n]*))?(?:\|(.*?))?$/;	
+	CORPUS._regexParseFullLine = /(.*?)?(?:STEM)(?:\|POS:([^\|\n]*))?(?:\|((?:ACT|PASS)\|PCPL))?(?:\|(IMPF|IMPV|PERF))?(?:\|(PASS))?(?:\|(VN))?(?:\|(\([IVX]*\)))?(?:\|LEM:([^\|\n]*))?(?:\|ROOT:([^\|\n]*))?(?:\|(.*?))?$/;	
 	CORPUS.LEMMA = 8; CORPUS.ROOT = 9; CORPUS.FORM = 7; CORPUS.PERSONGS = 10; CORPUS.MISC = 0; CORPUS.POS = 2;
+	CORPUS.ACTIVEPASSIVEPCPL = 3; CORPUS.TENSE = 4; CORPUS.PASSIVE = 5; CORPUS.VN = 6;
 	CORPUS._rawdata = CORPUS._rawdataArr = '';
 
-	CORPUS.parse = function(ref, index){ if(!CORPUS.isInitialized){ CORPUS.init(); } 
+
+	CORPUS.parse = function(corpustext){ if(!CORPUS.isInitialized){ CORPUS.init(); } 
 		var oParsed, corpus; 
 		try{//			if(!parseInt(index) ){debugger; return;}
-			oParsed = CORPUS.regexParse( CORPUS.lookupRef(ref, index) );
+			oParsed = CORPUS.regexParse( corpustext );
+			corpus = {}; corpus.lemma = corpus.root  = corpus.form  = corpus.features = corpus.misc = corpus.pos = '--';
+			corpus.lemma = oParsed[ CORPUS.LEMMA ];
+			corpus.root  = oParsed[ CORPUS.ROOT ];
+			corpus.form  = oParsed[ CORPUS.FORM ]; if(!corpus.form) corpus.form = '(I)';
+			corpus.features = oParsed[ CORPUS.PERSONGS ];
+			corpus.misc  = oParsed[ CORPUS.MISC ];
+			corpus.pos	 = $.trim( oParsed[ CORPUS.POS ] );
+			
+			corpus.tense = $.trim( oParsed[ CORPUS.TENSE ] );
+			corpus.passive = $.trim( oParsed[ CORPUS.PASSIVE ] );
+			corpus.activepassivepcpl = $.trim( oParsed[ CORPUS.ACTIVEPASSIVEPCPL ] );
+			corpus.vn = $.trim( oParsed[ CORPUS.VN ] );
+		}catch(err){ console.log(err.message); console.log(err); debugger; }
+		return corpus;
+	}
+	
+	CORPUS.parseFromRef = function(ref, index){ if(!CORPUS.isInitialized){ CORPUS.init(); } 
+		var oParsed, corpus; 
+		try{//			if(!parseInt(index) ){debugger; return;}
+			oParsed = CORPUS.regexParseFullLine( CORPUS.lookupRef(ref, index) );
 			corpus = {}; corpus.lemma = corpus.root  = corpus.form  = corpus.features = corpus.misc = corpus.pos = '--';
 			corpus.lemma = oParsed[ CORPUS.LEMMA ];
 			corpus.root  = oParsed[ CORPUS.ROOT ];
@@ -139,6 +193,10 @@ var CORPUS = {
 
 	CORPUS.regexParse = function(teststring){
 		return CORPUS._regexParse.exec( teststring );
+	}
+
+	CORPUS.regexParseFullLine = function(teststring){
+		return CORPUS._regexParseFullLine.exec( teststring );
 	}
 
 	
