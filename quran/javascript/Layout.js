@@ -1888,7 +1888,7 @@ var UI_dohotlink = function( obj ){
 		else if(_class == 'grammar'){
 			//step1: restore back to original content. some of it might have been escaped. in the special case where contain < etc
 			data = $(this).attr('data');
-			if( data.indexOf('%3C') != -1){ //alert('foreign char! ' + data + '<BR/>'+ UI_grammarUnenscape(data) + '<BR/>'+ text);
+			if( data.indexOf('%3C') != -1){ //alert('foreign char! ' + data + '<BR/>'+ UI_grammarUnescape(data) + '<BR/>'+ text);
 				text = UI_grammarUnescape(data);
 			}
 			$(this).html( UI_grammarHtml(text) );
@@ -1909,7 +1909,7 @@ var UI_grammarHtml = function( text ){ CORPUS.isInitialized = true;
 	return html;
 }
 
-var UI_grammarUnenscape = function(text){
+var UI_grammarUnescape = function(text){
 	return decodeURIComponent(text);
 }
 
