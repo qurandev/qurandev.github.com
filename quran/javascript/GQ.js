@@ -358,12 +358,13 @@ var gq = {
 					words = text.split( SEP2 ); 
 				else words = text.split( SEP0 ); 
 				var verse_html = '', verse_template=''; var unicodeSupported = true, isTablet = false;
+				var REFURL = "<A HREF='http://corpus.quran.com/wordmorphology.jsp?location=($1)' TARGET=_>$1</A>";
 
 				$.each(words, function(i, verse) {
 					if (verse){
 						var verse = verse.split( SEP );
 					    var ref = (value?value.surah:'?') +':'+ (value?value.ayah:'?') + ':'+ (1+i);
-						var refPOS='', corpus, token1, token2, token3, tooltip='';
+						var refPOS='', corpus, token1, token2, token3, token3_1, tooltip='';
 						var wordImageLink = '<span class=wordimage><img src="http://corpus.quran.com/wordimage?id=$1" ></img></span>';
 						wordImageLink = wordImageLink.replace( /\$1/, i);
 						if(ref == "9:1:1"){
@@ -376,11 +377,13 @@ var gq = {
 						token1 = EnToAr( verse[0] ); if(isTablet) token1 = wordImageLink;
 						token2 = verse[1] ? verse[1] : '-';
 						token3 = verse[2] ? UI_grammarEscape( verse[2] ) : '-'; //( verse[2] ).replace(/\</g, '&#171;').replace(/\>/g, '&gt;').replace(/\"/g, '&#9674;') : '-' ;
+						token3_1 = verse[2] ? UI_grammarEscapeUIFriendly( verse[2] ) : '-'; 
 						if(!verse[1]) token1 = token2 = token3 = verse[0];
 						if(verse[2])
 							refPOS = $.trim( verse[2].split('|')[0] );
-						tooltip = '<span class=hotlink grmr><span class=ref style=font-size:0.7em;color:blue;>' + ref + '&nbsp;&nbsp;</span>' +
-								  '<span class=grammar style=font-size:0.5em;>' + ( token3 ) + '</span></span>';
+						tooltip = '<span class=hotlink grmr><span class=ref style=font-size:0.7em;color:blue;>' + 
+								  REFURL.replace(/\$1/g, ref) + '&nbsp;</span>' +
+								  '<span class=grammar style=font-size:0.5em; data='+ token3 + ' >' + ( token3_1 ) + '</span></span>';
 						verse_template = '<span class="word staticWord">' +
 											'<span class="ar quranText top first rtl tipsWord POS-$POS" dir="rtl" title="$TOOLTIP" >$TOKEN1</span>'+  //data-tips-position="bottom center" data-tips-dynamic="true"
 											'<span class="en second ltr" dir="ltr" style="font-size:0.5em;" >$TOKEN2</span></span>';

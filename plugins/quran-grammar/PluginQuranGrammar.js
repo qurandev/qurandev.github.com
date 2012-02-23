@@ -36,11 +36,22 @@ var CORPUS = {
 	},
 	
 	UIgetFeaturesLink:	function(features, linkname, linkprefix){
-		return (linkprefix?linkprefix : 'Features: ') + escape(features);
+		if(!features) return;
+		var html='', items = features.split('|'), item, lookup;
+		lookup = CORPUS.FEATURES_MAPPING[ features ]; //it might be readymade
+		if(lookup) html += lookup  + '&nbsp;&nbsp;';
+		else for(var i=0; i<items.length; ++i){
+			item = items[i];
+			lookup = CORPUS.FEATURES_MAPPING[ item ];
+			if(lookup) html += lookup + '&nbsp;&nbsp;';
+			else html += UI_grammarEscapeUIFriendly( item ) + '&nbsp;&nbsp;'; //since it can be SP: w foreign chars.
+		}
+		html += '<!--&nbsp;('+ UI_grammarEscapeUIFriendly(features) +')-->'; //(linkprefix?linkprefix : 'Features: ') + 
+		return html;
 	},
 	
 	UIgetMiscLink:		function(misc, linkname, linkprefix){
-		return '<span style=font-size:8px>' + (linkprefix?linkprefix : 'Misc: ') + escapeMisc(misc) + '</span>';
+		return '<span style=font-size:8px;color:#C0C0C0;#F0F0F0; >' + (linkprefix?linkprefix : 'Misc: ') + escapeMisc(misc) + '</span>';
 	},
 	
 	UIgetWordGrammarDisplay: function(ref)
@@ -64,7 +75,7 @@ var CORPUS = {
 			str += '<li>';
 			if(corpus.lemma)		str += CORPUS.UIgetLemmaLink(corpus.lemma, EnToAr(corpus.lemma)) + '&nbsp;';
 			if(corpus.root)			str += CORPUS.UIgetRootDecoratedLink(corpus.root, EnToAr(corpus.root)); //If u dont want colored, use UIgetRootLink
-			//if(corpus.misc)			str += '</li><li>' + CORPUS.UIgetMiscLink(corpus.misc) + CORPUS.UIgetRefLink(ref,'more info');
+			if(corpus.misc)			str += '</li><li>' + CORPUS.UIgetMiscLink(corpus.misc);// + CORPUS.UIgetRefLink(ref,'more info');
 			str += '</li></ul>';
 		}
 		var obj = {};
@@ -73,6 +84,19 @@ var CORPUS = {
 		obj.pos    = corpus.pos;
 		return obj;
 	},
+	
+	FEATURES_MAPPING: {'GEN': 'Genitive case.', 'ACC': 'Accusative case.', 'NOM': 'Nominative case.', 'INDEF': 'Indefinte.', 
+						'3MS': '3rd person Masculine Singular.', '3MP': '3rd person Masculine Plural.', 
+						'2MP': '2nd person Masculine Plural.', '2MS': '2nd person Masculine Singular.',
+						'M': 'Masculine.', 'F': 'Feminine.', 'S': 'Singular.', 'P': 'Plural.',
+						'SP:kaAn': 'belongs to a special group of words known as <BR/>kāna and her sisters (كان واخواتها). <BR/>', 
+						'SP:<in~': 'belongs to a special group of words known as <BR/>inna and her sisters (ان واخواتها). <BR/>',
+						'SP:kaAd': 'belongs to a special group of words known as <BR/>kāda and her sisters (كاد واخواتها). <BR/>', 
+						'MP': 'Masculine Plural', '1P': '1st person Plural', 
+						'2MS': '2nd person Masculine Singular', '3FS': '3rd person Feminine Singular', 'MS': 'Masculine singular', 
+						'FP': 'Feminine plural', 'FS': 'Feminine Singular', '1S': '1st person Singular', 
+						'MD': 'Masculine Dual', 'FD': 'Feminine Dual', '3D': '3rd person Dual', '3FD': '', 
+						'MOOD:JUS': 'Jussive mood.', 'MOOD:SUBJ': 'Subjunctive mood.'},
 	
 	TENSE_MAPPING: {"IMPV": "Imperative", "IMPF": "Imperfect", "PERF": "Perfect"},
 					//{"IMPV": "Imperative (commanding etc tense)", "IMPF": "Imperfect (present, future tense)", "PERF": "Perfect (past tense)"},

@@ -1877,22 +1877,22 @@ var UI_initLiveQueries = function(){ var selector = '.hotlink'; if(!UI_HOTLINK_T
 }
 
 var UI_dohotlink = function( obj ){
-	var txt = $(obj).text(), _class, text, o;
-	var URL = "<A HREF='http://corpus.quran.com/wordmorphology.jsp?location=($1)' TARGET=_>$1</A>";
-	//step1: restore back to original content. some of it might have been escaped.
-	token3 = verse[2] ? ( verse[2] ).replace(/\</g, '&#171;').replace(/\>/g, '&gt;').replace(/\"/g, '&#9674;') : '-' ;
-
-	//step2: iterate over the children and process 
+	var txt = $(obj).text(), data = $(obj).attr('data'), _class, text, o;
+	//iterate over the children and process 
 	o = $(obj).children();
 	$(o).each( function(){
 		_class = $(this).attr('class'); text = $(this).text(); console.log(this); console.log(_class +' '+ text);
 		if(_class == 'ref'){ 
-			$(this).html( '' ); //( URL.replace(/\$1/g, text ) );
+			//$(this).html( URL.replace(/\$1/g, text ) );
 		}
 		else if(_class == 'grammar'){
-			text = UI_grammarUnenscape(text);
+			//step1: restore back to original content. some of it might have been escaped. in the special case where contain < etc
+			data = $(this).attr('data');
+			if( data.indexOf('%3C') != -1){ //alert('foreign char! ' + data + '<BR/>'+ UI_grammarUnenscape(data) + '<BR/>'+ text);
+				text = UI_grammarUnescape(data);
+			}
 			$(this).html( UI_grammarHtml(text) );
-		}
+		}//if all went thru fine, u can hide the link.
 	});
 }
 
@@ -1911,16 +1911,15 @@ var UI_grammarHtml = function( text ){ CORPUS.isInitialized = true;
 
 var UI_grammarUnenscape = function(text){
 	return decodeURIComponent(text);
-	//if(text.indexOf('&#9674;') != -1){ debugger; }
-	//if(text.indexOf('&gt;') != -1){ debugger; }
-	//if(text.indexOf('&#171;') != -1){ debugger; }
-	//return text.replace(/\&\#171\;/g, '\<').replace(/\&gt\;/g, '>').replace(/\&\#9674\;/g, '\"');
 }
 
 var UI_grammarEscape = function(text){
 	if(decodeURIComponent( encodeURIComponent( text ) ) != text ){ console.log('encodeURIComponent and rountrip after decode DONT MATCH!'); debugger; }
 	return encodeURIComponent(text);
-	//return text.replace(/\</g, '&#171;').replace(/\>/g, '&gt;').replace(/\"/g, '&#9674;');
+}
+
+var UI_grammarEscapeUIFriendly = function(text){
+	return text.replace(/\</g, '&#171;').replace(/\>/g, '&gt;').replace(/\"/g, '&#9674;');
 }
 
 var escape = function(input){ if(!input) return; return input.replace(/\</g, '&lt;').replace(/\>/g, '&gt;'); }
