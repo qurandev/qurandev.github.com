@@ -365,8 +365,8 @@ var gq = {
 						var verse = verse.split( SEP );
 					    var ref = (value?value.surah:'?') +':'+ (value?value.ayah:'?') + ':'+ (1+i);
 						var refPOS='', corpus, token1, token2, token3, token3_1, tooltip='';
-						var wordImageLink = '<span class=wordimage><img src="http://corpus.quran.com/wordimage?id=$1" ></img></span>';
-						wordImageLink = wordImageLink.replace( /\$1/, Quran.word.number(value.surah, value.ayah, i));
+						var wordImageLink = '<span class=wordimage><img src=http://corpus.quran.com/wordimage?id=$1 ></img></span>';
+						wordImageLink = wordImageLink.replace( /\$1/, 1 + Quran.word.number(value.surah, value.ayah, i));
 						if(ref == "9:1:1"){
 							isTablet = (navigator.userAgent.indexOf('tablet') != -1);
 							unicodeSupported = (document.getElementById('char-to-check').offsetWidth === document.getElementById('not-renderable').offsetWidth);
@@ -384,7 +384,7 @@ var gq = {
 							refPOS = $.trim( verse[2].split('|')[0] );
 						tooltip = '<span class=hotlink grmr><span class=ref style=font-size:0.7em;color:blue;>' + 
 								  REFURL.replace(/\$1/g, ref) + '&nbsp;</span>' +
-								  '<span class=grammar style=font-size:0.5em; data='+ token3 + ' >' + ( token3_1 ) + '</span></span>';
+								  '<span class=grammar style=font-size:0.5em; data='+ token3 + ' >' + ( token3_1 ) + wordImageLink + '</span></span>';
 						verse_template = '<span class="word staticWord">' +
 											'<span class="ar quranText top first rtl tipsWord POS-$POS" dir="rtl" title="$TOOLTIP" >$TOKEN1</span>'+  //data-tips-position="bottom center" data-tips-dynamic="true"
 											'<span class="en second ltr" dir="ltr" style="font-size:0.5em;" >$TOKEN2</span></span>';
