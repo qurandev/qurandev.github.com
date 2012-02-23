@@ -366,7 +366,7 @@ var gq = {
 					    var ref = (value?value.surah:'?') +':'+ (value?value.ayah:'?') + ':'+ (1+i);
 						var refPOS='', corpus, token1, token2, token3, token3_1, tooltip='';
 						var wordImageLink = '<span class=wordimage><img src="http://corpus.quran.com/wordimage?id=$1" ></img></span>';
-						wordImageLink = wordImageLink.replace( /\$1/, i);
+						wordImageLink = wordImageLink.replace( /\$1/, Quran.word.number(value.surah, value.ayah, i));
 						if(ref == "9:1:1"){
 							isTablet = (navigator.userAgent.indexOf('tablet') != -1);
 							unicodeSupported = (document.getElementById('char-to-check').offsetWidth === document.getElementById('not-renderable').offsetWidth);
