@@ -1,23 +1,9 @@
 {
   "1": {
-    "name": "Al-MuhSiy",
-    "aname": "AalomuHoSiYo",
-    "root": "HSY",
-    "nouns": ">aHoS`Yo",
-    "opps": "nasuwohu",
-    "meaning": "One who computes and preserves. Only in hadees. <BR/>Ref: 14:34, 36:12, 18:12. related: 72:28. opposite: 58:6.",
-    "pg": "115"
-  },
-  "2": {
-    "name": "Al-Mubdi",
-    "aname": "AalomubodiYo",
-    "root": "bdA",
-    "nouns": "Aibotada>a",{
-  "1": {
     "name": "Ar-RaHman, Ar-RaHeem",
-    "aname": "Alr~aHm`n Alr~aHiymo",
+    "aname": "Alr~aHom`n Alr~aHiymo",
     "root": "rHm",
-    "nouns": "raHomapN",
+    "nouns": "ruHumu raHomapN",
     "opps": "",
     "meaning": "The Beneficent. The Merciful. Occurs 169 and 227 times in quran. <BR/> Ref: 17:100, 30:50, 28:73. 17:24, 30:21. 17, 82, 4:176, 21:107. 45:30, 39:53. <BR/>related: Arhaam 3:6. opposites: Loss 7:23, punishment 6:15-16. Harm 30:33. Evil 30:36. Destruction 67:28. <BR/> Summary: Rehmat 6:12, 7:156. Ar-Rahmaan is associated with only 1 attribute ar-Raheem 118 times. Ref: 17:82 21:107 55:1-2. 78:37. <BR/>Ar-Raheem appears 227 times in the quran, no other attribute occurs so many times. <BR/>Associated with other attributes: ar-Raheem appears with Al-Gafoor 73 times, with Al-Azi 13 times, with al-Tawwab 9 times, with ar-Raoof 8 times, with ar-Rahmaan 118 times, with Al-wadood, Al-Barr and Rabb one time each. It's frequent association with Al-Gafoor (protector and forgiver of sins), Al-Tawwab (Acceptor of repentence) and Ar-Raoof (one full of pity), indicates that Allah's mercy is exhibited through it, therefore it can be translated as The Merciful. it is the second Attribute used with Allah's name.",
     "pg": "14"
@@ -141,9 +127,362 @@
     "pg": "67"
   },
   "15": {
-    
+    "name": "",
+    "aname": "",
+    "root": "aaa"
   },
   "16": {
+    "name": "Al-Ghaffar, Al-Ghafoor",
+    "aname": "",
+    "root": "gfr",
+    "nouns": "magofiratN",
+    "opps": "",
+    "meaning": "The Protectively Forgiving",
+    "pg": "41"
+  },
+  "17": {
+    "name": "Al-Qahhaar",
+    "aname": "",
+    "root": "qhr",
+    "nouns": "qahrN",
+    "opps": "",
+    "meaning": "Omnipotent",
+    "pg": "44"
+  },
+  "18": {
+    "name": "Al-Wahhaab",
+    "aname": "",
+    "root": "whb",
+    "nouns": "Aalohibapu",
+    "opps": "",
+    "meaning": "The One Who grants",
+    "pg": "45"
+  },
+  "19": {
+    "name": "Ar-Razzaak",
+    "aname": "",
+    "root": "rzq",
+    "nouns": "rizoq",
+    "opps": "",
+    "meaning": "The Provider",
+    "pg": "47"
+  },
+  "20": {
+    "name": "Al-Fattah",
+    "aname": "",
+    "root": "ftH",
+    "nouns": "fatoHN",
+    "opps": "",
+    "meaning": "The Judge",
+    "pg": "50"
+  },
+  "21": {
+    "name": "Al-Aleem",
+    "aname": "",
+    "root": "Elm",
+    "nouns": "EilomN",
+    "opps": "",
+    "meaning": "(The Knowing) (One Who Knows) (The Great Knower of the Unseen)",
+    "pg": "52"
+  },
+  "22": {
+    "name": "Al-KhabiD",
+    "aname": "",
+    "root": "qbD",
+    "nouns": "qaboDapN",
+    "opps": "",
+    "meaning": "[One Who Straitens (withholds)] [One Who has grip (control)]",
+    "pg": "56"
+  },
+  "23": {
+    "name": "Al-Basith",
+    "aname": "",
+    "root": "bsT",
+    "nouns": "basoTapN bisaATN",
+    "opps": "",
+    "meaning": "The Granter of abundance.",
+    "pg": "58"
+  },
+  "24": {
+    "name": "Al-KhafiD",
+    "aname": "",
+    "root": "xfD",
+    "nouns": "xfiDo",
+    "opps": "",
+    "meaning": "One Capable of bringing down and disgracing.",
+    "pg": "59"
+  },
+  "25": {
+    "name": "Al-Rafay",
+    "aname": "",
+    "root": "rfE",
+    "nouns": "rafoEapu",
+    "opps": "",
+    "meaning": "The Exalter. One Capable of elevating.",
+    "pg": "60"
+  },
+  "26": {
+    "name": "Al-Muzill",
+    "aname": "",
+    "root": "*ll",
+    "nouns": "*il~apN",
+    "opps": "",
+    "meaning": "One Who disgraces",
+    "pg": "62"
+  },
+  "27": {
+    "name": "As-Samee",
+    "aname": "",
+    "root": "smE",
+    "nouns": "samaAEap",
+    "opps": "",
+    "meaning": "The Hearing, One capable of hearing.",
+    "pg": "63"
+  },
+  "28": {
+    "name": "Al-Baseer",
+    "aname": "",
+    "root": "bSr",
+    "nouns": "baSaArap",
+    "opps": "",
+    "meaning": "The Seeing. One Who is capable of seeing.",
+    "pg": "65"
+  },
+  "29": {
+    "name": "Al-Hakam, Al-Hakeem",
+    "aname": "",
+    "root": "Hkm",
+    "nouns": "HikomapN HukomN",
+    "opps": "",
+    "meaning": "",
+    "pg": "67"
+  },
+  "30": {
+    "name": "Al-Adl",
+    "aname": "",
+    "root": "Edl",
+    "nouns": "EadolN",
+    "opps": "",
+    "meaning": "One Who does justice",
+    "pg": "69"
+  },
+  "31": {
+    "name": "Al-Latif",
+    "aname": "",
+    "root": "lTf",
+    "nouns": "laTaAfp laTofN",
+    "opps": "",
+    "meaning": "The Subtle. The Gracious.",
+    "pg": "70"
+  },
+  "32": {
+    "name": "Al-Khabeer",
+    "aname": "",
+    "root": "xbr",
+    "nouns": "xaborN",
+    "opps": "",
+    "meaning": "The Informed",
+    "pg": "72"
+  },
+  "33": {
+    "name": "Al-Haleem",
+    "aname": "",
+    "root": "Hlm",
+    "nouns": "HilomN",
+    "opps": "",
+    "meaning": "The Clement",
+    "pg": "74"
+  },
+  "34": {
+    "name": "Al-AZeem",
+    "aname": "",
+    "root": "EZm",
+    "nouns": "EaZmapN",
+    "opps": "",
+    "meaning": "The Great",
+    "pg": "76"
+  },
+  "35": {
+    "name": "Shakoor, Shakir",
+    "aname": "",
+    "root": "$kr",
+    "nouns": "$ukorN",
+    "opps": "",
+    "meaning": "One Who acknowledges",
+    "pg": "78"
+  },
+  "36": {
+    "name": "Al-Aliyy, Al-Mutaal",
+    "aname": "",
+    "root": "ElY",
+    "nouns": "EaliyF",
+    "opps": "",
+    "meaning": "The High. The Most High.",
+    "pg": "80"
+  },
+  "37": {
+    "name": "Al-Hafee",
+    "aname": "",
+    "root": "HfZ",
+    "nouns": "HifaAZapN",
+    "opps": "",
+    "meaning": "The Custodian, The Protector.",
+    "pg": "82"
+  },
+  "38": {
+    "name": "Al-Muqeet",
+    "aname": "Aalomuqiyoto",
+    "root": "qwt",
+    "nouns": "Aaloquwtu",
+    "opps": "",
+    "meaning": "The Controller Provider of raw material. Occurs once in quran 4:85 <BR/>Ref: 41:10.",
+    "pg": "84"
+  },
+  "39": {
+    "name": "Al-Haseeb",
+    "aname": "AaloHasiyobo",
+    "root": "Hsb",
+    "nouns": "HisaAbN HasobN",
+    "opps": "",
+    "meaning": "One who keeps account. One who is sufficient (for help). Occurs <BR/>3 times in Quran. see: 4:86, 2:202, 3:173, 65:3. Ref: 29:2, 24:39, <BR/>3:169, 59:2, 2:212, 6:97, 55:5, 2:284, 2:206, 5:104, 18:40.",
+    "pg": "85"
+  },
+  "40": {
+    "name": "Al-Jaleel",
+    "aname": "",
+    "root": "jll",
+    "nouns": "jlAl",
+    "opps": "",
+    "meaning": "The Glorious",
+    "pg": "87"
+  },
+  "41": {
+    "name": "Al-Kareem, Al-Ikram, Al-Akram",
+    "aname": "",
+    "root": "krm",
+    "nouns": "karomN",
+    "opps": "",
+    "meaning": "The Honorable. The Most Honoured. The Bountiful.",
+    "pg": "88"
+  },
+  "42": {
+    "name": "Ar-Raqeeb",
+    "aname": "",
+    "root": "rqb",
+    "nouns": "rqbpN",
+    "opps": "",
+    "meaning": "The Vigilant.",
+    "pg": "90"
+  },
+  "43": {
+    "name": "Al-Mujeeb",
+    "aname": "",
+    "root": "jwb",
+    "nouns": "jawaAbN",
+    "opps": "",
+    "meaning": "One Who responds.",
+    "pg": "92"
+  },
+  "44": {
+    "name": "Al-Wasi'",
+    "aname": "",
+    "root": "wsE",
+    "nouns": "wasoEata",
+    "opps": "",
+    "meaning": "The Omnipresent, The Ample-giving",
+    "pg": "94"
+  },
+  "45": {
+    "name": "Al-Wadood",
+    "aname": "",
+    "root": "wdd",
+    "nouns": "mawad~apN",
+    "opps": "",
+    "meaning": "The Loving",
+    "pg": "96"
+  },
+  "46": {
+    "name": "Al-Majid, Al-Majeed",
+    "aname": "",
+    "root": "mjd",
+    "nouns": "majodN",
+    "opps": "",
+    "meaning": "The Glorious. Possessor of Glory.",
+    "pg": "98"
+  },
+  "47": {
+    "name": "Al-Bais",
+    "aname": "AalobaAEivo",
+    "root": "bEv",
+    "nouns": "baEov",
+    "opps": "",
+    "meaning": "One who raises. only in hadees. <BR/>ref: 4:35, 2:213, 17:79, 6:60, 22:7, 30:56.",
+    "pg": "99"
+  },
+  "48": {
+    "name": "Al-Shaheed",
+    "aname": "",
+    "root": "$hd",
+    "nouns": "$ahaAdapN",
+    "opps": "",
+    "meaning": "The Witness",
+    "pg": "100"
+  },
+  "49": {
+    "name": "Al-Haq",
+    "aname": "",
+    "root": "Hqq",
+    "nouns": "HaqiyoqapN",
+    "opps": "",
+    "meaning": "The Reality",
+    "pg": "101"
+  },
+  "50": {
+    "name": "Al-Wakeel",
+    "aname": "",
+    "root": "wkl",
+    "nouns": "tawak~al",
+    "opps": "",
+    "meaning": "The Trustee (One Who is trusted)",
+    "pg": "104"
+  },
+  "51": {
+    "name": "Al-Qawi",
+    "aname": "",
+    "root": "qwY",
+    "nouns": "quw~apN",
+    "opps": "",
+    "meaning": "The Strong",
+    "pg": "106"
+  },
+  "52": {
+    "name": "Al-Mateen",
+    "aname": "",
+    "root": "mtn",
+    "nouns": "mataAnat",
+    "opps": "",
+    "meaning": "One Who is firm.",
+    "pg": "108"
+  },
+  "53": {
+    "name": "Al-Wali, Al-Waali, Waal",
+    "aname": "",
+    "root": "wlY",
+    "nouns": "wilaAyap",
+    "opps": "",
+    "meaning": "(The Guardian)",
+    "pg": "109"
+  },
+  "54": {
+    "name": "Al-Hameed",
+    "aname": "",
+    "root": "Hmd",
+    "nouns": "HamodN",
+    "opps": "",
+    "meaning": "(The Praised, Worthy of all praise)",
+    "pg": "112"
+  },
+  "55": {
     "name": "Al-MuhSiy",
     "aname": "AalomuHoSiYo",
     "root": "HSY",
@@ -152,7 +491,7 @@
     "meaning": "One who computes and preserves. Only in hadees. <BR/>Ref: 14:34, 36:12, 18:12. related: 72:28. opposite: 58:6.",
     "pg": "115"
   },
-  "17": {
+  "56": {
     "name": "Al-Mubdi",
     "aname": "AalomubodiYo",
     "root": "bdA",
@@ -161,7 +500,7 @@
     "meaning": "One who begins or starts. Only in hadees. <BR/>Ref: 21:104, 32:7, 12:76.",
     "pg": "117"
   },
-  "18": {
+  "57": {
     "name": "Al-Mueed",
     "aname": "AalomuEiyod",
     "root": "Ewd",
@@ -170,7 +509,7 @@
     "meaning": "One who gets things reproduced. Only in hadees. <BR/>Ref: 17:69, 20:21, 36:39. related: 10:4. opposite: 2:275.",
     "pg": "118"
   },
-  "19": {
+  "58": {
     "name": "Al-MuHyi, Al-Hayy",
     "aname": "AalomuHoyiYo AaloHaY~",
     "root": "HYY",
@@ -179,126 +518,400 @@
     "meaning": "The Giver of life. The Living. See details under Al-Mumeet pg 120. <BR/>Occurs 2 times and 5 times respectively.",
     "pg": "119"
   },
-  "20": {
-    "name": "Al-Muqeet",
-    "aname": "Aalomuqiyoto",
-    "root": "qwt",
-    "nouns": "Aaloquwtu",
+  "59": {
+    "name": "Al-Mumeet",
+    "aname": "",
+    "root": "mwt",
+    "nouns": "mawtN",
     "opps": "",
-    "meaning": "The Controller Provider of raw material. Occurs once in quran 4:85 <BR/>Ref: 41:10.",
-    "pg": "84"
+    "meaning": "(One Who causes death)",
+    "pg": "120"
   },
-  "21": {
-    "name": "Al-Haseeb",
-    "aname": "AaloHasiyobo",
-    "root": "Hsb",
-    "nouns": "HisaAbN HasobN",
+  "60": {
+    "name": "Al-Qayyum, Al-Qaayam",
+    "aname": "",
+    "root": "qwm",
+    "nouns": "qAympN qiyAmat",
     "opps": "",
-    "meaning": "One who keeps account. One who is sufficient (for help). Occurs <BR/>3 times in Quran. see: 4:86, 2:202, 3:173, 65:3. Ref: 29:2, 24:39, <BR/>3:169, 59:2, 2:212, 6:97, 55:5, 2:284, 2:206, 5:104, 18:40.",
-    "pg": "85"
+    "meaning": "(The Eternally Existing) (One WHo is established).",
+    "pg": "123"
   },
-  "22": {
-    "name": "Al-Bais",
-    "aname": "AalobaAEivo",
-    "root": "bEv",
-    "nouns": "baEov",
+  "61": {
+    "name": "Al-Wajid",
+    "aname": "",
+    "root": "wjd",
+    "nouns": "wajuwd",
     "opps": "",
-    "meaning": "One who raises. only in hadees. <BR/>ref: 4:35, 2:213, 17:79, 6:60, 22:7, 30:56.",
-    "pg": "99"
-  }
-}
-    "opps": "",
-    "meaning": "One who begins or starts. Only in hadees. <BR/>Ref: 21:104, 32:7, 12:76.",
-    "pg": "117"
+    "meaning": "One Who finds.",
+    "pg": "126"
   },
-  "3": {
-    "name": "Al-Mueed",
-    "aname": "AalomuEiyod",
-    "root": "Ewd",
-    "nouns": "EaAdN Eawdap",
-    "opps": "fa{ntahaY`",
-    "meaning": "One who gets things reproduced. Only in hadees. <BR/>Ref: 17:69, 20:21, 36:39. related: 10:4. opposite: 2:275.",
-    "pg": "118"
-  },
-  "4": {
-    "name": "Al-MuHyi Al-Hayy",
-    "aname": "AalomuHoyiYo AaloHaY~",
-    "root": "HYY",
-    "nouns": "HayaAp",
+  "62": {
+    "name": "Al-Wahid",
+    "aname": "",
+    "root": "wHd",
+    "nouns": "waHodaAniyap",
     "opps": "",
-    "meaning": "The Giver of life. The Living. See details under Al-Mumeet pg 120. <BR/>Occurs 2 times and 5 times respectively.",
-    "pg": "119"
+    "meaning": "[The One, The Only (God)]",
+    "pg": "127"
   },
-  "5": {
-    "name": "Al-Muqeet",
-    "aname": "Aalomuqiyoto",
-    "root": "qwt",
-    "nouns": "Aaloquwtu",
+  "63": {
+    "name": "Al-AHad",
+    "aname": "",
+    "root": "AHd",
+    "nouns": "AaHadiyp",
     "opps": "",
-    "meaning": "The Controller Provider of raw material. Occurs once in quran 4:85 <BR/>Ref: 41:10.",
-    "pg": "84"
+    "meaning": "The Unique",
+    "pg": "129"
   },
-  "6": {
-    "name": "Al-Haseeb",
-    "aname": "AaloHasiyobo",
-    "root": "Hsb",
-    "nouns": "HisaAbN HasobN",
+  "64": {
+    "name": "As-Samad",
+    "aname": "",
+    "root": "Smd",
+    "nouns": "",
     "opps": "",
-    "meaning": "One who keeps account. One who is sufficient (for help). Occurs <BR/>3 times in Quran. see: 4:86, 2:202, 3:173, 65:3. Ref: 29:2, 24:39, <BR/>3:169, 59:2, 2:212, 6:97, 55:5, 2:284, 2:206, 5:104, 18:40.",
-    "pg": "85"
+    "meaning": "One on Whom all depend.",
+    "pg": "130"
   },
-  "7": {
-    "name": "Al-Bais",
-    "aname": "AalobaAEivo",
-    "root": "bEv",
-    "nouns": "baEov",
+  "65": {
+    "name": "Al-Qadir, Al-Muqtadir, Al-Qadeer",
+    "aname": "",
+    "root": "qdr",
+    "nouns": "taqodiyrN qdrpN",
     "opps": "",
-    "meaning": "One who raises. only in hadees. <BR/>ref: 4:35, 2:213, 17:79, 6:60, 22:7, 30:56.",
-    "pg": "99"
+    "meaning": "(One Who is capable) (The Holder of power) (The Possessor of power)",
+    "pg": "131"
   },
-  "8": {
-    "name": "Al-Khaliq Al-Khallaq",
-    "aname": "AaloxaAliqo Aaloxal~aAqo",
-    "root": "xlq",
-    "nouns": "xiloqt",
+  "66": {
+    "name": "Al-Muqaddim",
+    "aname": "",
+    "root": "qdm",
+    "nouns": "qdmFA qdym qdmFA",
     "opps": "",
-    "meaning": "The Creator. The Great Creator. occurs 7x and 2x times. <BR/> ref: 24:45, 25:54, 55:14-15, 16:4, 39:6, 3:49, 22:5. 29:17, 21:37, 68:4, 26:137, 23:17. 2:102.  <BR/>related: 59:24, 7:54. opposites: 36:68 30:40. <BR/>See also 28:68, 6:102, 10:4, 67:3-4.",
-    "pg": "36"
+    "meaning": "[One Who advances (prepones as opposed to postpone)]",
+    "pg": "135"
   },
-  "9": {
-    "name": "Al-Bari",
-    "aname": "AalobaAri}",
-    "root": "brA",
-    "nouns": "baraApN",
+  "67": {
+    "name": "Al-Muakhir, Al-Aakhir",
+    "aname": "",
+    "root": "Axr",
+    "nouns": "Aaxirt",
     "opps": "",
-    "meaning": "The Purifier. Occurs once in quran: 59:24. <BR/>Ref: 9:114, 6:19. related attributes: 59:24.",
-    "pg": "39"
+    "meaning": "(One Who postpones) (The Last)",
+    "pg": "137"
   },
-  "10": {
-    "name": "Al-MuSawwir",
-    "aname": "AalomuSaw~iro",
-    "root": "Swr",
-    "nouns": "SuworapN",
+  "68": {
+    "name": "Al-Awwal",
+    "aname": "",
+    "root": "Awl",
+    "nouns": "Aw~al",
     "opps": "",
-    "meaning": "The Fashioner. Occurs once in quran: 59:24. <BR/>Ref: 40:64, 69:13-17. related attributes: 59:24.",
-    "pg": "40"
+    "meaning": "The First.",
+    "pg": "139"
   },
-  "11": {
-    "name": "Al-Mumin",
-    "aname": "Aalomu&omino",
-    "root": "Amn",
-    "nouns": "AamaAnapN AamonN AiyomaAnN",
+  "69": {
+    "name": "Az-Zahir",
+    "aname": "",
+    "root": "Zhr",
+    "nouns": "Zhr AiZhaAr ZahirN",
     "opps": "",
-    "meaning": "Granter of security. Occurs once in quran: 59:23. <BR/>Ref: 2:239, 4:91, 7:97, 12:11, 2:283, 2:260, 2:177, 26:107. <BR/>related: 33:22, 4:147, 10:84, 2:103, 6:48, 19:60, 2:137, 3:200, 13:28, 19:96, 57:12, 58:22, 48:4. opposite: 40:12, 57:13, 38:28, 3:110, 2:13, 63:3, 106:4, 40:58, 61:2, 83:29, 6:12, 29:67, 29:67, 3:154, 3:154, 6:83, 10:99.",
-    "pg": "25"
+    "meaning": "[The Evident (The Outer Most)]",
+    "pg": "141"
   },
-  "12": {
-    "name": "Al-Muhaimin",
-    "aname": "Aalomuhayomino",
-    "root": "hymn",
-    "nouns": "hayomanap",
+  "70": {
+    "name": "Al-Batin",
+    "aname": "",
+    "root": "bTn",
+    "nouns": "baTonN",
     "opps": "",
-    "meaning": "The Guardian. Occurs once in quran: 59:23. <BR/>Ref: 5:48.",
-    "pg": "29"
+    "meaning": "[The Hidden (The Inner Most)]",
+    "pg": "143"
+  },
+  "71": {
+    "name": "Al-Barr",
+    "aname": "",
+    "root": "brr",
+    "nouns": "bar~N",
+    "opps": "",
+    "meaning": "The Kind.",
+    "pg": "145"
+  },
+  "72": {
+    "name": "At-Tawwab",
+    "aname": "",
+    "root": "twb",
+    "nouns": "tawobap",
+    "opps": "",
+    "meaning": "The Acceptor of repentance",
+    "pg": "148"
+  },
+  "73": {
+    "name": "Al-Muntaqim",
+    "aname": "",
+    "root": "nqm",
+    "nouns": "AinotiqaAm",
+    "opps": "",
+    "meaning": "One who inflicts retribution",
+    "pg": "151"
+  },
+  "74": {
+    "name": "Al-Afuww",
+    "aname": "",
+    "root": "Efw",
+    "nouns": "Eafown",
+    "opps": "",
+    "meaning": "One Who pardons",
+    "pg": "152"
+  },
+  "75": {
+    "name": "Ar-Raoof",
+    "aname": "",
+    "root": "rAf",
+    "nouns": "raAofapN",
+    "opps": "",
+    "meaning": "One full of pity for others.",
+    "pg": "154"
+  },
+  "76": {
+    "name": "Malik ul Mulk, refer pg18",
+    "aname": "",
+    "root": "aaa",
+    "nouns": "",
+    "opps": "",
+    "meaning": "The Owner, Master and The only King of the Kingdom of the universe.",
+    "pg": "156"
+  },
+  "77": {
+    "name": "Zul Jalali Wal Ikram, refer pg 87, 88",
+    "aname": "",
+    "root": "aaa",
+    "nouns": "",
+    "opps": "",
+    "meaning": "Possessor of glory, honour and bounty",
+    "pg": "156"
+  },
+  "78": {
+    "name": "Al-MuqsiT",
+    "aname": "",
+    "root": "qsT",
+    "nouns": "qisoTN",
+    "opps": "",
+    "meaning": "One Who executes justice. mentioned only in hadees. <BR/> Ref: 5.42, 49:9, 17:35. related: 10:54.",
+    "pg": "156"
+  },
+  "79": {
+    "name": "Al-Jaami",
+    "aname": "",
+    "root": "jmE",
+    "nouns": "jamoEN",
+    "opps": "",
+    "meaning": "One Who has the power to bring together.",
+    "pg": "158"
+  },
+  "80": {
+    "name": "Al-Ghani, Al-Mughni",
+    "aname": "",
+    "root": "gnY",
+    "nouns": "ginoYN",
+    "opps": "",
+    "meaning": "The Independent. One who makes independent.",
+    "pg": "160"
+  },
+  "81": {
+    "name": "Al-Maaney",
+    "aname": "",
+    "root": "mnE",
+    "nouns": "mumaAnEat",
+    "opps": "",
+    "meaning": "One who is capable of forbidding",
+    "pg": "162"
+  },
+  "82": {
+    "name": "Al-Daar",
+    "aname": "",
+    "root": "Drr",
+    "nouns": "DararN",
+    "opps": "",
+    "meaning": "One Who is capable of harming.",
+    "pg": "163"
+  },
+  "83": {
+    "name": "An-Naafey",
+    "aname": "",
+    "root": "nfE",
+    "nouns": "nafaE",
+    "opps": "",
+    "meaning": "One who is capable of benefitting.",
+    "pg": "164"
+  },
+  "84": {
+    "name": "An-Noor",
+    "aname": "",
+    "root": "nwr",
+    "nouns": "nuwrN",
+    "opps": "",
+    "meaning": "The Light",
+    "pg": "165"
+  },
+  "85": {
+    "name": "Al-Hadi",
+    "aname": "",
+    "root": "hdY",
+    "nouns": "hud`Y",
+    "opps": "",
+    "meaning": "The Guide",
+    "pg": "168"
+  },
+  "86": {
+    "name": "Al-Badi",
+    "aname": "",
+    "root": "bdE",
+    "nouns": "bidoEata",
+    "opps": "",
+    "meaning": "The originator",
+    "pg": "171"
+  },
+  "87": {
+    "name": "Al-Baqi",
+    "aname": "",
+    "root": "bqY",
+    "nouns": "baAqK",
+    "opps": "",
+    "meaning": "One Who remains for ever",
+    "pg": "172"
+  },
+  "88": {
+    "name": "Al-Waris",
+    "aname": "",
+    "root": "wrv",
+    "nouns": "wiraAvto",
+    "opps": "",
+    "meaning": "One Who inherits everything.",
+    "pg": "173"
+  },
+  "89": {
+    "name": "Ar-Rasheed",
+    "aname": "",
+    "root": "r$d",
+    "nouns": "ru$d",
+    "opps": "",
+    "meaning": "One Who guides to the right way",
+    "pg": "174"
+  },
+  "90": {
+    "name": "As-Sabur",
+    "aname": "",
+    "root": "Sbr",
+    "nouns": "Sabor",
+    "opps": "",
+    "meaning": "One Who is patient",
+    "pg": "175"
+  },
+  "91": {
+    "name": "",
+    "aname": "",
+    "root": "aaa",
+    "nouns": "",
+    "opps": "",
+    "meaning": "",
+    "pg": "41"
+  },
+  "92": {
+    "name": "Al-Mannan",
+    "aname": "",
+    "root": "aaa",
+    "nouns": "",
+    "opps": "",
+    "meaning": "One Who obliges",
+    "pg": "177"
+  },
+  "93": {
+    "name": "Al-Musta'an",
+    "aname": "",
+    "root": "aaa",
+    "nouns": "",
+    "opps": "",
+    "meaning": "One Whose help is sought",
+    "pg": "177"
+  },
+  "94": {
+    "name": "Al-Fatir",
+    "aname": "",
+    "root": "aaa",
+    "nouns": "",
+    "opps": "",
+    "meaning": "Initiator of creation, Assigner of inherent character",
+    "pg": "41"
+  },
+  "95": {
+    "name": "Al-Hafiy",
+    "aname": "",
+    "root": "aaa",
+    "nouns": "",
+    "opps": "",
+    "meaning": "One Who is constantly and intensely gracious",
+    "pg": "41"
+  },
+  "96": {
+    "name": "Al-Mubeen",
+    "aname": "",
+    "root": "aaa",
+    "nouns": "",
+    "opps": "",
+    "meaning": "One who is manifest",
+    "pg": "41"
+  },
+  "97": {
+    "name": "Al-Kafil",
+    "aname": "",
+    "root": "aaa",
+    "nouns": "",
+    "opps": "",
+    "meaning": "The Surety",
+    "pg": "41"
+  },
+  "98": {
+    "name": "Al-Ghalib",
+    "aname": "",
+    "root": "aaa",
+    "nouns": "",
+    "opps": "",
+    "meaning": "The dominating",
+    "pg": "41"
+  },
+  "99": {
+    "name": "Al-Kafi",
+    "aname": "",
+    "root": "",
+    "nouns": "aaa",
+    "opps": "",
+    "meaning": "One Who is sufficient",
+    "pg": "41"
+  },
+  "100": {
+    "name": "Al-Muheet",
+    "aname": "",
+    "root": "HwT",
+    "nouns": "AiHaATapN",
+    "opps": "",
+    "meaning": "One who encompasses",
+    "pg": "188"
+  },
+  "101": {
+    "name": "An-Naseer",
+    "aname": "",
+    "root": "nSr",
+    "nouns": "nuSorat",
+    "opps": "",
+    "meaning": "The Helper",
+    "pg": "189"
+  },
+  "102": {
+    "name": "Al-Qareeb",
+    "aname": "",
+    "root": "qrb",
+    "nouns": "qurob",
+    "opps": "",
+    "meaning": "One who is nearest (with respect to space as well as time)",
+    "pg": "190"
   }
 }
