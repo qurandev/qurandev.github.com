@@ -82,7 +82,7 @@
 <body>
 <span><b>Near Synonyms in Quran - Mutaradafat-ul-Quran</b> <BR/>
 	<SPAN style="text-align:center; valign:center;"><A ID=top HREF=#book><IMG SRC='static/images/mutaradifat.jpg' /></A>
-	<A HREF=https://docs.google.com/open?id=0B_jmuLljB7qEaUVRVW92WWlRWFdfcTFBcmlpQVQ1Zw TARGET=_>Download</A>	
+	<A HREF=http://www.scribd.com/doc/82681420/Mutaradifatul-Quran TARGET=_>Download</A>	
 	<!--
 	<A HREF=https://docs.google.com/open?id=0B_jmuLljB7qEMG5EWEt4QS1ST0s4U05Xc3lkYjhoUQ TARGET=_>1</A> 
 	<A HREF=https://docs.google.com/open?id=0B_jmuLljB7qEQ0V0WWd0blRSX3UwUTJ1SFFZdjM1Zw TARGET=_>2</A>
@@ -149,19 +149,19 @@ var page = function(verseno){
 	src = "http://www.scribd.com/embeds/82681420/content?start_page=$1&view_mode=list&access_key=key-6w25dij9keuw0vv8keu&secret_password=2152gm9f7r5guird0e4x";
 	var map = {'1': '138', '2': '256', '3': '396', '4': '890'};
 	var pageno = map[ verseno ]; //debugger;
-	src = src.replace(/\$1/, (18+parseInt(pageno) ) );
-	$(obj).attr('src', src);
+	//src = src.replace(/\$1/, (18+parseInt(pageno) ) );
+	//$(obj).attr('src', src);
+	setPage((18+parseInt(pageno) ));
 	document.location.href = '#book';
 }
     $(function() {
-
-	$('#verse_6222').click( function(){ page(1) } );
-	
-	$('#verse_6223').click( function(){ page(2); } );
-	
-	$('#verse_6224').click( function(){ page(3); } );
-	
-	$('#verse_6225').click( function(){ page(4); } );
+		$('#verse_6222').click( function(){ page(1) } );
+		
+		$('#verse_6223').click( function(){ page(2); } );
+		
+		$('#verse_6224').click( function(){ page(3); } );
+		
+		$('#verse_6225').click( function(){ page(4); } );
     })
 	
 
@@ -172,20 +172,27 @@ var page = function(verseno){
 
 <div id='embedded_doc'><a href="http://www.scribd.com">Scribd</a></div>
 <script type="text/javascript">
-  var scribd_doc = scribd.Document.getDoc(82681420, 'key-6w25dij9keuw0vv8keu'); //(2659, 'key-6vhdaqehjkeob'); 
+  var url = 'http://abdurrahman.org/tawheed/asmawasifat/Names-of-Allah-with-Evidences.pdf';
+  url = 'http://samplepdf.com/sample.pdf';
+  var scribd_doc = scribd.Document.getDoc(//url, 'pub-29863482405429045887'); //
+											82681420, 'key-6w25dij9keuw0vv8keu'); //(2659, 'key-6vhdaqehjkeob'); 
   //password 2152gm9f7r5guird0e4x
 
   var onDocReady = function(e){
-	alert('document pdf ready');
-    scribd_doc.api.setPage(256);
+	//alert('document pdf ready');
+    scribd_doc.api.setPage(274); 
   }
 
-  scribd_doc.addParam('jsapi_version', 2);
+  var setPage = function(pg){
+	scribd_doc.api.setPage(pg);
+  }
+  
+  scribd_doc.addParam('jsapi_version', 1);
   scribd_doc.addEventListener('docReady', onDocReady);
   //scribd_doc.write('embedded_doc');
 
       // Parameters
-      scribd_doc.addParam('height', 420);
+      scribd_doc.addParam('height', 785);
       scribd_doc.addParam('width', 530);
       scribd_doc.addParam('auto_size', true);
       scribd_doc.addParam('mode', 'list');
@@ -196,14 +203,17 @@ var page = function(verseno){
       //scribd_doc.addEventListener('pageChanged', onPageChanged);
 
       // Write the instance
-      //scribd_doc.write('embedded_doc');
+      scribd_doc.write('embedded_doc');
 	  </script>
 <!--
 <a title="View Mutaradifatul Quran on Scribd" href="http://www.scribd.com/doc/82681420/Mutaradifatul-Quran?secret_password=2152gm9f7r5guird0e4x" style="margin: 12px auto 6px auto; font-family: Helvetica,Arial,Sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 14px; line-height: normal; font-size-adjust: none; font-stretch: normal; -x-system-font: none; display: block; text-decoration: underline;">Mutaradifatul Quran</a>-->
 
 
-<iframe class="scribd_iframe_embed" src="http://www.scribd.com/embeds/82681420/content?start_page=274&view_mode=list&access_key=key-6w25dij9keuw0vv8keu&secret_password=2152gm9f7r5guird0e4x" data-auto-height="false" data-aspect-ratio="0.575729068673565" scrolling="no" id="doc_34390" width="500" height="785" frameborder="0"></iframe>
+
+
 <!--
+<iframe class="scribd_iframe_embed" src="http://www.scribd.com/embeds/82681420/content?start_page=274&view_mode=list&access_key=key-6w25dij9keuw0vv8keu&secret_password=2152gm9f7r5guird0e4x" data-auto-height="false" data-aspect-ratio="0.575729068673565" scrolling="no" id="doc_34390" width="500" height="785" frameborder="0"></iframe>
+
 
 <iframe class="scribd_iframe_embed" src="http://www.scribd.com/embeds/82679917/content?start_page=11&view_mode=list&access_key=key-1yfz5zp9lm2rnzzzd2bu" data-auto-height="false" data-aspect-ratio="1.09343434343434" scrolling="no" id="doc_88766" width="100%" height="600" frameborder="0"></iframe><script type="text/javascript">(function() { var scribd = document.createElement("script"); scribd.type = "text/javascript"; scribd.async = true; scribd.src = "http://www.scribd.com/javascripts/embed_code/inject.js"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(scribd, s); })();</script>
 
