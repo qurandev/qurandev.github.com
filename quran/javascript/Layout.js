@@ -1104,7 +1104,17 @@ var layout = {
 			layout.ayahChanged();
 			return false;
 		});
-		
+
+		$('.ayahNumber').live('dblclick', function() {
+			var obj, verseno, surahno, ayahno, URL = 'http://textminingthequran.com/cgi/sim-phrase.cgi?s=$SURAH&v=$AYAH&p=50';
+			verseno = $(this).attr('data-verse');
+			obj = Quran.ayah.fromVerse( verseno );
+			surahno = obj.surah; ayahno = obj.ayah; 
+			URL = URL.replace(/\$SURAH/, surahno).replace(/\$AYAH/, ayahno );
+			window.open(URL, '_blank'); //alert(URL);
+		});
+		//$('.ayahNumber').each( function(){ console.log( $(this).attr('data-verse') )  } );
+	
 		$('.prevAyah').live('click', function() {
 			$('body').trigger('prevAyah');
 			return false;
