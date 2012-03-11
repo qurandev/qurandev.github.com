@@ -153,7 +153,8 @@
 			temp1 = '<span class="r1">' +tempValue[0]+ '</span>-<span class="r2">' +tempValue[1]+ '</span>-<span class="r3">'+tempValue[2]+ '</span>';
 			if(tempValue.length >= 4 && tempValue[3]) tempValue = temp1 + '-<span class=r4>' + tempValue[3] + '</span>';
 			else tempValue = temp1;
-			var URL = 'http://corpus.quran.com/search.jsp?q=ROOT:';
+			var URL = 'http://corpus.quran.com/search.jsp?q=ROOT:'; //search by Root
+			URL = 'http://corpus.quran.com/qurandictionary.jsp?q='; //quran dictionary
 			tempValue = '<A HREF="'+ URL + value + '" target=_ >' + tempValue + '</A>';
 			return "<span class='arr3' title='" + value + "' >" + tempValue +'</span><span style="display: none; font-size:0.8em;" class="small">&nbsp;&nbsp;'+ value + "</span>";
 		}
