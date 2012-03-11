@@ -144,22 +144,26 @@
 
 	
 	var arabicRootsFormatter = function(row, cell, value, columnDef, dataContext) {
-		if (value == null || value === "")
+		if (value == null || $.trim(value) == "" )
 			return "-";
 		else {
+			value = $.trim( value );
 			var tempValue = EnToAr(unescape(value)), temp1='';
 			if(!tempValue) return "-";
 			temp1 = '<span class="r1">' +tempValue[0]+ '</span>-<span class="r2">' +tempValue[1]+ '</span>-<span class="r3">'+tempValue[2]+ '</span>';
 			if(tempValue.length >= 4 && tempValue[3]) tempValue = temp1 + '-<span class=r4>' + tempValue[3] + '</span>';
 			else tempValue = temp1;
+			var URL = 'http://corpus.quran.com/search.jsp?q=ROOT:';
+			tempValue = '<A HREF="'+ URL + value + '" target=_ >' + tempValue + '</A>';
 			return "<span class='arr3' title='" + value + "' >" + tempValue +'</span><span style="display: none; font-size:0.8em;" class="small">&nbsp;&nbsp;'+ value + "</span>";
 		}
 	}
 
 	var arabicLemsFormatter = function(row, cell, value, columnDef, dataContext) {
-		if (value == null || value === "")
+		if (value == null || $.trim(value) == "")
 			return "-";
 		else {
+			value = $.trim( value );
 			var tempValue;
 			tempValue = value.replace("LEM:", "");
 			tempValue = EnToAr(unescape(tempValue));
@@ -176,7 +180,8 @@
 	}
 	
 	var qPageFormatter = function(row, cell, value, columnDef, dataContext){
-		if (!value) return "-"; //row=rowNo, cell=cellNo, dataContext has all the row data
+		if (!value || $.trim(value) == '') return "-"; //row=rowNo, cell=cellNo, dataContext has all the row data
+		value = $.trim( value );
 		var pg = value;
 		if(!parseInt(value) ){ //it maybe Name column... so lookup pgno.
 			pg = dataContext['col7']; console.log(pg); //console.log( dataContext ); debugger;
@@ -186,14 +191,17 @@
 	}
 	
 	var qInfoFormatter = function(row, cell, value, columnDef, dataContext){  //(value, val2) {//return "wait...";
-		if (!value) return "-"; //row=rowNo, cell=cellNo, dataContext has all the row data
+		if (!value || $.trim(value) == '') return "-"; //row=rowNo, cell=cellNo, dataContext has all the row data
 		//whichever token is like 59:24, then linkify it
+		value = $.trim( value );
 		var tokens = value.split(' ');
 		for(var k=0; k<tokens.length; ++k){
 			if(!tokens[k] || tokens[k].indexOf(':') == -1 || !parseInt(tokens[k]) ) continue;
 			if(tokens[k].indexOf(':') == 0 || tokens[k].indexOf(':') == (-1+tokens[k].length) ) continue; //discount the first and last char.
 			var parts = tokens[k].split(':');
-			var url = 'http://beta.quran.com/' + parseInt(parts[0]) +'/'+ parseInt(parts[1]);
+			if(parts[1].indexOf('-') != -1){ parts[1] = parseInt( parts[1].split('-')[0] ) + '-' + parseInt( parts[1].split('-')[1] ); } //for multi verse references.
+			else{ parts[1] = parseInt( parts[1] ); } //strip out any .'s or other stray chars.
+			var url = 'http://beta.quran.com/' + parseInt(parts[0]) +'/'+ /*parseInt*/(parts[1]);
 			var html = '<a href=' + url + ' target=_>'+ tokens[k] + '</a>';
 			tokens[k] = html;
 		}
@@ -390,7 +398,7 @@
 			
 			"Al-Mumin;		Aalomu&omino;		Amn;		AamaAnapN AamonN AiyomaAnN;	;		Granter of security. Occurs once in quran: 59:23. <BR/>Ref: 2:239, 4:91, 7:97, 12:11, 2:283, 2:260, 2:177, 26:107. <BR/>related: 33:22, 4:147, 10:84, 2:103, 6:48, 19:60, 2:137, 3:200, 13:28, 19:96, 57:12, 58:22, 48:4. opposite: 40:12, 57:13, 38:28, 3:110, 2:13, 63:3, 106:4, 40:58, 61:2, 83:29, 6:12, 29:67, 29:67, 3:154, 3:154, 6:83, 10:99.; 25; ",
 
-			"Al-Muhaimin;	Aalomuhayomino;		hymn;		hayomanap;			;				The Guardian. Occurs once in quran: 59:23. <BR/>Ref: 5:48.; 29; 100",
+			"Al-Muhaymin;	Aalomuhayomino;		hmn;		hayomanap;			;				The Guardian. Occurs once in quran: 59:23. <BR/>Ref: 5:48.; 29; 100",
 			
 			"Al-Aziz, Al-Muez; AloEaziyoz AlomuEizo; 		Ezz;		AaloEiz~ap;			;	The Mighty. The Grantor of Might. Occurs 89 times in quran. <BR/>Ref: 2:206, 4:139, 36:14, 38:23.<BR/> related: 26:9, 2:129, 6:96, 11:66, 3:4, 14:1, 38:9, 54:42, 35:28, 38:66, 59:22-24. opposites: 63:8, 3:26. summary: 48:7.; 30; ",
 			
@@ -406,7 +414,7 @@
 			
 			"Al-Hakeem, Al-Hakam;	AloHakiymo AloHakamo;	Hkm;	HukomN HikomapN;	;		The Wise. The Judge. Occurs in quran 92 times and mentioned only in hadees. <BR/>Ref: 5:42, 5:1, 13:41, 17:125, 38:20, 22:52. <BR/>related: 2:32, 2:129, 6:18, 24:10, 41:42, 42:51. opposite: 3:7. Summary: 17:125, 5:42, 13:41, 22:52.; 67; 5;",
 
-			"; ; aaa;",
+			"; ; ;",
 			
 			"Al-Ghaffar, Al-Ghafoor; Alogaf~Aro Alogafuwro; gfr; magofiratN; ; The Protectively Forgiving. Occurs 5x and 91x times. <BR/>Ref: 7:23, 57:20, 48:1-2. <BR/>related: 2:173, 2:225, 22:60, 34:15, 35:28, 35:30, 85:14, 38:66. <BR/>opposites: 2:284, 6:166.; 41; 10",
 			"Al-Qahhaar; Aloqah~aAro; qhr; qahrN; ; Omnipotent. occurs 6 times in quran. <BR/>Ref: 93:9, 7:127. <BR/>related w waaHid. <BR/>summary: 40:16; 44; 10",
@@ -473,8 +481,8 @@
 			"Al-Afuww; ; Efw; Eafown; ; One Who pardons; 152; 10",
 			"Ar-Raoof; ; rAf; raAofapN; ; One full of pity for others.; 154; 10",
 
-			"Malik ul Mulk, refer pg18; ; aaa; ; ; The Owner, Master and The only King of the Kingdom of the universe.; 156; 10",
-			"Zul Jalali Wal Ikram, refer pg 87, 88; ; aaa; ; ; Possessor of glory, honour and bounty; 156; 10",
+			"Malik ul Mulk, refer pg18; ; ; ; ; The Owner, Master and The only King of the Kingdom of the universe.; 156; 10",
+			"Zul Jalali Wal Ikram, refer pg 87, 88; ; ; ; ; Possessor of glory, honour and bounty; 156; 10",
 			"Al-MuqsiT; ; qsT; qisoTN; ; One Who executes justice. mentioned only in hadees. <BR/> Ref: 5.42, 49:9, 17:35. related: 10:54.; 156; 10",
 			"Al-Jaami; ; jmE; jamoEN; ; One Who has the power to bring together.; 158; 10",
 			"Al-Ghani, Al-Mughni; ; gnY; ginoYN; ; The Independent. One who makes independent.; 160; 10",
@@ -489,15 +497,15 @@
 			"Ar-Rasheed; ; r$d; ru$d; ; One Who guides to the right way; 174; 10",
 			"As-Sabur; ; Sbr; Sabor; ; One Who is patient; 175; 10",
 
-			"; ; aaa; ; ; ; 41; 10",
-			"Al-Mannan; ; aaa; ; ; One Who obliges; 177; 10",
-			"Al-Musta'an; ; aaa; ; ; One Whose help is sought; 177; 10",
-			"Al-Fatir; ; aaa; ; ;  Initiator of creation, Assigner of inherent character; 41; 10",
-			"Al-Hafiy; ; aaa; ; ; One Who is constantly and intensely gracious; 41; 10",
-			"Al-Mubeen; ; aaa; ; ; One who is manifest; 41; 10",
-			"Al-Kafil; ; aaa; ; ; The Surety; 41; 10",
-			"Al-Ghalib; ; aaa; ; ; The dominating; 41; 10",
-			"Al-Kafi; ; aaa; ; ; One Who is sufficient; 41; 10",
+			"; ; ; ; ; ; 41; 10",
+			"Al-Mannan; ; ; ; ; One Who obliges; 177; 10",
+			"Al-Musta'an; ; ; ; ; One Whose help is sought; 177; 10",
+			"Al-Fatir; ; ; ; ;  Initiator of creation, Assigner of inherent character; 41; 10",
+			"Al-Hafiy; ; ; ; ; One Who is constantly and intensely gracious; 41; 10",
+			"Al-Mubeen; ; ; ; ; One who is manifest; 41; 10",
+			"Al-Kafil; ; ; ; ; The Surety; 41; 10",
+			"Al-Ghalib; ; ; ; ; The dominating; 41; 10",
+			"Al-Kafi; ; ; ; ; One Who is sufficient; 41; 10",
 			"Al-Muheet; ; HwT; AiHaATapN; ; One who encompasses; 188; 10",
 			"An-Naseer; ; nSr; nuSorat; ; The Helper; 189; 10",
 			"Al-Qareeb; ; qrb; qurob; ; One who is nearest (with respect to space as well as time); 190; 10",			
