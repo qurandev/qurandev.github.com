@@ -31,6 +31,24 @@ var CORPUS = {
 		return CORPUS.TemplateLemmaLink.replace(/\$1/, link).replace(/\$2/, linkname?linkname:escape(lemma)).replace(/\$3/, linkprefix?linkprefix:'Lemma: ');
 	},
 	
+	UIgetLemmaCount:	function(lemma, linkname, linkprefix){
+		if(CORPUS._RAWDATAALL == ''){
+			CORPUS._RAWDATAALL = gq.strings.join('\n'); 
+		}
+		var pattern = 'LEM\\:';
+		var regexp = RegExp( pattern + lemma, "g");
+		return CORPUS._RAWDATAALL.match( regexp ).length;
+	},
+	
+	UIgetRootCount:		function(root, linkname, linkprefix){
+		if(CORPUS._RAWDATAALL == ''){
+			CORPUS._RAWDATAALL = gq.strings.join('\n'); 
+		}
+		var pattern = 'ROOT\\:';
+		var regexp = RegExp( pattern + root, "g");
+		return CORPUS._RAWDATAALL.match( regexp ).length;
+	},
+	
 	UIgetPOSLink:		function(pos, linkname, linkprefix){
 		return (linkprefix?linkprefix : '') + pos;
 	},
@@ -46,6 +64,9 @@ var CORPUS = {
 			if(lookup) html += lookup + '&nbsp;&nbsp;';
 			else html += UI_grammarEscapeUIFriendly( item ) + '&nbsp;&nbsp;'; //since it can be SP: w foreign chars.
 		}
+		//if(CORPUS.FEATURES_MAPPING[ features ]){
+		//	html += '<IMG SRC=../plugins/quran-grammar/Images/' + [ features ] + '.gif /><BR/> ';
+		//}
 		html += '<!--&nbsp;('+ UI_grammarEscapeUIFriendly(features) +')-->'; //(linkprefix?linkprefix : 'Features: ') + 
 		return html;
 	},
@@ -73,9 +94,14 @@ var CORPUS = {
 											'<span style=font-size:1.3em; class=POS-'+ corpus.pos + '>'+ CORPUS.UIlookupPOS(corpus.pos) +'</span></li>';
 			if(corpus.features) 	str += '<li>' + CORPUS.UIgetFeaturesLink(corpus.features) + '</li>';
 			str += '<li>';
-			if(corpus.lemma)		str += CORPUS.UIgetLemmaLink(corpus.lemma, EnToAr(corpus.lemma)) + '&nbsp;';
-			if(corpus.root)			str += CORPUS.UIgetRootDecoratedLink(corpus.root, EnToAr(corpus.root)); //If u dont want colored, use UIgetRootLink
+			if(corpus.lemma)		str += CORPUS.UIgetLemmaLink(corpus.lemma, EnToAr(corpus.lemma), 'Dict: ' + CORPUS.UIgetLemmaCount(corpus.lemma) + 'x ') + '&nbsp;';
+			//if(corpus.lemma)		str += '&nbsp;('+ CORPUS.UIgetLemmaCount(corpus.lemma) + ' times)&nbsp;';
+			if(corpus.root)			str += CORPUS.UIgetRootDecoratedLink(corpus.root, EnToAr(corpus.root), 'Root: ' + CORPUS.UIgetRootCount(corpus.root) + 'x ' ) + '&nbsp;'; //If u dont want colored, use UIgetRootLink
+			//if(corpus.root)			str += '&nbsp;('+ CORPUS.UIgetRootCount(corpus.root) + ' times)&nbsp;';
 			if(corpus.misc)			str += '</li><li>' + CORPUS.UIgetMiscLink(corpus.misc);// + CORPUS.UIgetRefLink(ref,'more info');
+			if(corpus.features)
+				if(CORPUS.FEATURES_MAPPING[ corpus.features ])
+									str += '</li><li>' + '<IMG SRC=../plugins/quran-grammar/Images/' + [ corpus.features ] + 'PERF3MS.gif /><BR/> ';
 			str += '</li></ul>';
 		}
 		var obj = {};
@@ -158,6 +184,7 @@ var CORPUS = {
 	CORPUS.LEMMA = 8; CORPUS.ROOT = 9; CORPUS.FORM = 7; CORPUS.PERSONGS = 10; CORPUS.MISC = 0; CORPUS.POS = 2;
 	CORPUS.ACTIVEPASSIVEPCPL = 3; CORPUS.TENSE = 4; CORPUS.PASSIVE = 5; CORPUS.VN = 6;
 	CORPUS._rawdata = CORPUS._rawdataArr = '';
+	CORPUS._RAWDATAALL = '';
 
 
 	CORPUS.parse = function(corpustext){ if(!CORPUS.isInitialized){ CORPUS.init(); } 
