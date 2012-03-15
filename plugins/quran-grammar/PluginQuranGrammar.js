@@ -121,7 +121,7 @@ var CORPUS = {
 			if(corpus.misc)			str += '</li><li>' + CORPUS.UIgetMiscLink(corpus.misc);// + CORPUS.UIgetRefLink(ref,'more info');
 			if(corpus.features)
 				if(CORPUS.FEATURES_MAPPING[ corpus.features ])
-									str += '</li><li>' + '<IMG SRC=../plugins/quran-grammar/Images/' + [ corpus.features ] + 'PERF3MS.gif /><BR/> ';
+									str += '</li><li>' + '<IMG SRC=../plugins/quran-grammar/Images/' + [ corpus.features ] /*+ 'PERF3MS'*/ + '.gif /><BR/> ';
 			str += '</li></ul>';
 		}
 		var obj = {};
