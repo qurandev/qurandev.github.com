@@ -31,23 +31,42 @@ var CORPUS = {
 		return CORPUS.TemplateLemmaLink.replace(/\$1/, link).replace(/\$2/, linkname?linkname:escape(lemma)).replace(/\$3/, linkprefix?linkprefix:'Lemma: ');
 	},
 	
-	UIgetLemmaCount:	function(lemma, linkname, linkprefix){
+	
+	UIgetLemmaCountTillRef: function(lemma, root, gq_verse){
+		var tempstr = '', temparr, pattern = 'LEM\\:', count = 0, message = '', regexp, arr;		
+		if(lemma){
+			temparr = gq.strings.slice(0, gq_verse); 
+			if(temparr) tempstr = temparr.join('\n');
+			regexp = RegExp( pattern + escapeForRegex(lemma), "g");
+			arr = tempstr.match( regexp ); if(arr) count = arr.length;
+			tempstr = ''; tempstr = null;
+			message = count>0 ? '<b>'+count+'</b> occurence' : '<b>First</b> occurrence';	
+			message += ' of <b>' + CORPUS.UIgetLemmaCount(lemma) + 'x</b>. ';
+		}
+		if(root) message  += '<small><b>' + CORPUS.UIgetRootCount(root) + '</b>x as root.</small>';
+		return message;
+	},
+	
+	UIgetLemmaCount:	function(lemma){
 		if(CORPUS._RAWDATAALL == ''){
 			CORPUS._RAWDATAALL = gq.strings.join('\n'); 
 		}
-		var pattern = 'LEM\\:';
+		var pattern = 'LEM\\:', count = '';
 		var regexp = RegExp( pattern + escapeForRegex(lemma), "g");
-		return CORPUS._RAWDATAALL.match( regexp ).length;
+		var arr = CORPUS._RAWDATAALL.match( regexp ); if(arr) count = arr.length;
+		return count;
 	},
 	
 	UIgetRootCount:		function(root, linkname, linkprefix){
 		if(CORPUS._RAWDATAALL == ''){
 			CORPUS._RAWDATAALL = gq.strings.join('\n'); 
 		}
-		var pattern = 'ROOT\\:';
+		var pattern = 'ROOT\\:', count='';
 		var regexp = RegExp( pattern + escapeForRegex(root), "g");
-		return CORPUS._RAWDATAALL.match( regexp ).length;
+		var arr = CORPUS._RAWDATAALL.match( regexp ); if(arr) count = arr.length;
+		return count;
 	},
+	
 	
 	UIgetPOSLink:		function(pos, linkname, linkprefix){
 		return (linkprefix?linkprefix : '') + pos;
@@ -94,9 +113,10 @@ var CORPUS = {
 											'<span style=font-size:1.3em; class=POS-'+ corpus.pos + '>'+ CORPUS.UIlookupPOS(corpus.pos) +'</span></li>';
 			if(corpus.features) 	str += '<li>' + CORPUS.UIgetFeaturesLink(corpus.features) + '</li>';
 			str += '<li>';
-			if(corpus.lemma)		str += CORPUS.UIgetLemmaLink(corpus.lemma, EnToAr(corpus.lemma), 'Dict: ' + CORPUS.UIgetLemmaCount(corpus.lemma) + 'x ') + '&nbsp;';
+			if(corpus.lemma)		str += CORPUS.UIgetLemmaLink(corpus.lemma, EnToAr(corpus.lemma), 'Dict: ') + /*CORPUS.UIgetLemmaCount(corpus.lemma) + 'x ') +*/ '&nbsp;';
 			//if(corpus.lemma)		str += '&nbsp;('+ CORPUS.UIgetLemmaCount(corpus.lemma) + ' times)&nbsp;';
-			if(corpus.root)			str += CORPUS.UIgetRootDecoratedLink(corpus.root, EnToAr(corpus.root), 'Root: ' + CORPUS.UIgetRootCount(corpus.root) + 'x ' ) + '&nbsp;'; //If u dont want colored, use UIgetRootLink
+			if(corpus.root)			str += CORPUS.UIgetRootDecoratedLink(corpus.root, EnToAr(corpus.root), 'Root: ') + /*CORPUS.UIgetRootCount(corpus.root) + 'x ' ) +*/ '&nbsp;'; //If u dont want colored, use UIgetRootLink
+			if(corpus.lemma)		str += '<BR/>' + CORPUS.UIgetLemmaCountTillRef(corpus.lemma, corpus.root, gq.verse() ) + '<BR/>';
 			//if(corpus.root)			str += '&nbsp;('+ CORPUS.UIgetRootCount(corpus.root) + ' times)&nbsp;';
 			if(corpus.misc)			str += '</li><li>' + CORPUS.UIgetMiscLink(corpus.misc);// + CORPUS.UIgetRefLink(ref,'more info');
 			if(corpus.features)
@@ -416,9 +436,9 @@ initializeMapper();
 	var Escape = function(input){ if(!input) return; return input.replace(/\</g, '&lt;').replace(/\>/g, '&gt;'); }
 	var Unescape = function(input){ if(!input) return; return input.replace(/\&lt\;/g, '<').replace(/\&gt\;/g, '>'); }
 
-	var escapeForRegex = function(regex){
+	var escapeForRegex = function(regex){ //^l~
 		if(!regex) return;
-		return regex.replace(/\'/g, '\\\'').replace(/\[/g, '\\\[').replace(/\*/g, '\\\*').replace(/\$/g, '\\\$').replace(/\@/g, '\\\@').replace(/\+/g, '\\\+');
+		return regex.replace(/\'/g, '\\\'').replace(/\^/g, '\\\^').replace(/\~/g, '\\\~').replace(/\[/g, '\\\[').replace(/\*/g, '\\\*').replace(/\$/g, '\\\$').replace(/\@/g, '\\\@').replace(/\+/g, '\\\+');
 	}
 	
 	var escapeMisc = function(input){ var output='';
