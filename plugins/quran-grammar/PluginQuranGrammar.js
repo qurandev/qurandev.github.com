@@ -36,7 +36,7 @@ var CORPUS = {
 			CORPUS._RAWDATAALL = gq.strings.join('\n'); 
 		}
 		var pattern = 'LEM\\:';
-		var regexp = RegExp( pattern + lemma, "g");
+		var regexp = RegExp( pattern + escapeForRegex(lemma), "g");
 		return CORPUS._RAWDATAALL.match( regexp ).length;
 	},
 	
@@ -45,7 +45,7 @@ var CORPUS = {
 			CORPUS._RAWDATAALL = gq.strings.join('\n'); 
 		}
 		var pattern = 'ROOT\\:';
-		var regexp = RegExp( pattern + root, "g");
+		var regexp = RegExp( pattern + escapeForRegex(root), "g");
 		return CORPUS._RAWDATAALL.match( regexp ).length;
 	},
 	
@@ -416,6 +416,11 @@ initializeMapper();
 	var Escape = function(input){ if(!input) return; return input.replace(/\</g, '&lt;').replace(/\>/g, '&gt;'); }
 	var Unescape = function(input){ if(!input) return; return input.replace(/\&lt\;/g, '<').replace(/\&gt\;/g, '>'); }
 
+	var escapeForRegex = function(regex){
+		if(!regex) return;
+		return regex.replace(/\'/g, '\\\'').replace(/\[/g, '\\\[').replace(/\*/g, '\\\*').replace(/\$/g, '\\\$').replace(/\@/g, '\\\@').replace(/\+/g, '\\\+');
+	}
+	
 	var escapeMisc = function(input){ var output='';
 		if(!input) return; output = input.replace(/\</g, '&#171;').replace(/\>/g, '&gt;').replace(/\"/g, '&#9674;');  //&#60; for <. 9668 for left diamond like.
 		if(input.indexOf('<') != -1 || input.indexOf('>') != -1){ console.log(input +'\t\t'+ output ); if(typeof(DEBUG) != 'undefined')debugger; }
