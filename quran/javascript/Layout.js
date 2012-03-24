@@ -159,7 +159,8 @@ var layout = {
 	
 	singleView: function(quranArray)
 	{
-		$(this.quranContent).html('');
+		
+		$(layout.quranContent).html('');
 		$(layout.quranContent).removeClass('list').removeClass('book').removeClass('search').addClass('single');
 		$('#playerNavBox').show();
 		$('#searchInfoBox').hide();
@@ -195,7 +196,8 @@ var layout = {
 			body += '</div><div class="hr"><hr /></div>';
 		});
 		
-		$(this.quranContent).append(head+body);
+		
+		$(layout.quranContent).append(head+body);
 	},
 	
 	bookView: function (quranArray)
@@ -512,14 +514,14 @@ var layout = {
 	
 	searchLoading: function (bool)
 	{
-		if (bool == true)		
+		/*if (bool == true)		
 		{
 			if (gq.search.position() == 0)
 				$(this.quranContent).html('<div id="result" class="loading"><p>searching...</p></div>');
 			else
 				$(this.quranContent).append('<div id="result" class="loading"><p>loading more...</p></div>');
 		} else
-			$('#result').remove();
+			$('#result').remove();*/
 	},
 	
 	_roundNumber: function (number, digits) {
@@ -1438,12 +1440,12 @@ var layout = {
 				case key.end:
 					$('body').trigger('customAyah', [114, 1]);
 				break;
-				case key.space:
+				/*case key.space:
 					if (gq.search.isActive())
 						return;
 					layout.togglePlay();
 					return false;
-				break;
+				break;*/
 				case key.up:
 					if (gq.search.isActive())
 						return;
