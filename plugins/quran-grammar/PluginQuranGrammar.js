@@ -47,6 +47,31 @@ var CORPUS = {
 		return message;
 	},
 	
+	UIgetNearSynonyms: function(lemma){
+		var nearsynonyms = '', synonymFound = false;
+		if(NEAR_SYNONYMS && NEAR_SYNONYMS_METADATA){
+			$.each(NEAR_SYNONYMS, function(lineno, line){
+				if(line.indexOf(lemma) != -1){ console.log(lemma + '\t\t' + line);
+					synonymFound = true; nearsynonyms = '';
+					nearsynonyms += EnToAr(line);
+					if( NEAR_SYNONYMS_METADATA[lineno]){
+						//nearsynonyms = NEAR_SYNONYMS_METADATA[a].split('|')[0] + nearsynonyms + NEAR_SYNONYMS_METADATA[a].split('|')[1];
+						nearsynonyms =  NEAR_SYNONYMS_METADATA[lineno].topic + '&nbsp;' + nearsynonyms + '<BR/>' +  
+										NEAR_SYNONYMS_METADATA[lineno].info + '<BR/>' + 
+										CORPUS.UIgetNearSynonymsPageLink( NEAR_SYNONYMS_METADATA[lineno].page ); 
+					}
+				}
+			});
+		}
+		return synonymFound ? '<BR/><font color=green><b>near-Synonyms</b></font>: ' + nearsynonyms + '<BR/>' : '';
+	},
+	
+	UIgetNearSynonymsPageLink: function(pageno){
+		var TEMPLATE = '<A HREF="http://www.scribd.com/embeds/82681420/content?access_key=key-6w25dij9keuw0vv8keu&amp;start_page=$1" TARGET=_ >$2</A>';
+		var mapPageno = ( 18 + parseInt(pageno) );
+		return TEMPLATE.replace(/\$1/, mapPageno ).replace(/\$2/, 'Page# ' + parseInt(pageno) );
+	},
+	
 	UIgetSarfSagheer: function(root, form){
 		var sarfSagheer = '', sarfFound = false;
 		if(SARF_SAGHEER){
@@ -139,6 +164,8 @@ var CORPUS = {
 			if(corpus.lemma)		str += '<BR/>' + CORPUS.UIgetLemmaCountTillRef(corpus.lemma, corpus.root, gq.verse() ) + '<BR/>';
 			if(typeof(corpus.pos) != 'undefined' && corpus.pos == 'V' && corpus.root && corpus.form)
 									str += CORPUS.UIgetSarfSagheer(corpus.root, corpus.form);
+			if(typeof(corpus.lemma) != 'undefined' && corpus.lemma /*&& corpus.pos == 'N'*/)
+									str += CORPUS.UIgetNearSynonyms( corpus.lemma );
 			//if(corpus.root)			str += '&nbsp;('+ CORPUS.UIgetRootCount(corpus.root) + ' times)&nbsp;';
 			if(corpus.misc)			str += '</li><li>' + CORPUS.UIgetMiscLink(corpus.misc);// + CORPUS.UIgetRefLink(ref,'more info');
 			if(corpus.features)
@@ -701,3 +728,32 @@ var SARF_SAGHEER = [ //'Verbs_VerbNo,Verbs_Words_Corpus_Root_English,Verbs_Type,
 '204,TwE,d10,اِسْتَغْفَرَ,2,217,to be able to,كرسكنا,42,اِسْتَطَاعَ, يَسْتَطِيعُ, اِسْتَطِعْ, مُسْتَطِيع, مُسْتَطَاع, اِسْتِطَاعَة,ط و ع,10,اِسْتَغْفَرَ',
 '205,qwm,d10,اِسْتَغْفَرَ,1,6,to be straight;  to act straight,ثابت قدم رهنا,47,اِسْتَقَامَ, يَسْتَقِيمُ, اِسْتَقِمْ, مُسْتَقِيم, -, اِسْتِقَامَة,ق و م,10,اِسْتَغْفَرَ',
 ];
+
+var NEAR_SYNONYMS = [
+"falak samaA^' ",
+"{ll~ah <ila`h",
+">aHad waHiyd farod fura`daY`",
+"S~amad ganiY~",
+"lam l~ayosa lan laA <in maA hal balaY` kal~aA ", 
+"walada waDaEa",
+"kaAna >aSobaHa yaSoduru waAqiE",
+"kufuw qariyn >atoraAb samiy~ kufuw Saf~ Sa`^f~a`t yuDa`hi_#u ",
+];
+
+var NEAR_SYNONYMS_METADATA = {
+	"0": {"topic": "The Sky", "page": "83", 
+		"info": "<BR/>samaa': Essentially means height without limitation. <BR/>  Purely linguistically, anything that is above another thing is a <BR/>  samaa' and that which is below is arDh. This explains the usage in ayah 65:12 and 7:176 <BR/>  where the sky is used for heights above and the word arDh is used for depths below. <BR/><BR/> falak: Though commonly interpreted as the sky, it actually refers to <BR/>  the paths or orbits assigned to planets and stars. These orbits are usually <BR/>  oval in shape and so the word is appropriate in that they <BR/>  resemble the shape of a ship الفُلْك !"},
+		
+	"1": {"topic": "God", "page": "818", "info": "Allah, ilah are the different synonyms.<BR/> See entry: ma3bood in below page. " },
+	"2": {"topic": "Alone", "page": "138", "info": "aHad, waHiyd, fard, furādā different synonyms.<BR/> See entry: akeyla in below page. " },
+	"3": {"topic": "Self-Sufficient", "page": "256", "info": "ghaniyy and Samad are synonyms.<BR/> See entry: beniyaaz in below page. " },
+	
+	"4": {"topic": "Not", "page": "862", "info": "lam laysa lan laa 'in maa hal balaa kallaa etc are some synonyms. lot more below.<BR/> See entry: naheen in below page. " },	
+	"5": {"topic": "Begetting", "page": "396", "info": "walada and waḍaʿa are synonyms.<BR/> See entry: jann-naa in below page. " },
+	"6": {"topic": "Become", "page": "900", "info": "kaana, aSbaHa, Sadara, aSdara, waqa3a are synonyms.<BR/> See entry: how-naa in below page. " },
+	"7": {"topic": "Equal", "page": "890", "info": "Kufuw, qariyn, aTraab, samiyy, Saffa, Saaffaat, yuḍāhiūna. <BR/>See entry: hamhaa-hangiy hona in below page. " },
+	
+	"": {"topic": "", "page": "", "info": "" },
+	"": {"topic": "", "page": "", "info": "" },
+	"": {"topic": "", "page": "", "info": "" },
+	};
