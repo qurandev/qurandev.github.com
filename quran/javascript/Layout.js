@@ -1719,7 +1719,7 @@ var layout = {
 	    );
 			
 		// start assinging tips to the containers
-		$('.tips, .tipsWord').live('mouseenter', function()
+		$('.tips, .tipsWord').live('mouseenter, touchend', function()
 		{
 			if ($('body').hasClass('rtl') && $.browser.msie && $.browser.version < 8) // ie6+ fix for right to left direction only
 				return false;

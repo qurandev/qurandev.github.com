@@ -61,7 +61,9 @@ gq.cookdata = function()
 			if(!gq.data.quran['quran-corpus'][ position ]) { gq.data.quran['quran-corpus'][position] = {}; }
 			gq.data.quran['quran-corpus'][ position ].verse = gq.MANZIL7[ i ];
 		}
-		gq.loadedPart1 = true; console.log('quran: loadedPart1. loadedPercent: ' + (gq.loadedPercent + 33 + '%') ); //part1 includes MANZIL1 and 7
+		gq.loadedPart1 = true; 
+		layout.message('', '1: '+(gq.loadedPercent+33)+ '% loaded');  $.growlUI('', 'Quran data loaded ' + (gq.loadedPercent+33)+ '%');
+		console.log('quran: loadedPart1. loadedPercent: ' + (gq.loadedPercent + 33 + '%') ); //part1 includes MANZIL1 and 7
 	} 
 	//for(var i=1; i <= gq.strings.length; ++i){
 	//	if(!gq.data.quran['quran-corpus'][i]) { gq.data.quran['quran-corpus'][i] = {}; }
@@ -72,7 +74,9 @@ gq.cookdata = function()
 			if(!gq.data.quran['quran-corpus'][ position ]) { gq.data.quran['quran-corpus'][position] = {}; }
 			gq.data.quran['quran-corpus'][ position ].verse = gq.MANZIL56[ i ];
 		}
-		gq.loadedPart2 = true; console.log('quran: loadedPart2. loadedPercent: ' + (gq.loadedPercent + 33 + '%') ); //part2 includes MANZIL5, 6
+		gq.loadedPart2 = true; 
+		layout.message('', '2: '+ (gq.loadedPercent+33)+ '% loaded');  $.growlUI('', 'Quran data loaded ' + (gq.loadedPercent+33)+ '%');
+		console.log('quran: loadedPart2. loadedPercent: ' + (gq.loadedPercent + 33 + '%') ); //part2 includes MANZIL5, 6
 		if(gq.surah() >= 26 && gq.surah() <= 49 ) gq.custom.unblockui(); //repaint the page, if the current surah is in this manzil
 	} 
 
@@ -81,7 +85,9 @@ gq.cookdata = function()
 			if(!gq.data.quran['quran-corpus'][ position ]) { gq.data.quran['quran-corpus'][position] = {}; }
 			gq.data.quran['quran-corpus'][ position ].verse = gq.MANZIL234[ i ];
 		}
-		gq.loadedPart3 = true; console.log('quran: loadedPart3. loadedPercent: ' + (gq.loadedPercent + 34 + '%') );  //part3 includes MANZIL2, 3, 4
+		gq.loadedPart3 = true; 
+		layout.message('', '3: '+ (gq.loadedPercent+34)+ '% loaded'); $.growlUI('', 'Quran data loaded ' + (gq.loadedPercent+34)+ '%');
+		console.log('quran: loadedPart3. loadedPercent: ' + (gq.loadedPercent + 34 + '%') );  //part3 includes MANZIL2, 3, 4
 		if(gq.surah() >= 5 && gq.surah() <= 25 ) gq.custom.unblockui(); //repaint the page if within this manzil
 		//cook up the strings too... gq.strings (this needed for the count statistics only)
 		gq.stringsGenerate();		
