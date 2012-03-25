@@ -73,6 +73,7 @@ gq.cookdata = function()
 			gq.data.quran['quran-corpus'][ position ].verse = gq.MANZIL56[ i ];
 		}
 		gq.loadedPart2 = true; console.log('quran: loadedPart2. loadedPercent: ' + (gq.loadedPercent + 33 + '%') ); //part2 includes MANZIL5, 6
+		if(gq.surah() >= 26 && gq.surah() <= 49 ) gq.custom.unblockui(); //repaint the page, if the current surah is in this manzil
 	} 
 
 	if(!gq.loadedPart3 && typeof(gq.MANZIL234) != 'undefined' && gq.MANZIL234.length > 0){
@@ -81,7 +82,7 @@ gq.cookdata = function()
 			gq.data.quran['quran-corpus'][ position ].verse = gq.MANZIL234[ i ];
 		}
 		gq.loadedPart3 = true; console.log('quran: loadedPart3. loadedPercent: ' + (gq.loadedPercent + 34 + '%') );  //part3 includes MANZIL2, 3, 4
-		
+		if(gq.surah() >= 5 && gq.surah() <= 25 ) gq.custom.unblockui(); //repaint the page if within this manzil
 		//cook up the strings too... gq.strings (this needed for the count statistics only)
 		gq.stringsGenerate();		
 	} 
@@ -89,7 +90,31 @@ gq.cookdata = function()
 	gq.loadedPercent = 0; if(gq.loadedPart1) gq.loadedPercent += 33; if(gq.loadedPart2) gq.loadedPercent += 33; if(gq.loadedPart3) gq.loadedPercent += 34; 
 	console.log('Total data loadedPercent: ' + gq.loadedPercent + '%. '); // + 'data cooked with ' + gq.strings.length +' strings');
 };
-		
+
+gq.custom = {};
+gq.custom.timeoutID = null;
+gq.custom.blockui = function(){
+	if(gq.custom.timeoutID) clearTimeout(gq.custom.timeoutID);
+	gq.custom.timeoutID = setTimeout('gq.custom.UI_blockui()', 1000);
+}
+gq.custom.unblockui = function(){
+	if(gq.custom.timeoutID) clearTimeout(gq.custom.timeoutID);
+	gq.custom.UI_unblockui(); //gq.custom.timeoutID = setTimeout('gq.custom.UI_blockui()', 1000);
+	$('body').trigger('prevPage'); 
+	setTimeout( "$('body').trigger('nextPage');", 150); //have to repaint page. doing crappy way, since layout.ayahChanged() no worky, and no resetView method
+}
+
+gq.custom.UI_blockui = function(){
+	$('.ayahs').block({ 
+		message: '<h4>Please wait</h4>', 
+		css: { border: '3px solid #a00' } 
+	});
+}
+
+gq.custom.UI_unblockui = function(){
+	$('.ayahs').unblock({ 	});
+}
+	
 gq.stringsGenerate = function(){
 	gq.strings = ["-1"];
 	var parts = [gq.MANZIL1, gq.MANZIL234, gq.MANZIL56, gq.MANZIL7];
@@ -98,13 +123,12 @@ gq.stringsGenerate = function(){
 			var index = item[0]; //will be 1, 670, 2933 or 4631
 			var currIndex = gq.strings.length;
 			if(index == currIndex){
-				gq.strings = gq.strings.concat(item.slice(1) ); console.log('concatenated ');
+				gq.strings = gq.strings.concat(item.slice(1) );
+				console.log( 'concatanated ' + a +'\t'+ item.length +'\t'+ gq.strings.length);
 			}
 			else{
-				console.log('failed concat ' + index +'\t'+ currIndex +'\t'+ gq.strings.length ); 
-				debugger; //TODO: even if some parts missing, let those array values be null... fill in the rest.
+				console.log('failed concat ' + index +'\t'+ currIndex +'\t'+ gq.strings.length );  //debugger; //TODO: even if some parts missing, let those array values be null... fill in the rest.
 			}
-			console.log( a +'\t'+ item.length +'\t'+ gq.strings.length);
 		}
 		else console.log( a +'\t'+ 'empty' +'\t'+ gq.strings.length);
 	});

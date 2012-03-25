@@ -353,7 +353,7 @@ var gq = {
 			parseCorpus: function (quranBy, text, value)
 			{
 				var SEP = '|,', SEP2 = '|;', SEP0 = ' ', words;
-				SEP = '⚓'; SEP2 = '★'; if(!text){ 	//if(gq && gq.cookdata) gq.cookdata(); else debugger;
+				SEP = '⚓'; SEP2 = '★'; if(!text){	gq.custom.blockui();
 													console.log('no data ' + value.surah +':'+ value.ayah); if(text!="") debugger;};
 				if(text.indexOf(SEP2) != -1) 
 					words = text.split( SEP2 ); 
