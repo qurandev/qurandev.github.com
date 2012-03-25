@@ -18,11 +18,13 @@ function $importNoCache(src){
 // gq.MANZIL1, gq.MANZIL7
 // gq.MANZIL56
 // gq.MANZIL234
-var delay = 3;
+var delay = 0.5;
 setTimeout("loadExtraFiles('javascript/manzil5,6.js');", delay * 1000);
-delay = 10;
+delay = 1.2;
 setTimeout("loadExtraFiles('javascript/manzil2,3,4.js');", delay * 1000);
-
+delay = 5;
+setTimeout("loadExtraFiles('http://sdscdn.userreport.com/popup.min.js');", delay * 1000);
+setTimeout("try { _bvt.initSite('2a56faaf-211f-4c5c-adec-50f76e0aaa9d'); } catch(err) {}", delay * 1100);
 
 var loadExtraFiles = function(datafilename){
 	$import(datafilename); //TODO: if user does some interaction needing data be loaded quicker, then cancel the above setTimeout return values and initiate immediate data request...
