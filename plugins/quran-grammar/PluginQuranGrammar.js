@@ -755,3 +755,87 @@ var NEAR_SYNONYMS_METADATA = {
 	"": {"topic": "", "page": "", "info": "" },
 	"": {"topic": "", "page": "", "info": "" },
 	};
+	
+	
+var offlinesearch = function(keyword){
+		var results = {}, title='', mixMode=false, arrMode=false, engMode=false, transMode=false;
+		var keyword1, keyword2, keyword3, keyword4, keyword5,  word=keyword;
+		if(!arrMode && !engMode) transMode=true;
+mixMode = arrMode = engMode = transMode = true;
+keyword1 = keyword2 = keyword3 = keyword4 = keyword5 = keyword;
+		if(mixMode){
+			title='mix';
+			regexp = new RegExp(".*(?:" + escapeForRegex(word=keyword1) + ").*", "g");
+			results[title] = search2(word, regexp); //COST=profile(title,0,true); results[title+'COST'] = COST;
+			//console.log( results[title] );//UI_displaySearchHits(title, word, results, COST);
+			if(results[title]){ var refs = '';
+				console.log( results[title].length + ' hits for keyword: ' + keyword);
+				$.each(results[title], function(a, hit){
+					refs += ( hit ? hit.split('|')[0] : '-') + '; ';
+				});
+				console.log(refs);
+			}else console.log( 'no hits for keyword: ' + keyword );
+		}
+return;
+		if(arrMode || engMode){ transMode = true;
+			title='arabic';
+			regexp = new RegExp(".*(?:" + escapeForRegex(word=keyword1) + ").*", "g");
+			results[title] = search2(word, regexp, qBare); //COST=profile(title,0,true); results[title+'COST'] = COST;
+			console.log( results );//UI_displaySearchHits(title, word, results, COST);
+		}
+		
+		if(arrMode || engMode){
+			title = 'arabicBuckTranslit';
+			regexp = new RegExp(".*(?:" + escapeForRegex(word=keyword2) + ").*", "g");
+			results[title] = search2(word, regexp, qBuck); //COST=profile(title,0,true); results[title+'COST'] = COST;
+			console.log( results );//UI_displaySearchHits(title, word, results, COST);
+		}		
+return;
+		if(transMode && keyword.length < 3) transMode=false;
+		if(transMode){
+			title='translation';
+			regexp = new RegExp(".*(?:" + escapeForRegex(word=keyword3) + ").*", "gi");
+			results[title] = searchTrans(word, regexp); //COST=profile(title,0,true); results[title+'COST'] = COST;
+			UI_displaySearchHits(title, word, results,COST);
+		}
+}
+
+
+		var qBuck, qBare2, qBuck2, RESET=false, qBare, qBareArr, qBare2, qBuck2, percentComplete = -1;
+var _bPROFILE_SEARCH = false;
+		var search2 = function(word, regexp, DATA){ var results;
+			if(gq.loadedPercent != 100){
+				alert('Searching on partial data only ' + gq.loadedPercent + '%');
+			}
+			else if(gq.loadedPercent == 0){ alert('data yet to be loaded'); return; }
+			if(percentComplete != gq.loadedPercent){
+				qBuck = gq.strings.join('\n');
+				qBuck2 = _prefixData( qBuck );
+				percentComplete = gq.loadedPercent;
+			}
+			
+		  if(!DATA) DATA = qBuck;
+		  //if(qBare == null)		qBare = BuckToBare(qBuck);
+		  //if(qBareArr == null)	qBareArr = qBare.split(/\r?\n/);
+		  //if(!qBare2 || RESET){ qBare2 = _prefixData( qBare ); RESET=false;}
+		  if(!qBuck2 || RESET){ qBuck2 = _prefixData( qBuck ); RESET=false;}
+		  if(DATA == qBuck) results = qBuck2.match(regexp);
+		  //else if(DATA == qBare) results = qBare2.match(regexp);
+		  //if(!results){if(_bPROFILE_SEARCH) _log('no hits');}else{ if(_bPROFILE_SEARCH) _log(results.length + ' hits');}
+		  return results;
+		}
+
+		var _prefixData = function(DATA){  if(!DATA) return;
+		   var ARRAY = DATA.split('\n'), SEP='|'; //TODO: split using a regex, to account for /r/n
+		   for(var n=0; n<ARRAY.length; ++n){
+			 ARRAY[n] = mapLinenoToRef(n, SEP) + '|' + ARRAY[n];
+		   } /*console.log( ARRAY );*/
+		   return ARRAY.join('\n');
+		}
+
+		var mapLinenoToRef = function(lineno){
+			var obj = Quran.ayah.fromVerse(lineno);
+			return obj.surah +':'+ obj.ayah;
+		}
+
+//		offlinesearch('beard');

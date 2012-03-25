@@ -1719,8 +1719,73 @@ var layout = {
 	    );
 			
 		// start assinging tips to the containers
-		$('.tips, .tipsWord').live('mouseenter, touchend', function()
+		$('.tips, .tipsWord').live('mouseenter', UI_Tooltip_Handler);
+		$('.tips, .tipsWord').live('touchend', UI_Tooltip_Handler);
+		
+		$('.progressBar').qtip(
 		{
+			position: {
+				my: 'top center',
+				at: 'bottom center',
+				target: 'mouse',
+				adjust: {
+					x: 0, y: 16,
+					mouse: true  // Can be ommited (e.g. default behaviour)
+				}
+			},
+			style: {
+				tip: true,
+				classes: ($.browser.msie && $.browser.version <= 7) ?  'ui-tooltip-dark' : 'ui-tooltip-youtube'
+			}			
+		});
+		
+		// place holder crossBrowser fix by hagenBurger - http://www.hagenburger.net/BLOG/HTML5-Input-Placeholder-Fix-With-jQuery.html
+		$('[placeholder]').focus(function()
+		{
+			var input = $(this);
+			if (input.val() == input.attr('placeholder')) {
+				input.val('');
+			}
+			else
+				input.removeClass('placeholder');
+		})
+		.blur(function()
+		{
+			var input = $(this);
+			if (input.val() == '' || input.val() == input.attr('placeholder')) {
+				input.addClass('placeholder');
+				input.val(input.attr('placeholder'));
+			}
+		}).blur().parents('form').submit(function() {
+			$(this).find('[placeholder]').each(function() {
+				var input = $(this);
+				if (input.val() == input.attr('placeholder')) {
+					input.val('');
+				}
+			});
+		});
+	}
+};
+
+jQuery.fn.extend({
+	scrollTo : function(speed, offset, easing) {
+		offset = offset || 0;
+		return this.each(function() {
+			var targetOffset = $(this).offset().top+offset;
+			$('html,body').animate({scrollTop: targetOffset}, speed, easing);
+		});
+	}
+});	
+
+$.ajaxSetup({"error":function(XMLHttpRequest,textStatus, errorThrown) {   
+    //alert(textStatus);
+    //alert(errorThrown);
+    //alert(XMLHttpRequest.responseText);
+	layout.message('error', 'Oopss!!!, Something went wrong. please refresh your browser or try again.');
+	gq._gaqPush(['_trackEvent', 'Error', 'Oopss!!!, Something went wrong.']);
+}});
+
+var UI_Tooltip_Handler = function(){
 			if ($('body').hasClass('rtl') && $.browser.msie && $.browser.version < 8) // ie6+ fix for right to left direction only
 				return false;
 			
@@ -1805,70 +1870,8 @@ var layout = {
 					classes: classes
 				}
 			});
-		});
-		
-		$('.progressBar').qtip(
-		{
-			position: {
-				my: 'top center',
-				at: 'bottom center',
-				target: 'mouse',
-				adjust: {
-					x: 0, y: 16,
-					mouse: true  // Can be ommited (e.g. default behaviour)
-				}
-			},
-			style: {
-				tip: true,
-				classes: ($.browser.msie && $.browser.version <= 7) ?  'ui-tooltip-dark' : 'ui-tooltip-youtube'
-			}			
-		});
-		
-		// place holder crossBrowser fix by hagenBurger - http://www.hagenburger.net/BLOG/HTML5-Input-Placeholder-Fix-With-jQuery.html
-		$('[placeholder]').focus(function()
-		{
-			var input = $(this);
-			if (input.val() == input.attr('placeholder')) {
-				input.val('');
-			}
-			else
-				input.removeClass('placeholder');
-		})
-		.blur(function()
-		{
-			var input = $(this);
-			if (input.val() == '' || input.val() == input.attr('placeholder')) {
-				input.addClass('placeholder');
-				input.val(input.attr('placeholder'));
-			}
-		}).blur().parents('form').submit(function() {
-			$(this).find('[placeholder]').each(function() {
-				var input = $(this);
-				if (input.val() == input.attr('placeholder')) {
-					input.val('');
-				}
-			});
-		});
 	}
-};
 
-jQuery.fn.extend({
-	scrollTo : function(speed, offset, easing) {
-		offset = offset || 0;
-		return this.each(function() {
-			var targetOffset = $(this).offset().top+offset;
-			$('html,body').animate({scrollTop: targetOffset}, speed, easing);
-		});
-	}
-});	
-
-$.ajaxSetup({"error":function(XMLHttpRequest,textStatus, errorThrown) {   
-    //alert(textStatus);
-    //alert(errorThrown);
-    //alert(XMLHttpRequest.responseText);
-	layout.message('error', 'Oopss!!!, Something went wrong. please refresh your browser or try again.');
-	gq._gaqPush(['_trackEvent', 'Error', 'Oopss!!!, Something went wrong.']);
-}});
 
 var UI_HOTLINK_TOOLTIPS_ENABLE = true;
 var UI_initLiveQueries = function(){ var selector = '.hotlink'; if(!UI_HOTLINK_TOOLTIPS_ENABLE) return;
