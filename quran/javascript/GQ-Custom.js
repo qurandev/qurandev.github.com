@@ -81,12 +81,35 @@ gq.cookdata = function()
 			gq.data.quran['quran-corpus'][ position ].verse = gq.MANZIL234[ i ];
 		}
 		gq.loadedPart3 = true; console.log('quran: loadedPart3. loadedPercent: ' + (gq.loadedPercent + 34 + '%') );  //part3 includes MANZIL2, 3, 4
+		
+		//cook up the strings too... gq.strings (this needed for the count statistics only)
+		gq.stringsGenerate();		
 	} 
 
 	gq.loadedPercent = 0; if(gq.loadedPart1) gq.loadedPercent += 33; if(gq.loadedPart2) gq.loadedPercent += 33; if(gq.loadedPart3) gq.loadedPercent += 34; 
 	console.log('Total data loadedPercent: ' + gq.loadedPercent + '%. '); // + 'data cooked with ' + gq.strings.length +' strings');
 };
-			
+		
+gq.stringsGenerate = function(){
+	gq.strings = ["-1"];
+	var parts = [gq.MANZIL1, gq.MANZIL234, gq.MANZIL56, gq.MANZIL7];
+	$.each(parts, function(a, item){
+		if(item){
+			var index = item[0]; //will be 1, 670, 2933 or 4631
+			var currIndex = gq.strings.length;
+			if(index == currIndex){
+				gq.strings = gq.strings.concat(item.slice(1) ); console.log('concatenated ');
+			}
+			else{
+				console.log('failed concat ' + index +'\t'+ currIndex +'\t'+ gq.strings.length ); 
+				debugger; //TODO: even if some parts missing, let those array values be null... fill in the rest.
+			}
+			console.log( a +'\t'+ item.length +'\t'+ gq.strings.length);
+		}
+		else console.log( a +'\t'+ 'empty' +'\t'+ gq.strings.length);
+	});
+}
+		
 gq.load = function (surah, ayah)
 {
 	//$("#audioPlayer").data("jplayer") = {};

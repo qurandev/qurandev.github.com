@@ -32,7 +32,7 @@ var CORPUS = {
 	},
 	
 	
-	UIgetLemmaCountTillRef: function(lemma, root, gq_verse){
+	UIgetLemmaCountTillRef: function(lemma, root, gq_verse){  if(gq.loadedPercent != 100) return '';
 		var tempstr = '', temparr, pattern = 'LEM\\:', count = 0, message = '', regexp, arr;		
 		if(lemma){
 			temparr = gq.strings.slice(0, gq_verse); 
@@ -44,7 +44,7 @@ var CORPUS = {
 			message += ' of <b>' + CORPUS.UIgetLemmaCount(lemma) + 'x</b>. ';
 		}
 		if(root) message  += '<small><b>' + CORPUS.UIgetRootCount(root) + '</b>x as root.</small>';
-		return message;
+		return '<BR/>' + message + '<BR/>';
 	},
 	
 	UIgetNearSynonyms: function(lemma){
@@ -92,7 +92,7 @@ var CORPUS = {
 	FORM_MAPPING: { "(I)": "1", "(II)": "2", "(III)": "3", "(IV)": "4", "(V)": "5",
 					"(VI)": "6", "(VII)": "7", "(VIII)": "8", "(IX)": "9", "(X)": "10", "(XI)": "11", "(XII)": "12" },
 	
-	UIgetLemmaCount:	function(lemma){
+	UIgetLemmaCount:	function(lemma){ if(gq.loadedPercent != 100) return;
 		if(CORPUS._RAWDATAALL == ''){
 			CORPUS._RAWDATAALL = gq.strings.join('\n'); 
 		}
@@ -102,7 +102,7 @@ var CORPUS = {
 		return count;
 	},
 	
-	UIgetRootCount:		function(root, linkname, linkprefix){
+	UIgetRootCount:		function(root, linkname, linkprefix){  if(gq.loadedPercent != 100) return;
 		if(CORPUS._RAWDATAALL == ''){
 			CORPUS._RAWDATAALL = gq.strings.join('\n'); 
 		}
@@ -158,15 +158,13 @@ var CORPUS = {
 											'<span style=font-size:1.3em; class=POS-'+ corpus.pos + '>'+ CORPUS.UIlookupPOS(corpus.pos) +'</span></li>';
 			if(corpus.features) 	str += '<li>' + CORPUS.UIgetFeaturesLink(corpus.features) + '</li>';
 			str += '<li>';
-			if(corpus.lemma)		str += CORPUS.UIgetLemmaLink(corpus.lemma, EnToAr(corpus.lemma), 'Dict: ') + /*CORPUS.UIgetLemmaCount(corpus.lemma) + 'x ') +*/ '&nbsp;';
-			//if(corpus.lemma)		str += '&nbsp;('+ CORPUS.UIgetLemmaCount(corpus.lemma) + ' times)&nbsp;';
-			if(corpus.root)			str += CORPUS.UIgetRootDecoratedLink(corpus.root, EnToAr(corpus.root), 'Root: ') + /*CORPUS.UIgetRootCount(corpus.root) + 'x ' ) +*/ '&nbsp;'; //If u dont want colored, use UIgetRootLink
-			if(corpus.lemma)		str += '<BR/>' + CORPUS.UIgetLemmaCountTillRef(corpus.lemma, corpus.root, gq.verse() ) + '<BR/>';
+			if(corpus.lemma)		str += CORPUS.UIgetLemmaLink(corpus.lemma, EnToAr(corpus.lemma), 'Dict: ') + '&nbsp;';
+			if(corpus.root)			str += CORPUS.UIgetRootDecoratedLink(corpus.root, EnToAr(corpus.root), 'Root: ') + '&nbsp;'; //If u dont want colored, use UIgetRootLink
+			if(corpus.lemma)		str += CORPUS.UIgetLemmaCountTillRef(corpus.lemma, corpus.root, gq.verse() );
 			if(typeof(corpus.pos) != 'undefined' && corpus.pos == 'V' && corpus.root && corpus.form)
 									str += CORPUS.UIgetSarfSagheer(corpus.root, corpus.form);
 			if(typeof(corpus.lemma) != 'undefined' && corpus.lemma /*&& corpus.pos == 'N'*/)
 									str += CORPUS.UIgetNearSynonyms( corpus.lemma );
-			//if(corpus.root)			str += '&nbsp;('+ CORPUS.UIgetRootCount(corpus.root) + ' times)&nbsp;';
 			if(corpus.misc)			str += '</li><li>' + CORPUS.UIgetMiscLink(corpus.misc);// + CORPUS.UIgetRefLink(ref,'more info');
 			if(corpus.features)
 				if(CORPUS.FEATURES_MAPPING[ corpus.features ])
