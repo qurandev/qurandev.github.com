@@ -17,7 +17,7 @@ var CORPUS = {
 	
 	UIgetRootLink:		function(root, linkname, linkprefix){
 		var link = CORPUS.LinkQuranDictionary.replace(/\$1/, root);
-		return CORPUS.TemplateRootLink.replace(/\$1/, link).replace(/\$2/, linkname?linkname:root).replace(/\$3/, linkprefix?linkprefix:'Root: ');
+		return CORPUS.TemplateRootLink.replace(/\$1/, link).replace(/\$2/, linkname?linkname:root).replace(/\$3/, linkprefix?linkprefix:'Root: ') + '&nbsp;<span dir=ltr style=font-size:0.87em;>(' + CORPUS.UIgetRootCount(root) + ' times)</span>';
 	},
 
 	UIgetRootDecoratedLink:		function(root, linkname, linkprefix){
@@ -28,7 +28,7 @@ var CORPUS = {
 
 	UIgetLemmaLink:		function(lemma, linkname, linkprefix){
 		var link = CORPUS.LinkLemmaSearch.replace(/\$1/, escape(lemma));
-		return CORPUS.TemplateLemmaLink.replace(/\$1/, link).replace(/\$2/, linkname?linkname:escape(lemma)).replace(/\$3/, linkprefix?linkprefix:'Lemma: ');
+		return CORPUS.TemplateLemmaLink.replace(/\$1/, link).replace(/\$2/, linkname?linkname:escape(lemma)).replace(/\$3/, linkprefix?linkprefix:'Lemma: ') + '&nbsp;<span dir=ltr style=font-size:0.92em;>(' + CORPUS.UIgetLemmaCount(lemma) + ' times)</span>';
 	},
 	
 	
