@@ -368,17 +368,9 @@ var gq = {
 						var refPOS='', corpus, token1, token2, token3, token3_1, tooltip='';
 						var wordImageLink = '<span class=wordimage><img src2=http://corpus.quran.com/wordimage?id=$1 ></img></span>';
 						wordImageLink = wordImageLink.replace( /\$1/, 1 + Quran.word.number(value.surah, value.ayah, i));
-						/*This was just temp code, fo testing on a tablet.
-						if(ref == "9:1:1"){
-							isTablet = (navigator.userAgent.indexOf('tablet') != -1);
-							unicodeSupported = (document.getElementById('char-to-check').offsetWidth === document.getElementById('not-renderable').offsetWidth);
-							alert( 'isTablet: ' + isTablet +'; '+ (unicodeSupported?'unicode supported': 'unicode not supported') +' ' 
-							    + document.getElementById('char-to-check').offsetWidth +' '+ document.getElementById('not-renderable').offsetWidth
-								+ '; wordImageLink: ' + wordImageLink);
-						}*/
 						token1 = EnToAr( verse[0] ); if(isTablet) token1 = wordImageLink;
 						token2 = verse[1] ? verse[1] : '-';
-						token3 = verse[2] ? UI_grammarEscape( verse[2] ) : '-'; //( verse[2] ).replace(/\</g, '&#171;').replace(/\>/g, '&gt;').replace(/\"/g, '&#9674;') : '-' ;
+						token3 = verse[2] ? UI_grammarEscape( verse[2] ) : '-'; 
 						token3_1 = verse[2] ? UI_grammarEscapeUIFriendly( verse[2] ) : '-'; 
 						///UNCOMMENT THIS IF U WANT IMAGE SIDE BY SIDE FOR VERIFICATION/// 
 						token1 += wordImageLink;
@@ -391,10 +383,6 @@ var gq = {
 						verse_template = '<span class="word staticWord">' +
 											'<span class="ar quranText top first rtl tipsWord POS-$POS" dir="rtl" title="$TOOLTIP" >$TOKEN1</span>'+  //data-tips-position="bottom center" data-tips-dynamic="true"
 											'<span class="en second ltr" dir="ltr" style="font-size:0.5em;" >$TOKEN2</span></span>';
-						/*if(typeof(CORPUS) == 'object' && CORPUS){//Play safe, incase grammar plugin disabled or grammar data not yet loaded..
-							corpus = CORPUS.UIgetWordGrammarDisplay(ref)
-							if(corpus && typeof(corpus) == 'object'){refHtml = corpus.html; refPOS = corpus.pos;}
-						}//else just show the plain words... on mouseover shows arabic word.						*/
 						if (gq.settings.wbwDirection == 'english2arabic'){
 							if (gq.settings.wbwMouseOver)
 								verse_html += '<span class="word wordColor'+color+'"><span class="en tipsWord" title="'+verse[0]+'">'+verse[1]+'</span></span>';

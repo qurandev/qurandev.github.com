@@ -1892,13 +1892,13 @@ var UI_initLiveQueries = function(){ var selector = '.hotlink'; if(!UI_HOTLINK_T
 }
 
 var UI_dohotlink = function( obj ){
-	var txt = $(obj).text(), data = $(obj).attr('data'), _class, text, o;
+	var txt = $(obj).text(), data = $(obj).attr('data'), _class, text, o, ref;
 	//iterate over the children and process 
 	o = $(obj).children();
 	$(o).each( function(){
 		_class = $(this).attr('class'); text = $(this).text(); console.log(this); console.log(_class +' '+ text);
 		if(_class == 'ref'){ 
-			//$(this).html( URL.replace(/\$1/g, text ) );
+			ref = $(this).text(); //$(this).html( URL.replace(/\$1/g, text ) );
 		}
 		else if(_class == 'grammar'){
 			//step1: restore back to original content. some of it might have been escaped. in the special case where contain < etc
@@ -1906,7 +1906,7 @@ var UI_dohotlink = function( obj ){
 			if( data.indexOf('%3C') != -1){ //alert('foreign char! ' + data + '<BR/>'+ UI_grammarUnescape(data) + '<BR/>'+ text);
 				text = UI_grammarUnescape(data);
 			}
-			$(this).html( UI_grammarHtml(text) );
+			$(this).html( UI_grammarHtml( ref + "||" + text) );
 		}//if all went thru fine, u can hide the link.
 	});
 }
@@ -1915,7 +1915,7 @@ var UI_dohotlink = function( obj ){
 var UI_grammarHtml = function( text ){ CORPUS.isInitialized = true;
 	var html = '', corpus, refHtml='--';
 	if(typeof(CORPUS) == 'object' && CORPUS){//Play safe, incase grammar plugin disabled or grammar data not yet loaded..
-		corpus = CORPUS.UIgetWordGrammarDisplay(text); console.log(corpus);
+		corpus = CORPUS.UIgetWordGrammarDisplay(text); //console.log(corpus);
 		if(corpus && typeof(corpus) == 'object'){
 			refHtml = corpus.html; //refPOS = corpus.pos;
 		}

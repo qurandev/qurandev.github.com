@@ -17,7 +17,7 @@ var CORPUS = {
 	
 	UIgetRootLink:		function(root, linkname, linkprefix){
 		var link = CORPUS.LinkQuranDictionary.replace(/\$1/, root);
-		return CORPUS.TemplateRootLink.replace(/\$1/, link).replace(/\$2/, linkname?linkname:root).replace(/\$3/, linkprefix?linkprefix:'Root: ') + '&nbsp;<span dir=ltr style=font-size:0.87em;>(' + CORPUS.UIgetRootCount(root) + ' times)</span>';
+		return CORPUS.TemplateRootLink.replace(/\$1/, link).replace(/\$2/, linkname?linkname:root).replace(/\$3/, linkprefix?linkprefix:'Root: ') + ( CORPUS.UIgetRootCount(root) ? '&nbsp;<span dir=ltr style=font-size:0.87em;>(' + CORPUS.UIgetRootCount(root) + ' times)</span>' : '' );
 	},
 
 	UIgetRootDecoratedLink:		function(root, linkname, linkprefix){
@@ -28,23 +28,35 @@ var CORPUS = {
 
 	UIgetLemmaLink:		function(lemma, linkname, linkprefix){
 		var link = CORPUS.LinkLemmaSearch.replace(/\$1/, escape(lemma));
-		return CORPUS.TemplateLemmaLink.replace(/\$1/, link).replace(/\$2/, linkname?linkname:escape(lemma)).replace(/\$3/, linkprefix?linkprefix:'Lemma: ') + '&nbsp;<span dir=ltr style=font-size:0.92em;>(' + CORPUS.UIgetLemmaCount(lemma) + ' times)</span>';
+		return CORPUS.TemplateLemmaLink.replace(/\$1/, link).replace(/\$2/, linkname?linkname:escape(lemma)).replace(/\$3/, linkprefix?linkprefix:'Lemma: ') + (CORPUS.UIgetLemmaCount(lemma) ? '&nbsp;<span dir=ltr style=font-size:0.92em;>(' + CORPUS.UIgetLemmaCount(lemma) + ' times)</span>' : '');
 	},
 	
 	
-	UIgetLemmaCountTillRef: function(lemma, root, gq_verse){  if(gq.loadedPercent != 100) return '';
-		var tempstr = '', temparr, pattern = 'LEM\\:', count = 0, message = '', regexp, arr;		
+	UIgetLemmaCountTillRef: function(lemma, root, gq_verse, ref){  if(gq.loadedPercent != 100) return '';
+		var tempstr = '', temparr, pattern = 'LEM\\:', count = 0, message = '', regexp, arr, lineno;
 		if(lemma){
-			temparr = gq.strings.slice(0, gq_verse); 
+			try{//get verseNo from ref. ref '4:5:12'
+				lineno = Quran.verseNo.ayah( parseInt(ref.split(':')[0]), parseInt(ref.split(':')[1]) );
+			}catch(e){} 
+			if(!lineno){ console.log('invalid ref ' + ref + ' using gq_verse ' + gq_verse); lineno = gq_verse;
+			}
+			temparr = gq.strings.slice(0, lineno);
+			
 			if(temparr) tempstr = temparr.join('\n');
 			regexp = RegExp( pattern + escapeForRegex(lemma), "g");
 			arr = tempstr.match( regexp ); if(arr) count = arr.length;
 			tempstr = ''; tempstr = null;
-			message = count>0 ? '<b>'+count+'</b> occurence' : '<b>First</b> occurrence';	
-			message += ' of <b>' + CORPUS.UIgetLemmaCount(lemma) + 'x</b>. ';
+			message = count>0 ? CORPUS.UIprettifyCount(1+count) +' occurence' : '<b>First</b> occurrence';	
+			if(CORPUS.UIgetLemmaCount(lemma))
+				message += ' of <b>' + CORPUS.UIgetLemmaCount(lemma) + '</b> total. ';
 		}
-		if(root) message  += '<small><b>' + CORPUS.UIgetRootCount(root) + '</b>x as root.</small>';
+		//if(root) message  += '<small><b>' + CORPUS.UIgetRootCount(root) + '</b>x as root.</small>';
 		return '<BR/>' + message + '<BR/>';
+	},
+	
+	UIprettifyCount: function(number){ var suffix = '';
+		suffix = (number%10 == 1 ? 'st' : (number%10 == 2 ? 'nd' : (number%10 ==3 ? 'rd' : 'th') ) );
+		return '<b>'+number + '</b><span style=vertical-align:super;font-size:xx-small;>'+suffix + '</span>';
 	},
 	
 	UIgetNearSynonyms: function(lemma){
@@ -139,12 +151,14 @@ var CORPUS = {
 		return '<span style=font-size:8px;color:#C0C0C0;#F0F0F0; >' + (linkprefix?linkprefix : 'Misc: ') + escapeMisc(misc) + '</span>';
 	},
 	
-	UIgetWordGrammarDisplay: function(ref)
+	UIgetWordGrammarDisplay: function(refAndData)
 	{
-		var corpus, str = '', root='', lemma = '', pos = '', features='';
-		
+		var corpus, str = '', root='', lemma = '', pos = '', features='', ref, Data;
+		if(!refAndData || refAndData.indexOf('||')==-1) return;
+		ref = refAndData.split('||')[0];
+		Data = refAndData.split('||')[1];
 		try{
-			corpus = CORPUS.parse( ref ); //console.log(corpus);
+			corpus = CORPUS.parse( Data ); //console.log(corpus);
 		}catch(err){ console.log(err.message); console.log(err); debugger; }
 		if(corpus){
 			str = '<ul style="line-height:1.2em !important;">';
@@ -160,7 +174,7 @@ var CORPUS = {
 			str += '<li>';
 			if(corpus.lemma)		str += CORPUS.UIgetLemmaLink(corpus.lemma, EnToAr(corpus.lemma), 'Dict: ') + '&nbsp;';
 			if(corpus.root)			str += CORPUS.UIgetRootDecoratedLink(corpus.root, EnToAr(corpus.root), 'Root: ') + '&nbsp;'; //If u dont want colored, use UIgetRootLink
-			if(corpus.lemma)		str += CORPUS.UIgetLemmaCountTillRef(corpus.lemma, corpus.root, gq.verse() );
+			if(corpus.lemma)		str += CORPUS.UIgetLemmaCountTillRef(corpus.lemma, corpus.root, gq.verse(), ref );
 			if(typeof(corpus.pos) != 'undefined' && corpus.pos == 'V' && corpus.root && corpus.form)
 									str += CORPUS.UIgetSarfSagheer(corpus.root, corpus.form);
 			if(typeof(corpus.lemma) != 'undefined' && corpus.lemma /*&& corpus.pos == 'N'*/)
@@ -839,3 +853,5 @@ var _bPROFILE_SEARCH = false;
 		}
 
 //		offlinesearch('beard');
+
+//KNOWN ISSUES:  For LemmaCountTillRef, check 2:228:22 (says 7 occurences. only 6 in corpus). 
