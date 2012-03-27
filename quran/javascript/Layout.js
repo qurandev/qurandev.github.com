@@ -1717,7 +1717,17 @@ var layout = {
 	           }
 	       }
 	    );
-			
+		
+		$('.MOREINFO').live('click', function(){
+			var html = $(this).parent().html();
+			if(!html) return;
+			//$('.MOREINFO').parent().hide();
+			$.blockUI({
+				message: '<div style=font-size:3em;text-align:left;>' + html + '</div>',
+				css: { height: '500px', width: '800px', top: '20%' }
+			});  $('.blockOverlay').attr('title','Click to unblock').click($.unblockUI); //ui-tooltip-content
+		});
+		
 		// start assinging tips to the containers
 		$('.tips, .tipsWord').live('mouseenter', UI_Tooltip_Handler);
 		$('.tips, .tipsWord').live('touchend', UI_Tooltip_Handler);
@@ -1841,7 +1851,6 @@ var UI_Tooltip_Handler = function(){
 				classes = 'ui-tooltip-word';
 			else
 				classes = ($.browser.msie && $.browser.version <= 7) ?  'ui-tooltip-dark' : 'ui-tooltip-youtube';
-			
 			$(this).qtip(
 			{
 				content: {
