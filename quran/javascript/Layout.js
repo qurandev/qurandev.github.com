@@ -1896,7 +1896,7 @@ var UI_dohotlink = function( obj ){
 	//iterate over the children and process 
 	o = $(obj).children();
 	$(o).each( function(){
-		_class = $(this).attr('class'); text = $(this).text(); console.log(this); console.log(_class +' '+ text);
+		_class = $(this).attr('class'); text = $(this).text(); //console.log(this); console.log(_class +' '+ text);
 		if(_class == 'ref'){ 
 			ref = $(this).text(); //$(this).html( URL.replace(/\$1/g, text ) );
 		}

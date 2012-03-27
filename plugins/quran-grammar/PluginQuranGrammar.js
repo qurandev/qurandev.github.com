@@ -63,7 +63,7 @@ var CORPUS = {
 		var nearsynonyms = '', synonymFound = false, lemmaBare = BuckToBare(lemma);
 		if(NEAR_SYNONYMS && NEAR_SYNONYMS_METADATA){
 			$.each(NEAR_SYNONYMS, function(lineno, line){
-				if(line.indexOf(lemma) != -1 || BuckToBare(line).indexOf(lemmaBare) != -1 ){ console.log(lemma + '\t\t' + line);
+				if(line.indexOf(lemma) != -1 || BuckToBare(line).indexOf(lemmaBare) != -1 ){ //console.log(lemma + '\t\t' + line);
 					synonymFound = true; nearsynonyms = '';
 					nearsynonyms += EnToAr(line);
 					if( NEAR_SYNONYMS_METADATA[lineno]){
@@ -505,7 +505,7 @@ initializeMapper();
 	
 	var escapeMisc = function(input){ var output='';
 		if(!input) return; output = input.replace(/\</g, '&#171;').replace(/\>/g, '&gt;').replace(/\"/g, '&#9674;');  //&#60; for <. 9668 for left diamond like.
-		if(input.indexOf('<') != -1 || input.indexOf('>') != -1){ console.log(input +'\t\t'+ output ); if(typeof(DEBUG) != 'undefined')debugger; }
+		//if(input.indexOf('<') != -1 || input.indexOf('>') != -1){ console.log(input +'\t\t'+ output ); if(typeof(DEBUG) != 'undefined')debugger; }
 		return output;
 	}
 
