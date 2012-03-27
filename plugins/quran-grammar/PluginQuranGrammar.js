@@ -60,18 +60,18 @@ var CORPUS = {
 	},
 	
 	UIgetNearSynonyms: function(lemma){
-		var nearsynonyms = '', synonymFound = false;
+		var nearsynonyms = '', synonymFound = false, lemmaBare = BuckToBare(lemma);
 		if(NEAR_SYNONYMS && NEAR_SYNONYMS_METADATA){
 			$.each(NEAR_SYNONYMS, function(lineno, line){
-				if(line.indexOf(lemma) != -1){ console.log(lemma + '\t\t' + line);
+				if(line.indexOf(lemma) != -1 || BuckToBare(line).indexOf(lemmaBare) != -1 ){ console.log(lemma + '\t\t' + line);
 					synonymFound = true; nearsynonyms = '';
 					nearsynonyms += EnToAr(line);
 					if( NEAR_SYNONYMS_METADATA[lineno]){
 						//nearsynonyms = NEAR_SYNONYMS_METADATA[a].split('|')[0] + nearsynonyms + NEAR_SYNONYMS_METADATA[a].split('|')[1];
-						nearsynonyms =  NEAR_SYNONYMS_METADATA[lineno].topic + '&nbsp;' + nearsynonyms + '<BR/>' +  
-										NEAR_SYNONYMS_METADATA[lineno].info + '<BR/>' + 
+						nearsynonyms =  NEAR_SYNONYMS_METADATA[lineno].topic + '<BR/>' + nearsynonyms + '<BR/>' +  
+										(NEAR_SYNONYMS_METADATA[lineno].info ? NEAR_SYNONYMS_METADATA[lineno].info + '<BR/>' : '') + 
 										CORPUS.UIgetNearSynonymsPageLink( NEAR_SYNONYMS_METADATA[lineno].page ); 
-					}
+					}else nearsynonyms += '<BR/>Refer book for details. (User contributions welcome!)<BR/>' + CORPUS.UIgetNearSynonymsPageLink( 1 ) + '&nbsp; (Pls type summary & submit via feedback.)'; 
 				}
 			});
 		}
@@ -80,8 +80,9 @@ var CORPUS = {
 	
 	UIgetNearSynonymsPageLink: function(pageno){
 		var TEMPLATE = '<A HREF="http://www.scribd.com/embeds/82681420/content?access_key=key-6w25dij9keuw0vv8keu&amp;start_page=$1" TARGET=_ >$2</A>';
-		var mapPageno = ( 18 + parseInt(pageno) );
-		return TEMPLATE.replace(/\$1/, mapPageno ).replace(/\$2/, 'Page# ' + parseInt(pageno) );
+		var mapPageno = pageno ? ( 18 + parseInt(pageno) ) : 1;
+		var linktext = pageno ? 'Page# ' + parseInt(pageno) : 'Book';
+		return TEMPLATE.replace(/\$1/, mapPageno ).replace(/\$2/, linktext );
 	},
 	
 	UIgetSarfSagheer: function(root, form){
@@ -750,6 +751,19 @@ var NEAR_SYNONYMS = [
 "walada waDaEa",
 "kaAna >aSobaHa yaSoduru waAqiE",
 "kufuw qariyn >atoraAb samiy~ kufuw Saf~ Sa`^f~a`t yuDa`hi_#u ",
+
+"fEl Eml SnE SdE jrH AjtrH tEmd >mr $>n",
+"HmdN $krN mdHN",
+"skn tbw> vwy vwy bd> HDr xld gny EA$r",
+"<ns >nAs A^dam b$rN", //إنس أناس آدم بشرٌ 
+"qdm sbq >qbl",
+"SwtN Sad~a Srx hms HsysN mkAXN tSdypN DbH xwAr $hyq zfyr lhv rkzN SyHp tgyZ SAxp hdN glyN SlSAlN qArEp",
+">mr >*n Hkm >wSy",
+"Har~ama s~uHot",
+"hdY <htdY r$d",
+"Erf mutawas~imiyn",
+"mHS zkY SfA tbr>",
+"nkr nqm",
 ];
 
 var NEAR_SYNONYMS_METADATA = {
@@ -765,7 +779,19 @@ var NEAR_SYNONYMS_METADATA = {
 	"6": {"topic": "Become", "page": "900", "info": "kaana, aSbaHa, Sadara, aSdara, waqa3a are synonyms.<BR/> See entry: how-naa in below page. " },
 	"7": {"topic": "Equal", "page": "890", "info": "Kufuw, qariyn, aTraab, samiyy, Saffa, Saaffaat, yuḍāhiūna. <BR/>See entry: hamhaa-hangiy hona in below page. " },
 	
-	"": {"topic": "", "page": "", "info": "" },
+	"8": {"topic": "Work/doing work", "page": "?", "info": "faEala Eamila SanaE SadaE jaraH ijtaraH tEmd amr Sha'n" },
+	"9": {"topic": "Praise & Thanks"},
+	"10": {"topic": "Settling down"},
+	"11": {"topic":"human"},
+	"12": {"topic":"Going ahead"},
+	"13": {"topic":"noise"},
+	"14": {"topic":"Executing Authority"},
+	"15": {"topic":"The Forbidden"},
+	"16": {"topic":"To Guide & to be guided"},
+	"17": {"topic":"To recognize"},
+	"18": {"topic":"To Purify"},
+	"19": {"topic":"Bad"},
+
 	"": {"topic": "", "page": "", "info": "" },
 	"": {"topic": "", "page": "", "info": "" },
 	};
