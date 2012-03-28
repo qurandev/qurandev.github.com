@@ -762,11 +762,18 @@ var NEAR_SYNONYMS = [
 "Har~ama s~uHot",
 "hdY <htdY r$d",
 "Erf mutawas~imiyn",
-"mHS zkY SfA tbr>",
-"nkr nqm",
+"mHS zkY SfA tbr> m~uSaf~FY Sfw",
+"nakira naqama",
 
 "xa$iYa  xaA$iE  wqy xwf x$y H*r x$E rhb $fq wjl rEb wjs wjf rwE",
-
+"qrDN dynN",
+"fDlN man~a >nEm >Hsn",
+"bATl zwr AfkN k*b",
+"jAX >tAY hyt hlm~ tEAl",
+"qad~ma >solafa >asolafato",
+"qara>a talY rat~ala darasa >amolY >amolaY`",
+"Eaduw~N bagoDaA^' $ana_#aAn $aAni} $AnyN",
+"qalob fu&Ad Sador nafos",
 ];
 
 var NEAR_SYNONYMS_METADATA = {
@@ -793,9 +800,17 @@ var NEAR_SYNONYMS_METADATA = {
 	"16": {"topic":"To Guide & to be guided"},
 	"17": {"topic":"To recognize"},
 	"18": {"topic":"To Purify"},
-	"19": {"topic":"Bad"},
+	"19": {"topic":"Bad", "info": "nakira naqama"},
+	
 	"20": {"topic":"Fear", "info": "Khawf Khashyah Khushoo' Taqwa Hadthr Raa'a Wajas Wajl Rahb Ru'b Shafaq Wajf. <BR/> See <A HREF=http://www.linguisticmiracle.com/gems/usage-of-fear-in-the-quran TARGET=_>Article</A> and the book below."},
-
+	"21": {"topic":"Borrowing", "info": "qarDun daynun"},
+	"22": {"topic":"Favors", "info": "faDlun manna an3ama aHsana"},
+	"23": {"topic":"Lie", "info": "kazib (opposite: Sidqun). baaTil (opposite: Haqqun), zuwr, ifkun"},
+	"24": {"topic":"Coming", "info": "jaa'a ataa hayta halumma ta3aala"},
+	"25": {"topic":"To send forward", "info": "qaddama aslafa"},
+	"26": {"topic":"Read & Recite", "info": "qara'a talaa rattala darasa amlaa"},
+	"27": {"topic":"Enemy", "info": "3aduwwun baghDaa'u shaaniyyun"},
+	"28": {"topic":"The heart, the chest & the self", "info": "qalb fu'ad Sadr nafs"},
 	"": {"topic": "", "page": "", "info": "" },
 	"": {"topic": "", "page": "", "info": "" },
 	};
