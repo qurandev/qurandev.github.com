@@ -764,6 +764,9 @@ var NEAR_SYNONYMS = [
 "Erf mutawas~imiyn",
 "mHS zkY SfA tbr>",
 "nkr nqm",
+
+"xa$iYa  xaA$iE  wqy xwf x$y H*r x$E rhb $fq wjl rEb wjs wjf rwE",
+
 ];
 
 var NEAR_SYNONYMS_METADATA = {
@@ -779,7 +782,7 @@ var NEAR_SYNONYMS_METADATA = {
 	"6": {"topic": "Become", "page": "900", "info": "kaana, aSbaHa, Sadara, aSdara, waqa3a are synonyms.<BR/> See entry: how-naa in below page. " },
 	"7": {"topic": "Equal", "page": "890", "info": "Kufuw, qariyn, aTraab, samiyy, Saffa, Saaffaat, yuḍāhiūna. <BR/>See entry: hamhaa-hangiy hona in below page. " },
 	
-	"8": {"topic": "Work/doing work", "page": "?", "info": "faEala Eamila SanaE SadaE jaraH ijtaraH tEmd amr Sha'n" },
+	"8": {"topic": "Work/doing work", "info": "faEala Eamila SanaE SadaE jaraH ijtaraH tEmd amr Sha'n" },
 	"9": {"topic": "Praise & Thanks"},
 	"10": {"topic": "Settling down"},
 	"11": {"topic":"human"},
@@ -791,6 +794,7 @@ var NEAR_SYNONYMS_METADATA = {
 	"17": {"topic":"To recognize"},
 	"18": {"topic":"To Purify"},
 	"19": {"topic":"Bad"},
+	"20": {"topic":"Fear", "info": "Khawf Khashyah Khushoo' Taqwa Hadthr Raa'a Wajas Wajl Rahb Ru'b Shafaq Wajf. <BR/> See <A HREF=http://www.linguisticmiracle.com/gems/usage-of-fear-in-the-quran TARGET=_>Article</A> and the book below."},
 
 	"": {"topic": "", "page": "", "info": "" },
 	"": {"topic": "", "page": "", "info": "" },
