@@ -832,8 +832,8 @@ keyword1 = keyword2 = keyword3 = keyword4 = keyword5 = keyword;
 				$.each(results[title], function(a, hit){
 					refs += ( hit ? hit.split('|')[0] : '-') + '; ';
 				});
-				console.log(refs);
-			}else console.log( 'no hits for keyword: ' + keyword );
+				UIdisplayResults(refs, 'Search results for keyword: ' + keyword); console.log(refs);
+			}else{ UIdisplayResults(null, 'No search results for keyword: ' + keyword); console.log( 'no hits for keyword: ' + keyword ); }
 		}
 return;
 		if(arrMode || engMode){ transMode = true;
@@ -859,6 +859,23 @@ return;
 		}
 }
 
+var UIlinkifySearchResult = function(ref){
+	var TEMPLATE = '<A HREF=#!/quran-corpus/$1>$2</A>';
+	return TEMPLATE.replace(/\$1/, ref).replace(/\$2/, ref);
+}
+
+var UIdisplayResults = function(refs, msg){
+	var html = '';
+	if(refs){
+		$.each(refs.split('; '), function(a, ref){
+			html += (a+1) + ') ' + UIlinkifySearchResult(ref) + '<BR/>';
+		});
+	}
+	$.blockUI({
+					message: '<BR/><h3>' + msg + '</h3><div style=font-size:3em;text-align:left;>' + html + '</div>',
+					css: { height: '500px', width: '800px', top: '20%' }
+				});  $('.blockOverlay').attr('title','Click to unblock').click($.unblockUI); //ui-tooltip-content
+}
 
 		var qBuck, qBare2, qBuck2, RESET=false, qBare, qBareArr, qBare2, qBuck2, percentComplete = -1;
 var _bPROFILE_SEARCH = false;
