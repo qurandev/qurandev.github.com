@@ -9,10 +9,61 @@ span.r3 { color: blue; }
 span.r1, span.r2, span.r3 { font-weight: bold !important;}
 #arabic				{ font-size: 5em; border: 1px solid #C3C3C3; padding: 10px;}
 #arabic1, Z#arabic2	{ font-size: 3.5em; border: 1px solid #C3C3C3; padding: 10px;}
+.suggest{
+    left: 125px !important;
+    top: 35px !important;
+    position: absolute !important;
+	white-space: nowrap;
+    Zbackground: none repeat scroll 0 0 #CCFB5D !important;
+}
+.searchfield{
+	width: 250px;
+}
+
+.search-bubble, .suggest {
+-webkit-box-shadow: 0 2px 2px #888;
+background-color: rgba(204, 251, 93, 0.8);
+border-radius: 6px;
+box-shadow: 0 2px 2px #888;
+margin: 12px 0 0;
+padding: 4px 10px;
+Zpointer-events: none;
+position: absolute;
+text-align: center;
+Zleft: 0;
+Ztop: -1000px;
+width: 100px;
+min-width: 100px;
+}
+
+.search-bubble::after , .suggest:after, .suggest::after{
+    Zbackground: none repeat scroll 0 0 #CCFB5D !important;
+border-color: rgba(204, 251, 93, 0.9) transparent;
+border-style: solid;
+border-width: 0 10px 10px;
+content: "";
+position: absolute;
+left: 50px;
+top: -10px;
+}
+/*  border-color: rgba(255, 240, 120, 0.9) transparent; YELLOW */
+
+.biggerArabic {
+font-size: 2.0em;
+}
+input[type="text"] {
+-webkit-transition: all 0.5s ease-in-out;
+-moz-transition: all 0.5s ease-in-out;
+transition: all 0.5s ease-in-out;
+font-size: 24px;
+margin-left: 20px;
+}
 </style>
 
-<INPUT id=input TYPE=text value=Hmd></INPUT>
-<INPUT id=btn TYPE=button value=Go></INPUT><BR/>
+<INPUT id=input class=searchfield TYPE=text value=Hmd></INPUT>
+<INPUT id=btn TYPE=button value="  Go  "></INPUT><BR/>
+<span class='suggest' id="suggest">&nbsp;</span> 
+
 <p style="font-size: 0.833em;"> <!--<img src="/images/expand.png" id="optionsImage" alttext="+"></img>-->
 	<a id=optionsLink href="javascript:toggleOptions();">+ Show options</a>
 </p>
@@ -220,6 +271,14 @@ initializeMapper();
 	}
 	var process = function(input){
 		var input = $('#input').val(), output='', regex1, regex2, words;
+
+		if(input == '') $('#suggest').html('').hide();
+		else{
+			var status = '<span class=biggerArabic>' + EnToAr(input) + '</span>';
+			$('#suggest').html( status ).show();
+			$('#suggest').width(   $('#suggest span').width()   );
+		}
+
 		if(input.length < SEARCH.minchars){ $('#arabic').html(''); $('#arabic1').html(''); return;}
 		regex1 = regex2 = input;
 		var charsArr = input.split(''), regex1 = "", chr, repl = false, mapper = {'A': 'A{`><', 'w': 'w&', 'y': 'y}' };
@@ -254,7 +313,11 @@ initializeMapper();
 	
 	$('#btn').click( process );
 	$('#input').keyup(process);
+	//$('#input').focus(function(){ $(this).select(); });
+	$('#input').select();
+	$('#input').focus();
 	process();
+	$('#suggest').html('Enter word here...');
 </script>
 
 
