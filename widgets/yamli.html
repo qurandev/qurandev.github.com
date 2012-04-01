@@ -3,7 +3,8 @@
 <script src="http://GlobalQuran.com/javascript/GlobalQuran.js?v=3.4"></script>
 
 <style>
-.searchHit::before {
+.small{ font-size: 0.23em; }
+.XsearchHit::before {
 content: "‎" attr(title) "‎"; //content: "‎(00E(" attr(title) ")‎200E";
 position: relative;
 font-size: .23em;
@@ -335,8 +336,10 @@ function isLtrText(text) {
 		words = input.match( XRegExp(regex, "g") );
 		return words;
 	}
+	var LinkLemmaSearch = "http://corpus.quran.com/search.jsp?q=lem:$1";
+
 	var onWordClick = function(word){
-		$('#output').val( $('#output').val() + ' ' + unescape(word) ); scrollToEnd('output');
+		$('#output').val( $('#output').val() + ' ' + unescape(word) ); scrollToEnd('output');		
 	}
 	var process = function(input){
 		var input = $('#input').val(), output='', regex1, regex2, words, status='';
@@ -373,8 +376,9 @@ function isLtrText(text) {
 		var _html = '', _html1 = '', _temp='';
 		if(_words) 
 		$.each(_words, function(a, word){ word = $.trim(word);
+			var url = LinkLemmaSearch.replace(/\$1/g, escape(word) );
 			if(a>=SEARCH.maxhits && !SEARCH.returnall){ _html += "<BR/>"+ "<span style=color:maroon;font-size:0.2em;>Max results exceeded. Click <a href='javascript:SEARCH.returnall=true;process();return false;'>here</a> to see all <b>" + _words.length + "</b> results.</span><BR/>"; return false; }
-			else _html += '<span class=searchHit title="' + LEMS_MAP[word] + ' x"><A href=javascript:onWordClick("'+ escape(word) +'")>' + EnToAr(word) + '</A></span>&nbsp;&nbsp;&nbsp; ';
+			else _html += '<span dir=rtl class=searchHit title="' + LEMS_MAP[word] + ' x"><A href=javascript:onWordClick("'+ escape(word) +'")>' + EnToAr(word) + '</A>&nbsp;<span dir=ltr><A class=small HREF=' + url + ' TARGET=_>' + LEMS_MAP[word] + 'x</A></span></span>&nbsp;&nbsp;&nbsp; ';
 		});
 		if(_words && _words.length >= SEARCH.maxhits && SEARCH.returnall){ _html += "<BR/>"+ "<span style=color:green;font-size:0.2em;>All results returned. Click <a href='javascript:SEARCH.returnall=false;process();window.scroll(0,0);return false;'>here</a> to see fewer results.</span><BR/>"; }
 		
