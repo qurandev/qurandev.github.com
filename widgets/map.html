@@ -1,0 +1,395 @@
+﻿
+<HTML>
+<HEAD><title>Verse Relatedness Network from Ibn Kathir</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="./css/wordcloud.css" type="text/css"> 
+</HEAD>
+<style type="text/css">
+table.stats 
+{text-align: center;
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif ;
+font-weight: normal;
+font-size: 11px;
+color: #fff;
+width: 850px;
+background-color: #666;
+border: 0px;
+border-collapse: collapse;
+border-spacing: 0px;}
+
+table.stats td 
+{background-color: #fafafa;
+color: #000;
+padding: 4px;
+width : 400px;
+text-align: left;
+
+border: 1px #6699CC solid;
+}
+
+table.stats td.aya 
+{background-color: #CCC;
+color: #000;
+padding: 4px;
+width: 50px;
+text-align: left;
+border: 1px #6699CC solid;}
+
+table.stats td.root 
+{background-color: #CCC;
+color: #000;
+padding: 4px;
+width: 50px;
+text-align: center;
+border: 1px #6699CC solid;}
+
+table.stats td.ara
+{background-color: #fafafa;
+color: #000;
+font-family:traditional arabic;
+padding: 4px;
+width: 350px;
+text-align: right;
+border-bottom: 1px #6699CC solid;;
+font-size: 18px;
+font-weight: bold;}
+
+
+table.stats td.hed
+{background-color: #666;
+color: #fff;
+padding: 4px;
+text-align: left;
+border-bottom: 2px #fff solid;
+font-size: 12px;
+font-weight: bold;}
+</style>
+
+
+<header>
+	<script src="http://code.jquery.com/jquery-latest.js" language="javascript" type="text/javascript" ></script>
+    <script type="text/javascript" src="js/raphael-min.js"></script>
+    <script type="text/javascript" src="js/dracula_graffle.js"></script>
+    <script type="text/javascript" src="js/dracula_graph.js"></script>
+	
+	<script type="text/javascript">
+<!--
+var redraw;
+var height =600;
+var width = 800;
+/* only do all this when document has finished loading (needed for RaphaelJS) */
+window.onload = function() {
+
+	var g2 = new Graph();	
+    var synonyms = {"rhb": 13, "xwf": 21, "q$y": 34, "q$E": 67, "mwjl": 41};
+	var parent	 = "fear";	
+	g2.addNode( parent );
+	$.each(Object.keys( synonyms ), function(a, word){
+		g2.addNode(word);
+		g2.addEdge(parent, word, {directed:true, label: synonyms[word], stroke:'#3c3'});
+	});	
+    var layouter2 = new Graph.Layout.Spring(g2);
+    layouter2.layout();
+    /* draw the graph using the RaphaelJS draw implementation */
+    var renderer2 = new Graph.Renderer.Raphael('canvas', g2, width, height);
+    renderer2.draw();
+    var redraw2 = function() {
+        layouter2.layout();
+        renderer2.draw();
+    };
+	
+  
+    var g = new Graph();
+	g.addNode('19:94');g.addNode('19:95');g.addNode('30:25');g.addNode('79:13');g.addNode('79:14');g.addEdge('2:255','19:94', {directed:true, label:0, stroke:'#3c3'});g.addEdge('2:255','19:95', {directed:true, label:1, stroke:'#3c3'});g.addEdge('2:255','30:25', {directed:true, label:5, stroke:'#3c3'});g.addEdge('30:25','79:13', {directed:true, label:0, stroke:'#3c3'});g.addEdge('30:25','79:14', {directed:true, label:0, stroke:'#3c3'});	
+	
+    /* layout the graph using the Spring layout implementation */
+    var layouter = new Graph.Layout.Spring(g);
+    layouter.layout();
+    
+    /* draw the graph using the RaphaelJS draw implementation */
+    var renderer = new Graph.Renderer.Raphael('canvas', g, width, height);
+    renderer.draw();
+    
+    redraw = function() {
+        layouter.layout();
+        renderer.draw();
+    };
+	
+	
+	var mapSarfSagheer = function(){ if(typeof(SARF_SAGHEER) == 'undefined' || !SARF_SAGHEER) return;
+		var map = {}, map2 = {}, arr;
+		$.each(SARF_SAGHEER, function(a, line){
+			arr = line.split(',');
+			if( !map[ arr[1] ] ){ map[ arr[1] ] = arr[2]; }
+			else{ map[ arr[1] ] += ' '+arr[2]; map2[ arr[1] ] = map[ arr[1] ]; }
+		});
+		console.log(JSON.stringify(map) );
+		console.log('\n\n\n');
+		console.log(JSON.stringify(map2) );
+		console.log(map2);
+	}
+	
+	//{"sdq":"b2 d2","Elm":"b4 d2","k*b":"b3 d2","qtl":"b2 d3","xrj":"b2 d4","dxl":"b2 d4",,"slH":"b1 d4", "Dll":"b9 d4","Edd":"b9 d4","*wq":"b6 d4", "mwt":"b6 d4","Hyy":"b9 d4","rAy":"b8 d4", "Amn":"b8 d4","Aty":"b8 d4","*kr":"b2 d5", "sAl":"b8 d6","Ax*":"b8 d7","wqy":"b5 d7","hdy":"b7 d7","bgy":"b7 d7","gfr":"b3 d10",
+	//	"sbH":"d2 d4","nzl":"d2 d4","nfq":"d3 d4", "njy":"d2 d4", "byn":"d2 d5","wly":"d2 d5","wfy":"d4 d5","TwE":"d4 d10",
+	//	"qwm":"b6 d4 d10"}
+	
+//'1,fEl,b1,فتح,2,24,to do,كرنا ,105,فَعَلَ, يَفْعَلُ, اِفْعَلْ , فَاعِل, مَفْعُول, فِعْل,ف ع ل ,1,فتح',
+//'2,ftH,b1,فتح,2,76,"to open, to give victory",کھولنا,29,فَتَحَ, يَفْتَحُ, اِفْتَحْ, فَاتِح, مَفْتُوح, فَتْح,ف ت ح ,1,فتح',
+//'3,bEv,b1,فتح,2,56,to raise; to resurrect, پہنچا نا,65,بَعَثَ, يَبْعَثُ, اِبْعَثْ, بَاعِث, مَبْعُوث, بَعْث,ب ع ث ,1,فتح',
+//'4,jEl,b1,فتح,2,19,"to make, to place, to set up",کردینا,346,جَعَلَ, يَجْعَلُ, اِجْعَلْ, جَاعِل, مَجْعُول, جَعْل,ج ع ل ,1,فتح',
+//'5,jmE,b1,فتح,3,25,"to gather,  to collect",جمع کرنا,40,جَمَعَ, يَجْمَعُ, اِجْمَعْ, جَامِع, مَجْمُوع, جَمْع,ج م ع ,1,فتح',
+
+};
+
+-->
+    </script>
+</header>
+<BODY> 
+
+<h2>Verse Similarity Search</h2>
+<hr>
+<p>
+Enter the chapter and verse number and search for all related verses as been mentioned in Tafseer Ibn Kathir.This dataset contains over 6,796 pairs of directly related verses and more than 30,000 indirectly related&nbsp; paris of verses taken from Ibn Kathir. For elaborate discussion on this dataset visit my wiki page <a href="http://www.textminingthequran.com/wiki/Verse_relatedness_in_Ibn_Kathir" title="" target="_blank">here</a>.<br>
+Edge labels show number of common roots between connected verses. <br>
+<I> I have tested it working best using FireFox. IE might not show tables properly. </I>
+<FORM method="get" action="/apps/similarity.php">
+   Chapter No. [1-114]: <input type="text" size="3" name="sura" value="2"/> 
+   Verse No. [use this <a href="http://www.intratext.com/X/ENG0027.htm">index</a>]: <input type="text" size="3" name="verse" value="255"/>   <input type="submit" name="submit" value="Submit"><br>
+</FORM>
+<div id="canvas"></div>
+<button id="redraw" onclick="redraw();">redraw</button><br>
+<p><h1>You Entered Verse 
+<a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=
+2&t=katheer&l=arb&nAya=255#255'>2:255</a></h1></p><table class='stats' cellspacing='0'><tr><td class='ara'>اللَّهُ لا إِلٰهَ إِلّا هُوَ الحَىُّ القَيّومُ لا تَأخُذُهُ سِنَةٌ وَلا نَومٌ لَهُ ما فِى السَّمٰوٰتِ وَما فِى الأَرضِ مَن ذَا الَّذى يَشفَعُ عِندَهُ إِلّا بِإِذنِهِ يَعلَمُ ما بَينَ أَيديهِم وَما خَلفَهُم وَلا يُحيطونَ بِشَيءٍ مِن عِلمِهِ إِلّا بِما شاءَ وَسِعَ كُرسِيُّهُ السَّمٰوٰتِ وَالأَرضَ وَلا يَـٔودُهُ حِفظُهُما وَهُوَ العَلِىُّ العَظيمُ</td><td>Allah! There is no deity save Him, the Alive, the Eternal. Neither slumber nor sleep overtaketh Him. Unto Him belongeth whatsoever is in the heavens and whatsoever is in the earth. Who is he that intercedeth with Him save by His leave? He knoweth that which is in front of them and that which is behind them, while they encompass nothing of His knowledge save what He will. His throne includeth the heavens and the earth, and He is never weary of preserving them. He is the Sublime, the Tremendous.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>Allah, mankind, the earth and skies, </p></td></tr></table> <h2>Following are <font color='green'> 15 </font> verses <font color='red'> directly </font> related to 2:255 from Ibn Kathir:</h2><table class='stats' cellspacing='0'><tr><th class='hed'>No.</th><th class='hed'>Arabic</th><th class='hed'>English</th><th class='hed'>Common Roots</th><th class='hed'>Level</th></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=
+53&t=katheer&l=arb&nAya=26#53_26'>53:26</a></td><td class='ara'>وَكَم مِن مَلَكٍ فِى السَّمٰوٰتِ لا تُغنى شَفٰعَتُهُم شَيـًٔا إِلّا مِن بَعدِ أَن يَأذَنَ اللَّهُ لِمَن يَشاءُ وَيَرضىٰ</td><td>And how many angels are in the heavens whose intercession availeth naught save after Allah giveth leave to whom He chooseth and accepteth.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>the Angels, </p></td><td class='root'>6</td><td class='root'>2</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=
+21&t=katheer&l=arb&nAya=28#21_28'>21:28</a></td><td class='ara'>يَعلَمُ ما بَينَ أَيديهِم وَما خَلفَهُم وَلا يَشفَعونَ إِلّا لِمَنِ ارتَضىٰ وَهُم مِن خَشيَتِهِ مُشفِقونَ</td><td>He knoweth what is before them and what is behind them, and they cannot intercede except for him whom He accepteth, and they quake for awe of Him.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>the Angels, Allah, </p></td><td class='root'>6</td><td class='root'>2</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=
+20&t=katheer&l=arb&nAya=110#20_110'>20:110</a></td><td class='ara'>يَعلَمُ ما بَينَ أَيديهِم وَما خَلفَهُم وَلا يُحيطونَ بِهِ عِلمًا</td><td>He knoweth (all) that is before them and (all) that is behind them, while they cannot compass it in knowledge.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>mankind, Allah, </p></td><td class='root'>6</td><td class='root'>2</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=
+30&t=katheer&l=arb&nAya=25#30_25'>30:25</a></td><td class='ara'>وَمِن ءايٰتِهِ أَن تَقومَ السَّماءُ وَالأَرضُ بِأَمرِهِ ثُمَّ إِذا دَعاكُم دَعوَةً مِنَ الأَرضِ إِذا أَنتُم تَخرُجونَ</td><td>And of His signs is this: The heavens and the earth stand fast by His command, and afterward, when He calleth you, lo! from the earth ye will emerge.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>Allah, mankind, </p></td><td class='root'>5</td><td class='root'>1</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=
+19&t=katheer&l=arb&nAya=93#19_93'>19:93</a></td><td class='ara'>إِن كُلُّ مَن فِى السَّمٰوٰتِ وَالأَرضِ إِلّا ءاتِى الرَّحمٰنِ عَبدًا</td><td>There is none in the heavens and the earth but cometh unto the Beneficent as a slave.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'></p></td><td class='root'>4</td><td class='root'>2</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=
+34&t=katheer&l=arb&nAya=23#34_23'>34:23</a></td><td class='ara'>وَلا تَنفَعُ الشَّفٰعَةُ عِندَهُ إِلّا لِمَن أَذِنَ لَهُ حَتّىٰ إِذا فُزِّعَ عَن قُلوبِهِم قالوا ماذا قالَ رَبُّكُم قالُوا الحَقَّ وَهُوَ العَلِىُّ الكَبيرُ</td><td>No intercession availeth with Him save for him whom He permitteth. Yet, when fear is banished from their hearts, they say: What was it that your Lord said? They say: The Truth. And He is the Sublime, the Great.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>Allah, the believers , the Angels, </p></td><td class='root'>4</td><td class='root'>2</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=
+19&t=katheer&l=arb&nAya=64#19_64'>19:64</a></td><td class='ara'>وَما نَتَنَزَّلُ إِلّا بِأَمرِ رَبِّكَ لَهُ ما بَينَ أَيدينا وَما خَلفَنا وَما بَينَ ذٰلِكَ وَما كانَ رَبُّكَ نَسِيًّا</td><td>We (angels) come not down save by commandment of thy Lord. Unto Him belongeth all that is before us and all that is behind us and all that is between those two, and thy Lord was never forgetful -<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>Prophet Muhammad, Allah, the Angels, </p></td><td class='root'>3</td><td class='root'>2</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=
+3&t=katheer&l=arb&nAya=2#3_2'>3:2</a></td><td class='ara'>اللَّهُ لا إِلٰهَ إِلّا هُوَ الحَىُّ القَيّومُ</td><td>Allah! There is no god save Him, the Alive, the Eternal.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>Allah, </p></td><td class='root'>3</td><td class='root'>2</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=
+13&t=katheer&l=arb&nAya=9#13_9'>13:9</a></td><td class='ara'>عٰلِمُ الغَيبِ وَالشَّهٰدَةِ الكَبيرُ المُتَعالِ</td><td>He is the Knower of the Invisible and the Visible, the Great, the High Exalted.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'></p></td><td class='root'>3</td><td class='root'>2</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=
+20&t=katheer&l=arb&nAya=111#20_111'>20:111</a></td><td class='ara'>وَعَنَتِ الوُجوهُ لِلحَىِّ القَيّومِ وَقَد خابَ مَن حَمَلَ ظُلمًا</td><td>And faces humble themselves before the Living, the Eternal. And he who beareth (a burden of) wrongdoing is indeed a failure (on that day).<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'></p></td><td class='root'>2</td><td class='root'>2</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=
+19&t=katheer&l=arb&nAya=95#19_95'>19:95</a></td><td class='ara'>وَكُلُّهُم ءاتيهِ يَومَ القِيٰمَةِ فَردًا</td><td>And each one of them will come unto Him on the Day of Resurrection, alone.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>all creations, Allah, </p></td><td class='root'>1</td><td class='root'>1</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=
+40&t=katheer&l=arb&nAya=3#40_3'>40:3</a></td><td class='ara'>غافِرِ الذَّنبِ وَقابِلِ التَّوبِ شَديدِ العِقابِ ذِى الطَّولِ لا إِلٰهَ إِلّا هُوَ إِلَيهِ المَصيرُ</td><td>The Forgiver of sin, the Accepter of repentance, the Stern in punishment, the Bountiful. There is no Allah save Him. Unto Him is the journeying.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>Allah, </p></td><td class='root'>1</td><td class='root'>2</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=
+19&t=katheer&l=arb&nAya=94#19_94'>19:94</a></td><td class='ara'>لَقَد أَحصىٰهُم وَعَدَّهُم عَدًّا</td><td>Verily He knoweth them and numbereth them with (right) numbering.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>all creations, </p></td><td class='root'>0</td><td class='root'>1</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=
+40&t=katheer&l=arb&nAya=1#40_1'>40:1</a></td><td class='ara'>بِسمِ اللَّهِ الرَّحمٰنِ الرَّحيمِ حم</td><td>Ha. Mim.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'></p></td><td class='root'>0</td><td class='root'>0</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=
+3&t=katheer&l=arb&nAya=1#3_1'>3:1</a></td><td class='ara'>بِسمِ اللَّهِ الرَّحمٰنِ الرَّحيمِ الم</td><td>Alim. Lam. Mim.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'></p></td><td class='root'>0</td><td class='root'>0</td></tr></table><h2>Following are <font color='green'> 2 </font> verses <font color='red'> directly </font> related to 53:26 from Ibn Kathir:</h2><table class='stats' cellspacing='0'><tr><th class='hed'>No.</th><th class='hed'>Arabic</th><th class='hed'>English</th><th class='hed'>Common Roots</th><th class='hed'>Level</th></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=	2&t=katheer&l=arb&nAya=255#2_255'>2:255</a></td><td class='ara'>اللَّهُ لا إِلٰهَ إِلّا هُوَ الحَىُّ القَيّومُ لا تَأخُذُهُ سِنَةٌ وَلا نَومٌ لَهُ ما فِى السَّمٰوٰتِ وَما فِى الأَرضِ مَن ذَا الَّذى يَشفَعُ عِندَهُ إِلّا بِإِذنِهِ يَعلَمُ ما بَينَ أَيديهِم وَما خَلفَهُم وَلا يُحيطونَ بِشَيءٍ مِن عِلمِهِ إِلّا بِما شاءَ وَسِعَ كُرسِيُّهُ السَّمٰوٰتِ وَالأَرضَ وَلا يَـٔودُهُ حِفظُهُما وَهُوَ العَلِىُّ العَظيمُ</td><td>Allah! There is no deity save Him, the Alive, the Eternal. Neither slumber nor sleep overtaketh Him. Unto Him belongeth whatsoever is in the heavens and whatsoever is in the earth. Who is he that intercedeth with Him save by His leave? He knoweth that which is in front of them and that which is behind them, while they encompass nothing of His knowledge save what He will. His throne includeth the heavens and the earth, and He is never weary of preserving them. He is the Sublime, the Tremendous.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>Allah, mankind, the earth and skies, </p></td><td class='root'>5</td><td class='root'>1</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=	34&t=katheer&l=arb&nAya=23#34_23'>34:23</a></td><td class='ara'>وَلا تَنفَعُ الشَّفٰعَةُ عِندَهُ إِلّا لِمَن أَذِنَ لَهُ حَتّىٰ إِذا فُزِّعَ عَن قُلوبِهِم قالوا ماذا قالَ رَبُّكُم قالُوا الحَقَّ وَهُوَ العَلِىُّ الكَبيرُ</td><td>No intercession availeth with Him save for him whom He permitteth. Yet, when fear is banished from their hearts, they say: What was it that your Lord said? They say: The Truth. And He is the Sublime, the Great.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>Allah, the believers , the Angels, </p></td><td class='root'>2</td><td class='root'>2</td></tr></table><h2>Following are <font color='green'> 2 </font> verses <font color='red'> directly </font> related to 21:28 from Ibn Kathir:</h2><table class='stats' cellspacing='0'><tr><th class='hed'>No.</th><th class='hed'>Arabic</th><th class='hed'>English</th><th class='hed'>Common Roots</th><th class='hed'>Level</th></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=	2&t=katheer&l=arb&nAya=255#2_255'>2:255</a></td><td class='ara'>اللَّهُ لا إِلٰهَ إِلّا هُوَ الحَىُّ القَيّومُ لا تَأخُذُهُ سِنَةٌ وَلا نَومٌ لَهُ ما فِى السَّمٰوٰتِ وَما فِى الأَرضِ مَن ذَا الَّذى يَشفَعُ عِندَهُ إِلّا بِإِذنِهِ يَعلَمُ ما بَينَ أَيديهِم وَما خَلفَهُم وَلا يُحيطونَ بِشَيءٍ مِن عِلمِهِ إِلّا بِما شاءَ وَسِعَ كُرسِيُّهُ السَّمٰوٰتِ وَالأَرضَ وَلا يَـٔودُهُ حِفظُهُما وَهُوَ العَلِىُّ العَظيمُ</td><td>Allah! There is no deity save Him, the Alive, the Eternal. Neither slumber nor sleep overtaketh Him. Unto Him belongeth whatsoever is in the heavens and whatsoever is in the earth. Who is he that intercedeth with Him save by His leave? He knoweth that which is in front of them and that which is behind them, while they encompass nothing of His knowledge save what He will. His throne includeth the heavens and the earth, and He is never weary of preserving them. He is the Sublime, the Tremendous.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>Allah, mankind, the earth and skies, </p></td><td class='root'>5</td><td class='root'>2</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=	34&t=katheer&l=arb&nAya=23#34_23'>34:23</a></td><td class='ara'>وَلا تَنفَعُ الشَّفٰعَةُ عِندَهُ إِلّا لِمَن أَذِنَ لَهُ حَتّىٰ إِذا فُزِّعَ عَن قُلوبِهِم قالوا ماذا قالَ رَبُّكُم قالُوا الحَقَّ وَهُوَ العَلِىُّ الكَبيرُ</td><td>No intercession availeth with Him save for him whom He permitteth. Yet, when fear is banished from their hearts, they say: What was it that your Lord said? They say: The Truth. And He is the Sublime, the Great.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>Allah, the believers , the Angels, </p></td><td class='root'>1</td><td class='root'>2</td></tr></table><h2>Following are <font color='green'> 1 </font> verses <font color='red'> directly </font> related to 20:110 from Ibn Kathir:</h2><table class='stats' cellspacing='0'><tr><th class='hed'>No.</th><th class='hed'>Arabic</th><th class='hed'>English</th><th class='hed'>Common Roots</th><th class='hed'>Level</th></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=	2&t=katheer&l=arb&nAya=255#2_255'>2:255</a></td><td class='ara'>اللَّهُ لا إِلٰهَ إِلّا هُوَ الحَىُّ القَيّومُ لا تَأخُذُهُ سِنَةٌ وَلا نَومٌ لَهُ ما فِى السَّمٰوٰتِ وَما فِى الأَرضِ مَن ذَا الَّذى يَشفَعُ عِندَهُ إِلّا بِإِذنِهِ يَعلَمُ ما بَينَ أَيديهِم وَما خَلفَهُم وَلا يُحيطونَ بِشَيءٍ مِن عِلمِهِ إِلّا بِما شاءَ وَسِعَ كُرسِيُّهُ السَّمٰوٰتِ وَالأَرضَ وَلا يَـٔودُهُ حِفظُهُما وَهُوَ العَلِىُّ العَظيمُ</td><td>Allah! There is no deity save Him, the Alive, the Eternal. Neither slumber nor sleep overtaketh Him. Unto Him belongeth whatsoever is in the heavens and whatsoever is in the earth. Who is he that intercedeth with Him save by His leave? He knoweth that which is in front of them and that which is behind them, while they encompass nothing of His knowledge save what He will. His throne includeth the heavens and the earth, and He is never weary of preserving them. He is the Sublime, the Tremendous.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>Allah, mankind, the earth and skies, </p></td><td class='root'>6</td><td class='root'>2</td></tr></table><h2>Following are <font color='green'> 6 </font> verses <font color='red'> directly </font> related to 30:25 from Ibn Kathir:</h2><table class='stats' cellspacing='0'><tr><th class='hed'>No.</th><th class='hed'>Arabic</th><th class='hed'>English</th><th class='hed'>Common Roots</th><th class='hed'>Level</th></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=	22&t=katheer&l=arb&nAya=65#22_65'>22:65</a></td><td class='ara'>أَلَم تَرَ أَنَّ اللَّهَ سَخَّرَ لَكُم ما فِى الأَرضِ وَالفُلكَ تَجرى فِى البَحرِ بِأَمرِهِ وَيُمسِكُ السَّماءَ أَن تَقَعَ عَلَى الأَرضِ إِلّا بِإِذنِهِ إِنَّ اللَّهَ بِالنّاسِ لَرَءوفٌ رَحيمٌ</td><td>Hast thou not seen how Allah hath made all that is in the earth subservient unto you? And the ship runneth upon the sea by His command, and He holdeth back the heaven from falling on the earth unless by His leave. Lo! Allah is, for mankind, Full of Pity, Merciful.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>mankind, Allah, </p></td><td class='root'>4</td><td class='root'>2</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=	35&t=katheer&l=arb&nAya=41#35_41'>35:41</a></td><td class='ara'>إِنَّ اللَّهَ يُمسِكُ السَّمٰوٰتِ وَالأَرضَ أَن تَزولا وَلَئِن زالَتا إِن أَمسَكَهُما مِن أَحَدٍ مِن بَعدِهِ إِنَّهُ كانَ حَليمًا غَفورًا</td><td>Lo! Allah graspeth the heavens and the earth that they deviate not, and if they were to deviate there is not one that could grasp them after Him. Lo! He is ever Clement, Forgiving.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>the earth and skies, Allah, </p></td><td class='root'>3</td><td class='root'>2</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=	17&t=katheer&l=arb&nAya=52#17_52'>17:52</a></td><td class='ara'>يَومَ يَدعوكُم فَتَستَجيبونَ بِحَمدِهِ وَتَظُنّونَ إِن لَبِثتُم إِلّا قَليلًا</td><td>A day when He will call you and ye will answer with His praise, and ye will think that ye have tarried but a little while.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>mankind, Allah, </p></td><td class='root'>2</td><td class='root'>2</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=	36&t=katheer&l=arb&nAya=53#36_53'>36:53</a></td><td class='ara'>إِن كانَت إِلّا صَيحَةً وٰحِدَةً فَإِذا هُم جَميعٌ لَدَينا مُحضَرونَ</td><td>It is but one Shout, and behold them brought together before Us!<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>mankind, Allah, </p></td><td class='root'>0</td><td class='root'>2</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=	79&t=katheer&l=arb&nAya=13#79_13'>79:13</a></td><td class='ara'>فَإِنَّما هِىَ زَجرَةٌ وٰحِدَةٌ</td><td>Surely it will need but one shout,<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>the second blow of the Horn, </p></td><td class='root'>0</td><td class='root'>1</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=	79&t=katheer&l=arb&nAya=14#79_14'>79:14</a></td><td class='ara'>فَإِذا هُم بِالسّاهِرَةِ</td><td>And lo! they will be awakened.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>those who deny resurrection, </p></td><td class='root'>0</td><td class='root'>1</td></tr></table><h2>Following are <font color='green'> 3 </font> verses <font color='red'> directly </font> related to 34:23 from Ibn Kathir:</h2><table class='stats' cellspacing='0'><tr><th class='hed'>No.</th><th class='hed'>Arabic</th><th class='hed'>English</th><th class='hed'>Common Roots</th><th class='hed'>Level</th></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=	2&t=katheer&l=arb&nAya=255#2_255'>2:255</a></td><td class='ara'>اللَّهُ لا إِلٰهَ إِلّا هُوَ الحَىُّ القَيّومُ لا تَأخُذُهُ سِنَةٌ وَلا نَومٌ لَهُ ما فِى السَّمٰوٰتِ وَما فِى الأَرضِ مَن ذَا الَّذى يَشفَعُ عِندَهُ إِلّا بِإِذنِهِ يَعلَمُ ما بَينَ أَيديهِم وَما خَلفَهُم وَلا يُحيطونَ بِشَيءٍ مِن عِلمِهِ إِلّا بِما شاءَ وَسِعَ كُرسِيُّهُ السَّمٰوٰتِ وَالأَرضَ وَلا يَـٔودُهُ حِفظُهُما وَهُوَ العَلِىُّ العَظيمُ</td><td>Allah! There is no deity save Him, the Alive, the Eternal. Neither slumber nor sleep overtaketh Him. Unto Him belongeth whatsoever is in the heavens and whatsoever is in the earth. Who is he that intercedeth with Him save by His leave? He knoweth that which is in front of them and that which is behind them, while they encompass nothing of His knowledge save what He will. His throne includeth the heavens and the earth, and He is never weary of preserving them. He is the Sublime, the Tremendous.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>Allah, mankind, the earth and skies, </p></td><td class='root'>4</td><td class='root'>2</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=	53&t=katheer&l=arb&nAya=26#53_26'>53:26</a></td><td class='ara'>وَكَم مِن مَلَكٍ فِى السَّمٰوٰتِ لا تُغنى شَفٰعَتُهُم شَيـًٔا إِلّا مِن بَعدِ أَن يَأذَنَ اللَّهُ لِمَن يَشاءُ وَيَرضىٰ</td><td>And how many angels are in the heavens whose intercession availeth naught save after Allah giveth leave to whom He chooseth and accepteth.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>the Angels, </p></td><td class='root'>2</td><td class='root'>2</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=	21&t=katheer&l=arb&nAya=28#21_28'>21:28</a></td><td class='ara'>يَعلَمُ ما بَينَ أَيديهِم وَما خَلفَهُم وَلا يَشفَعونَ إِلّا لِمَنِ ارتَضىٰ وَهُم مِن خَشيَتِهِ مُشفِقونَ</td><td>He knoweth what is before them and what is behind them, and they cannot intercede except for him whom He accepteth, and they quake for awe of Him.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>the Angels, Allah, </p></td><td class='root'>1</td><td class='root'>2</td></tr></table><h2>Following are <font color='green'> 3 </font> verses <font color='red'> directly </font> related to 19:64 from Ibn Kathir:</h2><table class='stats' cellspacing='0'><tr><th class='hed'>No.</th><th class='hed'>Arabic</th><th class='hed'>English</th><th class='hed'>Common Roots</th><th class='hed'>Level</th></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=	93&t=katheer&l=arb&nAya=3#93_3'>93:3</a></td><td class='ara'>ما وَدَّعَكَ رَبُّكَ وَما قَلىٰ</td><td>Thy Lord hath not forsaken thee nor doth He hate thee,<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>Prophet Muhammad, </p></td><td class='root'>2</td><td class='root'>1</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=	93&t=katheer&l=arb&nAya=1#93_1'>93:1</a></td><td class='ara'>بِسمِ اللَّهِ الرَّحمٰنِ الرَّحيمِ وَالضُّحىٰ</td><td>By the morning hours<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'></p></td><td class='root'>0</td><td class='root'>0</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=	93&t=katheer&l=arb&nAya=2#93_2'>93:2</a></td><td class='ara'>وَالَّيلِ إِذا سَجىٰ</td><td>And by the night when it is stillest,<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'></p></td><td class='root'>0</td><td class='root'>0</td></tr></table><h2>Following are <font color='green'> 1 </font> verses <font color='red'> directly </font> related to 3:2 from Ibn Kathir:</h2><table class='stats' cellspacing='0'><tr><th class='hed'>No.</th><th class='hed'>Arabic</th><th class='hed'>English</th><th class='hed'>Common Roots</th><th class='hed'>Level</th></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=	2&t=katheer&l=arb&nAya=255#2_255'>2:255</a></td><td class='ara'>اللَّهُ لا إِلٰهَ إِلّا هُوَ الحَىُّ القَيّومُ لا تَأخُذُهُ سِنَةٌ وَلا نَومٌ لَهُ ما فِى السَّمٰوٰتِ وَما فِى الأَرضِ مَن ذَا الَّذى يَشفَعُ عِندَهُ إِلّا بِإِذنِهِ يَعلَمُ ما بَينَ أَيديهِم وَما خَلفَهُم وَلا يُحيطونَ بِشَيءٍ مِن عِلمِهِ إِلّا بِما شاءَ وَسِعَ كُرسِيُّهُ السَّمٰوٰتِ وَالأَرضَ وَلا يَـٔودُهُ حِفظُهُما وَهُوَ العَلِىُّ العَظيمُ</td><td>Allah! There is no deity save Him, the Alive, the Eternal. Neither slumber nor sleep overtaketh Him. Unto Him belongeth whatsoever is in the heavens and whatsoever is in the earth. Who is he that intercedeth with Him save by His leave? He knoweth that which is in front of them and that which is behind them, while they encompass nothing of His knowledge save what He will. His throne includeth the heavens and the earth, and He is never weary of preserving them. He is the Sublime, the Tremendous.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>Allah, mankind, the earth and skies, </p></td><td class='root'>3</td><td class='root'>2</td></tr></table><h2>Following are <font color='green'> 1 </font> verses <font color='red'> directly </font> related to 20:111 from Ibn Kathir:</h2><table class='stats' cellspacing='0'><tr><th class='hed'>No.</th><th class='hed'>Arabic</th><th class='hed'>English</th><th class='hed'>Common Roots</th><th class='hed'>Level</th></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=	31&t=katheer&l=arb&nAya=13#31_13'>31:13</a></td><td class='ara'>وَإِذ قالَ لُقمٰنُ لِابنِهِ وَهُوَ يَعِظُهُ يٰبُنَىَّ لا تُشرِك بِاللَّهِ إِنَّ الشِّركَ لَظُلمٌ عَظيمٌ</td><td>And (remember) when Luqman said unto his son, when he was exhorting him: O my dear son! Ascribe no partners unto Allah. Lo! to ascribe partners (unto Him) is a tremendous wrong -<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>Luqman, son of Luqman, </p></td><td class='root'>1</td><td class='root'>1</td></tr></table><h2>Following are <font color='green'> 4 </font> verses <font color='red'> directly </font> related to 40:3 from Ibn Kathir:</h2><table class='stats' cellspacing='0'><tr><th class='hed'>No.</th><th class='hed'>Arabic</th><th class='hed'>English</th><th class='hed'>Common Roots</th><th class='hed'>Level</th></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=	13&t=katheer&l=arb&nAya=41#13_41'>13:41</a></td><td class='ara'>أَوَلَم يَرَوا أَنّا نَأتِى الأَرضَ نَنقُصُها مِن أَطرافِها وَاللَّهُ يَحكُمُ لا مُعَقِّبَ لِحُكمِهِ وَهُوَ سَريعُ الحِسابِ</td><td>See they not how we aim to the land, reducing it of its outlying parts? (When) Allah doometh there is none that can postpone His doom, and He is swift at reckoning.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>the infidels of Quraish, Allah, the Earth, </p></td><td class='root'>1</td><td class='root'>0</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=	15&t=katheer&l=arb&nAya=49#15_49'>15:49</a></td><td class='ara'>نَبِّئ عِبادى أَنّى أَنَا الغَفورُ الرَّحيمُ</td><td>Announce, (O Muhammad) unto My slaves that verily I am the Forgiving, the Merciful,<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>Allah, </p></td><td class='root'>1</td><td class='root'>2</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=	14&t=katheer&l=arb&nAya=34#14_34'>14:34</a></td><td class='ara'>وَءاتىٰكُم مِن كُلِّ ما سَأَلتُموهُ وَإِن تَعُدّوا نِعمَتَ اللَّهِ لا تُحصوها إِنَّ الإِنسٰنَ لَظَلومٌ كَفّارٌ</td><td>And He giveth you of all ye ask of Him, and if ye would count the bounty of Allah ye cannot reckon it. Lo! man is verily a wrong-doer, an ingrate.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>mankind, Allah, bounties of Allah, </p></td><td class='root'>0</td><td class='root'>0</td></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=	15&t=katheer&l=arb&nAya=50#15_50'>15:50</a></td><td class='ara'>وَأَنَّ عَذابى هُوَ العَذابُ الأَليمُ</td><td>And that My doom is the dolorous doom.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'>Allah, punishment of Allah, </p></td><td class='root'>0</td><td class='root'>2</td></tr></table><h2>Following are <font color='green'> 1 </font> verses <font color='red'> directly </font> related to 3:1 from Ibn Kathir:</h2><table class='stats' cellspacing='0'><tr><th class='hed'>No.</th><th class='hed'>Arabic</th><th class='hed'>English</th><th class='hed'>Common Roots</th><th class='hed'>Level</th></tr><tr><td class='aya'><a href='http://qurancomplex.com/Quran/tafseer/Tafseer.asp?nSora=	2&t=katheer&l=arb&nAya=1#2_1'>2:1</a></td><td class='ara'>بِسمِ اللَّهِ الرَّحمٰنِ الرَّحيمِ الم</td><td>Alif. Lam. Mim.<br><h4>Pronoun Referents:</h4><p style='font-size:0.75em'></p></td><td class='root'>0</td><td class='root'>0</td></tr></table><h2>Concept Cloud from Pronoun Referents: </h2>
+<p> Clink on the concept to see all occurrences </p>
+ &nbsp; <a href="referents.php?con=1" class="word size9">allah</a> &nbsp; &nbsp; <a href="referents.php?con=179" class="word size0">the infidels of quraish</a> &nbsp; &nbsp; <a href="referents.php?con=182" class="word size3">the earth and skies</a> &nbsp; &nbsp; <a href="referents.php?con=356" class="word size0">punishment of allah</a> &nbsp; &nbsp; <a href="referents.php?con=443" class="word size1">all creations</a> &nbsp; &nbsp; <a href="referents.php?con=10" class="word size5">mankind</a> &nbsp; &nbsp; <a href="referents.php?con=664" class="word size0">bounties of allah</a> &nbsp; &nbsp; <a href="referents.php?con=191" class="word size0">the second blow of the horn</a> &nbsp; &nbsp; <a href="referents.php?con=19" class="word size4">the angels</a> &nbsp; &nbsp; <a href="referents.php?con=18" class="word size0">the earth</a> &nbsp; &nbsp; <a href="referents.php?con=16" class="word size2">the believers</a> &nbsp; &nbsp; <a href="referents.php?con=655" class="word size0">son of luqman</a> &nbsp; &nbsp; <a href="referents.php?con=654" class="word size0">luqman</a> &nbsp; &nbsp; <a href="referents.php?con=190" class="word size0">those who deny resurrection</a> &nbsp; &nbsp; <a href="referents.php?con=4" class="word size1">prophet muhammad</a> &nbsp;<p>
+Let me know your <a href="http://www.textminingthequran.com/?p=48"> feedback and comments </a>
+
+<script>
+var SARF_SAGHEER = [ //'Verbs_VerbNo,Verbs_Words_Corpus_Root_English,Verbs_Type,Verbs_class,Verbs_Sura,Verbs_Verse,Meaning-English,Meaning-Urdu,Count,perfect,Imperfect,Imperative,Active-participle,Passive-participle,Verbal-noun,root,type,class',
+'1,fEl,b1,فتح,2,24,to do,كرنا ,105,فَعَلَ, يَفْعَلُ, اِفْعَلْ , فَاعِل, مَفْعُول, فِعْل,ف ع ل ,1,فتح',
+'2,ftH,b1,فتح,2,76,"to open, to give victory",کھولنا,29,فَتَحَ, يَفْتَحُ, اِفْتَحْ, فَاتِح, مَفْتُوح, فَتْح,ف ت ح ,1,فتح',
+'3,bEv,b1,فتح,2,56,to raise; to resurrect, پہنچا نا,65,بَعَثَ, يَبْعَثُ, اِبْعَثْ, بَاعِث, مَبْعُوث, بَعْث,ب ع ث ,1,فتح',
+'4,jEl,b1,فتح,2,19,"to make, to place, to set up",کردینا,346,جَعَلَ, يَجْعَلُ, اِجْعَلْ, جَاعِل, مَجْعُول, جَعْل,ج ع ل ,1,فتح',
+'5,jmE,b1,فتح,3,25,"to gather,  to collect",جمع کرنا,40,جَمَعَ, يَجْمَعُ, اِجْمَعْ, جَامِع, مَجْمُوع, جَمْع,ج م ع ,1,فتح',
+'6,*hb,b1,فتح,2,17,to go,جانا ,35,ذَهَبَ, يَذْهَبُ, اِذْهَبْ, ذَاهِب, -, ذِهَاب,ذ ه ب ,1,فتح',
+'7,rfE,b1,فتح,2,63,to raise,اونچا كرنا,28,رَفَعَ, يَرْفَعُ, اِرْفَعْ, رَافِع, مَرْفُوع, رَفْع,ر ف ع ,1,فتح',
+'8,sHr,b1,فتح,7,116,"to enchant, to bewitch",جادو كرنا,49,سَحَرَ, يَسْحَرُ, اِسْحَرْ, سَاحِر, مَسْحُور, سِحْر,س ح ر ,1,فتح',
+'9,slH,b1,فتح,3,39,to act righteously,نيك هونا,131,صَلَحَ, يَصْلَحُ, اِصْلَحْ, صَالِح, -, مَصْلَحَة,ص ل ح ,1,فتح',
+'10,lEn,b1,فتح,2,88,to curse,لعنت كرنا,27,لَعَنَ, يَلْعَنُ, اِلْعَنْ, لَاعِن, مَلْعُون, لَعْن,ل ع ن ,1,فتح',
+
+'11,nfE,b1,فتح,2,102,to profit,نفع پهنچانا,42,نَفَعَ, يَنْفَعُ, اِنْفَعْ, نَافِع, مَنْفُوع, نَفْع,ن ف ع ,1,فتح',
+'12,nsr,b2,نصر,2,250,to help; to deliver,مدد كرنا,92,نَصَرَ, يَنْصُرُ, اُنْصُرْ, نَاصِر, مَنْصُور, نَصْر,ن ص ر ,1,نصر',
+'13,blg,b2,نصر,2,196,to reach,پهنچنا,49,بلَغَ, يَبْلُغُ, اُبْلُغْ, بَالِغ, -, بُلُوغ,ب ل غ ,1,نصر',
+'14,trk,b2,نصر,,,to leave,چھوڑ دينا,43,تَرَكَ, يَتْرُكُ, اُتْرُكْ, تَارِك, مَتْرُوك, تَرْك  ,ت ر ك ,1,نصر',
+'15,H$r,b2,نصر,4,172,to gather; to bring together,جمع کرنا,43,حَشَرَ, يَحْشُرُ, اُحْشُرْ, حَاشِر, مَحْشُور, حَشْر ,ح ش ر ,1,نصر',
+'16,Hkm,b2,نصر,,,to judge; to rule,فيصله كرنا,80,حَكَمَ, يَحْكُمُ, اُحْكُمْ, حَاكِم, مَحْكُوم, حُكْم,ح ك م ,1,نصر',
+'17,xrj,b2,نصر,2,74,to come out,نكلنا,61,خَرَجَ, يَخْرُجُ, اُخْرُجْ, خَارِج, -, خُرُوج,خ ر ج ,1,نصر',
+'18,xld,b2,نصر,3,15,to live forever,هميشه رهنا,83,خَلَدَ, يَخْلُدُ, اُخْلُدْ, خَالِد, -, خُلُود,خ ل د ,1,نصر',
+'19,xlq,b2,نصر,2,21,to create out of nothing,پيدا كرنا,248,خَلَقَ, يَخْلُقُ, اُخْلُقْ, خَالِق, مَخْلُوق, خَلْق,خ ل ق ,1,نصر',
+
+'20,dxl,b2,نصر,2,58,to enter,داخل هونا,78,دَخَلَ, يَدْخُلُ, اُدْخُلْ, دَاخِل, مَدْخُول, دُخُول,د خ ل ,1,نصر',
+'21,*kr,b2,نصر,,,to remember,ياد كرنا,163,ذَكَرَ, يَذْكُرُ, اُذْكُرْ, ذَاكِر, مَذْكُور, ذِكْر,ذ ك ر ,1,نصر',
+'22,rzq,b2,نصر,2,3,to provide,رزق دينا,122,رَزَقَ, يَرْزُقُ, اُرْزُقْ, رَازِق, مَرْزُوق, رِزْق,ر ز ق ,1,نصر',
+'23,sjd,b2,نصر,2,34,to prostrate,سجده كرنا,49,سَجَدَ, يَسْجُدُ, اُسْجُدْ, سَاجِد, مَسْجُود, سُجُود,س ج د ,1,نصر',
+'24,$Er,b2,نصر,2,9,to perceive,سمجھنا,29,شَعَرَ, يَشْعُرُ, اُشْعُرْ, شَاعِر, -, شُعُور,ش ع ر ,1,نصر',
+'25,$kr,b2,نصر,,,to be grateful,شكر كرنا,63,شَكَرَ, يَشْكُرُ, اُشْكُرْ, شَاكِر, مَشْكُور, شُكْر,ش ك ر ,1,نصر',
+'26,sdq,b2,نصر,2,111,to be true; to say the truth,سچ بولنا,89,صَدَقَ, يَصْدُقُ, اُصْدُقْ, صَادِق, مَصْدُوق, صِدْق,ص د ق ,1,نصر',
+'27,Ebd,b2,نصر,1,5,to worship; to serve,عبادت كرنا,143,عَبَدَ , يَعْبُدُ, اُعْبُدْ, عَابِد, مَعْبُود, عِبَادَة,ع ب د  ,1,نصر',
+'28,fsq,b2,نصر,2,59,to transgress,نافرماني كرنا,54,فَسَقَ, يَفْسُقُ, اُفْسُقْ, فَاسِق, -, فِسْق، فُسُوق,ف س ق ,1,نصر',
+'29,qtl,b2,نصر,2,54,to kill; to slay,قتل كرنا، مارنا,93,قَتَلَ, يَقْتُلُ, اُقْتُلْ, قَاتِل, مَقْتُول, قَتْل,ق ت ل ,1,نصر',
+'30,qEd,b2,نصر,3,168,to sit; to remain behind,بيٹھنا,23,قَعَدَ, يَقْعُدُ, اُقْعُدْ, قَاعِد, -, قُعُود ,ق ع د ,1,نصر',
+'31,ktb,b2,نصر,,,to prescribe; to write,لكھنا,56,كَتَبَ, يَكْتُبُ, اُكْتُبْ, كَاتِب, مَكْتُوب, كِتَابَة,ك ت ب ,1,نصر',
+'32,kfr,b2,نصر,,,to disbelieve; to be ungrateful,انكار كرنا، ناشكري كرنا,461,كَفَرَ, يَكْفُرُ, اُكْفُرْ, كَافِر, مَكْفُور, كُفْر,ك ف ر ,1,نصر',
+'33,mkr,b2,نصر,,,to plot,چال چلنا، مكر كرنا,43,مَكَرَ, يَمْكُرُ, اُمْكُرْ, مَاكِر, مَمْكُور, مَكْر,م ك ر ,1,نصر',
+'34,nZr,b2,نصر,2,50,to look; to wait,ديكھنا,95,نَظَرَ, يَنْظُرُ, اُنْظُرْ, نَاظِر, مَنْظُور, نَظَر,ن ظ ر ,1,نصر',
+'35,Drb,b3,ضرب,2,26,to strike,مارنا,58,ضَرَبَ, يَضْرِبُ, اِضْرِبْ, ضَارِب, مَضْرُوب, ضَرْب,ض ر ب ,1,ضرب',
+'36,Hml,b3,ضرب,2,248,to carry; to bear,اٹھانا,50,حَمَلَ, يَحْمِلُ, اِحْمِلْ, حَامِل, مَحْمُول, حَمْل,ح م ل ,1,ضرب',
+'37,sbr,b3,ضرب,2,175,to bear with patience,صبر كرنا,94,صَبَرَ, يَصْبِرُ, اِصْبِرْ, صَابِر, -, صَبْر,ص ب ر ,1,ضرب',
+'38,Zlm,b3,ضرب,2,54,to wrong,ظلم كرنا,266,ظَلَمَ, يَظْلِمُ, اِظْلِمْ, ظَالِم, مَظْلُوم, ظُلْم,ظ ل م ,1,ضرب',
+'39,Erf,b3,ضرب,2,146,to recognize,پهچاننا,59,عَرَفَ, يَعْرِفُ , اِعْرِفْ, عَارِف, مَعْرُوف, مَعْرِفَة,ع ر ف ,1,ضرب',
+'40,Eql,b3,ضرب,2,44,to understand; to comprehend,عقل كا استعمال كرنا,49,عَقَلَ, يَعْقِلُ, اِعْقِلْ, عَاقِل, مَعْقُول, عَقْل,ع ق ل ,1,ضرب',
+'41,gfr,b3,ضرب,2,58,to forgive;  to cover,بخش دينا,95,غَفَرَ, يَغْفِرُ, اِغْفِرْ, غَافِر, مَغْفُور, مَغْفِرَة,غ ف ر ,1,ضرب',
+'42,qdr,b3,ضرب,2,264,to decree; to have power; ..,,47,قَدَرَ, يَقْدِرُ, اِقْدِرْ, قَادِر, مَقْدُور, قَدْر، قُدْرَة,ق د ر ,1,ضرب',
+'43,k*b,b3,ضرب,,,to lie,جھوٹ بولنا,76,كَذَبَ, يَكْذِبُ, اِكْذِبْ, كَاذِب, مَكْذُوب, كَذِب ,ك ذ ب ,1,ضرب',
+'44,ksb,b3,ضرب,,,to earn,كمانا,62,كَسَبَ, يَكْسِبُ, اِكْسِبْ, كَاسِب, مَكْسُوب, كَسْب,ك س ب ,1,ضرب',
+'45,mlk,b3,ضرب,,,to possess,مالك هونا,49,مَلَكَ, يَمْلِكُ, اِمْلِكْ, مَالِك, مَمْلُوك, مِلْك,م ل ك ,1,ضرب',
+'46,smE,b4,سمع,2,7,to hear,سننا,100,سَمِعَ, يَسْمَعُ, اِسْمَعْ, سَامِع, مَسْمُوع, سَمَاعَة,س م ع ,1,سمع',
+'47,Hzn,b4,سمع,2,38,to be grieved,غم كرنا,30,حَزِنَ, يَحْزَنُ, اِحْزَنْ, حَازِن, -, حُزْن,ح ز ن ,1,سمع',
+'48,Hsb,b4,سمع,2,214,to think;  to consider,گمان كرنا,46,حَسِبَ, يَحْسَبُ, اِحْسَبْ, حَاسِب, مَحْسُوب, حَسْب,ح س ب ,1,سمع',
+'49,HfZ,b4,سمع,4,34,to guard; to protect,حفاظت كرنا,27,حَفِظَ, يَحْفَظُ, اِحْفَظْ, حَافِظ, مَحْفُوظ, حِفْظ ,ح ف ظ ,1,سمع',
+'50,xsr,b4,سمع,3,85,to lose,نقصان ميں پڑنا,51,خَسِرَ, يَخْسَرُ, اِخْسَرْ, خَاسِر, -, خُسْر,خ س ر ,1,سمع',
+'51,rHm,b4,سمع,2,286,to have mercy on someone,رحم كرنا,148,رَحِمَ, يَرْحَمُ, اِرْحَمْ, رَاحِم, مَرْحُوم, رَحْمَة,ر ح م ,1,سمع',
+'52,$hd,b4,سمع,2,84,to bear witness; to be present,گواهي دينا,66,شَهِدَ, يَشْهَدُ, اِشْهَدْ, شَاهِد, مَشْهُود, شَهُود,ش ه د ,1,سمع',
+'53,Elm,b4,سمع,2,13,to know,جاننا,518,عَلِمَ, يَعْلَمُ, اِعْلَمْ, عَالِم, مَعْلُوم, عِلْم,ع ل م ,1,سمع',
+'54,Eml,b4,سمع,2,25,to work; to do,عمل كرنا,318,عَمِلَ, يَعْمَلُ, اِعْمَلْ, عَامِل, مَعْمُول, عَمَل,ع م ل ,1,سمع',
+'55,krh,b4,سمع,,,to dislike;  to detest,كراهت كرنا، ناپسند كرنا,25,كَرِهَ, يَكْرَهُ, اِكْرَهْ, كَارِه, مَكْرُوه, كُرْه,ك ر ه ,1,سمع',
+'56,w*r,b5,وعد,26,166,to leave behind,چھوڑ دينا,45,وَذَرَ, يَذَرُ, ذَرْ, وَاذِر, مَوْذُور, وَذْر,و ذ ر ,1,سمع',
+'57,wDE,b5,وعد,,,to put; to set,ركھ دينا,22,وَضَعَ, يَضَعُ, ضَعْ, وَاضِع, مَوْضُوع, وُضْع,و ض ع ,1,سمع',
+'58,wqE,b5,وعد,,,to befall,واقع هونا,20,وَقَعَ, يَقَعُ, قَعْ, وَاقِع, -, وَقُوع,و ق ع ,1,سمع',
+'59,whb,b5,وعد,3,8,to grant,دينا,23,وَهَبَ, يَهَبُ, هَبْ, وَاهِب, مَوْهُوب, وَهْب,و ه ب ,1,سمع',
+'60,wjd,b5,وعد,2,96,to find,پانا,107,وَجَدَ, يَجِدُ, جِدْ, وَاجِد, مَوْجُود, وُجُود,و ج د ,1,سمع',
+'61,wrv,b5,وعد,4,176,to inherit,وارث هونا,19,وَرِثَ, يَرِثُ, رِثْ, وَارِث, مَوْرُوث, وَرَاثَة,و ر ث ,1,سمع',
+'62,wzr,b5,وعد,6,31,to bear a load,بوجھ اٹھانا,19,وَزَرَ, يَزِرُ, زِرْ, وَازِر, مَوْزُور, وِزْر,و ز ر ,1,سمع',
+'63,wsf,b5,وعد,6,100,to describe; to ascribe,بيان كرنا,14,وَصَفَ, يَصِفُ, صِفْ, وَاصِف, مَوْصُوف, وَصْف,و ص ف ,1,سمع',
+'64,wEd,b5,وعد,2,268,to promise,وعده كرنا,124,وَعَدَ, يَعِدُ, عِدْ, وَاعِد, مَوْعُود, وَعْد,و ع د ,1,سمع',
+'65,wqy,b5,وعد,2,201,to protect;  to save,بچانا,19,وَقَى, يَقِي, قِ, وَاق, مَوْقى, وِقَايَة,و ق ى,1,سمع',
+'66,wsE,b5,وعد,,,to embrace;  to comprehend,سما لينا، وسيع هونا,25,وَسِعَ, يَوْسَعُ, اِيْسَعْ, وَاسِع, مَوْسُوع, سَعَة,و س ع ,1,سمع',
+'67,twb,b6,قال,2,37,to repent,پلٹنا,72,تَابَ, يَتُوبُ, تُبْ, تَائِب, -, تَوْبَة,ت و ب ,1,سمع',
+'68,*wq,b6,قال,3,106,to taste,چكھنا,42,ذَاقَ, يَذُوقُ, ذُقْ, ذَائِق, مَذَاق, ذَوْق,ذ و ق ,1,سمع',
+'69,fwz,b6,قال,3,185,to succeed; to gain victory,كامياب هونا,26,فَازَ, يَفُوزُ, فُزْ, فَائِز, -, فُوْز ,ف و ز ,1,سمع',
+'70,qwl,b6,قال,2,8,to say,كهنا,1719,قَالَ, يَقُولُ, قُلْ, قَائِل, مَقَال, قَوْل,ق و ل ,1,سمع',
+'71,qwm,b6,قال,2,20,to stand up; to raise,كھڑا هونا,55,قَامَ, يَقُومُ, قُمْ, قَائِم, -, قِيَام، قَوْمَة,ق و م ,1,سمع',
+'72,kwn,b6,قال,,,to be,هونا,1361,كَانَ, يَكُونُ, كُنْ, كَائِن, -, كَوْن,ك و ن ,1,سمع',
+'73,mwt,b6,قال,2,132,to die,مرنا، بے جان هونا,93,مَاتَ, يَمُوتُ, مُتْ, مَائِت, -, مَوْت,م و ت ,1,سمع',
+'74,xwf,b6,قال,2,112,to be afraid,ڈرنا,112,خَافَ, يَخَافُ, خِفْ, خَائِف, -, خَوْف,خ و ف ,1,سمع',
+'75,kwd,b6,قال,,,to become nigh; to be close to,قريب هونا,24,كَادَ, يَكَادُ, كِدْ, كَائِد, -, كَوْد,ك و د ,1,سمع',
+'76,kyd,b6,قال,,,to plot against,خفيه تدبير كرنا,35,كَادَ, يَكِيدُ, كِدْ, كَائِد, مَكَيد, كَيْد,ك ي د ,1,سمع',
+'77,zyd,b6,قال,2,10,to increase,زياده كرنا,51,زَادَ, يَزِيدُ, زِدْ, زَائِد, مَزِيد, زِيَادَة,ز ي د ,1,سمع',
+'78,tlw,b7,دعا,,,to recite,تلاوت كرنا,61,تَلَا, يَتْلُو, اُتْلُ, تَالٍ, مَتْلُو, تِلَاوَة,ت ل و ,1,سمع',
+'79,dEw,b7,دعا,2,23,to call; to pray,پكارنا، بلانا,197,دَعَا, يَدْعُو, اُدْعُ, دَاعٍ, مَدْعُوّ, دُعَاء,د ع و ,1,سمع',
+'80,Efw,b7,دعا,2,52,to forgo,معاف كرنا,30,عَفَا, يَعْفُو, اُعْفُ, عَافٍ, مَعْفُو, عَفْو,ع ف و ,1,سمع',
+'81,bgy,b7,دعا,3,83,"to want, to seek",چاهنا، زيادتي كرنا,29,بَغَى, يَبْغِي, اِبْغِ, بَاغٍ, مَبْغَى, بَغْى,ب غ ى,1,سمع',
+'82,jry,b7,دعا,,,to flow,چلنا ، جاري هونا,60,جَرَى, يَجْرِي, اِجْرِ, جَارٍ, -, جَرَيَان,ج ر ى,1,سمع',
+'83,jzy,b7,دعا,,,to reward,بدله دينا,116,جَزَى, يَجْزِي, اِجْزِ, جَازٍ, مَجْزِي, جَزَاء,ج ز ى,1,سمع',
+'84,qDy,b7,دعا,,,to decree;  to fulfil,فيصله كرنا، پورا كرنا,62,قَضَى, يَقْضِي, اِقْضِ, قَاضٍ, مَقْضِيّ,  قَضَاء ,ق ض ى,1,سمع',
+'85,kfy,b7,دعا,,,to suffice,كافي هونا، ضرورت پورا كرنا,32,كَفَى, يَكْفِي, اِكْفِ, كَافٍ, مَكْفِيّ, كِفَايَة,ك ف ى,1,سمع',
+'86,hdy,b7,دعا,1,6,to guide;  to direct,راسته بتانا,163,هَدَى, يَهْدِي, اِهْدِ, هَادٍ, مَهْدِيّ, هَدْى,ه د ى,1,سمع',
+'87,x$y,b7,دعا,2,150,to fear,ڈرنا، خوف كھانا,48,خَشِيَ, يَخْشَى, اِخْشَ, خَاشٍ, -, خَشِيَّة,خ ش ي ,1,سمع',
+'88,rDy,b7,دعا,,,"to be satisfied, to be content",راضي هونا، خوش هونا,57,رَضِيَ, يَرْضَى, اِرْضَ, رَاضٍ, مَرْضِيّ, رِضْوَان,ر ض ي ,1,سمع',
+'89,nsy,b7,دعا,2,44,to forget,بھول جانا,36,نَسِيَ, يَنْسَى, اِنْسَ, نَاسٍ, مَنْسِيّ, نِسْيَان,ن س ي ,1,سمع',
+'90,sAl,b8,أمر,2,61,to ask,پوچھنا,119,سَأَلَ, يَسْأَلُ, سَلْ  اِسْئَلْ, سَائِل, مَسْئُول, سُؤَال   ,س أ  ل ,1,سمع',
+'91,qrA,b8,أمر,,,to read; to recite,پڑھنا,17,قَرَأَ, يَقْرَأُ, اِقْرَأْ, قَارِئ, مَقْرُوء, قِرَاءَة,ق ر أ  ,1,سمع',
+'92,Ax*,b8,أمر,2,55,to take; to catch,پكڑنا، لينا,142,أَخَذَ, يَأْخُذُ, خُذْ, آخِذ, مَأْخُوذ, أَخْذ,أ  خ ذ ,1,سمع',
+'93,Akl,b8,أمر,,,to eat,كھانا,101,أَكَلَ, يَأْكُلُ, كُلْ, آكِل, مَأْكُول, أَكْل,أ  ك ل ,1,سمع',
+'94,Amr,b8,أمر,2,27,to command,حكم دينا,232,أَمَرَ, يَأْمُرُ, مُرْ, آمِر, مَأْمُور, أَمْر,أ  م ر ,1,سمع',
+'95,Amn,b8,أمر,2,196,to be safe; to feel safe; to trust,امن ميں هونا,25,أَمِنَ, يَأَمَنُ, ائْمَنْ, آمِن, -, أَمْن ,أ  م ن ,1,سمع',
+'96,Aby,b8,أمر,,,to refuse,سخت انكار كرنا,13,أَبَى, يَأْبَى, اِئْبَ, آبٍ, -, اِبَاء,أ  ب ى,1,سمع',
+'97,rAy,b8,أمر,2,55,to see,ديكھنا,269,رَأَى, يَرَى, رَ, رَاءٍ, مَرْءِيّ, رَأْيٌ,ر أ  ى,1,سمع',
+'98,Aty,b8,أمر,,,to come,آنا,263,أَتَى, يَأْتِي, اِئْتِ, آتٍ, مَأْتِيّ, اِتْيَان,أ  ت ى,1,سمع',
+'99,$yA,b8,أمر,2,20,"to will, to wish",چاهنا,277,شَاءَ, يَشَاءُ, شَأْ, شَاءٍ, -, مَشِيئَة,ش ي ء ,1,سمع',
+'100,swA,b8,أمر,,,to be evil,برُا هونا,39,سَاءَ, يَسُوءُ, سُؤْ, سَاوِئ, -, سَوْء,س و ء ,1,سمع',
+'101,jyA,b8,أمر,2,71,to come,آنا,236,جَاءَ, يَجِيءُ, جِئْ, جَاءٍ, -, مَجِيء,ج ي ء ,1,سمع',
+'102,Dll,b9,ضَلَّ,2,108,to go astray; to err; to waste,گمراه هونا,113,ضَلَّ, يَضِلُّ , ضِلَّ, ضَالّ, -, ضَلَالَة، ضَلَال,ض ل ل,1,ضَلَّ',
+'103,Hyy,b9,ضَلَّ,4,86,to live; to greet,جينا، زنده رهنا,83,حَيَّ, يَحْيَا, حَيَّ, حَيّ, -, حَيَاة,ح ي ي,1,ضَلَّ',
+'104,rdd,b9,ضَلَّ,2,109,to give back;  to return,لوٹانا، واپس كرنا,45,رَدَّ, يَرُدُّ, رُدَّ, رَادّ, مَرْدُود, رَدّ,ر د د,1,ضَلَّ',
+'105,sdd,b9,ضَلَّ,3,99,to turn away;  to hinder,روكنا، ركنا,39,صَدَّ, يَصُدُّ, صُدَّ, صَادّ, مَصْدُود, صَدّ,ص د د ,1,ضَلَّ',
+'106,Drr,b9,ضَلَّ,2,102,to hurt; to harm,نقصان پهنچانا,31,ضَرَّ, يَضُرُّ, ضُرَّ, ضَارّ, مَضْرُور, ضَرّ,ض ر ر,1,ضَلَّ',
+'107,Znn,b9,ضَلَّ,2,46,to think;   to believe,گمان كرنا، يقين كرنا,68,ظَنَّ, يَظُنُّ, ظُنَّ, ظَانّ, -, ظَنّ,ظ ن ن,1,ضَلَّ',
+'108,Edd,b9,ضَلَّ,14,34,to count,گننا، شمار كرنا,17,عَدَّ, يَعُدُّ, عُدَّ, عَادّ, مَعْدُود, عَدّ,ع د د,1,ضَلَّ',
+'109,grr,b9,ضَلَّ,,,to beguile,دھوكه دينا,24,غَرَّ, يَغِرُّ, غِرَّ, غَارّ, مَغْرُور, غُرُور,غ ر ر,1,ضَلَّ',
+'110,mdd,b9,ضَلَّ,13,3,to spread out;  to stretch,پھيلانا، مهلت دينا,17,مَدَّ, يَمُدُّ, مُدَّ, مَادّ, مَمْدُود, مَدّ,م د د,1,ضَلَّ',
+'111,mss,b9,ضَلَّ,2,80,to touch,چھونا,58,مَسَّ, يَمَسُّ, مَسَّ, مَاسّ, مَمْسُوس, مَسّ,م س س,1,ضَلَّ',
+'112,wdd,b9,ضَلَّ,2,96,to love; to wish,چاهنا,18,وَدَّ, يَوَدُّ, وَدَّ, وَادّ, مَوْدُود, وُدّ,و د د,1,ضَلَّ',
+'113,bdl,d2,سَبَّحَ,2,59,to change,بدل دينا,33,بَدَّلَ, يُبَدِّلُ, بَدِّلْ, مُبَدِّل, مُبَدَّل, تَبْدِيْل,ب د ل ,2,سَبَّحَ',
+'114,b$r,d2,سَبَّحَ,2,25,to give good news,بشارت، خوشخبري دينا,48,بَشَّرَ, يُبَشِّرُ, بَشِّرْ, مُبَشِّر, مُبَشَّر, تَبْشِيْر,ب ش ر ,2,سَبَّحَ',
+'115,byn,d2,سَبَّحَ,2,68,to make clear,بيان كرنا، واضح كرنا,35,بَيَّنَ, يُبَيِّنُ, بَيِّنْ, مُبَيِّن, مُبَيَّن, تَبْيِيْن,ب ي ن ,2,سَبَّحَ',
+'116,zyn,d2,سَبَّحَ,2,212,to adorn / make st  to seem fair,خوشنما بنانا، زينت دينا,26,زَيَّنَ, يُزَيِّنُ, زَيِّنْ, مُزَيِّن, مُزَيَّن, تَزْيِين,ز ي ن ,2,سَبَّحَ',
+'117,sbH,d2,سَبَّحَ,2,30,to glorify;  to praise,پاكي بيان كرنا,48,سَبَّحَ, يُسَبِّحُ, سَبِّحْ, مُسَبِّح, مُسَبَّح, تَسْبِيْح,س ب ح ,2,سَبَّحَ',
+'118,sxr,d2,سَبَّحَ,2,164,to bring under control,مسخر كنرا,26,سَخَّرَ, يُسَخِّرُ, سَخِّرْ, مُسَخِّر, مُسَخَّر, تَسْخِير ,س خ ر ,2,سَبَّحَ',
+'119,sdq,d2,سَبَّحَ,2,41,to pronounce ss to be true,سچا ماننا، تصديق كرنا,31,صَدَّقَ, يُصَدِّقُ, صَدِّقْ, مُصَدِّق, مُصَدَّق, تَصْدِيْق,ص د ق ,2,سَبَّحَ',
+'120,E*b,d2,سَبَّحَ,2,284,to punish;  to torment,عذاب دينا,49,عَذَّبَ, يُعَذِّبُ, عَذِّبْ, مُعَذِّب, مُعَذَّب, تَعْذِيْب,ع ذ ب ,2,سَبَّحَ',
+'121,Elm,d2,سَبَّحَ,2,31,to teach,سكھانا,42,عَلَّمَ, يُعَلِّمُ, عَلِّمْ, مُعَلِّم, مُعَلَّم, تَعْلِيْم,ع ل م ,2,سَبَّحَ',
+'122,qdm,d2,سَبَّحَ,2,95,to send forward,آگے بھيجنا، سامنے لانا,27,قَدَّمَ, يُقَدِّمُ, قَدِّمْ, مُقَدِّم, مُقَدَّم, تَقْدِيْم,ق د م ,2,سَبَّحَ',
+'123,k*b,d2,سَبَّحَ,,,to accuse ss of falsehood,جھٹلانا,198,كَذَّبَ, يُكَذِّبُ, كَذِّبْ, مُكَذِّب, مُكَذَّب, تَكْذِيْب,ك ذ ب ,2,سَبَّحَ',
+'124,nbw,d2,سَبَّحَ,,,to declare;  to apprise,خبر دينا، بتانا,46,نَبَّأَ, يُنَبِّئُ, نَبِّئْْ, مُنَبِّئ, مُنَبَّئْ, تَنْبِئَة,ن ب و  ,2,سَبَّحَ',
+'125,nzl,d2,سَبَّحَ,2,23,to send down,اُتارنا,79,نَزَّلَ, يُنَزِّلُ, نَزِّلْ, مُنَزِّل, مُنَزَّل, تَنْزِيْل,ن ز ل ,2,سَبَّحَ',
+'126,njy,d2,سَبَّحَ,,,to deliver;  to rescue,نجات دينا,39,نَجَّى, يُنَجِّي, نَجِّ, مُنَجِّي, مُنَجَّى, تَنْجِيَة,ن ج ى,2,سَبَّحَ',
+'127,wly,d2,سَبَّحَ,2,115,to turn,رخ كرنا، منه موڑنا,45,وَلَّى, يُوَلِّي, وَلِّ, مُوَلِّي, -, تَوْلِيَة,و ل ى,2,سَبَّحَ',
+'128,jhd,d3,جَاهَدَ,2,218,to struggle;  to strive,جهاد كرنا,31,جَاهَدَ, يُجَاهِدُ, جَاهِدْ, مُجَاهِد, مُجَاهَد, مُجَاهَدَة,ج ه د ,3,جَاهَدَ',
+'129,qtl,d3,جَاهَدَ,2,190,to fight,قتال كرنا، لڑنا,54,قَاتَلَ, يُقَاتِلُ, قَاتِلْ, مُقَاتِل, مُقَاتَل, مُقَاتَلَة,ق ت ل ,3,جَاهَدَ',
+'130,ndy,d3,جَاهَدَ,,,to call out; to cry unto,پكارنا,44,نَادَى, يُنَادِي , نَادِ,مُنَادٍ, مُنَادَى   , مُنَادَاة,ن د ى,3,جَاهَدَ',
+'131,nfq,d3,جَاهَدَ,3,167,to play hypocricy,منافقت كرنا,34,نَافَقَ, يُنَافِقُ, نَافِقْ, مُنَافِق, -, مُنَافَقَة,ن ف ق ,3,جَاهَدَ',
+'132,hjr,d3,جَاهَدَ,2,218,to migrate,هجرت كرنا، چھوڑنا,24,هَاجَرَ, يُهَاجِرُ, هَاجِرْ, مُهَاجِر, -, مُهَاجَرَة,ه ج ر ,3,جَاهَدَ',
+'133,bsr,d4,أَسْلَمَ,2,17,to see; to watch,ديكھنا,36,أَبْصَرَ, يُبْصِرُ, أَبْصِرْ, مُبْصِر, مُبْصَر, إِبْصَار,ب ص ر ,4,أَسْلَمَ',
+'134,Hsn,d4,أَسْلَمَ,2,58,to do good; to do excellently,اچھي طرح كرنا,72,أَحْسَنَ, يُحْسِنُ, أَحْسِنْ, مُحْسِن, مُحْسَن, إِحْسَان,ح س ن ,4,أَسْلَمَ',
+'135,xrj,d4,أَسْلَمَ,2,22,to bring forth,باهر نكالنا,108,أَخْرَجَ, يُخْرِجُ, أَخْرِجْ, مُخْرِج, مُخْرَج, إِخْرَاج,خ ر ج ,4,أَسْلَمَ',
+'136,dxl,d4,أَسْلَمَ,3,185,to make ss enter,داخل كرنا,45,أَدْخَلَ, يُدْخِلُ, أَدْخِلْ, مُدْخِل, مُدْخَل, إِدْخَال,د خ ل ,4,أَسْلَمَ',
+'137,rjE,d4,أَسْلَمَ,,,to send back; to take back,لوٹانا، واپس كرنا,33,أَرْجَعَ, يُرْجِعُ, أَرْجِعْ, مُرْجِع, مُرْجَع, إِرْجَاع ,ر ج ع ,4,أَسْلَمَ',
+'138,rsl,d4,أَسْلَمَ,2,119,to send,بھيجنا,135,أَرْسَلَ, يُرْسِلُ, أَرْسِلْ, مُرْسِل, مُرْسَل, إِرْسَال,ر س ل ,4,أَسْلَمَ',
+'139,srf,d4,أَسْلَمَ,3,147,to exceed; to be extravagant,اسراف كرنا,23,أَسْرَفَ, يُسْرِفُ, اَسْرِفْ, مُسْرِف, -, إِسْرَاف ,س ر ف ,4,أَسْلَمَ',
+'140,slm,d4,أَسْلَمَ,2,112,to submit;  to surrender,حكم ماننا,72,أَسْلَمَ, يُسْلِمُ, أَسْلِمْ, مُسْلِم, -, إِسْلَام,س ل م ,4,أَسْلَمَ',
+'141,$rk,d4,أَسْلَمَ,,,to ascribe a partner,شريك كرنا,120,أَشْرَكَ, يُشْرِكُ, أَشْرِكْ, مُشْرِك, مُشْرَك, إِشْرَاك,ش ر ك ,4,أَسْلَمَ',
+'142,sbH,d4,أَسْلَمَ,3,103,to become,هوجانا، صبح كرنا,34,أَصْبَحَ, يُصْبِحُ, أَصْبِحْ, مُصْبِح, -, إِصْبَاح ,ص ب ح ,4,أَسْلَمَ',
+'143,slH,d4,أَسْلَمَ,2,11,to become good; to make good,اصلاح كرنا,40,أَصْلَحَ, يُصْلِحُ, أَصْلِحْ, مُصْلِح, مُصْلَح, إِصْلَاح,ص ل ح ,4,أَسْلَمَ',
+'144,ErD,d4,أَسْلَمَ,2,83,to turn away; to backslide,منه پھيرنا,53,أَعْرَضَ, يُعْرِضُ, أَعْرِضْ, مُعْرِض, -, إِعْرَاض,ع ر ض ,4,أَسْلَمَ',
+'145,grq,d4,أَسْلَمَ,2,50,to drown,ڈبو دينا,21,أَغْرَقَ, يُغْرِقُ, أَغْرِقْ, مُغْرِق, -, إِغْرَاق,غ ر ق ,4,أَسْلَمَ',
+'146,fsd,d4,أَسْلَمَ,2,11,to spread corruption,خراب كرنا، فساد پھيلانا,36,أَفْسَدَ, يُفْسِدُ, أَفْسِدْ, مُفْسِد, مُفْسَد, إِفْسَاد,ف س د ,4,أَسْلَمَ',
+'147,flH,d4,أَسْلَمَ,2,5,to be successful,فلاح پانا,40,أَفْلَحَ, يُفْلِحُ, أَفْلِحْ, مُفْلِح, -, إِفْلَاح,ف ل ح ,4,أَسْلَمَ',
+'148,nbt,d4,أَسْلَمَ,2,61,to make st grow; to cause to grow,اگانا,16,أَنْبَتَ, يُنْبِتُ, أَنْبِتْ, مُنْبِت, -, إِنْبِات,ن ب ت ,4,أَسْلَمَ',
+'149,n*r,d4,أَسْلَمَ,2,6,to warn,ڈرانا,70,أَنْذَرَ, يُنْذِرُ, أَنْذِرْ, مُنْذِر, مُنْذَر, إِنْذَار,ن ذ ر ,4,أَسْلَمَ',
+'150,nzl,d4,أَسْلَمَ,2,4,to send down; to reveal,نازل كرنا,190,أَنْزَلَ, يُنْزِلُ, أَنْزِلْ, مُنْزِل, مُنْزَل, إِنْزَال,ن ز ل ,4,أَسْلَمَ',
+'151,n$A,d4,أَسْلَمَ,6,6,to produce/ create;  to make st grow,كھڑا كرنا,22,أَنْشَأَ, يُنْشِئُ, أَنْشِئْ, مُنْشِئ, مُنْشَئ, إِنْشَاء,ن ش أ,4,أَسْلَمَ',
+'152,nEm,d4,أَسْلَمَ,1,7,to favor; to bestow grace,انعام كرنا,17,أَنْعَمَ, يُنْعِمُ, أَنْعِمْ, مُنْعِم, مُنْعَم, إِنْعَام,ن ع م ,4,أَسْلَمَ',
+'153,nfq,d4,أَسْلَمَ,2,3,to spend,خرچ كرنا,69,أَنْفَقَ, يُنْفِقُ, أَنْفِقْ, مُنْفِق, مُنْفَق, إِنْفَاق,ن ف ق ,4,أَسْلَمَ',
+'154,nkr,d4,أَسْلَمَ,,,to not recognize; to deny,انكار كرنا,25,أَنْكَرَ, يُنْكِرُ, أَنْكِرْ, مُنْكِر, مُنْكَر, إِنْكَار ,ن ك ر ,4,أَسْلَمَ',
+'155,hlk,d4,أَسْلَمَ,,,to destroy,هلاك كرنا,58,أَهْلَكَ, يُهْلِكُ, أَهْلِكْ, مُهْلِك, مُهْلَك, إِهْلَاك,ه ل ك ,4,أَسْلَمَ',
+'156,tmm,d4,أَسْلَمَ,2,124,to complete,پورا كرنا,17,أَتَمَّ, يُتِمُّ, أَتْمِمْ, مُتِمّ, مُتَمّ, إِتْمَام,ت م م,4,أَسْلَمَ',
+'157,Hbb,d4,أَسْلَمَ,2,165,to love,محبت كرنا,64,أَحَبَّ, يُحِبُّ, أَحْبِبْ, مُحِبّ, مُحَبّ, إِحْبَاب,ح ب ب,4,أَسْلَمَ',
+'158,Hll,d4,أَسْلَمَ,2,187,to make lawful; to cause to dwell,حلال كرنا، ركھوانا,21,أَحَلَّ, يُحِلُّ, أَحْلِلْ, مُحِلّ, مُحَلّ, إِحْلَال ,ح ل ل,4,أَسْلَمَ',
+'159,srr,d4,أَسْلَمَ,2,77,to conceal; to speak secretly,چھپانا,18,أَسَرَّ, يُسِرُّ, أَسْرِرْ, مُسِرّ, مُسَرّ, إِسْرَار,س ر ر,4,أَسْلَمَ',
+'160,Dll,d4,أَسْلَمَ,2,26,to leave in error; to send astray,گمراه كرنا,68,أَضَلَّ, يُضِلُّ, أَضْلِلْ, مُضِلّ, مُضَلّ, إِضْلَال,ض ل ل,4,أَسْلَمَ',
+'161,Edd,d4,أَسْلَمَ,2,24,to prepare; to make st ready,تياري كرنا,20,أَعَدَّ, يُعِدُّ, أَعْدِدْ, مُعِدّ, مُعَدّ, إِعْدَاد,ع د د,4,أَسْلَمَ',
+'162,*wq,d4,أَسْلَمَ,6,65,to make sb taste,چكھانا,22,أَذَاقَ, يُذِيقُ, أَذِقْ, مُذِيق, مُذَاق, إِذَاقَة,ذ و ق ,4,أَسْلَمَ',
+'163,rwd,d4,أَسْلَمَ,2,26,to intend;  to wish,اراده كرنا,139,أَرَادَ, يُرِيدُ, أَرِدْ, مُرِيد, مُرَاد, إِرَادَة,ر و د ,4,أَسْلَمَ',
+'164,syb,d4,أَسْلَمَ,,,to befall; to inflict,آپڑنا,65,أَصَابَ, يُصِيبُ, أَصِبْ, مُصِيب, مُصَاب, إِصَابَة,ص ي ب ,4,أَسْلَمَ',
+'165,TwE,d4,أَسْلَمَ,2,285,to obey,اطاعت كرنا,74,أَطَاعَ, يُطِيعُ, أَطِعْ, مُطِيع, مُطَاع, إِطَاعَة,ط وع ,4,أَسْلَمَ',
+'166,qwm,d4,أَسْلَمَ,2,3,to establish;  to set upright,كھڑا كرنا,67,أَقَامَ, يُقِيمُ, أَقِمْ, مُقِيم, مُقَام, إِقَامَة,ق و م ,4,أَسْلَمَ',
+'167,mwt,d4,أَسْلَمَ,2,28,to cause someone to die,موت دينا,21,أَمَاتَ, يُمِيتُ, أَمِتْ, مُمِيت, مُمَات, إِمَاتَة,م و ت ,4,أَسْلَمَ',
+'168,Hyy,d4,أَسْلَمَ,2,28,to give life,زندگي دينا,53,أَحْيَا, يُحْيِي, أَحْيِ, مُحْيٍ, مُحْيَا, إِحْيَاء,ح ي ي,4,أَسْلَمَ',
+'169,xfy,d4,أَسْلَمَ,2,271,to conceal,چھپانا,18,أَخْفَى, يُخْفِي, أَخْفِ, مُخْفٍ, مُخْفَى, إِخْفَاء,خ ف ى,4,أَسْلَمَ',
+'170,rAy,d4,أَسْلَمَ,2,73,to show,دِكھانا,44,أَرَى, يُرِي, أَرِ, مُرٍ, مُرً, إِرَاءَ ة,ر أ ى,4,أَسْلَمَ',
+'171,gny,d4,أَسْلَمَ,3,10,to enrich,كام آنا، غني كرنا,41,أَغْنَى, يُغْنِي, أَغْنِ, مُغْنٍ, مُغْنَى, إِغْنَاء,غ ن ى,4,أَسْلَمَ',
+'172,lqy,d4,أَسْلَمَ,2,195,to throw; to cast; to place,ڈالنا,71,أَلْقَى, يُلقِي, أَلْقِ, مُلقٍ, مُلقَى, إِلقَاء,ل ق ى,4,أَسْلَمَ',
+'173,njy,d4,أَسْلَمَ,,,to rescue; to save; to deliver,نجات دينا,23,أَنْجَى, يُنْجِي, أَنْجِ, مُنْجٍ, مُنْجَى, إِنْجَاء,ن ج ى,4,أَسْلَمَ',
+'174,wHy,d4,أَسْلَمَ,3,44,to reveal;  to inspire,وحي كرنا,72,أَوْحَى, يُوحِي, أَوْحِ, مُوحٍ, مُوحَى, إِيحَاء,و ح ى,4,أَسْلَمَ',
+'175,wfy,d4,أَسْلَمَ,2,40,to fulfil,پورا كرنا,18,أَوْفَى, يُوفِي, أَوْفِ, مُوفٍ, مُوفَى, إِيفَاء,و ف ى,4,أَسْلَمَ',
+'176,Amn,d4,أَسْلَمَ,2,3,to believe,ايمان لانا,782,آمَنَ, يُؤْمِنُ, آمِنْ, مُؤْمِن, مُؤْمَن, إِيمَان,أ م ن ,4,أَسْلَمَ',
+'177,Aty,d4,أَسْلَمَ,,,to give,دينا,274,آ تَى, يُؤْتِي, آتِ, مُؤْتِي, مُؤْتَى, إِيتَاء,أ ت ى,4,أَسْلَمَ',
+'178,A*y,d4,أَسْلَمَ,,,to give trouble; to harm; to annoy,تكليف دينا,16,آذَى, يُؤْذِي, آذِ, مُؤْذِي, مُؤْذَى, إِيذَاء,أ ذ ى,4,أَسْلَمَ',
+'179,fkr,d5,تَدَبَّرَ,,,to think over; to reflect,تفكر كرنا، غور كنا,17,تَفَكَّرَ, يَتَفَكَّرُ, تَفَكَّرْ, مُتَفَكِّر, مُتَفَكَّر, تَفَكُّر,ف ك ر,5,تَدَبَّرَ',
+'180,*kr,d5,تَدَبَّرَ,,,to receive admonition; to remember,نصيحت پكڑنا,51,تَذَكَّرَ, يَتَذَكَّرُ, تَذَكَّرْ, مُتَذَكِّر, مُتَذَكَّر, تَذَكُّر,ذ ك ر,5,تَدَبَّرَ',
+'181,wkl,d5,تَدَبَّرَ,,,to put one\'s trust,بھروسه كرنا,44,تَوَكَّلَ, يَتَوَكَّلُ, تَوَكَّلْ, مُتَوَكِّل, مُتَوَكَّل, تَوَكُّل,و ك ل,5,تَدَبَّرَ',
+'182,byn,d5,تَدَبَّرَ,2,109,to become clear,ظاهر هونا، واضح هونا,18,تَبَيَّنَ, يَتَبَيَّنُ, تَبَيَّنْ, مُتَبَيِّن, مُتَبَيَّن, تَبَيُّن,ب ي ن,5,تَدَبَّرَ',
+'183,rbs,d5,تَدَبَّرَ,2,226,to wait & watch for opportunity,انتظار كرنا,17,تَرَبَّصَ, يَتَرَبَّصُ, تَرَبَّصْ, مُتَرَبِّص, مُتَرَبَّص, تَرَبُّص,ر ب ص,5,تَدَبَّرَ',
+'184,wly,d5,تَدَبَّرَ,2,64,to turn away; to take for friend,دوستي كرنا، منه موڑنا,79,تَوَلَّى, يَتَوَلَّى, تَوَلَّ, مُتَوَلٍّ, مُتَوَلَّى, تَوَلٍّ,و ل ي,5,تَدَبَّرَ',
+'185,wfy,d5,تَدَبَّرَ,2,234,to make sb die; to receive in full,جان نكالنا,25,تَوَفَّى, يَتَوَفَّى, تَوَفَّ, مُتَوَفٍّ, مُتَوَفَّى, تَوَفٍّ,و ف ي,5,تَدَبَّرَ',
+'186,brk,d6,تَدَارَسَ,,,to be blessed or exalted,با بركت هونا,9,تَبَارَكَ, يَتَبَارَكُ, تَبَارَكْ, مُتَبَارِك, -, تَبَارُك,ب ر ك,6,تَدَارَسَ',
+'187,sAl,d6,تَدَارَسَ,4,1,to ask each other,آپس ميں پوچھنا,9,تَسَاءَلَ, يَتَسَاءَلُ, تَسَاءَلْ, مُتَسَاءِل, مُتَسَاءَل, تَسَاءُل,س أ ل,6,تَدَارَسَ',
+'188,xlf,d7,اِخْتَلَفَ,,,to differ,اختلاف كرنا,52,اِخْتَلَفَ, يَخْتَلِفُ, اِخْتَلِفْ, مُخْتَلِف, مُخْتَلَف, اِخْتِلَاف,خ ل ف,7,اِخْتَلَفَ',
+'189,tbE,d7,اِخْتَلَفَ,,,to follow,پيروي كرنا، اتباع كرنا,140,اِتَّبَعَ, يَتَّبِعُ, اِتَّبِعْ, مُتَّبِع, مُتَّبَع, اِتِّبَاع,ت ب ع,7,اِخْتَلَفَ',
+'190,Ax*,d7,اِخْتَلَفَ,,,to take; to adopt,اختيار كرنا,128,اِتَّخَذَ, يَتَّخِذُ, اِتَّخِذْ, مُتَّخِذ, مُتَّخَذ, اِتِّخَاذ,أ خ ذ,7,اِخْتَلَفَ',
+'191,wqy,d7,اِخْتَلَفَ,,,to be on guard; to protect,تقوي كرنا,215,اِتَّقَى, يَتَّقِي, اِتَّقِ, مُتَّقِي, -, اِتِّقَاء,و ق ي,7,اِخْتَلَفَ',
+'192,fry,d7,اِخْتَلَفَ,,,to fabricate a lie,جھوٹ باندھنا,59,اِفْتَرَى, يَفْتَرِي, اِفْتَرِ, مُفْتَرٍ, -, اِفْتِرَاء,ف ر ي,7,اِخْتَلَفَ',
+'193,hdy,d7,اِخْتَلَفَ,,,to find or to follow the right path,هدايت پانا,61,اِهْتَدَى, يَهْتَدِي, اِهْتَدِ, مُهْتَدٍ, -, اِهْتِدَاء,ه د ي,7,اِخْتَلَفَ',
+'194,bgy,d7,اِخْتَلَفَ,19,92,to seek,چاهنا، تلاش كرنا,48,اِبْتَغَى, يَبْتَغِي, اِبْتَغِ, مُبْتَغٍ, مُبْتَغَى, اِبْتِغَاء,ب غ ي,7,اِخْتَلَفَ',
+'195,nhy,d7,اِخْتَلَفَ,,,to refrain; to end,چھوڑ دينا، رك جانا,16,اِنْتَهَى, يَنْتَهِي, اِنْتَهِ, مُنْتَهٍ, -, اِنْتِهَاء,ن ه ي,7,اِخْتَلَفَ',
+'196,qlb,d8,اِنْقَلَبَ,,,to turn around; to return,پھر جانا,20,اِنْقَلَبَ, يَنْقَلِبُ, اِنْقَلِبْ, مُنْقَلِب, -, اِنْقِلَاب,ق ل ب,8,اِنْقَلَبَ',
+'197,byD,d9,اِبْيَضَّ,3,106,to become white,سفيد هونا,3,اِبْيَضَّ, يَبْيَضُّ, اِبْيَضَّ, مُبْيَضٍّ, -, اِبْيِضَاض,ب ي ض,9,اِبْيَضَّ',
+'198,swd,d9,اِبْيَضَّ,3,106,to become black,كالا هونا,3,اِسْوَدَّ, يَسْوَدُّ, اِسْوَدَّ, مُسْوَدٍّ, -, اِسْوِدَاد,س و د,9,اِبْيَضَّ',
+'199,Ejl,d10,اِسْتَغْفَرَ,6,57,to seek ss to hasten,جلدي كرنا,20,اِسْتَعْجَلَ, يَسْتَعْجِلُ, اِسْتَعْجِلْ, مُسْتَعْجِل,  -, اِسْتِعْجَال,ع ج ل,10,اِسْتَغْفَرَ',
+'200,gfr,d10,اِسْتَغْفَرَ,2,199,to ask forgiveness,بخشش مانگنا,42,اِسْتَغْفَرَ, يَسْتَغْفِرُ, اِسْتَغْفِرْ, مُسْتَغْفِر, مُسْتَغْفَر, اِسْتِغْفَار,غ ف ر,10,اِسْتَغْفَرَ',
+'201,kbr,d10,اِسْتَغْفَرَ,,,to act arrogantly,گھمنڈ كرنا,48,اِسْتَكْبَرَ, يَسْتَكْبِرُ, اِسْتَكْبِرْ, مُسْتَكْبِر, -, اِسْتِكْبَار,ك ب ر,10,اِسْتَغْفَرَ',
+'202,hzA,d10,اِسْتَغْفَرَ,2,14,to mock at,ٹھٹھا كرنا,23,اِسْتَهْزَأَ, يَسْتَهْزِئُ, اِسْتَهْزِئْ, مُسْتَهْزِئ, مُسْتَهْزَئ, اِسْتِهْزَاء,ه ز ء,10,اِسْتَغْفَرَ',
+'203,jwb,d10,اِسْتَغْفَرَ,2,186,to accept;  to respond,قبول كرنا,28,اِسْتَجَابَ, يَسْتَجِيب, اِسْتَجِبْ, مُسْتَجِيب, مُسْتَجَاب, اِسْتِجَابَة,ج و ب,10,اِسْتَغْفَرَ',
+'204,TwE,d10,اِسْتَغْفَرَ,2,217,to be able to,كرسكنا,42,اِسْتَطَاعَ, يَسْتَطِيعُ, اِسْتَطِعْ, مُسْتَطِيع, مُسْتَطَاع, اِسْتِطَاعَة,ط و ع,10,اِسْتَغْفَرَ',
+'205,qwm,d10,اِسْتَغْفَرَ,1,6,to be straight;  to act straight,ثابت قدم رهنا,47,اِسْتَقَامَ, يَسْتَقِيمُ, اِسْتَقِمْ, مُسْتَقِيم, -, اِسْتِقَامَة,ق و م,10,اِسْتَغْفَرَ',
+];
+</script>
+</BODY>
+</HTML>
