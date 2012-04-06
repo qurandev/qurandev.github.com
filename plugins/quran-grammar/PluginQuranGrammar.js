@@ -60,10 +60,12 @@ var CORPUS = {
 	},
 	
 	UIgetNearSynonyms: function(lemma){
-		var nearsynonyms = '', synonymFound = false, antonyms='', antonymFound = false, lemmaBare = BuckToBare(lemma);
+		var nearsynonyms = '', synonymFound = false, antonyms='', antonymFound = false; //, lemmaBare = BuckToBare(lemma);
+		//var regexp = RegExp( '\\b' + escapeForRegex(lemma) /*+ '\\b'*/);
 		if(NEAR_SYNONYMS && NEAR_SYNONYMS_METADATA){
 			$.each(NEAR_SYNONYMS, function(lineno, line){
-				if(line.indexOf(lemma) != -1 || BuckToBare(line).indexOf(lemmaBare) != -1 ){ //console.log(lemma + '\t\t' + line);
+				if( /*regexp.test( line ) CHECK FOR EXACT WORD only using regex.. */ 
+					(' ' + line + ' ').indexOf(' ' + lemma +' ') != -1  /*|| BuckToBare(line).indexOf(lemmaBare) != -1*/ ){ //console.log(lemma + '\t\t' + line);
 					if(line.split('||').length <= 1){
 						synonymFound = true; nearsynonyms = '';
 						nearsynonyms += EnToAr(line);
@@ -761,7 +763,7 @@ var NEAR_SYNONYMS = [
 "fEl Eml SnE SdE jrH AjtrH tEmd >mr $>n",
 "HmdN $krN mdHN",
 "skn tbw> vwy vwy bd> HDr xld gny EA$r",
-"<ns >nAs A^dam b$rN", //إنس أناس آدم بشرٌ 
+"n~aAs <ns >nAs A^dam b$rN", //إنس أناس آدم بشرٌ 
 "qdm sbq >qbl",
 "SwtN Sad~a Srx hms HsysN mkAXN tSdypN DbH xwAr $hyq zfyr lhv rkzN SyHp tgyZ SAxp hdN glyN SlSAlN qArEp",
 ">mr >*n Hkm >wSy",
@@ -779,8 +781,15 @@ var NEAR_SYNONYMS = [
 "qad~ma >solafa >asolafato",
 "qara>a talY rat~ala darasa >amolY >amolaY`",
 "Eaduw~N bagoDaA^' $ana_#aAn $aAni} $AnyN",
-"qalob fu&Ad Sador nafos",
+"qalob fu&Ad Sador nafos", //28
 
+"jaAr {sotajaAra Eu*o {sotaEi*o",
+"rab~",
+"malik",
+"$ar~",
+"wasowaAs wasowasa",
+"xan~aAs",
+	
 //ANTONYMS START HERE...
 "||<ivom  bar~",
 "||>aviym  saliym",
@@ -818,7 +827,7 @@ var NEAR_SYNONYMS_METADATA = {
 	"8": {"topic": "Work/doing work", "info": "faEala Eamila SanaE SadaE jaraH ijtaraH tEmd amr Sha'n" },
 	"9": {"topic": "Praise & Thanks"},
 	"10": {"topic": "Settling down"},
-	"11": {"topic":"human"},
+	"11": {"topic":"human", "page": 71, "info": "Aadmi. ins, unaas, aadam, bashar."},
 	"12": {"topic":"Going ahead"},
 	"13": {"topic":"noise"},
 	"14": {"topic":"Executing Authority"},
@@ -836,9 +845,20 @@ var NEAR_SYNONYMS_METADATA = {
 	"25": {"topic":"To send forward", "info": "qaddama aslafa"},
 	"26": {"topic":"Read & Recite", "info": "qara'a talaa rattala darasa amlaa"},
 	"27": {"topic":"Enemy", "info": "3aduwwun baghDaa'u shaaniyyun"},
-	"28": {"topic":"The heart, the chest & the self", "info": "qalb fu'ad Sadr nafs"},
-	"": {"topic": "", "page": "", "info": "" },
-	"": {"topic": "", "page": "", "info": "" },
+	"28": {"topic":"The heart, the chest & the self", "page": 483, "info": "qalb fu'ad Sadr nafs"},
+
+
+	"29": {"topic": "Seeking protection", "page": 289, "info": "Ajaar and istijaar. Aa3aza and isti3aza." },
+	"30": {"topic": "Lord", "page": 279, "info": "Rabb. Parvarish karna." },
+	"31": {"topic": "King", "page": 172, "info": "Malik. Badshahi." },
+	"32": {"topic": "Evil", "page": 206, "info": "Shar. Burai." },
+	"33": {"topic": "Whisperer", "page": 485, "info": "Waswaas. dil main baat daalna." },
+	"34": {"topic": "One who withdraws", "page": 392, "info": "Khannas. Jinn. Also pg 326 'peeche ke doosre mustaqqaat'." },
+	"35": {"topic": "", "page": "", "info": "" },
+	"36": {"topic": "", "page": "", "info": "" },
+	"37": {"topic": "", "page": "", "info": "" },
+	"38": {"topic": "", "page": "", "info": "" },
+	"39": {"topic": "", "page": "", "info": "" },
 	};
 	
 	
