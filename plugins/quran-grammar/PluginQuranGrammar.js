@@ -788,7 +788,13 @@ var NEAR_SYNONYMS = [
 "malik",
 "$ar~",
 "wasowaAs wasowasa",
-"xan~aAs",
+"xan~aAs jin~ap",
+
+"falaq",
+"xalaqa",
+"gaAsiq waqaba",
+"<i*aA",
+"n~af~a`va`t",
 	
 //ANTONYMS START HERE...
 "||<ivom  bar~",
@@ -848,17 +854,18 @@ var NEAR_SYNONYMS_METADATA = {
 	"28": {"topic":"The heart, the chest & the self", "page": 483, "info": "qalb fu'ad Sadr nafs"},
 
 
-	"29": {"topic": "Seeking protection", "page": 289, "info": "Ajaar and istijaar. Aa3aza and isti3aza." },
+	"29": {"topic": "Seeking protection", "page": 289, "info": "Ajaar and istijaar. Aa3aza and isti3aza. Panah dena, panah maangna." },
 	"30": {"topic": "Lord", "page": 279, "info": "Rabb. Parvarish karna." },
 	"31": {"topic": "King", "page": 172, "info": "Malik. Badshahi." },
 	"32": {"topic": "Evil", "page": 206, "info": "Shar. Burai." },
 	"33": {"topic": "Whisperer", "page": 485, "info": "Waswaas. dil main baat daalna." },
 	"34": {"topic": "One who withdraws", "page": 392, "info": "Khannas. Jinn. Also pg 326 'peeche ke doosre mustaqqaat'." },
-	"35": {"topic": "", "page": "", "info": "" },
-	"36": {"topic": "", "page": "", "info": "" },
-	"37": {"topic": "", "page": "", "info": "" },
-	"38": {"topic": "", "page": "", "info": "" },
-	"39": {"topic": "", "page": "", "info": "" },
+	
+	"35": {"topic": "Dawn", "page": 302, "info": "Falaq. Phaarna." },
+	"36": {"topic": "Creator", "page": 327, "info": "Khalaq. peda karna." },
+	"37": {"topic": "darkness", "page": 337, "info": "Ghaasiq. taareeki chaana." },
+	"38": {"topic": "when", "page": 381, "info": "Iza." },
+	"39": {"topic": "blowers", "page": 313, "info": "naffathaat. phoonkna." },
 	};
 	
 	
