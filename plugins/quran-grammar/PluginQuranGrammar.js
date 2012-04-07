@@ -77,7 +77,7 @@ var CORPUS = {
 						//nearsynonyms = NEAR_SYNONYMS_METADATA[a].split('|')[0] + nearsynonyms + NEAR_SYNONYMS_METADATA[a].split('|')[1];
 						nearsynonyms =  NEAR_SYNONYMS_METADATA[lineno].topic + '<BR/>' + nearsynonyms + '<BR/>' +  
 										(NEAR_SYNONYMS_METADATA[lineno].info ? NEAR_SYNONYMS_METADATA[lineno].info + '<BR/>' : '') + 
-										CORPUS.UIgetNearSynonymsPageLink( NEAR_SYNONYMS_METADATA[lineno].page ); 
+										CORPUS.UIgetNearSynonymsPageLink( lemma, NEAR_SYNONYMS_METADATA[lineno].page ); 
 					}else nearsynonyms += '<BR/>Refer book for details. (User contributions welcome!)<BR/>' + CORPUS.UIgetNearSynonymsPageLink( 1 ) + '&nbsp; (Pls type summary & submit via feedback.)'; 
 				}
 			});
@@ -86,11 +86,50 @@ var CORPUS = {
 			   (antonymFound ? '<BR/><font color=maroon><b>Antonyms</b></font>: ' + antonyms + '<BR/>' : '');
 	},
 	
-	UIgetNearSynonymsPageLink: function(pageno){
-		var TEMPLATE = '<A HREF="http://www.scribd.com/embeds/82681420/content?access_key=key-6w25dij9keuw0vv8keu&amp;start_page=$1" TARGET=_ >$2</A>';
+	UIgetNearSynonymsPageLink: function(lemma, pageno){
+		var TEMPLATE = '<A HREF="javascript:CORPUS.UIsynonymClicked(\'$LEM\', $PAGENO, $1);" TARGET=_>$2</A>';
+		//'<A HREF="javascript:CORPUS.UIsynonymClicked(\'$LEM\', $2, \'http://www.scribd.com/embeds/82681420/content?access_key=key-6w25dij9keuw0vv8keu&amp;start_page=$1\')" TARGET=_ >$2</A>';
 		var mapPageno = pageno ? ( 18 + parseInt(pageno) ) : 1;
 		var linktext = pageno ? 'Page# ' + parseInt(pageno) : 'Book';
-		return TEMPLATE.replace(/\$1/, mapPageno ).replace(/\$2/, linktext );
+		return TEMPLATE.replace(/\$1/g, mapPageno ).replace(/\$2/g, linktext ).replace(/\$LEM/g, lemma).replace(/\$PAGENO/g, pageno);
+	},
+	
+	_scribd_doc: null,
+	
+	UIsynonymClicked: function(lemma, pageno, mappageno){ //var iframeURL = 'http://www.scribd.com/embeds/82681420/content?access_key=key-6w25dij9keuw0vv8keu&amp;start_page=$1'; iframeURL = iframeURL.replace(/\$1/g, mappageno);
+		if( !$('#book') || $('#book').length <= 0 ){
+			loadExtraFiles('http://www.scribd.com/javascripts/scribd_api.js');
+			$('body').append('<div id=book style="position:fixed; bottom:0; left:0;"><span id=bookclosetop>Close</span><div id="embedded_doc" class=leftcolumn><a href="http://www.scribd.com">Scribd</a></div><div id=bookclose style=text-align:right>Close</div></div>');
+			CORPUS.UILoadPDF(mappageno);
+		}
+		else{ //navigate to the specified page.. mappageno
+			$('#book').show();
+			if(CORPUS._scribd_doc){
+				CORPUS._scribd_doc.api.setPage( mappageno );
+			}
+		}
+		$("#bookclose").click(function() { $('#book').hide(); /*$.unblockUI();*/ });
+		/*$.blockUI({ message: $("#book"), css: {
+			 Xwidth: '425px',
+			 Xheight: '225px',
+			 Xleft: ($(window).width() - 425) /2 + 'px',
+			 Xtop: '10%'
+		}});*/
+		return false;
+	},
+	
+	UILoadPDF: function(mappageno){
+		if(typeof(scribd) == 'undefined' || !scribd || !scribd.Document){
+			setTimeout('CORPUS.UILoadPDF('+ mappageno + ')', 100); //TODO: there must be max number of attempts!!!
+			return;
+		}
+		var scribd_doc  = scribd.Document.getDoc(82681420, 'key-6w25dij9keuw0vv8keu');
+		var onDocReady = function(e){ /*alert('document pdf ready');*/ $('#book').show(); if(scribd_doc) scribd_doc.api.setPage(mappageno); CORPUS._scribd_doc = scribd_doc; }
+		if(scribd_doc){ scribd_doc.addParam('jsapi_version', 1); scribd_doc.addEventListener('docReady', onDocReady);
+			scribd_doc.addParam('height', 785);  scribd_doc.addParam('width', 530); scribd_doc.addParam('auto_size', true);
+			scribd_doc.addParam('mode', 'list'); scribd_doc.addParam('jsapi_version', 2);
+			scribd_doc.write('embedded_doc'); $('#book').show(); // Write the instance
+		}
 	},
 	
 	UIgetSarfSagheer: function(root, form){
