@@ -868,10 +868,22 @@ var NEAR_SYNONYMS = [
 "||>aw~al A^xir",
 ];
 
+var _PDF = "<A HREF=http://ia600705.us.archive.org/12/items/BayyinahE-bookGemsCollection-Linguisticmiracle.com/near-synonyms-nouman-ali-khan-muslimmattersorg.pdf TARGET=_>Source: NearSynonyms PDF - Nouman Ali Khan</A><BR/>";
 var NEAR_SYNONYMS_METADATA = {
 	"0": {"topic": "The Sky", "page": 83, 
-		"info": "<BR/>samaa': Essentially means height without limitation. <BR/>  Purely linguistically, anything that is above another thing is a <BR/>  samaa' and that which is below is arDh. This explains the usage in ayah 65:12 and 7:176 <BR/>  where the sky is used for heights above and the word arDh is used for depths below. <BR/><BR/> falak: Though commonly interpreted as the sky, it actually refers to <BR/>  the paths or orbits assigned to planets and stars. These orbits are usually <BR/>  oval in shape and so the word is appropriate in that they <BR/>  resemble the shape of a ship الفُلْك !\
-		See: Aasmaan."},
+		"info": _PDF + "<BR/>samaa': Essentially means height without limitation. <BR/>  Purely linguistically, anything that is above another thing is a <BR/>  samaa' and that which is below is arDh. This explains the usage in ayah 65:12 and 7:176 <BR/>  where the sky is used for heights above and the word arDh is used for depths below. <BR/><BR/> falak: Though commonly interpreted as the sky, it actually refers to <BR/>  the paths or orbits assigned to planets and stars. These orbits are usually <BR/>  oval in shape and so the word is appropriate in that they <BR/>  resemble the shape of a ship الفُلْك !<PRE>\n\n\
+ءآ\n\
+▪ Essentially means height without limitation.\n\
+▪ Purely linguistically, anything that is above another thing is a ءا and that which is\n\
+below is ضرأ . This explains the usage in ayah 65:13\n\
+▪ نهلثم ضرلأا نمو تاوا عبس قلخ يلذا اللها ▪ Where the sky is used for heights above, the word ضرأ is used for depths below.7:176\n\
+▪ ضرلأا إ لدخأ هنكـلو ا هانعفرل انئش ولو\n\n\
+كلف\n\
+▪ Though commonly interpreted as the sky, it actually refers to the paths or orbits assigned to planets and stars.\n\
+▪ These orbits are usually oval in shape and so the word is appropriate in that they\n\
+resemble the shape of a ship كلفلا !\n\
+▪ نوحبس كلف في لكو\n\n\
+		</PRE>See: Aasmaan."},
 		
 	"1": {"topic": "God", "page": 818, "info": "Allah, ilah are the different synonyms.<BR/> See entry: ma3bood in below page. " },
 	"2": {"topic": "Alone", "page": 138, "info": "aHad, waHiyd, fard, furādā different synonyms.<BR/> See entry: akeyla in below page. " },
@@ -884,7 +896,7 @@ var NEAR_SYNONYMS_METADATA = {
 	
 	"8": {"topic": "Work/doing work", "info": "faEala Eamila SanaE SadaE jaraH ijtaraH tEmd amr Sha'n" },
 	"9": {"topic": "Praise & Thanks", "page": 347, "info": "Hamd, Shukr, madH. See: 'Ta3reef karna' topic in book at below page."},
-	"10": {"topic": "Settling down. Also see '(7:92:6) yaghnaw	they (had) lived'", "page": 67, "info": "<BR><PRE>\n\
+	"10": {"topic": "Settling down. Also see '(7:92:6) yaghnaw	they (had) lived'", "page": 67, "info": _PDF + "<BR><PRE>\n\
 نكس ▪ The word نوكس is the opposite of motion or disturbance. When used for settling it\n\
 implies moving from somewhere to a new location.\n\
 ▪ ةنجلا كجوزو تنأ نكسا مدآ اي انلقو (2:35) . This implies that the event of creation was elsewhere.\n\
@@ -912,12 +924,57 @@ word for the desert.\n\
 رشاع ▪ Comes from ع which denotes two distinct things: the number 10 and to mix,\n\
 associate, interfere and be involved in one another’s affairs. The word ةيرشع meaning\n\
 tribe also comes from this root. رشاع then means to live together with a family.\n\
-▪ (4:19) فو ملاب نهورشاعو \n\
-<PRE><BR>See: Abaad hona, bemaana rahnaa."},
+▪ (4:19) فو ملاب نهورشاعو \n\n\
+</PRE>See: Abaad hona, bemaana rahnaa."},
 
-	"11": {"topic":"human", "page": 71, "info": "See: Aadmi, insaan. ins, unaas, aadam, bashar."},
-	"12": {"topic":"Go ahead", "page": 94, "info": "See: agay badhaana"},
-	"13": {"topic":"noise", "page": 100, "info": "What’s all that noise?<PRE>\
+	"11": {"topic":"human", "page": 71, "info":  "ins, unaas, aadam, bashar. " + _PDF + "<PRE>\n\n\
+س إ ▪ Ibn Qutaybah writes that ناس إ is called س إ because he is visible to the eye, unlike Jinn.\n\
+He cites 28:29 إ اوثكما لههلأ لاق اران روطلا بناج نم س آ لههأب راسو لجلأ ا وم ىضق املف اران تس آ\n\
+as evidence.\n\
+▪ Ibn Abbas narrates that يس إ is used because a covenant was made with him and he\n\
+forgot, from the word ناوس ىس ي يس .\n\
+▪ Imam Raghib assumes the word is derived from س أ; meaning a creature predisposed to\n\
+loving and mutual living. From this prospective, the antonym would be شحو.\n\
+▪ Ibn Al Faris combines both of the above; a) to be visible and b) to not have attributes of wild beasts.\n\
+▪ س إ is an Ism Jins; it could mean a person or all of humanity. ناس إ is the same way but\n\
+mostly gets used for all of humanity. The exclusive singular for ناس إ is يس إ and its\n\
+plural is سان, سانأ and انأ.\n\n\
+سانأ\n\
+▪ UNAAS is used for distinct groups, tribes, nations or otherwise.\n\
+▪ 2:60 م م\n\
+سانأ لك ملع دق\n\
+▪ انأ is used for a massive group of people.\n\
+▪ (25:49) ايرثك انأو اماعنأ انقلخ امم هيقس و اتيم ةلدب هب ييحنل\n\
+مدآ ▪ It comes from the root م و لاد و فلأ; meaning compassion, softness and agreement.\n\
+▪ It is the name of the father of humanity; whenever it is used in the Quran, it deals with the history of human creation.\n\
+▪ Something manifest with great beauty.\n\
+▪ ة لا refers to the outer layer of our body, meaning our skin.\n\
+▪ (74:29) لل ةحاول ▪ Its plural is both and راش أ; one reason he is called this is because his skin is more\n\
+visible than other animals.\n\
+▪ The word is used when the intent is to highlight the instinctive animal dimensions of people.\n\
+▪ (23:47) نودباع انل امهموقو انلثم ني ل نمؤنأ اولاقف ▪ (17: 94-95) لاوسر ا اللها ثعبأ اولاق\n\
+▪ لاوسر اكلم ءامسلا نم م لع انلزنل ينن مطم نوشمي ةك لآم ضرلأا في ناك ول لق \n\n\
+</PRE>See: Aadmi, insaan.</PRE>"
+},
+
+	"12": {"topic":"Go ahead", "page": 94, "info": _PDF + "<PRE>\n\n\
+مدق\n\
+▪ To go ahead of someone on one’s feet.\n\
+▪ (11:98) دوروملا درولا سئبو رانلا دروأف ةمايقلا موي هموق مدقي\n\
+▪ مدقتسا is to intend to get ahead and move forward\n\n\
+قبس ▪ To proceed, come side by side, take the lead. قبس is a bet on racing. قباس is used for a\n\
+racehorse and قبس for the give and take done after the race. It implies competition in\n\
+getting ahead.\n\
+▪ (59:10) ناميلإاب انوقبس نيلذا انناوخلإو انل رفغا انبر نولوقي دعب نم اوؤاج نيلذاو\n\
+▪ قبتسا is to do ones best to get ahead in a race\n\
+▪ (12:25) بابلا اقبتساو\n\
+لبقأ ▪ Both لبقأ and لبقتسا are to proceed towards someone or alongside someone\n\
+▪ (68:30) نومولاتي ضعب ع ضعب لبقأف\n\
+▪ (46:24) حير هب لجعتسا ام وه لب انرطمم ضراع اذه اولاق\n\
+م يدوأ لبقتسم اضراع هوأر املف لأ باذع ا ف 6. 	\n\n\
+	</PRE>See: agay badhaana"},
+	
+	"13": {"topic":"noise", "page": 100, "info": _PDF +"<PRE>\
 صَوْت\n\
 ▪ Used for any time of noise whether made from living or non living things. Ibn AlFaris calls defines it as any sound that hits the ears of the listener.\n\
 ▪ (31:19) يرمحلا توصل تاوصلأا ركنأ نإ كتوص نم ضضغاو\n\
@@ -980,13 +1037,66 @@ ground.\n\
 ▪ 15:26\n\
  قَارِعَة  ▪ قَارِعَة   means to strike one thing against another. بابلا عرق is to knock on a door.\n\
 Resurrection has been called ةعراق because a lot of noise will be generated because of\n\
-things striking against one another on that day.	\n\
-See: Awaaz aur uske aqsaam.\
-	</PRE>"},
-	"14": {"topic":"Executing Authority", "page": 451, "info": "See: Hukum deyna."},
-	"15": {"topic":"The Forbidden", "page": 446, "info": "See: Haraam."},
-	"16": {"topic":"To Guide & to be guided", "page": 883, "info": "See: hidayath deyna, paana"},
-	"17": {"topic":"To recognize", "page": 296, "info": "See: pehchaanna"},
+things striking against one another on that day.	\n\n\
+</PRE>See: Awaaz aur uske aqsaam."},
+	
+	"14": {"topic":"Executing Authority", "page": 451, "info": _PDF + "<PRE>\n\n\
+رمأ ▪ رمأ means issue or matter, the plural being رومأ . رمأ also means command and in that\n\
+case its plural is رماوأ. رمأي رمأ means to instruct, to send instructions or to command.\n\
+It can be used for something good or bad is the most general term in the group.\n\
+▪ 3:14\n\
+▪ 34:33\n\n\
+نذأ\n\
+▪ Means to give approval or permission. It also means to command but used only when the command is to conform to divine will.\n\
+▪ 24:36\n\n\
+مكح\n\
+▪ Means to stop someone or something for their/ its own benefit. Also used to leash an\n\
+animal. ةبالدا ةمكح means the leash/ reigns on an animal. مكح has also been\n\
+understood to mean ملظلا نع عنم meaning a command that prevents or prohibits\n\
+wrongdoing.\n\
+▪ 5:47\n\n\
+ىصوأ\n\
+▪ Means to take a binding promise or commitment from someone, to command or to urge & bid someone that is under one’s wing.\n\
+▪ When attributed to اللها it means that the command in question is being issued as\n\
+counsel and the one being commanded needs to understand that it deserves extra attention because it is for his /her own benefit.\n\n\
+	</PRE>See: Hukum deyna."},
+	
+	"15": {"topic":"The Forbidden", "page": 446, "info": _PDF + "<PRE>\n\
+مارح ▪ Things or actions that are forbidden by divine law. Some have identified it as عنملا\n\
+ديدشلا .\n\
+▪ 2:275\n\n\
+تحس\n\
+▪ Is associated specifically with earnings and wealth. Moneys earned from the selling of\n\
+haram or gambling etc. would all be تحس.\n\
+▪ 5:42\n\n\
+</PRE>	See: Haraam."},
+	
+	"16": {"topic":"To Guide & to be guided", "page": 883, "info": _PDF + "<PRE>\n\n\
+ىده ▪ To guide someone to what is good out of one’s grace and favor. The opposite of لضأ .\n\
+▪ It includes natural predispositions like a child suckling from the mother.\n\
+▪ (20:50)\n\
+▪ It includes the turning of one’s world view from disbelief to belief. To guide someone to obedience and away from rebellion. Prophets, messengers and da’ees try to call people to guidance, but in the end Allah is the one who grants it.\n\
+▪ 28:56\n\
+▪ Those who are guided to Islam, to show them the right way now that they are convinced of living by it.\n\n\
+ىدتها\n\
+▪ To acquire, internalize and commit oneself to guidance.\n\
+▪ 10:108\n\n\
+دشر ▪ The opposite of ىوغ . It describes someone who not only accepts the right path but\n\
+makes changes for the better in his / her character.\n\
+▪ 11:78 \n\n\
+</PRE>	See: hidayath deyna, paana"},
+	
+	"17": {"topic":"To recognize", "page": 296, "info": _PDF + "<PRE>\n\n\
+ف\n\
+▪ To recognize something after observing its signs, symbols or identifying markers. It is a\n\
+less comprehensive term than ملع\n\
+▪ (2:146) ءانبأ نوف ي امك هنوف ي باتكلا انيتآ نيلذا\n\n\
+مسوت ▪ مسو means to brand or tattoo something. To scratch off a birth mark. ماسو is the tool\n\
+used to brand or tattoo. سو is beautiful. مسوت is to describe something in great\n\
+detail. To demand identifying.\n\
+▪ (15:75) ين و تملل تايلآ كلذ في نإ 11.\n\
+</PRE>	See: pehchaanna"},
+
 	"18": {"topic":"To Purify", "page": 265, "info": "See: paak karna"},
 	"19": {"topic":"To feel bad", "page": 209, "info": "naqama nakira. See: Buraa lagna."},
 	
