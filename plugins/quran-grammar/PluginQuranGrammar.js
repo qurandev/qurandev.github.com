@@ -766,8 +766,8 @@ var NEAR_SYNONYMS = [
 "<insa`n <ins <insiy~ A^dam ba$ar", //"n~aAs <ns >nAs A^dam b$rN", //إنس أناس آدم بشرٌ 
 "qadimo yasotaqodimu musotaqodimiyn taqad~ama sabaqa saboq >aqobala", //"qdm sbq >qbl",
 
-"SwtN Sad~a Srx hms HsysN mkAXN tSdypN DbH xwAr $hyq zfyr lhv rkzN SyHp tgyZ SAxp hdN glyN SlSAlN qArEp",
-">mr >*n Hkm >wSy",
+"Sawot Sad~a yaSoTarixu hamos Hasiys mukaA^' taSodiyap DaboH xuwaAr $ahiyq zafiyr yalohavo rikoz SayoHap tagay~uZ S~aA^x~ap had~ yagoliY galoY SaloSa`l qaAriEap", //"SwtN Sad~a Srx hms HsysN mkAXN tSdypN DbH xwAr $hyq zfyr lhv rkzN SyHp tgyZ SAxp hdN glyN SlSAlN qArEp",
+">amor >amara >a*ina Hukom Hakama Hakam yuHak~imu >awoSa`", //">mr >*n Hkm >wSy",
 "Har~ama s~uHot",
 "hdY <htdY r$d",
 "Erf mutawas~imiyn",
@@ -847,7 +847,71 @@ var NEAR_SYNONYMS_METADATA = {
 	"10": {"topic": "Settling down. Also see '(7:92:6) yaghnaw	they (had) lived'"},
 	"11": {"topic":"human", "page": 71, "info": "Aadmi. ins, unaas, aadam, bashar."},
 	"12": {"topic":"Going ahead"},
-	"13": {"topic":"noise"},
+	"13": {"topic":"noise", "info": "What’s all that noise?<PRE>\
+صَوْت\n\
+▪ Used for any time of noise whether made from living or non living things. Ibn AlFaris calls defines it as any sound that hits the ears of the listener.\n\
+▪ (31:19) يرمحلا توصل تاوصلأا ركنأ نإ كتوص نم ضضغاو\n\
+صَدَّ\n\
+▪ The cry of a person that has fallen or been hurt. Some have also taken it to mean the\n\
+opposite; the cry of someone jumping with joy/ hooting and howling. اديدص دصي دص\n\
+▪ (43:57) نودصي هنم كموق اذإ لاثم رم نبا برض املو\n\
+صرخ\n\
+▪ To scream when in danger or terrorized\n\
+▪ (35:37) ا ف نوخرطصي و\n\
+هَمْس\n\
+▪ The sound made by any movement of a person. Whispering/ near silence.\n\
+▪ (20:108) اسمه لاإ عمس لاف ن رلل تاوصلأا تعشخو\n\
+حَسِيس \n\
+▪ The sound of a footstep. The lightest bit of sound like the subtle crackling of a flame\n\
+▪ (21:102) اهس سح نوعمس لا\n\
+ ُكَآء\n\
+▪ To whistle or to use instruments that create whistle-like sounds (flutes etc.)\n\
+▪ (8:35) ةيدصتو ءاكم لاإ تيبلا دنع م لاص ناك امو\n\
+تَصْدِيَة \n\
+▪ To clap with both hands or to use instruments of percussion.\n\
+▪ (8:35) ةيدصتو ءاكم لاإ تيبلا دنع م لاص ناك امو\n\
+ضَبْح \n\
+▪ Horses panting because of their exhausting gallop\n\
+▪ (100:1) احبض تايداعلاو\n\
+خُوَار \n\
+▪ The mooing of a cow or bull.\n\
+▪ (7:148) راوخ له ادسج لاجع م لح نم هدعب نم وم موق ذختاو\n\
+شَهِيق\n\
+▪ The progressively lower moaning of a donkey as it comes a journey’s end.\n\
+▪ (11:106) قيهشو يرفز ا ف ل رانلا يفف اوقش نيلذا امأف\n\
+ زَفِير \n\
+▪ To extend the exhale after a long inhale.\n\
+▪ The progressively louder braying of a donkey as it begins its journey.\n\
+▪ (11:106) قيهشو يرفز ا ف ل رانلا يفف اوقش نيلذا امأف\n\
+لْهَثْ \n\
+▪ The sound of a dehydrated panting dog\n\
+▪ (7:176) ثهلي هكترت وأ ثهلي هيلع لمحت نإ بلكلا لثمك لهثمف\n\
+رِكْز \n\
+▪ The barely audible buzzing of a fly\n\
+▪ (19:98) ازكر ل عمس وأ دحأ نم م م سحت له نرق نم لبق انكلهأ مكو\n\
+صَيْحَة \n\
+▪ To scream at the top of one’s lungs. The sound of the horn being blown. A sound that shakes the insides. A cry that doesn’t carry meaning.\n\
+▪ (15:73) ينق م ةحيصلا م ذخأف\n\
+تَغَيُّظ\n\
+▪ The cry of one overwhelmed with rage and fury. The sounds produced by the raging flames of hell.\n\
+▪ (25:12) ايرفزو اظيغت اله اوع ديعب ناكم نم م أر اذإ\n\
+  صَّآخَّة\n\
+▪ A harsh deafening sound. A sound that hurts the ear.\n\
+▪ (80:33) ةخاصلا تءاج اذإف\n\
+هَدّ\n\
+▪ The crashing sound of a collapsing wall or building.\n\
+▪ 19:90\n\
+غَلْى \n\
+▪ The sound of sizzling or boiling stew.\n\
+▪ 44:45-46\n\
+صَلْصَٰل ▪ Is considered a derivative of the word للاص\n\
+▪ The crackling sound of dry, hard soil. The sound of a nail or peg being driven into the\n\
+ground.\n\
+▪ 15:26\n\
+ قَارِعَة  ▪ قَارِعَة   means to strike one thing against another. بابلا عرق is to knock on a door.\n\
+Resurrection has been called ةعراق because a lot of noise will be generated because of\n\
+things striking against one another on that day.	\n\
+	</PRE>"},
 	"14": {"topic":"Executing Authority"},
 	"15": {"topic":"The Forbidden"},
 	"16": {"topic":"To Guide & to be guided"},
