@@ -884,7 +884,37 @@ var NEAR_SYNONYMS_METADATA = {
 	
 	"8": {"topic": "Work/doing work", "info": "faEala Eamila SanaE SadaE jaraH ijtaraH tEmd amr Sha'n" },
 	"9": {"topic": "Praise & Thanks", "page": 347, "info": "Hamd, Shukr, madH. See: 'Ta3reef karna' topic in book at below page."},
-	"10": {"topic": "Settling down. Also see '(7:92:6) yaghnaw	they (had) lived'", "page": 67, "info": "See: Abaad hona, bemaana rahnaa."},
+	"10": {"topic": "Settling down. Also see '(7:92:6) yaghnaw	they (had) lived'", "page": 67, "info": "<BR><PRE>\n\
+نكس ▪ The word نوكس is the opposite of motion or disturbance. When used for settling it\n\
+implies moving from somewhere to a new location.\n\
+▪ ةنجلا كجوزو تنأ نكسا مدآ اي انلقو (2:35) . This implies that the event of creation was elsewhere.\n\
+▪ عرز يذ يرغ داوب يتيرذ نم تنكسأ إ انبر (14:37). Since he relocated his family...\n\
+أوب و أوبت\n\
+▪ Two unique additions to the general meaning: Return to a relaxed environment and\n\
+▪ Used when the climate, environment, neighbors etc are all exactly as the settler wants them to be. It fits the criteria that the settler has in mind.\n\
+▪ (12:56) ءاش ثيح ا م أوبتي ضرلأا في فسويل انك م كلذكو ▪ (3:121) لاتقلل دعاقم يننمؤملا ءىوبت كلهأ نم تودغ ذإو\n\
+ىوث ▪ To be buried, to stop by, to settle down. لجرلا ىوث – the man died. To remain &\n\
+intend to remain in the same location in the future where one has been since numerous generations.\n\
+▪ (28:45) ينلسرم انك انكلو انتايآ م لع ولتت نيدم لهأ في ايواث تنك امو\n\
+ادب\n\
+▪ To live as a Bedouin in the outskirts / rural areas. A place where, because of the lack of\n\
+structures, one can see far and wide. A word derived from this is ةيداب which is another\n\
+word for the desert.\n\
+▪ (12:100) ودبلا نم مكب ءاجو نجسلا نم ينجرخأ ذإ\n\
+رضح ▪ The opposite of ادب in some sense. To live in a city, to take up residence in a city.	\n\
+▪ (2:196) مارحلا دجسملا يرضاح لههأ نكي مل نمل كلذ\n\
+لدخ\n\
+▪ To remain somewhere for an extended period of time.\n\
+▪ (2:25) نولداخ ا ف و\n\
+ينغ\n\
+▪ To live in a place so comfortably that you don’t consider the thought of moving. To be happy where you are because of being well settled.\n\
+▪ (7:92) ا ف اونغي مل نأك ابيعش اوبذك نيلذا\n\
+رشاع ▪ Comes from ع which denotes two distinct things: the number 10 and to mix,\n\
+associate, interfere and be involved in one another’s affairs. The word ةيرشع meaning\n\
+tribe also comes from this root. رشاع then means to live together with a family.\n\
+▪ (4:19) فو ملاب نهورشاعو \n\
+<PRE><BR>See: Abaad hona, bemaana rahnaa."},
+
 	"11": {"topic":"human", "page": 71, "info": "See: Aadmi, insaan. ins, unaas, aadam, bashar."},
 	"12": {"topic":"Go ahead", "page": 94, "info": "See: agay badhaana"},
 	"13": {"topic":"noise", "page": 100, "info": "What’s all that noise?<PRE>\

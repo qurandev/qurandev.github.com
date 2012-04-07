@@ -1722,9 +1722,16 @@ var layout = {
 			var html = $(this).parent().html();
 			if(!html) return;
 			//$('.MOREINFO').parent().hide();
+			var height = $(window).height() * 88/100;
+			var width  = $(window).width() * 88/100;
 			$.blockUI({
-				message: '<div style=font-size:3em;text-align:left;>' + html + '</div>',
-				css: { height: '500px', width: '800px', top: '20%' }
+				message: '<div style=font-size:3em;text-align:left;overflow:scroll;max-height:'+ height +';height:' + height +'>' + html + '</div>',
+				css: { 
+					top: '60px', //($(window).height() - width) /2 + 'px', 
+					left: ($(window).width() - width) /2 + 'px', 
+					width: '88%', //'400px' 
+					height: '88%'
+				} //css: { height: '500px', width: '800px', top: '20%' }
 			});  $('.blockOverlay').attr('title','Click to unblock').click($.unblockUI); //ui-tooltip-content
 		});
 		
