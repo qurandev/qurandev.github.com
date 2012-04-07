@@ -813,7 +813,7 @@ var NEAR_SYNONYMS = [
 "yumaH~iSa zak~aY` m~uSaf~FY bar~a>a tubori}u", //"mHS zkY SfA tbr> m~uSaf~FY Sfw",
 "n~ukur nakira naqamu munkar >ankar n~ukur n~ukor", //"nakira naqama",
 
-"xa$iYa  xaA$iE  wqy xwf x$y H*r x$E rhb $fq wjl rEb wjs wjf rwE",
+"xaAfa xawof xa$iYa xaA$iE xa$aEati xu$uwE {t~aqaY` taqowaY yaHo*aru Hi*or Ha*ar r~awoE xiyfap >awojasa wajilato wajilap wajiluwn yarohabu rahobap ruEob mu$ofiquwn waAjifap >awojafo", //"xa$iYa  xaA$iE  wqy xwf x$y H*r x$E rhb $fq wjl rEb wjs wjf rwE",
 "qaroD >aqoraDu dayon", //"qrDN dynN",
 "faDol man~a >anoEama >aHosana >aHosan", //"fDlN man~a >nEm >Hsn",
 "ka*ib ba`Til z~uwr <ifok", //"k*b bATl zwr AfkN",
@@ -1126,7 +1126,7 @@ found so unacceptable to someone that whether or not it is universally bad or no
 ▪ (85:8) ديمحلا زيزعلا اللهاب اونمؤي نأ لاإ م م اومقن امو 13. \n\n\
 </PRE>	naqama nakira. See: Buraa lagna."},
 	
-	"20": {"topic":"Fear", "info": "Khawf Khashyah Khushoo' Taqwa Hadthr Raa'a Wajas Wajl Rahb Ru'b Shafaq Wajf. <BR/> See <A HREF=http://www.linguisticmiracle.com/gems/usage-of-fear-in-the-quran TARGET=_>Article</A> and the book below."},
+	"20": {"topic":"Fear", "page": 518, "info": "Khawf Khashyah Khushoo' Taqwa Hadthr Raa'a Wajas Wajl Rahb Ru'b Shafaq Wajf. <BR/> See <A HREF=http://www.linguisticmiracle.com/gems/usage-of-fear-in-the-quran TARGET=_>Article</A> and entry for 'Darna' in the book below."},
 	
 	"21": {"topic":"Borrowing", "page": 127, "info": "qarDun daynun. "+_PDF + "<PRE>\n\n\
 ضرق\n\
