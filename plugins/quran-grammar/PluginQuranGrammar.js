@@ -99,7 +99,7 @@ var CORPUS = {
 	UIsynonymClicked: function(lemma, pageno, mappageno){ //var iframeURL = 'http://www.scribd.com/embeds/82681420/content?access_key=key-6w25dij9keuw0vv8keu&amp;start_page=$1'; iframeURL = iframeURL.replace(/\$1/g, mappageno);
 		if( !$('#book') || $('#book').length <= 0 ){
 			loadExtraFiles('http://www.scribd.com/javascripts/scribd_api.js');
-			$('body').append('<div id=book style="position:fixed; bottom:0; left:0;"><span id=bookclosetop>Close</span><div id="embedded_doc" class=leftcolumn><a href="http://www.scribd.com">Scribd</a></div><div id=bookclose style=text-align:right>Close</div></div>');
+			$('body').append('<div id=book style="position:fixed; bottom:0; left:0;"><div style="background-color: #404040; height: 23px;"><div style="float: right; width: 25px; height: 23px; padding: 2px;"><img id="bookclose" alt="Close" src="images/close.gif" /></div></div><div id="embedded_doc" class=leftcolumn><a href="http://www.scribd.com">Scribd</a></div><div style="background-color: #404040; height: 23px;"><div style="float: right; width: 25px; height: 23px; padding: 2px;"><img id="bookclose2" alt="Close" src="images/close.gif" /></div></div></div>');
 			CORPUS.UILoadPDF(mappageno);
 		}
 		else{ //navigate to the specified page.. mappageno
@@ -108,7 +108,7 @@ var CORPUS = {
 				CORPUS._scribd_doc.api.setPage( mappageno );
 			}
 		}
-		$("#bookclose").click(function() { $('#book').hide(); /*$.unblockUI();*/ });
+		$("#bookclose, #bookclose2").click(function() { $('#book').hide(); /*$.unblockUI();*/ });
 		/*$.blockUI({ message: $("#book"), css: {
 			 Xwidth: '425px',
 			 Xheight: '225px',
@@ -125,8 +125,8 @@ var CORPUS = {
 		}
 		var scribd_doc  = scribd.Document.getDoc(82681420, 'key-6w25dij9keuw0vv8keu');
 		var onDocReady = function(e){ /*alert('document pdf ready');*/ $('#book').show(); if(scribd_doc) scribd_doc.api.setPage(mappageno); CORPUS._scribd_doc = scribd_doc; }
-		if(scribd_doc){ scribd_doc.addParam('jsapi_version', 1); scribd_doc.addEventListener('docReady', onDocReady);
-			scribd_doc.addParam('height', 785);  scribd_doc.addParam('width', 530); scribd_doc.addParam('auto_size', true);
+		if(scribd_doc){ scribd_doc.addParam('jsapi_version', 1); scribd_doc.addEventListener('docReady', onDocReady); 
+			scribd_doc.addParam('height', 550);  scribd_doc.addParam('width', 425); scribd_doc.addParam('auto_size', true);
 			scribd_doc.addParam('mode', 'list'); scribd_doc.addParam('jsapi_version', 2);
 			scribd_doc.write('embedded_doc'); $('#book').show(); // Write the instance
 		}
