@@ -763,7 +763,7 @@ var NEAR_SYNONYMS = [
 "faEala fiEol faEolat Eamila Eamal SanaEu SunoE SanoEap {SodaEo jaraHo {jotaraHu taEam~adato >amor >amara $a>on", //"fEl Eml SnE SdE jrH AjtrH tEmd >mr $>n",
 "Hamod $ukor $akara mdH", //"HmdN $krN mdHN",  mdHN??
 "sakan sakana >asokan yatabaw~a>u vaAwiy mavowFY bada>a HaDara >axolada xulod yaxoludo m~uxal~aduwn EaA$iru", //"skn tbw> vwy vwy bd> HDr xld gny EA$r",  gny?? (7:92:6) yaghnaw	they (had) lived
-"<insa`n <ins <insiy~ A^dam ba$ar", //"n~aAs <ns >nAs A^dam b$rN", //إنس أناس آدم بشرٌ 
+"n~aAs <insa`n <ins <insiy~ A^dam ba$ar", //"n~aAs <ns >nAs A^dam b$rN", //إنس أناس آدم بشرٌ 
 "qadimo yasotaqodimu musotaqodimiyn taqad~ama sabaqa saboq >aqobala", //"qdm sbq >qbl",
 
 "Sawot Sad~a yaSoTarixu hamos Hasiys mukaA^' taSodiyap DaboH xuwaAr $ahiyq zafiyr yalohavo rikoz SayoHap tagay~uZ S~aA^x~ap had~ yagoliY galoY SaloSa`l qaAriEap", //"SwtN Sad~a Srx hms HsysN mkAXN tSdypN DbH xwAr $hyq zfyr lhv rkzN SyHp tgyZ SAxp hdN glyN SlSAlN qArEp",
