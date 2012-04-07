@@ -844,7 +844,7 @@ var NEAR_SYNONYMS_METADATA = {
 	"7": {"topic": "Equal", "page": 890, "info": "Kufuw, qariyn, aTraab, samiyy, Saffa, Saaffaat, yuḍāhiūna. <BR/>See entry: hamhaa-hangiy hona in below page. " },
 	
 	"8": {"topic": "Work/doing work", "info": "faEala Eamila SanaE SadaE jaraH ijtaraH tEmd amr Sha'n" },
-	"9": {"topic": "Praise & Thanks"},
+	"9": {"topic": "Praise & Thanks", "page": 347, "info": "Hamd, Shukr, madH. See: 'Ta3reef karna' topic in book at below page."},
 	"10": {"topic": "Settling down. Also see '(7:92:6) yaghnaw	they (had) lived'", "page": 67, "info": "See: Abaad hona, bemaana rahnaa."},
 	"11": {"topic":"human", "page": 71, "info": "See: Aadmi, insaan. ins, unaas, aadam, bashar."},
 	"12": {"topic":"Go ahead", "page": 94, "info": "See: agay badhaana"},
