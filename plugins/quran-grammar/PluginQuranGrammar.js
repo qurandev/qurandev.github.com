@@ -760,11 +760,12 @@ var NEAR_SYNONYMS = [
 "kaAna >aSobaHa yaSoduru waAqiE",
 "kufuw qariyn >atoraAb samiy~ kufuw Saf~ Sa`^f~a`t yuDa`hi_#u ",
 
-"fEl Eml SnE SdE jrH AjtrH tEmd >mr $>n",
-"HmdN $krN mdHN",
-"skn tbw> vwy vwy bd> HDr xld gny EA$r",
-"n~aAs <ns >nAs A^dam b$rN", //إنس أناس آدم بشرٌ 
-"qdm sbq >qbl",
+"faEala fiEol faEolat Eamila Eamal SanaEu SunoE SanoEap {SodaEo jaraHo {jotaraHu taEam~adato >amor >amara $a>on", //"fEl Eml SnE SdE jrH AjtrH tEmd >mr $>n",
+"Hamod $ukor $akara mdH", //"HmdN $krN mdHN",  mdHN??
+"sakan sakana >asokan yatabaw~a>u vaAwiy mavowFY bada>a HaDara >axolada xulod yaxoludo m~uxal~aduwn EaA$iru", //"skn tbw> vwy vwy bd> HDr xld gny EA$r",  gny?? (7:92:6) yaghnaw	they (had) lived
+"<insa`n <ins <insiy~ A^dam ba$ar", //"n~aAs <ns >nAs A^dam b$rN", //إنس أناس آدم بشرٌ 
+"qadimo yasotaqodimu musotaqodimiyn taqad~ama sabaqa saboq >aqobala", //"qdm sbq >qbl",
+
 "SwtN Sad~a Srx hms HsysN mkAXN tSdypN DbH xwAr $hyq zfyr lhv rkzN SyHp tgyZ SAxp hdN glyN SlSAlN qArEp",
 ">mr >*n Hkm >wSy",
 "Har~ama s~uHot",
@@ -843,7 +844,7 @@ var NEAR_SYNONYMS_METADATA = {
 	
 	"8": {"topic": "Work/doing work", "info": "faEala Eamila SanaE SadaE jaraH ijtaraH tEmd amr Sha'n" },
 	"9": {"topic": "Praise & Thanks"},
-	"10": {"topic": "Settling down"},
+	"10": {"topic": "Settling down. Also see '(7:92:6) yaghnaw	they (had) lived'"},
 	"11": {"topic":"human", "page": 71, "info": "Aadmi. ins, unaas, aadam, bashar."},
 	"12": {"topic":"Going ahead"},
 	"13": {"topic":"noise"},
