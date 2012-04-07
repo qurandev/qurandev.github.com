@@ -830,24 +830,25 @@ var NEAR_SYNONYMS = [
 ];
 
 var NEAR_SYNONYMS_METADATA = {
-	"0": {"topic": "The Sky", "page": "83", 
-		"info": "<BR/>samaa': Essentially means height without limitation. <BR/>  Purely linguistically, anything that is above another thing is a <BR/>  samaa' and that which is below is arDh. This explains the usage in ayah 65:12 and 7:176 <BR/>  where the sky is used for heights above and the word arDh is used for depths below. <BR/><BR/> falak: Though commonly interpreted as the sky, it actually refers to <BR/>  the paths or orbits assigned to planets and stars. These orbits are usually <BR/>  oval in shape and so the word is appropriate in that they <BR/>  resemble the shape of a ship الفُلْك !"},
+	"0": {"topic": "The Sky", "page": 83, 
+		"info": "<BR/>samaa': Essentially means height without limitation. <BR/>  Purely linguistically, anything that is above another thing is a <BR/>  samaa' and that which is below is arDh. This explains the usage in ayah 65:12 and 7:176 <BR/>  where the sky is used for heights above and the word arDh is used for depths below. <BR/><BR/> falak: Though commonly interpreted as the sky, it actually refers to <BR/>  the paths or orbits assigned to planets and stars. These orbits are usually <BR/>  oval in shape and so the word is appropriate in that they <BR/>  resemble the shape of a ship الفُلْك !\
+		See: Aasmaan."},
 		
-	"1": {"topic": "God", "page": "818", "info": "Allah, ilah are the different synonyms.<BR/> See entry: ma3bood in below page. " },
-	"2": {"topic": "Alone", "page": "138", "info": "aHad, waHiyd, fard, furādā different synonyms.<BR/> See entry: akeyla in below page. " },
-	"3": {"topic": "Self-Sufficient", "page": "256", "info": "ghaniyy and Samad are synonyms.<BR/> See entry: beniyaaz in below page. " },
+	"1": {"topic": "God", "page": 818, "info": "Allah, ilah are the different synonyms.<BR/> See entry: ma3bood in below page. " },
+	"2": {"topic": "Alone", "page": 138, "info": "aHad, waHiyd, fard, furādā different synonyms.<BR/> See entry: akeyla in below page. " },
+	"3": {"topic": "Self-Sufficient", "page": 256, "info": "ghaniyy and Samad are synonyms.<BR/> See entry: beniyaaz in below page. " },
 	
-	"4": {"topic": "Not", "page": "862", "info": "lam laysa lan laa 'in maa hal balaa kallaa etc are some synonyms. lot more below.<BR/> See entry: naheen in below page. " },	
-	"5": {"topic": "Begetting", "page": "396", "info": "walada and waḍaʿa are synonyms.<BR/> See entry: jann-naa in below page. " },
-	"6": {"topic": "Become", "page": "900", "info": "kaana, aSbaHa, Sadara, aSdara, waqa3a are synonyms.<BR/> See entry: how-naa in below page. " },
-	"7": {"topic": "Equal", "page": "890", "info": "Kufuw, qariyn, aTraab, samiyy, Saffa, Saaffaat, yuḍāhiūna. <BR/>See entry: hamhaa-hangiy hona in below page. " },
+	"4": {"topic": "Not", "page": 862, "info": "lam laysa lan laa 'in maa hal balaa kallaa etc are some synonyms. lot more below.<BR/> See entry: naheen in below page. " },	
+	"5": {"topic": "Begetting", "page": 396, "info": "walada and waḍaʿa are synonyms.<BR/> See entry: jann-naa in below page. " },
+	"6": {"topic": "Become", "page": 900, "info": "kaana, aSbaHa, Sadara, aSdara, waqa3a are synonyms.<BR/> See entry: how-naa in below page. " },
+	"7": {"topic": "Equal", "page": 890, "info": "Kufuw, qariyn, aTraab, samiyy, Saffa, Saaffaat, yuḍāhiūna. <BR/>See entry: hamhaa-hangiy hona in below page. " },
 	
 	"8": {"topic": "Work/doing work", "info": "faEala Eamila SanaE SadaE jaraH ijtaraH tEmd amr Sha'n" },
 	"9": {"topic": "Praise & Thanks"},
-	"10": {"topic": "Settling down. Also see '(7:92:6) yaghnaw	they (had) lived'"},
-	"11": {"topic":"human", "page": 71, "info": "Aadmi. ins, unaas, aadam, bashar."},
-	"12": {"topic":"Going ahead"},
-	"13": {"topic":"noise", "info": "What’s all that noise?<PRE>\
+	"10": {"topic": "Settling down. Also see '(7:92:6) yaghnaw	they (had) lived'", "page": 67, "info": "See: Abaad hona, bemaana rahnaa."},
+	"11": {"topic":"human", "page": 71, "info": "See: Aadmi, insaan. ins, unaas, aadam, bashar."},
+	"12": {"topic":"Go ahead", "page": 94, "info": "See: agay badhaana"},
+	"13": {"topic":"noise", "page": 100, "info": "What’s all that noise?<PRE>\
 صَوْت\n\
 ▪ Used for any time of noise whether made from living or non living things. Ibn AlFaris calls defines it as any sound that hits the ears of the listener.\n\
 ▪ (31:19) يرمحلا توصل تاوصلأا ركنأ نإ كتوص نم ضضغاو\n\
@@ -911,23 +912,24 @@ ground.\n\
  قَارِعَة  ▪ قَارِعَة   means to strike one thing against another. بابلا عرق is to knock on a door.\n\
 Resurrection has been called ةعراق because a lot of noise will be generated because of\n\
 things striking against one another on that day.	\n\
+See: Awaaz aur uske aqsaam.\
 	</PRE>"},
-	"14": {"topic":"Executing Authority"},
-	"15": {"topic":"The Forbidden"},
-	"16": {"topic":"To Guide & to be guided"},
-	"17": {"topic":"To recognize"},
-	"18": {"topic":"To Purify"},
-	"19": {"topic":"Bad", "info": "nakira naqama"},
+	"14": {"topic":"Executing Authority", "page": 451, "info": "See: Hukum deyna."},
+	"15": {"topic":"The Forbidden", "page": 446, "info": "See: Haraam."},
+	"16": {"topic":"To Guide & to be guided", "page": 883, "info": "See: hidayath deyna, paana"},
+	"17": {"topic":"To recognize", "page": 296, "info": "See: pehchaanna"},
+	"18": {"topic":"To Purify", "page": 265, "info": "See: paak karna"},
+	"19": {"topic":"To feel bad", "page": 209, "info": "naqama nakira. See: Buraa lagna."},
 	
 	"20": {"topic":"Fear", "info": "Khawf Khashyah Khushoo' Taqwa Hadthr Raa'a Wajas Wajl Rahb Ru'b Shafaq Wajf. <BR/> See <A HREF=http://www.linguisticmiracle.com/gems/usage-of-fear-in-the-quran TARGET=_>Article</A> and the book below."},
-	"21": {"topic":"Borrowing", "info": "qarDun daynun"},
-	"22": {"topic":"Favors", "info": "faDlun manna an3ama aHsana"},
-	"23": {"topic":"Lie", "info": "kazib (opposite: Sidqun). baaTil (opposite: Haqqun), zuwr, ifkun"},
-	"24": {"topic":"Coming", "info": "jaa'a ataa hayta halumma ta3aala"},
-	"25": {"topic":"To send forward", "info": "qaddama aslafa"},
-	"26": {"topic":"Read & Recite", "info": "qara'a talaa rattala darasa amlaa"},
-	"27": {"topic":"Enemy", "info": "3aduwwun baghDaa'u shaaniyyun"},
-	"28": {"topic":"The heart, the chest & the self", "page": 483, "info": "qalb fu'ad Sadr nafs"},
+	"21": {"topic":"Borrowing", "page": 127, "info": "qarDun daynun. See: udhaar."},
+	"22": {"topic":"Favors", "page": 124, "info": "faDlun manna an3ama aHsana. See: ihsaan karna."},
+	"23": {"topic":"Lie", "page": 405, "info": "kazib (opposite: Sidqun). baaTil (opposite: Haqqun), zuwr, ifkun. See: jhuwt."},
+	"24": {"topic":"Coming", "page": 97, "info": "jaa'a ataa hayta halumma ta3aala. See: aana."},
+	"25": {"topic":"To send forward", "page": 95, "info": "qaddama aslafa. See: aage bhejna."},
+	"26": {"topic":"Read & Recite", "page": 251, "info": "qara'a talaa rattala darasa amlaa. See: padhna, padhaana."},
+	"27": {"topic":"Enemy, Enmity", "page": 481, "info": "3aduwwun baghDaa'u shaaniyyun. See: Dushman, dushmani."},
+	"28": {"topic":"The heart, the chest & the self", "page": 483, "info": "qalb fu'ad Sadr nafs. See: Dil."},
 
 
 	"29": {"topic": "Seeking protection", "page": 289, "info": "Ajaar and istijaar. Aa3aza and isti3aza. Panah dena, panah maangna." },
