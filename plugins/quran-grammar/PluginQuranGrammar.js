@@ -795,7 +795,18 @@ var NEAR_SYNONYMS = [
 "gaAsiq waqaba",
 "<i*aA",
 "n~af~a`va`t",
-	
+
+"tab~a",
+"lahab",
+">agonaY`",
+"kasaba",
+"yaSolaY",
+"naAr",
+"*uw",
+"HaTab",
+"jiyd",
+"Habol m~asad",
+
 //ANTONYMS START HERE...
 "||<ivom  bar~",
 "||>aviym  saliym",
@@ -866,6 +877,30 @@ var NEAR_SYNONYMS_METADATA = {
 	"37": {"topic": "darkness", "page": 337, "info": "Ghaasiq. taareeki chaana." },
 	"38": {"topic": "when", "page": 381, "info": "Iza." },
 	"39": {"topic": "blowers", "page": 313, "info": "naffathaat. phoonkna." },
+	
+	"40": {"topic": "Perish", "page": 370, "info": "Tabbat. tootna. Also see pg 884, Halaakat." },
+	"41": {"topic": "Flame", "page": 610, "info": "Lahab. Sho`la." },
+	"42": {"topic": "to be of use/to avail", "page": 692, "info": "Aghna. kaam aana." },
+	"43": {"topic": "to earn", "page": 706, "info": "kasab. kamaana." },
+	"44": {"topic": "to enter", "page": 473, "info": "Yasla, daakhil hona" },
+	"45": {"topic": "fire", "page": 85, "info": "Naaran, aag" },
+	"46": {"topic": "owner/possessor of", "page": 873, "info": "Zaat (zu), waala" },
+	"47": {"topic": "fuel/firewood", "page": 165, "info": "Hatab, eendhan. Also see pg 764, Lakri." },
+	"48": {"topic": "neck", "page": 728, "info": "Jeed, gardan" },
+	"49": {"topic": "rope", "page": 541, "info": "Habl, rassi. Masad, moonj ki rassi." },
+	
+	"50": {"topic": "", "page": 1, "info": "" },
+	"51": {"topic": "", "page": 1, "info": "" },
+	"52": {"topic": "", "page": 1, "info": "" },
+	"53": {"topic": "", "page": 1, "info": "" },
+	"54": {"topic": "", "page": 1, "info": "" },
+	"55": {"topic": "", "page": 1, "info": "" },
+	"56": {"topic": "", "page": 1, "info": "" },
+	"57": {"topic": "", "page": 1, "info": "" },
+	"58": {"topic": "", "page": 1, "info": "" },
+	"59": {"topic": "", "page": 1, "info": "" },
+	"60": {"topic": "", "page": 1, "info": "" },
+
 	};
 	
 	
