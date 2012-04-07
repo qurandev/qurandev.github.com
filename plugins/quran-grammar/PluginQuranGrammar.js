@@ -1097,11 +1097,53 @@ detail. To demand identifying.\n\
 ▪ (15:75) ين و تملل تايلآ كلذ في نإ 11.\n\
 </PRE>	See: pehchaanna"},
 
-	"18": {"topic":"To Purify", "page": 265, "info": "See: paak karna"},
-	"19": {"topic":"To feel bad", "page": 209, "info": "naqama nakira. See: Buraa lagna."},
+	"18": {"topic":"To Purify", "page": 265, "info": _PDF + "<PRE>\n\n\
+صحم ▪ To purify something of flaws, blemishes or impurities. بهلذا صحم is the term used to\n\
+describe the process used to purify gold of its impurities.\n\
+▪ (3:141) نيرفاكلا\n\
+قحميو اونمآ نيلذا اللها صحميلو\n\n\
+ىكز ▪ To purify the inner self سفن of spiritual diseases, immorality and evil inclinations. To\n\
+declare oneself pure of such ills.\n\
+▪ (53:32) ىقتا نمب ملعأ وه مكسفنأ اوكزت لاف\n\n\
+افص\n\
+▪ To remove any or all impurities. It is used to describe the process of filtration.\n\
+▪ (47:15) ىفصم لسع نم را أو ينبراشلل ةلذ ر نم را أو\n\n\
+أرب ▪ أبرتTo acquire a cure from disease. To be free and clear of someone or something. أربأ\n\
+to make someone healthy or heal someone\n\
+▪ (3:149) اللها نذإب وملا يـيحأو صربلأاو همكلأا ءىربأو\n\
+▪ Also means to purify someone of an accusation or fault. To free someone.\n\
+▪ (33:69) اولاق امم اللها هأبرف وم اوذآ نيلذاك اونوكت لا 12.\n\
+</PRE>	See: paak karna"},
+
+	"19": {"topic":"To feel bad", "page": 209, "info": _PDF + "<PRE>\n\n\
+ركن ▪ Has two implications: (i) estrangement and (ii) unacceptability. ركنأ means to deny as\n\
+well as to find someone shocking. ركنم is everything that society finds detestable or\n\
+that divine law declares unacceptable. ركن is something considered bad universally.\n\
+▪ (54:6) ركن ء إ عالدا عدي موي م ع لوتف\n\n\
+مقن ▪ مقن و مقن to consider something bad. To recognize something as detestable, to find\n\
+fault in something, to condemn something, to punish. Thus ةمقن is something that is\n\
+found so unacceptable to someone that whether or not it is universally bad or not, the one finding it unacceptable is willing to punish in retaliation to it. That is why it includes the meanings of punishment and revenge.\n\
+▪ (85:8) ديمحلا زيزعلا اللهاب اونمؤي نأ لاإ م م اومقن امو 13. \n\n\
+</PRE>	naqama nakira. See: Buraa lagna."},
 	
 	"20": {"topic":"Fear", "info": "Khawf Khashyah Khushoo' Taqwa Hadthr Raa'a Wajas Wajl Rahb Ru'b Shafaq Wajf. <BR/> See <A HREF=http://www.linguisticmiracle.com/gems/usage-of-fear-in-the-quran TARGET=_>Article</A> and the book below."},
-	"21": {"topic":"Borrowing", "page": 127, "info": "qarDun daynun. See: udhaar."},
+	
+	"21": {"topic":"Borrowing", "page": 127, "info": "qarDun daynun. "+_PDF + "<PRE>\n\n\
+ضرق\n\
+▪ A loan taken by someone because of one’s personal needs. It is on the condition that it\n\
+will be returned. If there is a time period allotted for the return, it is نيد, otherwise it is\n\n\
+ضرق .\n\
+▪ A نسح ضرق is coined by Allah in the Qur’an for when He is collecting taking the loan\n\
+from His subjects. The term is used to put the subject to shame and to challenge the \n\
+reverence he or she may have for Allah.\n\
+▪ (2:245) مَّن ذَا الَّذِي يُقْرِضُ اللَّـهَ قَرْضًا حَسَنًا\n\n\
+daynun\n\
+▪ Is  a  more generic  term  used  for all  types of  transactions  for  which one  becomes  \n\
+financially responsible;  be they  business or  personal in  nature.    \n\
+▪ A  person  can  be 'madyuwn' when engaged a  mixture of  accounts  receivable & payable transactions. \n\
+▪ 2:282 إِذَا تَدَايَنتُم بِدَيْنٍ إِلَىٰ أَجَلٍ مُّسَمًّى\n\n\
+</PRE>	See: udhaar."},
+
 	"22": {"topic":"Favors", "page": 124, "info": "faDlun manna an3ama aHsana. See: ihsaan karna."},
 	"23": {"topic":"Lie", "page": 405, "info": "kazib (opposite: Sidqun). baaTil (opposite: Haqqun), zuwr, ifkun. See: jhuwt."},
 	"24": {"topic":"Coming", "page": 97, "info": "jaa'a ataa hayta halumma ta3aala. See: aana."},
