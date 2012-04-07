@@ -99,7 +99,7 @@ var CORPUS = {
 	UIsynonymClicked: function(lemma, pageno, mappageno){ //var iframeURL = 'http://www.scribd.com/embeds/82681420/content?access_key=key-6w25dij9keuw0vv8keu&amp;start_page=$1'; iframeURL = iframeURL.replace(/\$1/g, mappageno);
 		if( !$('#book') || $('#book').length <= 0 ){
 			loadExtraFiles('http://www.scribd.com/javascripts/scribd_api.js');
-			$('body').append('<div id=book style="position:fixed; bottom:0; left:0;"><div style="background-color: #404040; height: 23px;"><div style="float: right; width: 25px; height: 23px; padding: 2px;"><img id="bookclose" alt="Close" src="images/close.gif" /></div></div><div id="embedded_doc" class=leftcolumn><a href="http://www.scribd.com">Scribd</a></div><div style="background-color: #404040; height: 23px;"><div style="float: right; width: 25px; height: 23px; padding: 2px;"><img id="bookclose2" alt="Close" src="images/close.gif" /></div></div></div>');
+			$('body').append('<div id=book style="position:fixed; bottom:0; left:0;"><div style="background-color: #32BD2F; height: 12px;"><div style="float: right; width: 42px; height: 12px; padding: 2px;"><img id="bookclose" alt="Close" src="images/close.gif" /></div></div><div id="embedded_doc" class=leftcolumn><a href="http://www.scribd.com" target=_>Scribd</a></div></div></div>');
 			CORPUS.UILoadPDF(mappageno);
 		}
 		else{ //navigate to the specified page.. mappageno
