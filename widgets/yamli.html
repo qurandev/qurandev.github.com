@@ -16,7 +16,7 @@ span.r2 { color: green; }
 span.r3 { color: blue; }
 span.r1, span.r2, span.r3 { font-weight: bold !important;}
 span.tiny {font-size: 0.3em;}
-span.small {font-size: 0.8em;}
+#didyoumean, span.small {font-size: 0.8em;}
 #arabic				{ font-size: 5em; border: 1px solid #C3C3C3; padding: 10px;}
 #arabic1, Z#arabic2	{ font-size: 3.5em; border: 1px solid #C3C3C3; padding: 10px;}
 .suggest{
@@ -96,6 +96,8 @@ margin-left: 20px;
 </div>
 
 <div>
+	<div id=didyoumean>
+	</div><BR/>
 	<div id=arabic>
 	</div><BR/>
 	<div id=arabic1>
@@ -348,8 +350,8 @@ function isLtrText(text) {
 		$('#output').val( $('#output').val() + ' ' + unescape(word) ); scrollToEnd('output');		
 	}
 	var process = function(input){
-		var input = $('#input').val(), output='', regex1, regex2, words, status='';
-		if(input == '') $('#suggest').html('').hide();
+		var input = $('#input').val(), origInput = '', output='', regex1, regex2, words, status=''; origInput = input;
+		if(input == ''){ $('#suggest').html('').hide(); $('#didyoumean').html('').hide();}
 		else{
 			if(isEnglish(input) ){
 				status = '<span class=biggerArabic>' + EnToAr(input) + '</span>';
@@ -361,7 +363,13 @@ function isLtrText(text) {
 			if(status && $.trim(status) != ""){ $('#suggest').html( status ).show();
 				$('#suggest').width(   $('#suggest span').width()   );
 			}else{ $('#suggest').html('').hide(); }
-			checkDirection();
+			if(typeof(ejtaal_do_search) != 'undefined'){
+				var didyoumeanInput = input.replace(/[iou]/g, ''), didyoumean = ejtaal_do_search( didyoumeanInput );
+				if(!isArabic(origInput) && didyoumean != didyoumeanInput && didyoumean != EnToAr(didyoumeanInput) ){
+					$('#didyoumean').html('Did you mean: <span class=biggerArabic><strong><A href="javascript:void" onclick="$(\'#input\').val(\'' + didyoumean + '\'); process();return false;">' + didyoumean+'</A></strong></span>').show();
+				}else $('#didyoumean').html('').hide();
+			}
+			checkDirection(origInput); //based on content, set the direction property of textbox, rtl or ltr automatically.
 		}
 
 		if(input.length < SEARCH.minchars){ $('#arabic').html(''); $('#arabic1').html(''); return;}
@@ -418,14 +426,67 @@ function isLtrText(text) {
 	$('#suggest').html('Enter word here...');
 </script>
 
-
+<script>
+var ejtaal_do_search = function( input) {
+	var search = input;
+	var last_input = input;
+	// TODO: converting all forms of alif and hamza                                             
+	// (ء, آ, أ, ؤ, إ, ئ, ا) to a single character ء
+	// Here's a funny hamza, what is it?
+	// ha_p[25]="ءدب";
+	// The same should be done for both forms of yaa (ي, ى)
+	/*
+		Perform search and replace mostly according to the Arabic Chat Alphabet:
+		http://en.wikipedia.org/wiki/Arabic_chat_alphabet
+	search = search.replace(//gi,"");
+	*/
+	// Normalize alifs and yas, not sure if this is right yet?
+	search = search.replace(/[ﺀﺀﺁﺃﺅﺇﺉ]/g,"ا");
+	search = search.replace(/[ﻯ]/g,"ي");
+	// Firstly the letters that take IMHO 2 letters to transliterate
+	search = search.replace(/th/g,"ث");
+	search = search.replace(/gh/g,"غ");
+	search = search.replace(/kh/g,"خ");
+	search = search.replace(/sh/g,"ش");
+	search = search.replace(/dh/g,"ذ");
+	// Hmm, make the following case insensitive and assign different letters to different cases:
+	search = search.replace(/d/g,"د");
+	search = search.replace(/D/g,"ض");
+	search = search.replace(/z/g,"ز");
+	search = search.replace(/Z/g,"ظ");
+	search = search.replace(/s/g,"س");
+	search = search.replace(/S/g,"ص");
+	search = search.replace(/t/g,"ت");
+	search = search.replace(/T/g,"ط");
+	search = search.replace(/h/g,"ه");
+	search = search.replace(/H/g,"ح");
+	// Not much iktilaaf over these I guess:
+	search = search.replace(/a/g,"ا");
+	search = search.replace(/b/g,"ب");
+	search = search.replace(/j/g,"ج");
+	search = search.replace(/7/g,"ح");
+	search = search.replace(/r/g,"ر");
+	search = search.replace(/3/g,"ع");
+	search = search.replace(/E/g,"ع");
+	search = search.replace(/e/g,"ع");
+	search = search.replace(/f/g,"ف");
+	search = search.replace(/q/g,"ق");
+	search = search.replace(/k/g,"ك");
+	search = search.replace(/l/g,"ل");
+	search = search.replace(/m/g,"م");
+	search = search.replace(/n/g,"ن");
+	search = search.replace(/w/g,"و");
+	search = search.replace(/y/g,"ي");
+	return search; //alert( "Searching for: " + search);
+}
+</script>
 <span>
 You may now also type english (roman) letters in the search box and they will be automatically transformed into the arabic form used by the website search functionality. So for example: If you search for "bqr" it will automatically become: "بقر" inshallah :) 
 This may be of great benefit for those people who are not able for whatever reason to install and use an arabic keyboard and/or layout.
 <a id=moreinfoclick href="javascript:$('.blahblah').toggle();">See Reference...</a>
 </span>
 <div class=blahblah style=display:none;clear:both;>
-Here is the list of english letters  that will become their corresponding arabic letter. This has been mostly based on the <a href="http://en.wikipedia.org/wiki/Arabic_chat_alphabet">Arabic Chat Alphabet</a><BR/>
+Here is the list of english letters  that will become their corresponding arabic letter. This has been mostly based on the <a href="http://en.wikipedia.org/wiki/Arabic_chat_alphabet">Arabic Chat Alphabet</a>
 <div style=float:left;padding:50px;><pre>
 Non-Intuitive letters:
 v -&gt; "ث"        g -&gt; "غ"
@@ -454,13 +515,17 @@ E -&gt; "ع"        w -&gt; "و"
 f -&gt; "ف"        y -&gt; "ي"
 </pre>
 </div>
-</div>
-<!--
-TODO / NOT YET IMPLEMENTED: Double letters:
+
+<div style=float:left;padding:50px;><pre>
+Double letters:
 th -&gt; "ث"       gh -&gt; "غ"
 kh -&gt; "خ"       sh -&gt; "ش"
 dh -&gt; "ذ"
--->
+</pre>
+</div>
+
+</div>
+
 
 <!-- YAMLI CODE START -->
 <script type="text/javascript" src="http://api.yamli.com/js/yamli_api.js"></script>
