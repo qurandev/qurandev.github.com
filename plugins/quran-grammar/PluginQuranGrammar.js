@@ -15,9 +15,21 @@ var CORPUS = {
 		return CORPUS.TemplateRefLink.replace(/\$1/, link).replace(/\$2/, linkname?linkname:ref).replace(/\$3/, linkprefix?linkprefix:'');
 	},
 	
+	UIgetArabicAlmanacLink:	function(root){
+		var ejlink = '&nbsp;<A HREF=http://ejtaal.net/m/aa/#q=' + CORPUS.mapBuckToEjtaal(root) + ' TARGET=_ title=Arabic_Almanac><span dir=ltr style=font-size:0.81em;>(AA)</span></A>';
+		return ejlink;
+	},
+	
+	mapBuckToEjtaal:	function(root){
+		root = root.replace(/v/g, 'th').replace(/x/g, 'kh').replace(/\*/g, 'dh').replace(/\$/g, 'sh') ; //.replace(/g/g, 'gh'); //no need ghain. g ok.
+		return root;
+	},
+	
 	UIgetRootLink:		function(root, linkname, linkprefix){
 		var link = CORPUS.LinkQuranDictionary.replace(/\$1/, root);
-		return CORPUS.TemplateRootLink.replace(/\$1/, link).replace(/\$2/, linkname?linkname:root).replace(/\$3/, linkprefix?linkprefix:'Root: ') + ( CORPUS.UIgetRootCount(root) ? '&nbsp;<span dir=ltr style=font-size:0.87em;>(' + CORPUS.UIgetRootCount(root) + ' times)</span>' : '' );
+		return CORPUS.TemplateRootLink.replace(/\$1/, link).replace(/\$2/, linkname?linkname:root).replace(/\$3/, linkprefix?linkprefix:'Root: ') + 
+			( CORPUS.UIgetRootCount(root) ? '&nbsp;<span dir=ltr style=font-size:0.87em;>(' + CORPUS.UIgetRootCount(root) + ' times)</span>' : '' ) + 
+			CORPUS.UIgetArabicAlmanacLink(root);
 	},
 
 	UIgetRootDecoratedLink:		function(root, linkname, linkprefix){
