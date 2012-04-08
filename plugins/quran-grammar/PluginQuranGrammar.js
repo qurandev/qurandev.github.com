@@ -859,6 +859,8 @@ var NEAR_SYNONYMS = [
 "jiyd",
 "Habol m~asad",
 
+"baAri} badiyE faTara xa`liq xalaqa xaloq >an$a>a <in$aA^' *ara>a",
+
 //ANTONYMS START HERE...
 "||<ivom  bar~",
 "||>aviym  saliym",
@@ -1188,8 +1190,8 @@ financially responsible;  be they  business or  personal in  nature.  �
 	"47": {"topic": "fuel/firewood", "page": 165, "info": "Hatab, eendhan. Also see pg 764, Lakri." },
 	"48": {"topic": "neck", "page": 728, "info": "Jeed, gardan" },
 	"49": {"topic": "rope", "page": 541, "info": "Habl, rassi. Masad, moonj ki rassi." },
-	
-	"50": {"topic": "", "page": 1, "info": "" },
+
+	"50": {"topic": "to create", "page": 327, "info": "bara'a badaEa faTara khalaqa ansha'a dhara'a <BR> See: payda karna." },
 	"51": {"topic": "", "page": 1, "info": "" },
 	"52": {"topic": "", "page": 1, "info": "" },
 	"53": {"topic": "", "page": 1, "info": "" },
