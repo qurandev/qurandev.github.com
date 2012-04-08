@@ -1191,7 +1191,30 @@ financially responsible;  be they  business or  personal in  nature.  �
 	"48": {"topic": "neck", "page": 728, "info": "Jeed, gardan" },
 	"49": {"topic": "rope", "page": 541, "info": "Habl, rassi. Masad, moonj ki rassi." },
 
-	"50": {"topic": "to create", "page": 327, "info": "bara'a badaEa faTara khalaqa ansha'a dhara'a <BR> See: payda karna." },
+	"50": {"topic": "to create", "page": 327, "info": "bara'a badaEa faTara khalaqa ansha'a dhara'a <PRE> \n\
+GIST:\n\
+1) bara'a: To bring forth/create something from nothing. See 2:57.\n\
+2) bada3a: Without a model or example, create something for the first time. See 2:117.\n\
+3) faTara: To give good shape by splitting. See 35:1.\n\
+4) Khalaqa: to create/produce something that already exists. See 4:1, 5:110.\n\
+5) ansha'a: To create and raise up. Ex: 6:98, 43:18, 56:72.\n\
+6) dhara'a: to create and multiply. see 7:179, 67:24.\n\
+\n\n\
+DETAILS:\n\
+1) bara'a: To create from nothing, and give it a shape. Invent. See 2:57.\n\
+2) bada3a: To begin, make/create for the first time without any model. bariy3: to create a unique thing. See 2:117.\n\
+3) faTara: To create/split to make it more beautiful. See 35:1.\n\
+4) Khalaqa: i) to measure accurately and define the dimensions of anything. ii) to be created by The Creator. \n\
+	iii) commonly means to create/produce another thing from one that already exists/created. See 4:1. \n\
+	In this case it can be attributed to others too other than The Creator, eg: 5:110.\n\
+5) ansha'a: From nasha'a = production/creation. Basically it has two meanings: i) to create a thing \n\
+	ii) then to care for it & help in its growth/increase/to raise up.\n\
+This word has been used both in individual meaning as well as in both meanings together.\n\
+Ex: To create/give birth: see 6:98. To raise up/help grow: see 43:18. To create & raise up: see 56:72.\n\
+6) dhara'a: i) to create/produce ii) to multiply. This word is used in both meanings, separately & jointly.\n\
+Ex: To create: see 7:179. To multiply: 67:24. (ex: of a seed as well as man)\n\
+sowed & multiplied; created & multiplied.	\n\n\
+	</PRE>See: payda karna." },
 	"51": {"topic": "", "page": 1, "info": "" },
 	"52": {"topic": "", "page": 1, "info": "" },
 	"53": {"topic": "", "page": 1, "info": "" },
