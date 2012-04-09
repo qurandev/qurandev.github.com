@@ -2001,6 +2001,10 @@ var toggleSearchMode = function(){
 		$('#searchForm').bind('submit', function(event){ 
 			event.preventDefault(); 
 			offlinesearch($('#search').val() ); 
+			//var keyword = $('#search').val();
+			//offlinesearch( keyword ); 
+			//UIblockForSearch('Searching for keyword: ' + keyword, 'Please wait...<IMG SRC=wait.gif>');
+			//setTimeout("offlinesearch('" + keyword + "');", 5); 
 			return false; 
 		});
 	}
