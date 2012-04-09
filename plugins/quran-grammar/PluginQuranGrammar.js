@@ -900,7 +900,7 @@ resemble the shape of a ship كلفلا !\n\
 		</PRE>See: Aasmaan."},
 		
 	"1": {"topic": "God", "page": 818, "info": "Allah, ilah are the different synonyms.<BR/> See entry: ma3bood in below page. " },
-	"2": {"topic": "Alone", "page": 138, "info": "aHad, waHiyd, fard, furādā different synonyms.<BR/> See entry: akeyla in below page. " },
+	"2": {"topic": "Alone", "page": 138, "info": "aHad, waHiyd, fard, furādā different synonyms. <BR/><BR/>See related: <STRONG><A HREF=http://www.linguisticmiracle.com/gems/waheed TARGET=_>Gem/Linguistic miracle</A></STRONG><BR/><BR/> See entry: akeyla in below page. " },
 	"3": {"topic": "Self-Sufficient", "page": 256, "info": "ghaniyy and Samad are synonyms.<BR/> See entry: beniyaaz in below page. " },
 	
 	"4": {"topic": "Not", "page": 862, "info": "lam laysa lan laa 'in maa hal balaa kallaa etc are some synonyms. lot more below.<BR/> See entry: naheen in below page. " },	
