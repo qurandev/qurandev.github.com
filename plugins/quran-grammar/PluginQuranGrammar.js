@@ -880,7 +880,19 @@ var NEAR_SYNONYMS = [
 "||<ins jin~",
 "||<ins wH$",
 "||>aw~al A^xir",
+
+"||bi}osa niEoma niEomap",
+"|| ba>os ba>osaA^' s~ar~aA^'", //Dar~aA^'", 
+
+"|| taHot fawoq",
 ];
+
+var ANTONYMS_METADATA = [
+	"Bi's (bura [disliked]) x Ni3m",
+	"Ba'saa' x sarraa'a",
+
+	"taHta (neechay) x fawqa",
+]
 
 var _PDF = "<A HREF=http://ia600705.us.archive.org/12/items/BayyinahE-bookGemsCollection-Linguisticmiracle.com/near-synonyms-nouman-ali-khan-muslimmattersorg.pdf TARGET=_>Source: NearSynonyms PDF - Nouman Ali Khan</A><BR/>";
 var NEAR_SYNONYMS_METADATA = {
