@@ -145,7 +145,13 @@ var CORPUS = {
 	},
 	
 	UIgetSarfSagheer: function(root, form){
-		var sarfSagheer = '', sarfFound = false;
+		var sarfSagheer = '', sarfFound = false, verbConj = 'http://acon.baykal.be/index.php'; //?r3=%D9%82&r2=%D9%84&r1=%D8%AE&type=III&pvowel=a&ivowel=a';
+		try{
+			var r1, r2, r3, type, arr= $.trim(root).split('');
+			r1 = encodeURIComponent( EnToAr( arr[0] ) ); r2 = encodeURIComponent( EnToAr( arr[1] ) ); r3 = encodeURIComponent( EnToAr( arr[2] ) ); 
+			if(form) type = form.substring(1, form.length - 1); else type = 'I';
+			verbConj = verbConj + '?r3=' + r3 +'&r2=' + r2 + '&r1=' + r1 + '&type=' + type + ''; //&pvowel=a&ivowel=a
+		}catch(e){}
 		if(SARF_SAGHEER){
 			var key = root;
 			if(form) (form!='(I)') ? key = root + ',d' + CORPUS.FORM_MAPPING[ form ] : key = root + ',b'; //to avoid multiple false matches
@@ -157,6 +163,7 @@ var CORPUS = {
 					//break;
 				}
 			});
+			sarfSagheer += '&nbsp;&nbsp;<span style="font-size:0.61em;"><A HREF=' + verbConj + ' target=_>(conj.)</a></span>';
 		}
 		return sarfFound ? '<BR/>Sarf: ' + sarfSagheer + '<BR/>': '';
 	},
