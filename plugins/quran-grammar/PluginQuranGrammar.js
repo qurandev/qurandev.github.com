@@ -251,6 +251,28 @@ var CORPUS = {
 		obj.pos    = corpus.pos;
 		return obj;
 	},
+
+	UIgetAyahInfoDisplay: function(ref){
+		var ret = '', GEM = '<IMG SRC=images/gem.gif style=float:none!important; />', LIT_DEV = '<IMG SRC=images/lit_dev.gif style=float:none!important; />';
+		$.each( Object.keys( AYAHS_METADATA.LITERARY_DEVICES ), function(a, b){
+			if(b.indexOf(' ' + ref + ' ') != -1) ret += '<li>- Literary Device: ' + LIT_DEV + '&nbsp;<A TARGET=_ HREF=' + AYAHS_METADATA.LITERARY_DEVICES[b].url +' >'+ AYAHS_METADATA.LITERARY_DEVICES[b].topic + '</A><BR></li>';
+		});
+		$.each( Object.keys( AYAHS_METADATA.MIRACLES ), function(a, b){
+			if(b.indexOf(' ' + ref + ' ') != -1) ret += '<li>- Gem: ' + GEM + '&nbsp;<A TARGET=_ HREF=' + AYAHS_METADATA.MIRACLES[b].url +' >'+ AYAHS_METADATA.MIRACLES[b].topic + '</A><BR></li>';
+		});
+		return ret;
+	},
+	
+	UIgetAyahInfoIndicator: function(ref){
+		var ret = '', GEM = '<IMG SRC=images/gem.gif style=float:none!important; />', LIT_DEV = '<IMG SRC=images/lit_dev.gif style=float:none!important; />';
+		$.each( Object.keys( AYAHS_METADATA.LITERARY_DEVICES ), function(a, b){
+			if(b.indexOf(' ' + ref + ' ') != -1) ret += LIT_DEV;
+		});
+		$.each( Object.keys( AYAHS_METADATA.MIRACLES ), function(a, b){
+			if(b.indexOf(' ' + ref + ' ') != -1) ret += GEM;		
+		});
+		return ret;
+	},
 	
 	FEATURES_MAPPING: {'GEN': 'Genitive case.', 'ACC': 'Accusative case.', 'NOM': 'Nominative case.', 'INDEF': 'Indefinte.', 
 						'3MS': '3rd person Masculine Singular.', '3MP': '3rd person Masculine Plural.', 
@@ -1239,7 +1261,39 @@ sowed & multiplied; created & multiplied.	\n\n\
 	"60": {"topic": "", "page": 1, "info": "" },
 
 	};
-	
+
+
+var AYAHS_METADATA = {
+	"MIRACLES": {
+		" 74:3 36:40 ": {
+			"topic": "Palindrome", 
+			"url": "http://www.linguisticmiracle.com/gems/palindromes" 
+		},
+		
+		" 35:32 ": {
+			"topic": "The letter Waaw in Faatir 35:32 has a right to be written in tears…",
+			"url": "http://www.linguisticmiracle.com/gems/waaw"
+		}
+	},
+	"LITERARY_DEVICES": {
+		" 55:60 37:91 ": {
+			"topic": "Rhetorical questions",
+			"url": "http://qurandev.github.com/widgets/literarydevices.html",
+			"info": "This type of question is a figure of speech in the form of a question posed for its persuasive effect without the expectation of a reply (for example, Why me?). Rhetorical questions encourage the listener to think about what the (often obvious) answer to the question must be. When a speaker states, “How much longer must our people endure this injustice?”, no formal answer is expected. Rather, it is a device used by the speaker to assert or deny something. In the Qur’an, Allah uses rhetorical questions in many places, for example:\n\
+\n\
+'Is there any reward for good other than good?' Surah ar-Rahmaan (The Most Gracious) 55: 60.\n\
+\n\
+'Then he turned to their alihah (gods) and said: 'Will you not eat (of the offering before you)?' Surah as-Saaffaat (Those Ranged in Ranks) 37: 91.'"
+		},
+		" 54:13 6:127 ": {
+			"topic": "Metonymy (kinayah)",
+			"url": "http://qurandev.github.com/widgets/literarydevices.html",
+			"info": "This device is used in rhetoric in which a thing or concept is not called by its own name, but by the name of something intimately associated with that thing or concept. So for example in the following verse when describing the story of Prophet Noah (peace be upon him), the Arabic word for ark or ship is not in the verse but is implied by Allah’s mention of planks and nails:\n\
+\n\
+“And We carried him on a (ship) made of planks and nails” Surah al-Qamar (The Moon) 54: 13."
+		}
+	}
+}
 	
 var offlinesearch = function(keyword){
 		var results = {}, title='', mixMode=false, arrMode=false, engMode=false, transMode=false;

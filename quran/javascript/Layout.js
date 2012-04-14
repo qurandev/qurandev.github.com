@@ -191,7 +191,9 @@ var layout = {
 					lastSurahTitle = val.surah;
 				}
 				
-				body += '<p class="ayah '+val.surah+'-'+val.ayah+'" '+fontFamily+'><span class="'+quranClass+'">'+layout.verseParse(quranBy, val.verse, val)+'</span> <span class=tipsWord title="&lt;span class=hotlink&gt;&lt;span class=ayah data-verse='+verseNo+'&gt;Related verses to this one.<BR><BR><BR>&lt;/span&gt;&lt;/span&gt;"><a href="'+gq.url.hashless()+'#!/'+quranBy+'/'+val.surah+':'+val.ayah+'" class="ayahNumber" data-verse="'+verseNo+'"><span class="icon leftBracket"> </span>'+val.ayah+'<span class="icon rightBracket"> </span></a></span></p>';
+				body += '<p class="ayah '+val.surah+'-'+val.ayah+'" '+fontFamily+'><span class="'+quranClass+'">'+layout.verseParse(quranBy, val.verse, val)+'</span> <span class=tipsWord title="&lt;span class=hotlink&gt;&lt;span class=ayah data-verse='+verseNo+'&gt;Related verses to this one.<BR><BR><BR>&lt;/span&gt;&lt;/span&gt;"><a href="'+gq.url.hashless()+'#!/'+quranBy+'/'+val.surah+':'+val.ayah+'" class="ayahNumber" data-verse="'+verseNo+'"><span class="icon leftBracket"> </span>'+val.ayah+
+				UIgetAyahInfoIndicator(val.surah+':'+val.ayah) +
+				'<span class="icon rightBracket"> </span></a></span></p>';
 			});
 			body += '</div><div class="hr"><hr /></div>';
 		});
@@ -1944,13 +1946,19 @@ var UI_ayahHtml = function( verseno ){ if(!(verseno = parseInt(verseno) ) ) retu
 	var surah, ayah, html;
 	surahno = Quran.ayah.fromVerse( verseno ).surah;
 	ayahno  = Quran.ayah.fromVerse( verseno ).ayah;
-	html = "<span style=font-size:0.6em!important;line-height:1em!important;>You might also be interested in this verse's...<BR><ul>" +
+	html = "<span style=font-size:0.6em!important;line-height:1em!important;>You might also be interested in this ayah's...<BR><ul>" +
+		CORPUS.UIgetAyahInfoDisplay(surahno + ':' + ayahno ) + 
 		UI_ayahLinkTemplate1.replace(/\$SURAH/, surahno).replace(/\$AYAH/, ayahno ).replace(/\$TITLE/, UI_ayahLinkTitle1) +
 		UI_ayahLinkTemplate2.replace(/\$SURAH/, surahno).replace(/\$AYAH/, ayahno ).replace(/\$TITLE/, UI_ayahLinkTitle2) + 
 		UI_ayahLinkTemplate3.replace(/\$SURAH/, surahno).replace(/\$AYAH/, ayahno ).replace(/\$TITLE/, UI_ayahLinkTitle3) + 
 		UI_ayahLinkTemplate4.replace(/\$SURAH/, surahno).replace(/\$AYAH/, ayahno ).replace(/\$TITLE/, UI_ayahLinkTitle4) + 
 		"</ul></span>";
 	return html;
+}
+
+var UIgetAyahInfoIndicator = function(ref){
+	if(typeof(CORPUS) == 'undefined') return '';
+	return CORPUS.UIgetAyahInfoIndicator(ref);
 }
 
 var UI_grammarHtml = function( text ){ CORPUS.isInitialized = true;
