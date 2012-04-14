@@ -163,7 +163,7 @@ var CORPUS = {
 					//break;
 				}
 			});
-			sarfSagheer += '&nbsp;&nbsp;<span style="font-size:0.61em;"><A HREF=' + verbConj + ' target=_>(conj.)</a></span>';
+			sarfSagheer += '&nbsp;&nbsp;<A HREF=http://www.scribd.com/embeds/89383169/content?start_page=1&view_mode=slideshow&access_key=key-26c3dogrsa7rabyiehvm&secret_password=1u076toxw5hnczujpoly TARGET=_>(ref)</A>&nbsp;&nbsp;<span style="font-size:0.61em;"><A HREF=' + verbConj + ' target=_>(conj.)</a></span>';
 		}
 		return sarfFound ? '<BR/>Sarf: ' + sarfSagheer + '<BR/>': '';
 	},
