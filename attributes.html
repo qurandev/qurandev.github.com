@@ -191,6 +191,16 @@
 		return url;
 	}
 	
+	var qWordRefFormatter = function(row, cell, value, columnDef, dataContext){
+		if (!value || $.trim(value) == '') return "-";
+		var _URL = "<A HREF='http://corpus.quran.com/wordmorphology.jsp?location=($REF)' TARGET=_>$REF</A>";
+		var ref = $.trim(value), url='';
+		if(parseInt(ref) ){
+			url = _URL.replace(/\$REF/g, ref);
+		}
+		return url;
+	}
+	
 	var qInfoFormatter = function(row, cell, value, columnDef, dataContext){  //(value, val2) {//return "wait...";
 		if (!value || $.trim(value) == '') return "-"; //row=rowNo, cell=cellNo, dataContext has all the row data
 		//whichever token is like 59:24, then linkify it
@@ -231,7 +241,7 @@
 		{id:"col0", name:"#", field:"col0", cssClass: "VCenter", width: 30},
 		{id:"col1", name:"Attribute", field:"col1", width: 120, cssClass: "VCenter", formatter:qPageFormatter},
 		{id:"col2", name:"in arabic", field:"col2", formatter:arabicLemsFormatter, cssClass: "VCenter", width: 180},
-		{id:"col9", name:"1st occurence", field:"col9", cssClass: "xVCenter", width: 78},
+		{id:"col9", name:"1st occurence", field:"col9", cssClass: "xVCenter", width: 78, formatter:qWordRefFormatter },
 		{id:"col3", name:"root letters", field:"col3", formatter:arabicRootsFormatter, cssClass: "VCenter", width: 127},
 		{id:"col4", name:"associated nouns", field:"col4", formatter:arabicLemsFormatter, cssClass: "VCenter", width: 170},
 		{id:"col5", name:"opposites", field:"col5", formatter:arabicLemsFormatter, cssClass: "VCenter", width: 40},
