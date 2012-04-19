@@ -910,9 +910,12 @@ var NEAR_SYNONYMS = [
 "||<ins wH$",
 "||>aw~al A^xir",
 
-"||bi}osa niEoma niEomap",
+"|| bi}osa niEoma niEomap",
 "|| ba>os ba>osaA^' s~ar~aA^'", //Dar~aA^'", 
 
+"|| bikor vay~iba`t",
+"|| bayoDaA' sawodaA'",
+"|| >aboyaD >asowad {sowad~ato",
 "|| taHot fawoq",
 ];
 
@@ -920,7 +923,10 @@ var ANTONYMS_METADATA = [
 	"Bi's (bura [disliked]) x Ni3m",
 	"Ba'saa' x sarraa'a",
 
-	"taHta (neechay) x fawqa",
+	"Bikr (kanwaarah/kanwaari) x thayyib",
+	"BayDaa' (white) x sawdaa'",
+	"aByaD (white) x aswad",
+	"taHta (Below/neechay) x fawqa",
 ]
 
 var _PDF = "<A HREF=http://ia600705.us.archive.org/12/items/BayyinahE-bookGemsCollection-Linguisticmiracle.com/near-synonyms-nouman-ali-khan-muslimmattersorg.pdf TARGET=_>Source: NearSynonyms PDF - Nouman Ali Khan</A><BR/>";
@@ -1269,23 +1275,76 @@ sowed & multiplied; created & multiplied.	\n\n\
 
 	};
 
-
+var LITDEV_URL = "http://qurandev.github.com/widgets/literarydevices.html";
 var AYAHS_METADATA = {
 	"MIRACLES": {
-		" 74:3 36:40 ": {
-			"topic": "Palindrome", 
-			"url": "http://www.linguisticmiracle.com/gems/palindromes" 
-		},
-		
 		" 35:32 ": {
 			"topic": "The letter Waaw in Faatir 35:32 has a right to be written in tears…",
 			"url": "http://www.linguisticmiracle.com/gems/waaw"
-		}
+		},
+		" 79:40 74:53 106:4 36:11 35:28 23:1 23:2 79:9 2:197 9:64 11:74 11:70 20:67 8:2 16:51 59:13 8:12 18:18 52:26 42:22 79:8 24:52 ": {
+			"topic": "Usage of 'Fear' in the Qur’an",
+			"url": "http://www.linguisticmiracle.com/gems/usage-of-fear-in-the-quran"
+		},
+		" 2:23 9:64 9:86 9:124 9:127 10:38 11:13 24:1 47:20 ": { // suwrapN swrp. bakka:  bibak~apa bbkp  mak~apa mkp
+			"topic": "Surah",
+			"url": "http://www.linguisticmiracle.com/gems/surah"
+		},
+		
+		" 74:3 36:40 ": {
+			"topic": "Palindromes", 
+			"url": "http://www.linguisticmiracle.com/gems/palindromes" 
+		},
+
+		" 105:1 90:4  -  18:6 18:8  19:77 19:80 6:94 74:11  - 37:96 2:186  4:85 40:40  82:10 82:11 82:12  22:74 22:75 22:78  26:106 26:176 26:177 7:85  33:4 17:23 30:21 57:20 36:68 33:13 - 81:5  2:257 47:11  57:15  4:13 4:14  3:170 76:11 28:76  53:11  39:71 39:74  43:79  3:96 3:97 48:24 42:7  2:34  4:92 4:93  12:4 12:5 12:6  15:39 15:40 ":{
+			"topic": "Precise word selection",
+			"url": "http://www.linguisticmiracle.com/gems/precise-word-selection"
+		},
+
+		" 26:80 15:9 42:43  94:5 94:6  14:7 2:1 ":{
+			"topic": "Emphasises",
+			"url": "http://www.linguisticmiracle.com/gems/emphasises"
+		},
+
+		" 33:24 2:286 42:43  91:5 91:6 92:3 41:39  3:134 3:136  1:5 10:1  19:2 19:32 19:33 19:34  17:1 18:1  40:49 42:45 39:15  2:143  6:151 17:31  10:84 5:72 ":{
+			"topic": "Word placement",
+			"url": "http://www.linguisticmiracle.com/gems/word-placement"
+		},
+
+
+		"  17:45 18:57 16:108 45:23 36:9  2:102 ": {
+			"topic": "Supernatural",
+			"url": "http://www.linguisticmiracle.com/gems/supernatural"
+		},
+
+		" 11:42 80:1 26:10 93:10 53:17 100:1 100:9 18:45 18:7 81:5 101:9 22:31 21:18 28:10   12:4  81:2 82:2  20:9 20:21  20:37 20:40 12:2 12:111 ":{
+			"topic": "pictures",
+			"url": "http://www.linguisticmiracle.com/gems/pictures"
+		},
+		
+		" 93:2 100:2 78:14 80:33 20:120 69:27 91:14   56:4 79:6 79:7 20:120 99:1 ": {
+			"topic": "Sounds [Onomatopoeia] in al-Qur'an",
+			"url": "http://www.linguisticmiracle.com/gems/sounds"
+		},		
+		" 14:24 14:26 ": {
+			"topic": "Tajweed Sounds",
+			"url": "http://www.linguisticmiracle.com/gems/sounds"
+		},
+
+		"  11:90 85:14  2:31 2:33 2:34 2:35 2:37 3:33 3:59 5:27 7:11 7:19 7:26 7:27 7:31 7:35 7:172 17:61 17:70 18:50 19:58 20:115 20:116 210:117 20:120 20:121 36:60  3:144 33:40 47:2 48:29 61:6  19:8 ": {
+			"topic": "Names",
+			"url": "http://www.linguisticmiracle.com/gems/names"
+		},
+		"  30:12 6:44 23:77 30:49 43:75 2:34 7:11 15:31 15:32 17:61 18:50 20:116 26:95 34:20 38:74 38:75 " : {
+			"topic": "Names - iblees",
+			"url": "http://www.linguisticmiracle.com/gems/names"
+		},
 	},
+	
 	"LITERARY_DEVICES": {
-		" 55:60 37:91 ": {
+		" 55:60 37:91 37:92 ": {
 			"topic": "Rhetorical questions",
-			"url": "http://qurandev.github.com/widgets/literarydevices.html",
+			"url": LITDEV_URL,
 			"info": "This type of question is a figure of speech in the form of a question posed for its persuasive effect without the expectation of a reply (for example, Why me?). Rhetorical questions encourage the listener to think about what the (often obvious) answer to the question must be. When a speaker states, “How much longer must our people endure this injustice?”, no formal answer is expected. Rather, it is a device used by the speaker to assert or deny something. In the Qur’an, Allah uses rhetorical questions in many places, for example:\n\
 \n\
 'Is there any reward for good other than good?' Surah ar-Rahmaan (The Most Gracious) 55: 60.\n\
@@ -1294,11 +1353,104 @@ var AYAHS_METADATA = {
 		},
 		" 54:13 6:127 ": {
 			"topic": "Metonymy (kinayah)",
-			"url": "http://qurandev.github.com/widgets/literarydevices.html",
+			"url": LITDEV_URL,
 			"info": "This device is used in rhetoric in which a thing or concept is not called by its own name, but by the name of something intimately associated with that thing or concept. So for example in the following verse when describing the story of Prophet Noah (peace be upon him), the Arabic word for ark or ship is not in the verse but is implied by Allah’s mention of planks and nails:\n\
 \n\
 “And We carried him on a (ship) made of planks and nails” Surah al-Qamar (The Moon) 54: 13."
-		}
+		},
+		
+		" 88:15 88:16 93:9 93:10 ": {
+			"topic": "Analogy",
+			"url": LITDEV_URL,
+		},	
+		" 33:71 77:20 ": {
+			"topic": "Alliteration",
+			"url": LITDEV_URL,
+		},
+		" 44:49 ": {
+			"topic": "Antiphrasis",
+			"url": LITDEV_URL,
+		},
+		" 35:7 9:82 ": {
+			"topic": "Antithesis",
+			"url": LITDEV_URL,
+		},
+		" 13:2 ": {
+			"topic": "Asyndeton",
+			"url": LITDEV_URL,
+		},	
+		" 88:25 88:26 88:14 88:15 ": {
+			"topic": "Assonance",
+			"url": LITDEV_URL,
+		}, //cadence: present in whole quran
+		" 3:27 ": {
+			"topic": "Chiasmus",
+			"url": LITDEV_URL,
+		},
+		" 94:5 94:6 ": {
+			"topic": "Epizeuxis",
+			"url": LITDEV_URL,
+		},
+		" 24:43 ": {
+			"topic": "Equivoque",
+			"url": LITDEV_URL,
+		},
+		" 2:14 2:15 3:54 ": {
+			"topic": "Homynymy",
+			"url": LITDEV_URL,
+		},
+		" 7:40 33:10 39:71 39:72 ": {
+			"topic": "Hyperbole",
+			"url": LITDEV_URL,
+		},
+		" 65:7 65:8 65:9 65:10 ": {
+			"topic": "Isocolon",
+			"url": LITDEV_URL,
+		},
+		" 19:4 21:18 ": {
+			"topic": "Metaphor",
+			"url": LITDEV_URL,
+		},
+		" 54:13 6:127 ": {
+			"topic": "Metonymy",
+			"url": LITDEV_URL,
+		},
+		" 7:42 4:73 ": {
+			"topic": "Parenthesis / Hazaf(?)",
+			"url": LITDEV_URL,
+		},
+		" 80:25 80:26 ": {
+			"topic": "Polypton",
+			"url": LITDEV_URL,
+		},
+		" 29:62 3:92 ": {
+			"topic": "Stress",
+			"url": LITDEV_URL,
+		},
+		" 90:12 90:13 ": {
+			"topic": "Synedoche",
+			"url": LITDEV_URL,
+		}, /*
+		"  ": {
+			"topic": "",
+			"url": LITDEV_URL,
+		},
+		"  ": {
+			"topic": "",
+			"url": LITDEV_URL,
+		},
+		"  ": {
+			"topic": "",
+			"url": LITDEV_URL,
+		},
+		"  ": {
+			"topic": "",
+			"url": LITDEV_URL,
+		},
+		"  ": {
+			"topic": "",
+			"url": LITDEV_URL,
+		},*/
 	}
 }
 	
