@@ -18842,10 +18842,14 @@ $('#dataisland5').text( BuckToBare( $('#dataisland3').text() ) );
 $('#dataisland9').text( str9 );
 $('#dataisland10').text( str10 );
 
+var escapeRegex = function (str) {
+        return str.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
+
 var regex = "[a-zA-Z\~\^\#\*\$\{\`\>\<\&\}]+";
 	regex = "(?<word>\\w+)";
 	regex = "~^#*${`><&}-";
-	regex = "(?<word>[a-zA-Z" + XRegExp.escape(regex) + "]+)";
+	regex = "(?<word>[a-zA-Z" + escapeRegex(regex) + "]+)";
 	regex = "(?<word>" + "[^ ]* " + ")";
 var consumedCharsCount = 0, wordsCount = 0, spacesCount = 0, linesCount = 0, timeBaseline = new Date().getTime(), timeDone;
 
@@ -18905,41 +18909,12 @@ var process = function(dataislandnum){var strs = '';
 	if(document.getElementById('dataisland' + dataislandnum) && document.getElementById('dataisland' + dataislandnum).text)
 		strs = document.getElementById('dataisland' + dataislandnum).text;
 	else return -1;
-	return AnalyzeText('dataisland' + dataislandnum, strs);
+	var results = AnalyzeText('dataisland' + dataislandnum, strs);
+	return results;
+	//_log( JSON.stringify(results) );
 }
 
-sura(111);
-var _array = [], _arrayRoots, _arrayLems;
-var formatRootsIntoOrderedArrayByOccurenceCount = function(){
-	_arrayRoots = formatArrayIntoOrderedArrayByOccurenceCount();
-}
-var formatLemsIntoOrderedArrayByOccurenceCount = function(){
-	_arrayLems = formatArrayIntoOrderedArrayByOccurenceCount();
-}
-var formatArrayIntoOrderedArrayByOccurenceCount = function(){
-	var _words = process(2).words, tmp;
-	_array = ['', '', '', '', '', '', '', '', ''];
-	$.each( Object.keys(_words), function(a, word){
-		tmp = _words[word]; //this gives count
-		if(tmp >= 100) 		_array[3+5] += word + ' ';
-		else if(tmp >= 50) _array[3+4] += word + ' ';
-		else if(tmp >= 25) _array[3+3] += word + ' ';
-		else if(tmp >= 15) _array[3+2] += word + ' ';
-		else if(tmp >= 10) _array[3+1] += word + ' ';
-		else if(tmp >= 4) _array[3] += word + ' ';
-		else if(tmp >= 3) _array[2] += word + ' ';
-		else if(tmp >= 2) _array[1] += word + ' ';
-		else if(tmp == 1) _array[0] += word + ' ';
-		//else ignored.
-	});
-	//for(var j=0; j<_array.length; ++j) 	console.log(_array[j]);
-	var _info = [">=100\t", ">50 - 100", ">25 - 50", ">15 - 25", ">10 - 15", ">3 - 10\t", "3\t", "2\t", "1\t"].reverse();
-	$.each( _array, function(a, aa){
-		console.log("\t" + _info[a] +"\t"+ _array[a].length + " words");
-	});//	console.log( _array.join('\n\n\n') );
-}
-
-
+//sura(111);
 
 var MapWords = function(){
 	var regex = "(?<LEM>LEM\:[^ \|]*)?\|(?<ROOT>ROOT:[^ \|]*)";
@@ -18957,18 +18932,19 @@ var MapWords = function(){
 	timeDone = new Date().getTime();
 	_log( words ); // words: {run: 2, forrest: 1}
 }
-MapWords();
+//MapWords();
 
 
 
 
 
 //----- 	searching for cross refs: --------------------------------------------
-var _roots, _lems, _rootsArr, _lemsArr, _prepData = function(){
+var _roots, _lems, _rootsArr, _lemsArr;
+var _prepData = function(){
 	if(!_roots || !_rootsArr){
 		var txt = $('#dataisland1').text(); _roots=''; _rootsArr = [];
 		$.each( txt.split('\n'), function(lineno, line){
-			_rootsArr.push( lineno + '|'+ line );
+			_rootsArr.push( lineno + '| '+ line +' ' );
 		});
 		_roots = _rootsArr.join('\n');
 	}
@@ -18976,7 +18952,7 @@ var _roots, _lems, _rootsArr, _lemsArr, _prepData = function(){
 	if(!_lems || !_lemsArr){
 		var lems = $('#dataisland2').text(); _lems = ''; _lemsArr = [];
 		$.each( lems.split('\n'), function(lineno, line){
-			_lemsArr.push( lineno + '|'+ line );
+			_lemsArr.push( lineno + '| '+ line + ' ');
 		});
 		_lems = _lemsArr.join('\n');
 	}
@@ -18994,7 +18970,7 @@ var mapLemToRoot = function( token ){
 
 var mapToken = function( token, src, srcArr, dest, destArr ){ 
 	if(!token) return;
-	var reg = RegExp(".* " + token + " .*", "g");  // /.*smw.*/g;
+	var reg = RegExp(".* " + escapeRegex(token) + " .*", "g");  // /.*smw.*/g;
 	var set1 = src.match( reg ), set2, t1, t2, t3, map = {}, wordindex, word, occurences=-1, parts;
 	if(!set1) return '--no matches--';
 
@@ -19016,36 +18992,81 @@ var mapToken = function( token, src, srcArr, dest, destArr ){
 			});			
 		}else debugger;
 	});
-	var json = {
-			id: token,
-			name: token,
-			data: {},
-			children: []
-	};
-	json = { id:token };
+	var json = {id: token, name: token,	data: {},children: []};
+	json = { }, d = {};
 	var val='', totalCount=0; //{"mubaArak":8,"tabaAraka":9,"baraka`t":3,"ba`raka":8,"m~uba`rakap":4}
-	$.each(Object.keys(map), function(childno, child){val = map[child];
-		//json.children.push( {id: child, name: child, data:{'count': val}, children: [] } ); 
-		json[child] = val; 
+	$.each(Object.keys(map), function(childno, child){val = map[child];		//json.children.push( {id: child, name: child, data:{'count': val}, children: [] } ); 
+		d[child] = val; 
 		totalCount += val;
 	});
-	json['count'] = totalCount; //json.data['count'] = totalCount;
-	json['forms'] = Object.keys(map).length;//json.data['forms'] = Object.keys(map).length;
-	//console.log( JSON.stringify( json ) );	console.log( json );
+	json['n'] = totalCount; //json.data['count'] = totalCount;
+	json['f'] = Object.keys(map).length;//json.data['forms'] = Object.keys(map).length;
+	json['d'] = d;
 	return json;
 }
-var token = "smw", token2 = 'qawom'; //qawom Zalama xayor
-mapRootToLem(token);
-mapLemToRoot(token2);
-mapRootToLem('qwm');
+//var token = "smw", token2 = 'qawom'; //qawom Zalama xayor
+//mapRootToLem(token);
+//mapLemToRoot(token2);
+//mapRootToLem('qwm');
+
+
+var _array = [], _arrayRoots, _arrayLems;
+var formatRootsIntoOrderedArrayByOccurenceCount = function(){
+	var obj = process(1), roots = obj.words, results;
+	_log(obj.summary);
+	results = formatArrayIntoOrderedArrayByOccurenceCount( roots );
+	_arrayRoots = results.array;
+	_log( results.summary );
+}
+var formatLemsIntoOrderedArrayByOccurenceCount = function(){
+	var obj = process(2), lems = obj.words, results;
+	_log(obj.summary);
+	results = formatArrayIntoOrderedArrayByOccurenceCount( lems );
+	_arrayLems = results.array;
+	_log( results.summary );
+}
+var formatArrayIntoOrderedArrayByOccurenceCount = function(_words){
+	var results = {}, summary = '', tmp;
+	var _info = [">=100\t", ">50 - 100", ">25 - 50", ">15 - 25", ">10 - 15", ">3 - 10\t", "3\t", "2\t", "1\t"].reverse();
+	_array = ['', '', '', '', '', '', '', '', ''];
+	$.each( Object.keys(_words), function(a, word){
+		tmp = _words[word]; //this gives count
+		if(tmp >= 100) 		_array[3+5] += word + ' ';
+		else if(tmp >= 50) _array[3+4] += word + ' ';
+		else if(tmp >= 25) _array[3+3] += word + ' ';
+		else if(tmp >= 15) _array[3+2] += word + ' ';
+		else if(tmp >= 10) _array[3+1] += word + ' ';
+		else if(tmp >= 4) _array[3] += word + ' ';
+		else if(tmp >= 3) _array[2] += word + ' ';
+		else if(tmp >= 2) _array[1] += word + ' ';
+		else if(tmp == 1) _array[0] += word + ' ';
+		//else ignored.
+	});
+	$.each( _array, function(a, aa){
+		summary += ("\t" + _info[a] +"\t"+ _array[a].length + " words") + '\n';
+	});//	console.log( _array.join('\n\n\n') );
+	results["summary"] = summary;
+	results["array"] = _array;
+	return results;
+}
+
+
 
 //AnalyzeAll();
 formatRootsIntoOrderedArrayByOccurenceCount();
-formatLemsIntoOrderedArrayByOccurenceCount();
+console.log( _arrayRoots[5].split(' ') + ' elements more than 100 occuring.');
+var rootsSet = {}
+$.each( _arrayRoots[5].split(' '), function(b, bb){ 
+	rootsSet[ bb ] = mapRootToLem(bb);
+});
+_log( JSON.stringify( rootsSet ) );
 
-console.log( _array[5].split(' ') + ' elements more than 100 occuring.');
-$.each( _array[5].split(' '), function(b, bb){ 
+/*
+formatLemsIntoOrderedArrayByOccurenceCount();
+console.log( _arrayLems[5].split(' ') + ' elements more than 100 occuring.');
+$.each( _arrayLems[5].split(' '), function(b, bb){ 
 	if(b<3) console.log( b + '\t'+ bb +'\t'+ JSON.stringify( mapLemToRoot(bb) ) ); 
 });
+*/
 //----------------------------------------------------------------------------------
 </script>

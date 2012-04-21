@@ -2,7 +2,7 @@
 <html>
 <head>
   <style>#demo-1{ color:lightBlue; }</style>
-  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script src="lib/jquery-1.7.min.js" Xsrc="http://code.jquery.com/jquery-latest.js"></script>
 </head>
 <body>
 	<H4>Visualize GlobalQuran-Corpus Data Sets</H4>
@@ -979,16 +979,83 @@ var AYAHS_METADATA = {
 
 </script>
 
+<script>
+var ACCESS_Q_ARABIC = {
+						"Unit1 - Nouns, pronouns and adjectives: masculine": 
+						"85:21 85:21 56:77 21:24 21:50 23:24 43:59 20:112 6:19 19:36 19:36 11:77 11:103 2:2 12:83",
+						"Unit2 - Nouns, pronouns and adjectives: feminine": 
+						"39:50 2:258 23:100 37:64 2:67 79:41 73:19 36:63 52:14 12:108 2:134 26:22 19:63 20:20 2:74",
+						"Unit3 - Nouns, pronouns and adjectives: indefinite": 
+						"50:2 44:11 101:11 34:15 44:17 57:11 33:44 2:173 71:5 18:74 2:221 2:221 16:76 44:3 69:40",
+						"Unit4 - Nouns, and adjectives: definite": 
+						"2:173 85:14 42:22 1:6 51:37 38:67 78:2 36:33 47:36 7:169 29:64 16:125 109:1 89:27 95:1-2",
+						"Unit5 - Nouns, and adjectives: number": 
+						"4:24 8:4 2:254 2:5 2:27 83:32 43:88 2:195 6:79 2:194 2:2 2:2 39:34 4:145 9:40",
+}
+</script>
+
+<script>//This section for formatters
+var fnAccessQArabicFormatter = function(data){
+	if(!data) return;
+	var html = '', arr;
+	$.each(Object.keys(data), function(number, unit){
+		arr = data[unit]; if(arr) arr = arr.split(' ');
+		html += '<BR>' + unit + '<BR><BR>';
+		$.each(arr, function(index, item){
+			html += item + '<SPAN ID="' + item.replace(/\:/g, '_') + '"></SPAN><BR>';
+			getAyahInfo( item );
+		});
+		html += '<HR>';
+	});
+	return html;
+}
+
+var AYAH_FETCH_ENABLED = true;
+var getAyahInfo = function(ref, surano, versno){ if(!AYAH_FETCH_ENABLED) return; var _ref;
+	if(ref && typeof(ref) == 'string') _ref = $.trim(ref);
+	else if(surano && versno) _ref = surano +":"+ versno;
+	else return;
+	$.ajaxSetup({ cache: true, jsonpCallback: 'quranData' }); // define ajax setup
+	$.getJSON("http://api.globalquran.com/ayah/" + _ref + "/"+ "quran-simple|" + "en.sahih?jsoncallback=?", {
+		format : "jsonp"
+	}, function(data){ fnPaintAyahInfo(data);
+	}, function(data, data2, data3){ debugger; 
+	});
+}
+
+var fnPaintAyahInfo = function(data){
+	var html = '<ul>', selec, ref;
+	$.each(data.quran, function(i, by){
+		$.each(by, function (verseNo, line) {
+			ref = line.surah+':'+line.ayah;
+			html += '<li>(' + ref + ') '+ line.verse + '</li>';
+		});
+	}); html += '</ul>';
+	selec = $('#' + ref.replace(/\:/g, '_') );
+	if(selec){
+		$(selec).html(html);
+	}else debugger;
+}
+
+var quranData = function(data){
+	console.log( JSON.stringify( data ) );
+}
+
+</script>
+
 
 <script>
-var obj, DATASETS = {	"Miracles": AYAHS_METADATA["MIRACLES"],
-						"Rhetorical features": AYAHS_METADATA["LITERARY_DEVICES"],
-						"Attributes of Allah": DATASET_ATTRIBUTES,
-						"Synonyms info": NEAR_SYNONYMS_METADATA,
-						"Antonyms info": ANTONYMS_METADATA,
-						"Sarf Sagheer": SARF_SAGHEER,
-						"Near Synonyms, Antonyms": NEAR_SYNONYMS,
-						
+var obj, 
+	selectedOption = "Access Q Arabic", //"Miracles", 
+	DATASETS = {
+		"Miracles": {"data": AYAHS_METADATA["MIRACLES"]},
+		"Rhetorical features": {"data": AYAHS_METADATA["LITERARY_DEVICES"]},
+		"Attributes of Allah": {"data": DATASET_ATTRIBUTES},
+		"Synonyms info": {"data": NEAR_SYNONYMS_METADATA},
+		"Antonyms info": {"data": ANTONYMS_METADATA},
+		"Sarf Sagheer": {"data": SARF_SAGHEER},
+		"Near Synonyms, Antonyms": {"data": NEAR_SYNONYMS},
+		"Access Q Arabic": {"data": ACCESS_Q_ARABIC, "formatter": fnAccessQArabicFormatter},						
 };
 var getLength = function(obj){
 	var length = -1;
@@ -996,13 +1063,13 @@ var getLength = function(obj){
 	}else if(typeof(obj) == 'array'){ length = obj.length; }
 	return length;
 }
-var select = $('#datasets'), selectedOption = "Miracles";
+var select = $('#datasets');
 var options = []; //select.attr('options');
 //$('option', select).remove();
 $.each(Object.keys( DATASETS ), function(index, item){
 	//options[options.length] = new Option(item, item);
 	$('#datasets').append(new Option(item, item, true, true));
-	$('#status').append(item +'\t\t' + getLength( DATASETS[item] ) + '<BR>');
+	$('#status').append(item +'\t\t' + getLength( DATASETS[item].data ) + '<BR>');
 });
 $('#status').html( '<pre>' + $('#status').html() + '</pre>');
 
@@ -1012,7 +1079,7 @@ select.change( function(){
 	result.html('-- please wait. processing request.--');
 	var selection = $('#datasets > option:selected').val();
 	
-	var obj = DATASETS[ selection ], length = getLength(obj), title = "Dataset selected: <B>" + selection +"</B>", str = JSON.stringify(obj);	
+	var obj = DATASETS[ selection ].data, fnFormatter = DATASETS[ selection ].formatter, length = getLength(obj), title = "Dataset selected: <B>" + selection +"</B>", str = JSON.stringify(obj);	
 	title += (length ? " <small>(Items: <b>" + length + "</b>)</small>" : "") + "<HR>";
 	
 	if(typeof(obj) == 'object'){
@@ -1022,8 +1089,15 @@ select.change( function(){
 		});
 	}
 	
-	//alert(selection +"\n"+ str);
-	result.html( '<pre>' + title + str + '</pre>');
+	if(typeof(fnFormatter) != 'undefined' && fnFormatter){
+		str = fnFormatter(obj );
+		if(str){
+			result.html( '<pre>' + title + str + '</pre>');
+		}
+	}
+	else{
+		result.html( '<pre>' + title + str + '</pre>');
+	}
 });
 select.change();
 

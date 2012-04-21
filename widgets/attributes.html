@@ -1,0 +1,683 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Attributes of Allah</title>
+    <link rel="stylesheet" href="css/slick.grid.css" type="text/css" media="screen" charset="utf-8"/>
+    <link rel="stylesheet" href="css/smoothness/jquery-ui-1.8.16.custom.css" type="text/css" media="screen"
+          charset="utf-8"/>
+    <link rel="stylesheet" href="js/controls/slick.pager.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="css/examples.css" type="text/css" media="screen" charset="utf-8"/>
+    <style>
+		.VCenter{
+			text-align: center;
+			valign: center;
+			line-height: 4em;
+		}
+        .cell-title {
+            font-weight: bold;
+        }
+
+        .cell-effort-driven {
+            text-align: center;
+        }
+
+        .cell-selection {
+            border-right-color: silver;
+            border-right-style: solid;
+            background: #f5f5f5;
+            color: gray;
+            text-align: right;
+            font-size: 10px;
+        }
+		span.r1, span.r2, span.r3, span.r4{
+			font-size: 2.2em !important;
+			font-weight:bold !important;
+		}
+		span.r1 {
+			color: red;
+		}
+		span.r2 {
+			color: green;
+		}
+		span.r3 {
+			color: blue;
+		}
+		span.r4 {
+			color: purple;
+		}
+		*{
+			font-size: 1em !important;
+		}
+		.gridarea{
+			font-size: 8pt !important;
+		}
+		.rootsArea, sectionArea{
+			font-size: 2em !important;
+			font-size: 16pt !important;
+		}
+		.entryArea{
+			display: none;
+		}
+		select{
+			font-size: 1em !important;
+		}
+		.arr{
+			line-height: 49px !important;
+			font-size:3.8em !important;
+		}
+		.arr2{
+			line-height: 49px !important;
+			font-size:2.1em !important;
+		}
+		.arr3{
+			line-height: 49px !important;
+			//font-size:2.5em !important;
+		}
+		.small{
+			font-size:0.8em !important;
+		}
+    </style>
+</head>
+<body>
+<span><b>Attributes of Allah - Know your Creator.</b> Book by Late Dr. Mir. Aneesuddin M.Sc. Ph. D.<BR/>
+	<SPAN style="text-align:center; valign:center;"><A ID=top HREF=#book><IMG SRC='images/AttributesBookCover2.JPG' /></A>
+	<A HREF=https://docs.google.com/open?id=0B_jmuLljB7qEaUVRVW92WWlRWFdfcTFBcmlpQVQ1Zw TARGET=_>Download</A>
+	&nbsp;&nbsp;&nbsp; preface: "In this work an attempt has been made to explain the Attributes of Allah through associated words and their opposites used in the Quran". &nbsp;
+	</SPAN>
+</span>
+<div style="position:relative">
+    <div zstyle="width:600px;"><A name=tbl> </A>
+        <div class="grid-header" style="width:100%">
+            <label><A name=tbl2>Attributes of Allah</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A id=gobook HREF=#book>Go to Book</A></label>
+        </div>
+        <div id="myGrid" style="width:100%;;"></div>
+        <div id="pager" style="width:100%;height:20px;"></div>
+    </div>
+
+    <div style="display: none;" class="options-panel">
+        <b>Search:</b>
+        <hr/>
+        <div style="padding:6px;">
+			<div>
+				<textarea id=rawoutput rows=15 cols=20%></textarea>
+				<textarea id=rawoutput2 rows=15 cols=30%></textarea>
+				<textarea id=rawoutput3 rows=10 cols=20% style=display:none></textarea>
+			</div>
+			<BR/>
+            <label style="width:200px;float:left">Show Quran words with % at least: </label>
+            <div style="padding:2px;">
+                <div style="width:100px;display:inline-block;" id="pcSlider"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+		<script src="lib/jquery-1.7.min.js"></script>
+		<script src="lib/jquery-ui-1.8.16.custom.min.js"></script>
+		<script src="lib/jquery.event.drag-2.0.min.js"></script>
+
+		<script src="js/slick.core.js"></script>
+		<script src="js/slick.editors.js"></script>
+        <script src="js/plugins/slick.cellrangedecorator.js"></script>
+        <script src="js//plugins/slick.cellrangeselector.js"></script>
+        <script src="js//plugins/slick.cellselectionmodel.js"></script>
+		<script src="js/slick.grid.js"></script>
+		<script src="js/slick.groupitemmetadataprovider.js"></script>
+		<script src="js/slick.dataview.js"></script>
+		<script src="js/controls/slick.pager.js"></script>		
+		<script src="js/controls/slick.columnpicker.js"></script>
+		<script src="js/q-Mapper.js"></script>
+<script>
+    var dataView;
+    var grid;
+    var data = [];
+
+	
+	var arabicRootsFormatter = function(row, cell, value, columnDef, dataContext) {
+		if (value == null || $.trim(value) == "" )
+			return "-";
+		else {
+			value = $.trim( value );
+			var tempValue = EnToAr(unescape(value)), temp1='';
+			if(!tempValue) return "-";
+			temp1 = '<span class="r1">' +tempValue[0]+ '</span>-<span class="r2">' +tempValue[1]+ '</span>-<span class="r3">'+tempValue[2]+ '</span>';
+			if(tempValue.length >= 4 && tempValue[3]) tempValue = temp1 + '-<span class=r4>' + tempValue[3] + '</span>';
+			else tempValue = temp1;
+			var URL = 'http://corpus.quran.com/search.jsp?q=ROOT:'; //search by Root
+			URL = 'http://corpus.quran.com/qurandictionary.jsp?q='; //quran dictionary
+			tempValue = '<A HREF="'+ URL + value + '" target=_ >' + tempValue + '</A>';
+			return "<span class='arr3' title='" + value + "' >" + tempValue +'</span><span style="display: none; font-size:0.8em;" class="small">&nbsp;&nbsp;'+ value + "</span>";
+		}
+	}
+
+	var arabicLemsFormatter = function(row, cell, value, columnDef, dataContext) {
+		if (value == null || $.trim(value) == "")
+			return "-";
+		else {
+			value = $.trim( value );
+			var tempValue;
+			tempValue = value.replace("LEM:", "");
+			tempValue = EnToAr(unescape(tempValue));
+			return "<span style='color:Xgreen;font-weight:bold;' class='arr2' title='" + value + "' >" + tempValue +'</span><span style="display: none; font-size:0.8em;" class="small">&nbsp;&nbsp;'+ value + "</span>";
+		}
+	}
+
+	//just a utility function to navigate to specific scribd book page...
+	var navigateToBookPage = function( pageno ){
+		if(!parseInt(pageno) ) debugger; //error. shouldnt happen.
+		var pg = 4 + parseInt(pageno/2);  //alert(pageno +'\n'+ pg);
+		scribd_doc.api.setPage(pg);
+		document.getElementById('book').scrollIntoView();
+	}
+	
+	var qPageFormatter = function(row, cell, value, columnDef, dataContext){
+		if (!value || $.trim(value) == '') return "-"; //row=rowNo, cell=cellNo, dataContext has all the row data
+		value = $.trim( value );
+		var pg = value;
+		if(!parseInt(value) ){ //it maybe Name column... so lookup pgno.
+			pg = dataContext['col7'];
+		}
+		var url = '<A href="javascript:navigateToBookPage(\'' + pg + '\');return false;" >' + value + '</A>';
+		return url;
+	}
+	
+	var qWordRefFormatter = function(row, cell, value, columnDef, dataContext){
+		if (!value || $.trim(value) == '') return "-";
+		var _URL = "<A HREF='http://corpus.quran.com/wordmorphology.jsp?location=($REF)' TARGET=_>$REF</A>";
+		var ref = $.trim(value), url='';
+		if(parseInt(ref) ){
+			url = _URL.replace(/\$REF/g, ref);
+		}
+		getAyahInfo(ref); //fire off ajax request... can paint later.
+		return url;
+	}
+	var AYAH_FETCH_ENABLED = false;
+	var getAyahInfo = function(ref, surano, versno){ if(!AYAH_FETCH_ENABLED) return; var html = '', _ref;
+		if(ref && typeof(ref) == 'string') _ref = ref;
+		else if(surano && versno) _ref = surano +":"+ versno;
+		else return;
+		$.ajaxSetup({ cache: true, jsonpCallback: 'quranData' }); // define ajax setup
+		$.getJSON("http://api.globalquran.com/ayah/" + _ref + "/quran-simple|quran-corpus|en.sahih?jsoncallback=?", {
+			format : "jsonp"
+		}, function(data){
+			$.each(data.quran, function(i, by){
+				$.each(by, function (verseNo, line) {
+						html += line.surah+':'+line.ayah+' '+line.verse;
+				});
+			});
+			console.log(html);
+		});
+	}
+	var quranData = function(data){
+		//console.log(data);
+	}
+	var qInfoFormatter = function(row, cell, value, columnDef, dataContext){  //(value, val2) {//return "wait...";
+		if (!value || $.trim(value) == '') return "-"; //row=rowNo, cell=cellNo, dataContext has all the row data
+		//whichever token is like 59:24, then linkify it
+		value = $.trim( value );
+		var tokens = value.split(' ');
+		for(var k=0; k<tokens.length; ++k){
+			if(!tokens[k] || tokens[k].indexOf(':') == -1 || !parseInt(tokens[k]) ) continue;
+			if(tokens[k].indexOf(':') == 0 || tokens[k].indexOf(':') == (-1+tokens[k].length) ) continue; //discount the first and last char.
+			var parts = tokens[k].split(':'), surano=-1, versno=-1;
+			if(parts[1].indexOf('-') != -1){ parts[1] = parseInt( parts[1].split('-')[0] ) + '-' + parseInt( parts[1].split('-')[1] ); } //for multi verse references.
+			else{ parts[1] = parseInt( parts[1] ); } //strip out any .'s or other stray chars.
+			versno = parts[1]; surano = parseInt(parts[0]);
+			var url = 'http://beta.quran.com/' + surano +'/'+ /*parseInt*/(parts[1]);
+			var html = '<a href=' + url + ' target=_>'+ tokens[k] + '</a>';
+			tokens[k] = html;
+			//getAyahInfo(surano, versno);
+		}
+		value = tokens.join(' ');
+		return value;
+		
+		
+		var buck = dataContext["buck"], bare, str = '', corpus;
+		var ref = dataContext["ref"], index = dataContext["id"], tokens = [], i=0;
+		if( corpus = lookupCorpusFeatures(index, ref, buck)){
+			if(corpus.lemma)	tokens[i++] = 'Lemma: ' 	  + linkifyCorpusFeature(0, corpus.lemma);
+			if(corpus.root)		tokens[i++] = 'Root: '        + linkifyCorpusFeature(1, corpus.root);
+			if(corpus.form)		tokens[i++] = 'form: '        + linkifyCorpusFeature(2, corpus.form);
+			if(corpus.pos)		tokens[i++] = 'pos: '         + linkifyCorpusFeature(3, corpus.pos);
+			if(corpus.features)	tokens[i++] = 'features: '    + corpus.features;
+			if(corpus.misc)		tokens[i++] = 'misc: '    	  + corpus.misc;
+		}
+		tokens[i++] = bare = 'Bare: ' 	  + lookupBare( ref, buck );
+		//tokens[i++] = bare = 'Translit: ' + lookupTranslit( ref, buck );
+		str = '<ul><li>' + tokens.join('</li><li>') + '</li></ul>';
+		return ( '<span>'+ str + '</span>' );
+	}
+	
+
+    var columns = [
+		{id:"col0", name:"#", field:"col0", cssClass: "VCenter", width: 30},
+		{id:"col1", name:"Attribute", field:"col1", width: 120, cssClass: "VCenter", formatter:qPageFormatter},
+		{id:"col2", name:"in arabic", field:"col2", formatter:arabicLemsFormatter, cssClass: "VCenter", width: 180},
+		{id:"col9", name:"1st occurence", field:"col9", cssClass: "xVCenter", width: 78, formatter:qWordRefFormatter },
+		{id:"col3", name:"root letters", field:"col3", formatter:arabicRootsFormatter, cssClass: "VCenter", width: 127},
+		{id:"col4", name:"associated nouns", field:"col4", formatter:arabicLemsFormatter, cssClass: "VCenter", width: 170},
+		{id:"col5", name:"opposites", field:"col5", formatter:arabicLemsFormatter, cssClass: "VCenter", width: 40},
+		{id:"col6", name:"meaning, quranic verses explaining associated word", field:"col6", cssClass: "xVCenter", formatter:qInfoFormatter, width: 510},
+		{id:"col7", name:"pg#", field:"col7", cssClass: "xVCenter", formatter:qPageFormatter, width: 40},
+		{id:"col8", name:"-", field:"col8", cssClass: "xVCenter", width: 10}
+    ];
+	var columnFilters = {};
+	var searchString = "", searchFilter = false;
+
+    var options = {
+		rowHeight: 150, //104, //64, //54
+        editable:false,
+        enableAddRow:false,
+		enableColumnReorder:false,
+        enableCellNavigation:true,
+		autoHeight: true
+    };
+
+	 function updateHeaderRow() {
+		for (var i = 0; i < columns.length; i++) {
+			if (columns[i].id !== "selector") {
+				var header = grid.getHeaderRowColumn(columns[i].id);
+				$(header).empty();
+				$("<input type='text'>")
+					.data("columnId", columns[i].id)
+					.width(65) ///$(header).width() - 4)
+					.val(columnFilters[columns[i].id])
+					.appendTo(header);
+			}
+		}
+	}
+
+	function filter(item) {
+		if (searchString != "" && (item["tags"].indexOf(searchString) == -1
+							   && item["ref"].indexOf(searchString) == -1
+							   //&& item["buck"].indexOf(searchString) == -1
+							   )
+			)
+			return false;
+		else
+		if(searchFilter && searchString != ""){
+			$('#rawoutput').text ( $('#rawoutput').text()  + item["ref"] + '\n');
+			$('#rawoutput2').text( $('#rawoutput2').text() + item["tags"] + '\n');
+		}
+		for (var columnId in columnFilters) {
+			if (columnId !== undefined && columnFilters[columnId] !== "") {
+				var c = grid.getColumns()[grid.getColumnIndex(columnId)];
+				if (item[c.field] != columnFilters[columnId]) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+    var percentCompleteThreshold = 0;
+    var prevPercentCompleteThreshold = 0;
+    var searchString = "", searchFilter=false;
+    var h_runfilters = null;
+
+    function myFilter(item, args) {
+        return item["percentComplete"] >= args;
+    }
+
+    $(function() {
+        // prepare the data
+        data = qLoadData();
+		
+        dataView = new Slick.Data.DataView();
+        grid = new Slick.Grid("#myGrid", dataView, columns, options);
+        var pager = new Slick.Controls.Pager(dataView, grid, $("#pager"));
+
+        // wire up model events to drive the grid
+        dataView.onRowCountChanged.subscribe(function(e, args) {
+            grid.updateRowCount();
+            grid.render();
+        });
+
+        dataView.onRowsChanged.subscribe(function(e, args) {
+            grid.invalidateRows(args.rows);
+            grid.render();
+        });
+
+
+        // wire up the slider to apply the filter to the model
+        $("#pcSlider").slider({
+            "range":"min",
+            "slide":function(event, ui) {
+                if (percentCompleteThreshold != ui.value) {
+                    window.clearTimeout(h_runfilters);
+                    h_runfilters = window.setTimeout(filterAndUpdate, 10);
+                    percentCompleteThreshold = ui.value;
+                }
+            }
+        });
+
+        function filterAndUpdate() {
+            var isNarrowing = percentCompleteThreshold > prevPercentCompleteThreshold;
+            var isExpanding = percentCompleteThreshold < prevPercentCompleteThreshold;
+            var renderedRange = grid.getRenderedRange();
+
+            dataView.setFilterArgs(percentCompleteThreshold);
+            dataView.setRefreshHints({
+                ignoreDiffsBefore:renderedRange.top,
+                ignoreDiffsAfter:renderedRange.bottom + 1,
+                isFilterNarrowing:isNarrowing,
+                isFilterExpanding:isExpanding
+            });
+            dataView.refresh();
+
+            prevPercentCompleteThreshold = percentCompleteThreshold;
+        }
+
+        // initialize the model after all the events have been hooked up
+        dataView.beginUpdate();
+        dataView.setItems(data);
+		dataView.setFilter(filter);
+        //dataView.setFilterArgs(0);
+        dataView.endUpdate();
+		
+		// wire up the search textbox to apply the filter to the model
+		$("#txtSearch,#txtSearch2").keyup(function(e) {
+			Slick.GlobalEditorLock.cancelCurrentEdit();
+
+			// clear on Esc
+			if (e.which == 27)
+				this.value = "";
+
+			searchString = this.value;
+			searchFilter = false;
+			dataView.refresh();
+		});
+		
+		$("#go").click(function(e) {
+			searchString = $('#txtSearch').val();
+			searchFilter = true;
+			$('#rawoutput').text(''); $('#rawoutput2').text('');
+			dataView.refresh();
+			//searchFilter = false;
+		});
+
+
+    })
+	
+
+	
+	
+	
+	
+	
+	
+	
+	function qLoadData( returnJSON ){
+		var data=[], temp={}; if(typeof(returnJSON) == 'undefined' || !returnJSON) returnJSON = false;
+		var qd = [
+			"Allah; {ll~ah; Alh; ; ; Allah <BR/>occurs 2810 times in quran. <BR>Ref: 112:1, 47:19, 6:3, 21:22, 58:7,2:255, 6:104, 16:40, 2:117, 7:54, 5:17, 33:38, 3:83, 21:23, 23:116, 48:4, 4:126, 57:1, 39:67, 1:1, 20:8, 8:24, 50:16, 56:85, 39:42, 29:65, 17:67, 11:7. <BR>opposite: There is no opposite of Allah. <BR>summary: Allah is One, He is unique, no one is like Him. He is separate and different from His creation - He is the Creator, rest is creation. He is always alive, awake and does not get tired. He cannot be seen. He is the Creator of both, the seen and the unseen universe and the laws governing them. He is the Supreme Authority in His creation having absolute power over everytjhing, everywhere and every moment. He does what He wills and cannot be questioned for His actions. <BR><BR>-Todo the rest-; 1; 1; 1:1:2;",
+			
+			"Ilaha; <ila`h; Alh; ; ; God <BR/>It is referred to Allah 54 times in the Quran. <BR>Ref: 2:163, 43:84, 23:91, 17:42, 25:3, 46:27-28, 6:75, 45:23, 5:116, 9:31, 34:40-41. <BR>opp: It has no opposite word. <BR>summary: 45:13, 4:48, 4:116, 1:4.; 5; 1; 2:133:17;",
+
+			"Rabb; rab~N; rbb; ; ; Fosterer <BR/>occurs 151 times in Quran. <BR>Ref: 6:165, 14:1, 45:36, 11:107, 9:129, 7:172-174, 38:71-74, 2:35, 17:30, 27:73, 8:12, 11:102, 7:203, 6:115. 40:60, 1:1, 27:8, 74:3, 16:99, 23:57-61, 1:4, 40:64, 23:97-98. <BR>Related: 6:166, 6:129, 6:134, 11:66, 13:6, 25:31, 25:54, 17:30, 34:21, 38:9, 41:53, 44:6, 55:27, 82:6, 87:1, 11:90, 16:7, 35:34, 15:86, 10:32, 11:61, 41:54 + more. <BR>word Rabb used for others than Allah: 9:31, 3:64. <BR>opp: The word Rabb does not appear to have an opposite.;8;1; 1:2:3;",
+			
+			"Ar-RaHman;	Alr~aHom`n; rHm; raHomapN; ; The Beneficent.  <BR/>occurs 169 times in quran. <BR/>Ref: 17:100, 30:50, 28:73. 17:24, 30:21. 17, 82, 4:176, 21:107. 45:30, 39:53. <BR/>related: Arhaam 3:6.  <BR/>opposites: Loss 7:23, punishment 6:15-16. Harm 30:33. Evil 30:36. Destruction 67:28. <BR/>Summary: Rehmat 6:12, 7:156. Ar-Rahmaan is associated with only 1 attribute ar-Raheem 118 times.  <BR/>Ref: 17:82 21:107 55:1-2. 78:37. <BR/>Ar-Raheem appears 227 times in the quran, no other attribute occurs so many times. <BR/>Associated with other attributes: ar-Raheem appears with Al-Gafoor 73 times, with Al-Azi 13 times, with al-Tawwab 9 times, with ar-Raoof 8 times, with ar-Rahmaan 118 times, with Al-wadood, Al-Barr and Rabb one time each. It's frequent association with Al-Gafoor (protector and forgiver of sins), Al-Tawwab (Acceptor of repentence) and Ar-Raoof (one full of pity), indicates that Allah's mercy is exhibited through it, therefore it can be translated as The Merciful. it is the second Attribute used with Allah's name.; 14; 5; 1:1:3;",
+			
+			"Ar-RaHeem;	Alr~aHiymo; rHm; raHomapN; ; The Merciful.  <BR/>occurs 227 times in quran. <BR/> Ref: 17:100, 30:50, 28:73. 17:24, 30:21. 17, 82, 4:176, 21:107. 45:30, 39:53. <BR/>related: Arhaam 3:6. <BR/>opposites: Loss 7:23, punishment 6:15-16. Harm 30:33. Evil 30:36. Destruction 67:28. <BR/>Summary: Rehmat 6:12, 7:156. Ar-Rahmaan is associated with only 1 attribute ar-Raheem 118 times.  <BR/>Ref: 17:82 21:107 55:1-2. 78:37. <BR/>Ar-Raheem appears 227 times in the quran, no other attribute occurs so many times. <BR/>Associated with other attributes: ar-Raheem appears with Al-Gafoor 73 times, with Al-Azi 13 times, with al-Tawwab 9 times, with ar-Raoof 8 times, with ar-Rahmaan 118 times, with Al-wadood, Al-Barr and Rabb one time each. It's frequent association with Al-Gafoor (protector and forgiver of sins), Al-Tawwab (Acceptor of repentence) and Ar-Raoof (one full of pity), indicates that Allah's mercy is exhibited through it, therefore it can be translated as The Merciful. it is the second Attribute used with Allah's name.; 14; 5; 1:1:4;",
+			
+			"Al-Malik, Maleek, Malik;	Alomalik Aalomaliyok AlomaAlik; mlk; mulokN malokuwopN;;The King (5 times), King (1 time), Master (2 times). <BR/>1) Ref: 30:28, 10:49, 3:189, 7:185. opposite: slave 16:75. <BR/>2) ref: 12:43 is used for king. 23:116, 54:54-55. <BR/>3) 36:71-72, 1:3. <BR/>Al-Malik, meaning King, appears 5 times and is associated with al-Haqq and al-Qudduws. <BR/>Al-Maleek, also meaning Kind, appears only once with (54:55 al-Muqtadir?). <BR/>al-Maalik meaning Master appears twice, it also means Owner. <BR/>; 18; 15; 1:4:1;",
+			
+			"Al-Quddus;	Aloqud~uwos;			qds;		qudaAsapN;			;				The Holy.  <BR/>occurs 2 times in Quran. <BR/>Ref: 20:12, 5:21, 2:87, 5:110, 16:102, 26:193. <BR/>related: 2:30.  <BR/>opposite: evil, harmful 26:210-212, 62:1.  <BR/>Summary: 5:21, 26:194, 26:210-212.; 20; 15; 59:23:9;",
+			
+			"As-Salam; 		Aals~alaAmo; 		slm; AalAisolaAmo sul~amN saliyomN salaAmN; ; 	Author of peace.  <BR/>occurs once in quran: 59:23. <BR/>Ref: 3:83, 4:65, 39:29, 2:71, 37:83-84, 8:43, 52:38, 24:27, 8:61, 3:19. <BR/>related: 33:22.  <BR/>opposites: 9:74, 56:25-26, 68:35, 72:14, 3:64.; 22;; 59:23:10;",
+			
+			"Al-Mumin;		Aalomu&omino;		Amn;		AamaAnapN AamonN AiyomaAnN;	;		Granter of security. <BR/>occurs once in quran: 59:23. <BR/>Ref: 2:239, 4:91, 7:97, 12:11, 2:283, 2:260, 2:177, 26:107. <BR/>related: 33:22, 4:147, 10:84, 2:103, 6:48, 19:60, 2:137, 3:200, 13:28, 19:96, 57:12, 58:22, 48:4. <BR/>opposite: 40:12, 57:13, 38:28, 3:110, 2:13, 63:3, 106:4, 40:58, 61:2, 83:29, 6:12, 29:67, 29:67, 3:154, 3:154, 6:83, 10:99.; 25;; 59:23:11;",
+
+			"Al-Muhaymin;	Aalomuhayomino;		hmn;		hayomanap;			;				The Guardian. <BR/>occurs once in quran: 59:23. <BR/>Ref: 5:48.; 29; 100; 59:23:12;",
+			
+			"Al-Aziz, Al-Muez; AloEaziyoz AlomuEizo; 		Ezz;		AaloEiz~ap;			;	The Mighty. The Grantor of Might. <BR/>occurs 89 times in quran. <BR/>Ref: 2:206, 4:139, 36:14, 38:23. <BR/>related: 26:9, 2:129, 6:96, 11:66, 3:4, 14:1, 38:9, 54:42, 35:28, 38:66, 59:22-24. <BR/>opposites: 63:8, 3:26. <BR/>summary: 48:7.; 30; ; 2:129:15;",
+			
+			"Al-Jabbar; 	Alojab~aAro;		jbr;		jaborN;				;				The Compeller. <BR/>occurs once in quran: 59:23. <BR/>Ref: 50:45, 28:19, 5:22. <BR/>related: 59:22-24.  <BR/>opposites: 19:13-14. Opposites - tabarra'an, taqiyyan. see prev.; 32;; 59:23:14;",
+			
+			"Al-Mutakabbir, Al-Kabeer; Alomutakab~iro Alokabiyor; kbr; kiborN;	;				The Possessor of Greatness. The Great. <BR/>occurs 1 time (59:23) and 7 times. <BR/>Ref: 4:6, 6:79, 28:39, 11:11, 42:13. <BR/>related: 59:22-24, 13:9, 22:62.  <BR/>opposites: 7:13, 14:21, 46:20, 7:206, 2:45, 32:21.  <BR/>Summary: 45:37.; 34;; 59:23:15;",
+
+			"Al-Khaliq, Al-Khallaq;		AaloxaAliqo Aaloxal~aAqo;		xlq;		xiloqt;	;	The Creator. The Great Creator. <BR/>occurs 7x and 2x times. <BR/> ref: 24:45, 25:54, 55:14-15, 16:4, 39:6, 3:49, 22:5. 29:17, 21:37, 68:4, 26:137, 23:17. 2:102.  <BR/>related: 59:24, 7:54. <BR/>opposites: 36:68 30:40. <BR/>See also 28:68, 6:102, 10:4, 67:3-4.; 36;; 6:102:8;",
+
+			"Al-Bari;		AalobaAri};			brA;		baraApN;			;				The Purifier. <BR/>occurs once in quran: 59:24. <BR/>Ref: 9:114, 6:19.  <BR/>related attributes: 59:24. ; 39; 100; 59:24:4;",
+			
+			"Al-MuSawwir;	AalomuSaw~iro;		Swr;		SuworapN;			;				The Fashioner. <BR/>occurs once in quran: 59:24. <BR/>Ref: 40:64, 69:13-17.  <BR/>related attributes: 59:24.; 40;; 59:24:5;",
+			
+//			"; ; ;",
+			
+			"Al-Ghaffar, Al-Ghafoor; Alogaf~Aro Alogafuwro; gfr; magofiratN; ; The Protectively Forgiving. <BR/>occurs 5x and 91x times. <BR/>Ref: 7:23, 57:20, 48:1-2. <BR/>related: 2:173, 2:225, 22:60, 34:15, 35:28, 35:30, 85:14, 38:66. <BR/>opposites: 2:284, 6:166.; 41; 10; 2:173:24;",
+			"Al-Qahhaar; Aloqah~aAro; qhr; qahrN; ; Omnipotent. <BR/>occurs 6 times in quran. <BR/>Ref: 93:9, 7:127. <BR/>related w waaHid. <BR/>summary: 40:16; 44; 10; 12:39:9;",
+			"Al-Wahhaab; Alowah~aAbo; whb; Aalohibapu; ; The One Who grants. <BR/>occurs 3 times in quran. <BR/>Ref: 26:21, 38:30, 14:39, 19:19,, 21:89-90, 19:2-10. <BR/>related: 38:9.  <BR/>summary: 38:9.; 45; 10; 3:8:15;",
+			"Ar-Razzaak; Alor~az~aAqo; rzq; rizoq; ; The Provider. <BR/>occurs once in quran. <BR/>Ref: 45:5, 50:9-11, 2:60, 30:40, 2:254, 3:169, 2:25, 56:82. <BR/>related: 15:20, 2:233.  <BR/>opposite: 6:152. <BR/>summary: 11:6, 29:60, 29:17, 13:26, 51:58, 62:11.; 47; 10; 51:58:4;",
+			"Al-Fattah; Alofat~aAHo; ftH; fatoHN; ; The Judge. <BR/>occurs once in quran. <BR/>Ref: 12:65, 6:44, 35:2, 23:76-77, 6:59, 48:1, 2:76, 8:19. <BR/>related: 34:26.  <BR/>opposite: 14:15.  <BR/>summary: 34:26.; 50; 10; 34:26:10;",
+			"Al-Aleem; AloEaliymo; Elm; EilomN; ; (The Knowing) (One Who Knows) (The Great Knower of the Unseen). <BR/>occurs 156 times in quran. <BR/>opposites: 2:78, 2:120, 6:141, 6:145, 30:7. <BR/>knowledge defn: 2:111, 4:113, 4:175, 22:46, 11:37, 2:31, 2:255, 55:1-4, 96:4-5, 16:78, 17:85. <BR/>related: 2:32, 2:115, 2:127, 2:158, 4:12, 6:96, 16:70, 31:34, 34:26, 38:81. <BR/>Ref: 6:102, 22:70, 35:38, 17:25, 59:22.; 52; 10; 2:29:19;",
+			"Al-KhabiD; AloqaAbiDo; qbD; qaboDapN; ; [One Who Straitens (withholds)] [One Who has grip (control)]. <BR/>mentioned only in hadees. <BR/>Ref, opposites: 2:283, 20:96, 9:67, 39:67, 67:19, 25:45-46, 2:245.; 56; 10; -;",
+			"Al-Basith; AlobaAsiTo; bsT; basoTapN bisaATN; ; The Granter of abundance. <BR/>mentioned only in hadees. <BR/>Ref, opposites: 30:48, 5:11, 17:29, 2:247, 13:26.; 58; 10; -;",
+			"Al-KhafiD; AloxaAfiDo; xfD; xfiDo; ; One Capable of bringing down and disgracing. <BR/>mentioned only in hadees. <BR/>Ref: 17:24, 56:3.; 59; 10; -;",
+			"Al-Rafay; Alor~aAfiEo; rfE; rafoEapu; ; The Exalter. One Capable of elevating. <BR/>mentioned only in hadees. <BR/>Ref: 2:127, 13:2, 4:158, 49:2, 35:10, 94:4, 56:3, 40:15. <BR/>See also Al-Muez (The Granter of might), Al-Aziz.; 60; 10; -;",
+			"Al-Muzill; Alomu*ilo; *ll; *il~apN; ; One Who disgraces. <BR/>mentioned only in hadees. <BR/>Ref: 2:61, 36:72, 17:111, 76:14. <BR/>opposite: 3:26, 5:54. ; 62; 10; -;",
+			"As-Samee; Alos~amiyoEu; smE; samaAEap; ; The Hearing, One capable of hearing. <BR/>occurs 45 times in quran. <BR/>Ref: 3:181, 67:10, 7:179, 72:1, 41:20. <BR/>related: 2:285, 25:44, 32:12, 35:14, 20:13. <BR/>related: 2:127, 17:1, 34:50. <BR/>opposites: 2:93, 10:42, 27:80, 16:108. <BR/>summary: 16:78.; 63; 10; 2:127:13;",
+			"Al-Baseer; AlobaSiyro; bSr; baSaArap; ; The Seeing. One Who is capable of seeing. <BR/>occurs 42 times in quran. <BR/>Ref: 7:179, 10:67, 2:17. 28:11, 6:105, 41:20. <BR/>related: 7:198. <BR/>opposites: 22:46. 6:105. <BR/>summary: 76:2, 2:20, 6:104, 17:1, 35:31. 67:19.; 65; 10; 2:96:23; ",
+			"Al-Hakam, Al-Hakeem; AloHakamo AloHakiymo; Hkm; HikomapN HukomN; ; The Judge. The Wise. <BR/>occurs in quran 92 times and mentioned only in hadees. <BR/>Ref: 5:42, 5:1, 13:41, 17:125, 38:20, 22:52. <BR/>related: 2:32, 2:129, 6:18, 24:10, 41:42, 42:51. <BR/>opposites: 3:7. <BR/>summary: 17:125, 5:42, 13:41, 22:52.; 67; 10; 2:32:12;",
+			"Al-Adl; AloEadlo; Edl; EadolN; ; One Who does justice. <BR/>mentioned only in hadees. <BR/>Ref: 42:15, 6:70, 6:1, 4:3, 82:7.; 69; 10; -;",
+			"Al-Latif; Alol~aTiyfo; lTf; laTaAfp laTofN; ; The Subtle. The Gracious. <BR/>occurs 7 times in quran. <BR/>Ref: 6:104, 18:19, 42:19, 67:13-14. <BR/>related: Al=Khabeer. ; 70; 10; 6:103:8;",
+			"Al-Khabeer; Aloxabiyro; xbr; xaborN; ; The Informed. <BR/>occurs 44 times in quran. <BR/>Ref: 9:94, 18:91, 35:14. <BR/>related: 6:18, 6:104, 31:34, 35:31. <BR/>summary: 2:234, 24:30, 27:88.; 72; 10; 2:234:25;",
+			"Al-Haleem; AloHaliymo; Hlm; HilomN; ; The Clement. <BR/>occurs 11 times in quran. <BR/>Ref: 2:225, 3:155, 34:40-41, 52:32, 24:59, 12:44. <BR/>related: 2:255, 2:263, 4:12, 64:17.; 74; 10; 2:225:14;",
+			"Al-AZeem; AloEaZiymo; EZm; EaZmapN; ; The Great. <BR/>occurs 5 times in quran. <BR/> Ref: 22:30, 17:40, 3:173, 65:5. 2:7, 9:63, 21:76, 4:48, 56:46, 2:105, 4:13, 28:79, 68:54, 7:116, 12:28, 2:49, 24:16, 31:13, 4:27, 6:15, 9:129, 22:1, 15:87, 43:31, 38:67, 37:107, 56:76, 4:54, 26:63, 57:10. <BR/>opposite: 24:15. <BR/>other meaning of derivative word: Bones. 19:4. <BR/>summary: 19:4, 2:105, 2:255, 56:74, <BR/>See Al-Musawwir.; 76; 10; ?;",
+			"Shakoor, Shakir; $akuwro $aAkiro; $kr; $ukorN; ; One Who acknowledges. <BR/>occurs 4 times in quran. <BR/>Ref: 17:19, 27:40, 10:60, 39:7, 14:7. <BR/>related: 54:35, 4:7, 2:52, 3:123, 7:10, 8:26, 16:14, 16:78, 31:12, 25:62, 31:31, 2:158, 64:17, 35:30. ; 78; 10; ?;",
+			"Al-Aliyy, Al-Mutaal; AloEaliY~a AlomutoEaAlo; Elw; EaliyF; ; The High. The Most High. <BR/>occurs 8 times and 1 time respectively in quran. <BR/>Ref: 23:91, 23:46, 27:31, 28:4, 11:82, 20:4, 20:75, 7:190. <BR/>related: 2:255, 31:30, 42:51. <BR/>See also Al-Jabbar.; 80; 10; ?;",
+			"Al-Hafeez; AloHafiyZo; HfZ; HifaAZapN; ; The Custodian, The Protector. <BR/>occurs 3 times in quran. <BR/>Ref: 24:31, 12:12, 12:55, 5:44, 6:93, 2:255. <BR/>opposite: 11:57.; 82; 10; ?;",
+
+			"Al-Muqeet;		Aalomuqiyto;		qwt;		Aaloquwtu;			;				The Controller Provider of raw material. <BR/>occurs once in quran 4:85 <BR/>Ref: 41:10. Summary: 4:85. ; 84; 100; 4:85:22;",
+			
+			"Al-Haseeb;		AaloHasiybo;		Hsb;		HisaAbN HasobN; 	;				One who keeps account. One who is sufficient (for help). <BR/>occurs 3 times in Quran. see: 4:86, 2:202, 3:173, 65:3. Ref: 29:2, 24:39, <BR/>3:169, 59:2, 2:212, 6:97, 55:5, 2:284, 2:206, 5:104, 18:40. <BR/>summary: 4:86, 2:202, 3:173, 65:3.; 85;; 4:6:37;",
+			
+			"Al-Jaleel; Alojaliylo; jll; jlAl; ; The Glorious. <BR/>occurs 2 times in quran. <BR/>Ref: 55:27, 55:78, 55:46-76. <BR/>related: Jalal occurs twice, 55:27 and 55:78. both places associated with Ikram...; 87; 10; 55:27:5;",
+			"Al-Kareem, Al-Ikram, Al-Akram; Alokariymo AloAikoraAmo AloAakoramo; krm; karomN; ; The Honorable. The Most Honoured. The Bountiful. <BR/>Al-Ikraam occurs twice, Al-Akramu once, Al-Kareem? twice in quran.<BR/> Ref: 12:21, 17:62, 26:7. <BR/> opposite: 89:15-16. <BR/> Dual meaning: honour and beenfit. see 89:17, 56:77, 69:40. <BR/> related: 27:40, 82:6.; 88; 10; 27:40:38;",
+			"Ar-Raqeeb; Alor~aqiybo; rqb; rqbpN; ; The Vigilant. <BR/>occurs 3 times in quran. <BR/> Ref: 4:92, 47:4, 20:94, 9:8, 28:18, 50:18. <BR/> Summary: 33:52.;90; 10; 4:1:28; ",
+			"Al-Mujeeb; Alomujiybo; jwb; jawaAbN; ; One Who responds. <BR/>occurs once in quran. <BR/>Ref: 7:82, 46:31, 2:186. <BR/>related: 11:61. <BR/>Summary: first attribute associated with Allah is Ar Rahmaan. The chain of Attributes which follows Ar Rahman is as follows: Ar Rahmaan, Ar Raheem, Al Aziz, Al Aleem, As Samee, Al Khareeb, Al Mujeeb. Allah as Al-Mujeeb responds to one who prays to Him. He is the Nearest (Khareeb), no one is nearer than Him, He is so near that He is the First to listen, He listens to the prayer as He is As Samee, He knows the solution of (how to respond to) the prayer as He is Al Aleem, He can execute His decision because He is Al Azi and this responsive decision is good for the person who prays to Him, because He is Ar Raheem and Ar Rahmaan - Allah.; 92; 10; 11:61:27;",
+			"Al-Wasi'; AlowaAsiEo; wsE; wasoEata; ; The Omnipresent, The Ample-giving. <BR/>occurs 8 times in quran. <BR/>Ref: 4:97, 2:286, 2:247. <BR/>related: 2:115, 4:130. <BR/>opposites: 2:236, 65:7. <BR/>summary: 2:255, 20:98, 7:156, 51:47, 2:115, 4:130.; 94; 10; 2:115:11;",
+			"Al-Wadood; Alowaduwdo; wdd; mawad~apN; ; The Loving. <BR/>occurs 2 times in quran. <BR/>Ref: 15:2, 68:8-9, 30:21. <BR/>related: 11:90, 85:14. <BR/>opposite: 60:7. <BR/>summary: 11:90, 85:14, 3:31-32.; 96; 10; 11:90:9;",
+			"Al-Majid, Al-Majeed; AlomaAjido Alomajiydo; mjd; majodN; ; The Glorious. Possessor of Glory. The difference exhibited by faa3ilun and fa3iylun. <BR/>Al Majeed occurs in quran one time and Al Majid is mentioned only in hadees. <BR/>Ref: 50:1, 85:21, 85:15, 11:73. <BR/>summary: 15:21.; 98; 10; 11:73:14;",
+			"Al-Bais;		AalobaAEivo;		bEv;		baEov;				;				One who raises. only in hadees. <BR/>ref: 4:35, 2:213, 17:79, 6:60, 22:7, 30:56. ; 99; 100; -;",
+			"Al-Shaheed; Aalo$~ahiydo; $hd; $ahaAdapN; ; The Witness. <BR/>occurs 20 times in quran. <BR/>Ref: 12:26, 2:185, 6:74, 22:78. <BR/> summary: 22:17.; 100; 10; 3:98:9;",
+			"Al-Haq; AaloHaq~; Hqq; HaqiyoqapN; ; The Reality. <BR/>occurs 7 times in quran. <BR/>Ref: 2:42, 6:73, 2:61, 7:8, 38:22, 6:92, 7:105, 38:14, 5:116, 28:63. <BR/>related: 15:64, 42:17, 56:95, 10:30, 10:32, 20:114, 24:25. <BR/>ropposites: 8:8, 6:5, 10:32, 10:36, 3:60, 45:32, 31:33, 10:76, 38:22, 38:22, 21:55, 5:48. <BR/>summary: 2:42, 6:73, 2:61, 7:8, 38:22, 6:92, 7:105, 38:14, 28:63 etc.; 101; 10; 6:62:6;",
+			"Al-Wakeel; Aalowakiylo; wkl; tawak~al; ; The Trustee (One Who is trusted). <BR/>occurs 13 times in quran. <BR/>Ref: 32:11, 9:129. <BR/>related: 5:23, 10:84. <BR/>opposites: 6:90. <BR/>summary: 6:103, 65:3, 3:159, 6:103.; 104; 10; 3:173:17;",
+			"Al-Qawi; AaloqawiY~; qwy; quw~apN; ; The Strong. <BR/>occurs 9 times in quran. <BR/>Ref: 16:92, 2:63, 8:60, 28:76. <BR/>related: always associated with Al Azeez, The Mighty. One can understand might requires strength and power. <BR/>opposites: 16:92, 30:54. <BR/>summary: 35:41, 2:165, 22:74.; 106; 10; 8:52:15;",
+			"Al-Mateen; Aalomatiyno; mtn; mataAnat; ; One Who is firm. <BR/>occurs once in quran. <BR/>Ref: 7:183. <BR/>summary: 51:58.; 108; 10; 51:58:7; ",
+			"Al-Wali, Al-Waali, Waal; AalowaliY  AalowaAliY  waAlo; wly; wilaAyap; ; (The Guardian). <BR/>occurs 6 times in quran. <BR/>Ref: 33:6, 9:123, 4:33, 47:20, 2:149, 18:183:28, 8:72. <BR/>related: 2:107, 13:37, 6:70, 42:28. <BR/>opposites: 3:20, 3:32, 75:31-32, 60:1. <BR/>summary: 42:9.; 109; 10; 2:257:2;",
+			"Al-Hameed; AaloHamiydo; Hmd; HamodN; ; (The Praised, Worthy of all praise). <BR/>occurs 17 times in quran. <BR/>Ref: 3:188, 14:39, 23:28, 27:15, 7:43, 1:1, 35:1, 34:1, 28:70, 17:44, 13:13. <BR/>related: 25:58, 2:267, 11:73,14:1, 41:42, 42:28, 31:13. <BR/>opposites: 2:30, 31:12, 32:15. <BR/>summary: 25:58.; 112; 10; 2:267:29;",
+			"Al-MuhSiy;		AalomuHoSiYo;		HSy;		>aHoS`Yo;			nasuwohu;		One who computes and preserves. Only in hadees. <BR/>Ref: 14:34, 36:12, 18:12. related: 72:28. opposite: 58:6.; 115; 100; -;",
+			"Al-Mubdi;		AalomubodiYo;		bdA;		Aibotada>a;			;				One who begins or starts. Only in hadees. <BR/>Ref: 21:104, 32:7, 12:76.; 117; 100; -;",
+			"Al-Mueed;		AalomuEiyod;		Ewd;		EaAdN Eawdap; fa{ntahaY`;		One who gets things reproduced. Only in hadees. <BR/>Ref: 17:69, 20:21, 36:39. related: 10:4. opposite: 2:275. <BR/>summary: 10:34.; 118; 100; -;",
+			"Al-MuHyi, Al-Hayy;		AalomuHoyiYo AaloHaY~;		Hyy;		HayaAp;	;			The Giver of life. The Living. See details under Al-Mumeet pg 120. <BR/>occurs 2 times and 5 times respectively.; 119;; 30:50:13;",
+			"Al-Mumeet; Aalomumiyto; mwt; mawtN; ; (One Who causes death). <BR/>mentioned only in hadees. <BR/>Ref: 2:255, 25:58, 28:88, 55:26-27, 2:115, 40:68, 2:28, 25:3, 41:39, 50:9-11, 3:49, 2:259, 67:2, 29:64, 20:74, 10:10, 28:25, 20:20. <BR/>related: 2:253, 3:169.; 120; 10; -;",
+			"Al-Qayyum, Al-Qaayam; Aaloqay~uwmo AaloqaAyamo; qwm; qAympN qiyAmat; ; (The Eternally Existing) (One WHo is established). <BR/>Al Qayyum occurs 3 times and Al-Qaayam once in quran. <BR/>Ref: 30:25, 2:229, 5:37, 2:177, 57:25, 18:105, 81:27-28, 1:5, 74:1-2, 4:127, 72:19, 4:34, 4:5, 4:51, 19:73, 95:4-6, 2:118. <BR/>related: Al Hayyu - 2:255 - occurs 3 times only with this and no other Attribute. <BR/>opposites: 2:20, 16:80, 18:77, 18:2.; 123; 10; 2:255:7;",
+			"Al-Wajid; AalowaAjido; wjd; wajuwd; ; One Who finds. <BR/>mentioned only in hadees. <BR/> Ref: 3:37, 38:44, 93:6-8.; 126; 10; -;",
+			"Al-Wahid; AalowaAHido; wHd; waHodaAniyap; ; [The One, The Only (God)]. <BR/>occurs 22 times in quran. <BR/>Ref: 2:163, 29:46, 2:213, 13:4. <BR/>related: 2:163, 12:39. <BR/>opposites: 25:14, 12:39, 10:19. <BR/>summary: 35:43.; 127; 10; 2:133:24;",
+			
+			"Al-AHad; AaloAaHado; AHd; AaHadiyp; ; The Unique. <BR/>occurs once in quran. <BR/>Ref: 90:7, 5:115, 5:27, 112:1-4.; 129; 10; 112:1:4;",
+			"As-Samad; AaloS~amado; Smd; ; ; One on Whom all depend. <BR/>occurs once in quran. <BR/>Ref: 112:1-4.; 130; 10; 112:2:2;",
+			"Al-Qadir, Al-Muqtadir, Al-Qadeer; AaloqaAdiro  Aalomuqotadiro  Aaloqadiyro; qdr; taqodiyrN qdrpN; ; (One Who is capable) (The Holder of power) (The Possessor of power) <BR/>Al-Qaadir occurs 7 times, Al-Muqtadir 3 times, Al-Qadiyr 45 times in Quran. <BR/>Ref: 73:20, 32:5, 2:236, 16:75, 6:96-97, 36:33-38, 36:39, 41:9-12, 13:8, 77:20-23, 80:19-20, 54:49, 65:3, 25:2, 85:22, 97. <BR/>Opp: 13:26 <BR/>related: 87:1-3 <BR/>Summary: 5:120, 17:99, 18:45, 39:67. 85:22, 54:3, 13:39.; 131; 10; 2:20:25;",
+			"Al-Muqaddim; Aalomuqad~imo; qdm; qdmFA qdym qdmFA; ; [One Who advances (prepones as opposed to postpone)] <BR/>Mentioned only in Hadees. <BR/>Ref: 25:23, 50:28, 2:95, 49:1, 11:98, 12:95, 55:41. <BR/>Opp: 7:34, 82:5, 15:24, 36:12. <BR/>Summary: 13:39, 54:3.; 135; 10; -;",
+			"Al-Muakhir, Al-Aakhir; Aalomu_#ax~iro  AaloA`xiro; Axr; Aaxirt; ; (One Who postpones) (The Last) <BR/>Al-Muakhir mentioned only in Hadees, Al-Aakhir appears once in quran at 57:3. <BR/>Ref: 4:77, 17:62, 2:203, 74:37, 15:5, 93:4, 2:86, 20:55, 82:5, 5:27, 53:20, 3:153. <BR/>Summary: 55:26-27. ; 137; 10; 57:3:3;",
+			"Al-Awwal; AaloAaw~alo; Awl; Aw~al; ; The First. <BR/>occurs once in Quran 57:3. <BR/>Ref: 17:51, 21:104. <BR/>Opp: 5:114. <BR/>Summary: 57:3, 112:3, 28:88, 2:255.; 139; 10; 57:3:2;",
+			"Az-Zahir; AaloZaAhiro; Zhr; Zhr AiZhaAr ZahirN; ; [The Evident (The Outer Most)] <BR/>occurs once in Quran <BR/>Ref: 30:41, 30:7, 9:33, 34:22, 18:97, 42:33, 84:10, 2:189, 30:18, 13:33, 72:26-27. <BR/>opp: 31:20, 57:13, 6:152.; 141; 10; 57:3:4;",
+			"Al-Batin; AalobaATino; bTn; baTonN; ; [The Hidden (The Inner Most)] <BR/>occurs once in Quran. <BR/>Ref: 48:24, 24:45, 37:144, 16:78, 3:118, 55:54. <BR/>opp: see previous - external/outside/manifest opposites inernal/inside/hidden. 31:20, 57:13, 6:152. <BR/>summary: 2:115.; 143; 10; 57:3:5;",
+			"Al-Barr; Aalobar~; brr; bar~N; ; The Kind. <BR/>occurs 1 time in quran. <BR/>Ref: 2:224, 80:13-16, 60:8, 52:28 <BR/>opposites: 76:4-5, 58:9, 82:13-14, 19:12-14, 19:32 <BR/>; 145; 10; 52:28:8;",
+			"At-Tawwab; Aalot~aw~aAbo;  twb; tawobap; ; The Acceptor of repentance <BR/>Occurs 11 times in quran. <BR/>Ref: 20:82, 4:145-146, 25:69-71, 4:17-18, 9:104, 2:37. 11:52 <BR/>related: 9:117, 11:90, 24:10 <BR/>opposites: 3:128, <BR/>summary: 25:69-71, 4:17-18, 9:104, 39:52; 148; 10; 2:37:10;",
+			"Al-Muntaqim; Aalomunotaqimo; nqm; AinotiqaAm; ; One who inflicts retribution <BR/>Occurs 4 times in quran. <BR/>Ref: 5:59, 85:8,43:55, 15:78-79, 43:24-25, 3:4; 151; 10; 3:4:18;",
+			"Al-Afuww; AaloEafuw~; Efw; Eafown; ; One Who pardons <BR/>Occurs 5 times in quran. <BR/>Ref: 42:25, 5:95, 2:219 <BR/>Related: 2:237, 42:40, 2:286, 64:14, 4:149 <BR/>Opposite: 9:66, 42:34 <BR/>Summary: 25:70, 2:286; 152; 10; 4:43:47;",
+			"Ar-Raoof; Aalor~a'uwf; rAf; raAofapN; ; One full of pity for others. <BR/>Occurs 10 times in quran. <BR/>Ref: 24:2, 2:143, 9:117, 9:128, 57:9, 22:65, 16:45-47, <BR/>Related: Associated with Rahim 9 times <BR/>Opposite: 16:7, 59:10 ; 154; 10; 2:143:44;",
+
+			"Malik ul Mulk; ma`lika {lomulok; mlk; mulokN malokuwopN; ; The Owner, Master and The only King of the Kingdom of the universe. <BR/>refer to Al-Malik (page 18); 156; 10; 3:26:3?;",
+			"Zul Jalali Wal Ikram; *uw {lojala`li wa{lo<ikoraAmi; krm; karomN; ; Possessor of glory, honour and bounty <BR/>refer to al-jaleel, al-kareem/al-ikram/al-akram (pages 87, 88); 156; 10; 55:27:5;",
+			"Al-MuqsiT; AalomuqosiTo; qsT; qisoTN; ; One Who executes justice. <BR/>mentioned only in hadees. <BR/>Ref: 5:42, 49:9, 17:35. <BR>opp: 10:54.; 156; 10; -;",
+			"Al-Jaami; AalojaAmiEo; jmE; jamoEN; ; One Who has the power to bring together. <BR>mentioned only in hadees. <BR>Ref: 77:38, 104:2, 2:165, 75:9, 18:60, 12:15. <BR>opp: 3:103, 24:61. <BR>summary: 3:9; 158; 10; ?;",
+			"Al-Ghani, Al-Mughni; Aaloganiy~  AalomugoniY; gny; ginoYN; ; The Independent. One who makes independent. <BR>occurs 18 times in quran. <BR>Ref: 39:7, 80:37, 88:7, 69:28, 59:7, 7:48, 7:92, 10:24. <BR>related: 2:263, 2:267, 6:134, 27:40. <BR>opp: 93:8, 35:15. <BR>summary: 3:97; 160; 10; 2:263:10;",
+			"Al-Maaney; AalomaAniEo; mnE; mumaAnEat; ; One who is capable of forbidding. <BR>Mentioned only in hadees. <Br> rel: 2:114, 12:63, 70:21, 59:2, 50:25; 162; 10; ?;",
+			"Al-Daar; AaloD~aAr~; Drr; DararN; ; One Who is capable of harming. <BR>Mentioned only in hadees. <BR> Ref: 11:57 <BR> opp: 11:10, 10:21, 10:106, 72:21.  <BR> summary: 72:21; 163; 10; ?;",
+			"An-Naafey; Aalon~aAfiEo; nfE; nafaE; ; One who is capable of benefitting. <BR>Mentioned only in hadees.  <BR> rel: 2:164.  <BR> opp: 6:71.  <BR> summary: 7:188; 164; 10; ?;",
+			"An-Noor; Aalon~uwro; nwr; nuwrN; ; The Light <BR>It occurs once in Quran.  <BR> Ref: 2:17, 2:257, 21:69. 10:5, 6:1. 4:175, 33:45-46, 21:59, 24:35, 7:30. 24:35, 24:40, 39:69.  <BR> summary: 6:103; 165; 10; 24:35:2;",
+			"Al-Hadi; AalohaAdiYo; hdy; hud`Y; ; The Guide <BR>Mentioned only in hadees.  <BR> Ref: 20:10, 40:38, 22:4. 2:120, 2:185, 42:52, 24:35, 2:213, 6:126, 49:17, 13:31, 20:50, 87:1-3, 27:35.  <BR> opp: 3:8, 7:30.  <BR> summary: 25:31. ; 168; 10; -;",
+			"Al-Badi; AalobadiyEo; bdE; bidoEata; ; The originator <BR>occurs two times in the quran. <BR>Ref: 46:9, 57:27, 2:117. ; 171; 100; 2:117:1;",
+			"Al-Baqi; AalobaAqiYo; bqy; baAqK; ; One Who remains for ever <BR>mentioned only in hadees. <BR>Ref: 2:178. <BR>opp: 16:96, 55:26-27. <BR>summary: 20:73.; 172; 10; -;",
+			"Al-Waris; AalowaArivo; wrv; wiraAvto; ; One Who inherits everything. <BR>mentioned only in hadees. <BR>Ref: 27:16, 4:11, 7:169, 19:80, 23:10-11, 57:10.; 173; 10; -;",
+			"Ar-Rasheed; Aalor~a$iydo; r$d; ru$d; ; One Who guides to the right way. <BR>mentioned only in hadees. <BR>Ref: 72:2. <BR>opp: 72:10, 72:21, 2:256.; 174; 10; -;",
+			"As-Sabur; AaloS~abuwro; Sbr; Sabor; ; One Who is patient. <BR>mentioned only in hadees. <BR>Ref: 2:177, 2:175, 6:34, 18:28, 25:42. <BR>related: 16:42, 42:43. <BR>opp: 14:21, 18:68, 8:65-66.; 175; 10;  -;",
+
+//			"; ; ; ; ; ; 41; 10",
+			"Al-Mannan; Aaloman~aAno; mnn; Almanuwno; ; One Who obliges. <BR>mentioned only in hadees. <BR>Ref: 49:17, 74:6, 2:57, 41:8, 52:30. <BR>opp: 38:39.; 177; 10; -;",
+			"Al-Musta'an; AalomusotaEaAno; Ewn; EawaAno EaAnapu; ; One Whose help is sought. <BR/>occurs one time in the quran. <BR>Ref: 1:4, 5:2, 2:68. <BR>summary: 21:112.; 179; 10; 12:18:15;",
+			"Al-Fatir; AalofaATiro; fTr; fiTorapu; ;  Initiator of creation, Assigner of inherent character. <BR>occurs 6 times in quran and always with the words skies and the earth. <BR>Ref: 6:80, 17:51, 42:5, 67:3, 30:30. <BR>summary: 21:30 3:83 7:54 39:46.; 180; 10; ?;",
+			"Al-Hafiy; AaloHafiY~; Hfw; HafiY~N; ; One Who is constantly and intensely gracious. <BR>occurs once in quran. <BR>Ref: 47:37, 7:187. <BR>summary: 19:47.; 182; 10; ?;",
+			"Al-Mubeen; Aalomubiyno; byn; bayaAno; ; One who is manifest. <BR>occurs once in quran. <BR>Ref: 15:1, 75:19:4, 55:4, 2:256, 4:94, 43:63, 15:19, 15:79,2:68, 2:66, 3:140, 18:93, 49:1, 25:38. <BR>opp: 3:187, 5:15. <BR>summary: 24:25.; 183; 10; 24:25:11;",
+			"Al-Kafil; Aalokafiylo; kfl; kifaAlat; ; The Surety. <BR>occurs once in quran. <BR>Ref: 3:37, 38:23, 28:12, 57:28, 16:91.; 185; 10; 16:91:15;",
+			"Al-Ghalib; AalogaAlibo; glb; galobapu; ; The dominating. <BR>occurs once in quran. <BR>Ref: 3:160, 23:106, 4:74, 80:30. <BR>summary: 12:21.; 186; 10; 12:21:25;",
+			"Al-Kafi; AalokaAfiYo; kfy; kifaAyat; ; One Who is sufficient. <BR>mentioned only in hadees (no. 2). <BR>Ref: 4:70, 17:17, 4:79, 4:6, 4:45, 4:81, 25:31. ; 187; 10; ?;",
+			"Al-Muheet; AalomuHiyTo; HwT; AiHaATapN; ; One who encompasses. <BR>occurs 8 times in quran. <BR>Ref: 18:29, 12:66, 18:68. <BR>summary: 17:60, 65:12, 4:126.; 188; 10; 2:19:18;",
+			"An-Naseer; Aalon~aSiyro; nSr; nuSorat; ; The Helper. <BR>occurs 4 times in quran. <BR>Ref: 3:160. <BR>related: 2:107, 25:31.; 189; 10; 2:107:17;",
+			"Al-Qareeb; Aaloqariybo; qrb; qurob; ; One who is nearest (with respect to space as well as time) <BR>occurs 3 times in quran. <BR>Ref: 2:35, 4:17, 7:56, 4:43, 5:27, 2:83. <BR>related: 11:61, 34:150. <BR>opposite: 9:42, 70:6-7. <BR>summary: 2:186, 50:16, 56:85.; 190; 10; 2:186:6;",
+		];
+
+		String.prototype.trim = function() {
+			return this.replace(/^\s+|\s+$/g,"");
+		}
+		if(returnJSON){
+			var json = {}, item, itemsarr, keys = ['name', 'aname', 'root', 'nouns', 'opps', 'meaning', 'pg'], key; 
+			for(var j=1; j <= qd.length; ++j){ 
+				item = {}; itemsarr = qd[j-1].split(';');
+				for(var l=0; l < itemsarr.length-1; ++l){
+					key = keys[l] ? keys[l] : l;
+					item[ key ] = ( itemsarr[ l ] ).trim();
+				}
+				json[j] = item;
+			}
+			//console.log( JSON.stringify(json) ); 
+			return json;
+		}
+		else for(var i=0, item=''; i<qd.length; ++i){
+			temp = {}; temp.num = temp.id = temp.col0 = i+1;
+			item = qd[i].split(';');
+			for(var j=1; j<=item.length; ++j){
+				temp['col'+j] = item[j-1];
+			}
+			temp.ref = "ref"+i; 
+			temp.root = "root"+i;
+			data[i] = temp;
+		}
+		return data;
+	}
+	qLoadData(true);
+
+
+	
+	function qDataItem(i, ref, word, wordBare, wordToWordMeaning) {
+		var tempArr;
+        this.num = i;
+        this.id = "id_" + i;
+		if(word){
+			this.ref = ref;// +'   '+ i;
+			this.buck = (word);
+			this.pos = (wordBare);
+			this.tags = (wordToWordMeaning);
+		}
+    }
+
+	var BuckToBare = function(str){ if(!str) return;
+		str = str.replace(/[{`><]/g, 'A').replace(/[\&]/g, 'w').replace(/[}]/g, 'y').replace( /[\FNK#aeiou~\^]/g, '');
+		return str;
+	}
+	var escape = function(input){ if(!input) return; return input.replace(/\</g, '&lt;').replace(/\>/g, '&gt;'); }
+	var unescape = function(input){ if(!input) return; return input.replace(/\&lt\;/g, '<').replace(/\&gt\;/g, '>'); }
+
+	<!-- misc UTIL functions -->
+	var _prefixData = function(DATA){           //profile('PREFIX-start');
+		  if(!DATA) return;
+		   var ARRAY = DATA.split('\n'), SEP='|'; //TODO: split using a regex, to account for /r/n
+		   for(var n=0; n<ARRAY.length; ++n){
+			 ARRAY[n] = mapLinenoToRef(n, SEP) + '|' + ARRAY[n];
+		   } /*console.log( ARRAY );*/              //profile('PREFIX-end');
+		   return ARRAY.join('\n');
+	}	
+	var fnMapWordToRoots = function(word){ var ROOTS = '', ch = '&zwnj;'; //'\200C'; //&#8204; '&zwnj;';  \200E &lrm;
+		if(!word) return ROOTS;
+		ROOTS = word.trim().split('').join(ch);
+		return ROOTS;
+	}
+	function mapLinenoToRef(lineno, SEP){
+		if(typeof(SEP) == 'undefined' || !SEP) SEP=':';
+		var ref = '', pos, line,k; 
+		line = parseInt( lineno );
+		if( typeof(line) == 'undefined' || typeof(line) != 'number'){ debugger; return -1; }
+		if(line==0){ return '1'+SEP+'1'; }
+		for(k=0; k<verseIndexes.length-1;++k){
+			if(verseIndexes[k+1] > (line+1) ){//BUGFIX for boundry case when search result is first line of Sura. Test for last line too!
+				pos = k; break;
+			}
+		}
+		ref = pos +SEP+ (line - verseIndexes[pos] +2);
+		return ref;
+	}
+
+	<!-- STATIC DATA -->
+var verseCounts = new Array(-1, 7, 286, 200, 176, 120, 165, 206, 75, 129, 109, 123,
+		111, 43, 52, 99, 128, 111, 110, 98, 135, 112, 78, 118, 64, 77, 227, 93,
+		88, 69, 60, 34, 30, 73, 54, 45, 83, 182, 88, 75, 85, 54, 53, 89, 59,
+		37, 35, 38, 29, 18, 45, 60, 49, 62, 55, 78, 96, 29, 22, 24, 13, 14, 11,
+		11, 18, 12, 12, 30, 52, 52, 44, 28, 28, 20, 56, 40, 31, 50, 40, 46, 42,
+		29, 19, 36, 25, 22, 17, 19, 26, 30, 20, 15, 21, 11, 8, 8, 19, 5, 8, 8,
+		11, 11, 8, 3, 9, 5, 4, 7, 3, 6, 3, 5, 4, 5, 6); //115
+
+var verseIndexes = new Array(-1, 1, 8, 294, 494, 670, 790, 955, 1161, 1236, 1365, 1474, 1597, 1708, 1751, 1803, 1902, 2030, 2141, 2251, 2349, 2484, 
+	2596, 2674, 2792, 2856, 2933, 3160, 3253, 3341, 3410, 3470, 3504, 3534, 3607, 3661, 3706, 3789, 3971, 4059, 4134, 4219, 4273, 4326, 4415, 4474, 
+	4511, 4546, 4584, 4613, 4631, 4676, 4736, 4785, 4847, 4902, 4980, 5076, 5105, 5127, 5151, 5164, 5178, 5189, 5200, 5218, 5230, 5242, 5272, 5324, 
+	5376, 5420, 5448, 5476, 5496, 5552, 5592, 5623, 5673, 5713, 5759, 5801, 5830, 5849, 5885, 5910, 5932, 5949, 5968, 5994, 6024, 6044, 6059, 6080, 
+	6091, 6099, 6107, 6126, 6131, 6139, 6147, 6158, 6169, 6177, 6180, 6189, 6194, 6198, 6205, 6208, 6214, 6217, 6222, 6226, 6231, 6237);
+	
+var wordsCounts = new Array(-1, 29, 6116, 3481, 3747, 2804, 3050, 3320, 1233, 2498, 1833, 1917, 1777, 853, 830, 655, 1844, 1556, 1579, 961, 1335, 1169,
+	1274, 1050, 1316, 893, 1318, 1151, 1430, 976, 817, 546, 372, 1287, 883, 775, 725, 861, 733, 1172, 1219, 794, 860, 830, 346, 488, 643, 539, 560, 
+	347, 373, 360, 312, 360, 342, 351, 379, 574, 472, 445, 348, 221, 175, 180, 241, 287, 249, 333, 300, 258, 217, 226, 285, 199, 255, 164, 243, 181, 
+	173, 179, 133, 104, 80, 169, 107, 109, 61, 72, 92, 137, 82, 54, 71, 40, 27, 34, 72, 30, 94, 36, 40, 36, 28, 14, 33, 23, 17, 25, 10, 26, 19, 23, 15,
+	23, 20); //115. map.
+	//diffrnt 3 6 7 8 13 16 17 19 // 22 25 27 29 32 37 38 41 84 96th. 3:165 ava lamma. 
+var XordsCounts = new Array(-1, 29, 6116, 3482, 3747, 2804, 3053, 3324, 1234, 2498, 1833, 1917, 1777, 855, 830, 655, 1845, 1557, 1579, 962, 1335, 1169, 
+    1276, 1050, 1316, 894, 1318, 1152, 1430, 977, 817, 546, 373, 1287, 883, 775, 725, 862, 734, 1172, 1219, 795, 860, 830, 346, 488, 643, 539, 560, 
+	347, 373, 360, 312, 361, 342, 351, 380, 574, 472, 445, 348, 221, 175, 180, 241, 287, 249, 333, 300, 258, 217, 226, 285, 199, 255, 164, 243, 181, 
+	173, 179, 133, 104, 80, 169, 108, 109, 61, 72, 92, 137, 82, 54, 71, 40, 27, 34, 73, 30, 94, 36, 40, 36, 28, 14, 33, 23, 17, 25, 10, 26, 19, 23, 15, 
+	23, 20);
+
+var linesIndexes = new Array(-1, 1, 30, 6146, 9627, 13374, 16178, 19228, 22548, 23781, 26279, 28112, 30029, 31806, 32659, 33489, 34144, 35988, 37544, 
+	39123, 40084, 41419, 42588, 43862, 44912, 46228, 47121, 48439, 49590, 51020, 51996, 52813, 53359, 53731, 55018, 55901, 56676, 57401, 58262, 58995, 
+	60167, 61386, 62180, 63040, 63870, 64216, 64704, 65347, 65886, 66446, 66793, 67166, 67526, 67838, 68198, 68540, 68891, 69270, 69844, 70316, 70761, 
+	71109, 71330, 71505, 71685, 71926, 72213, 72462, 72795, 73095, 73353, 73570, 73796, 74081, 74280, 74535, 74699, 74942, 75123, 75296, 75475, 75608, 
+	75712, 75792, 75961, 76068, 76177, 76238, 76310, 76402, 76539, 76621, 76675, 76746, 76786, 76813, 76847, 76919, 76949, 77043, 77079, 77119, 77155, 
+	77183, 77197, 77230, 77253, 77270, 77295, 77305, 77331, 77350, 77373, 77388, 77411, 77431); //116. pos.
+
+</script>
+<BR/><A ID=book HREF=#tbl >Back to table</A>
+<script type='text/javascript' src='http://www.scribd.com/javascripts/scribd_api.js'></script>
+<div id='embedded_doc'><a href="http://www.scribd.com">Scribd</a></div>
+<script type="text/javascript">
+  var url = 'http://abdurrahman.org/tawheed/asmawasifat/Names-of-Allah-with-Evidences.pdf';
+  var scribd_doc = scribd.Document.getDoc(82679917, 'key-1yfz5zp9lm2rnzzzd2bu');
+  var onDocReady = function(e){
+	//alert('document pdf ready');
+    scribd_doc.api.setPage(11); 
+  }
+
+  var setPage = function(pg){
+	scribd_doc.api.setPage(pg);
+  }
+  
+  scribd_doc.addParam('jsapi_version', 1);
+  scribd_doc.addEventListener('docReady', onDocReady);
+  scribd_doc.addParam('auto_size', true);
+  scribd_doc.addParam('mode', 'list');
+  scribd_doc.addParam('jsapi_version', 2);
+  // Attach event listeners
+  scribd_doc.addEventListener('docReady', onDocReady);
+  // Write the instance
+  scribd_doc.write('embedded_doc');
+</script>
+</html>
