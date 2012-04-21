@@ -1,0 +1,30 @@
+Example:  Complete load the simple quran and display only 10 verses from it.
+<BR><A HREF=http://docs.globalquran.com/API:Data/Complete_Quran>http://docs.globalquran.com/API:Data/Complete_Quran</A><HR>
+<!DOCTYPE html>
+<html>
+<head>
+  <style>#demo-1{ color:lightBlue; }</style>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+  <div id="demo-1">
+
+</div>
+<script>
+$.ajaxSetup({ cache: true, jsonpCallback: 'quranData' }); // define ajax setup
+$.getJSON("http://api.globalquran.com/complete/quran-simple?jsoncallback=?", {
+    format : "jsonp"
+}, function(data)
+{    
+    $.each(data.quran, function(i, by)
+    {
+	$.each(by, function (verseNo, line) {
+            $("<p>").html(line.surah+':'+line.ayah+' '+line.verse).appendTo("#demo-1");
+            if (verseNo == 10)
+                return false;
+	});
+    });
+});
+</script>
+</body>
+</html>

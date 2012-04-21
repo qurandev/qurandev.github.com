@@ -1,0 +1,180 @@
+﻿<h4>Example of custom application: </h4>
+Demonstrate using GQ API to get sura data and add custom your own actions on clicking words. <BR>
+Example here shows integrating word click to showing a book page with information on that words synonyms occuring in Quran. This was really easy to build by leveraging GQ APIs.<BR><BR>
+Go to <A HREF=http://docs.globalquran.com/Main_Page>docs</A> and start building apps today! Inshallah, you will get lot of help from the brothers as well.
+<HR>
+<!DOCTYPE html>
+<html>
+<head>
+  <style>#demo-1{ color:lightBlue; }
+		 .qurantext{ color:green !important; font-size: 2.5em; text-align: right; }
+		 .leftcolumn, #leftcolumn { width: 300px; border: 1px solid blue; float: left}
+		 .rightcolumn, #rightcolumn { width: 550px; border: 1px solid blue; float: right}
+		 .rightcolumn2, #rightcolumn2 { width: 150px; border: 1px solid blue; float: right}
+		 .hide { display: none; }
+		 body{ background: beige; }
+		 .LINKNONE{ text-decoration:none; pointer-events: none; color: gray; cursor: default;}
+		 .LINKMUTARADIFAT{ }
+		 X.LINKMUTARADIFAT::after {
+			content: "«"; //"⇐";
+			Xcontent: "‎(00E(" attr(class) ")‎200E";
+			position: relative;
+			font-size: .5em;
+			color: gray;
+			vertical-align: sub;
+			}
+  </style>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+<div>
+<span><b>Near Synonyms in Quran - Mutaradafat-ul-Quran</b> &nbsp;&nbsp;&nbsp;&nbsp; NOTE: Open in non-IE browser! (i)select a surah below (ii)click any word on rightside to see its mutaradifaat page<BR/>
+</span></div>
+  <div id="demo-1" class="qurantext rightcolumn">
+
+  </div>
+  <div id="demo-2" class="qurantext rightcolumn hide">
+
+  </div>
+  <script>
+	var EMBED_PDF = true, TEST = true, map = {};  //These are static vars used in multiple places... 
+	var temp;
+	$.ajaxSetup({ cache: true, jsonpCallback: 'quranData' }); // define ajax setup
+	
+	var paintSura = function(surano, divID){ if(!divID) divID = '#demo-1';
+		$(divID).html('');
+		$.getJSON("http://api.globalquran.com/surah/" + surano + "/quran-simple?jsoncallback=?", {
+					format : "jsonp"
+					}, function(data){
+							console.log(temp = data);
+							var bism = 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', prefix = '', suffix='';
+							$.each(data.quran, function(i, by){ prefix = suffix = '';
+								$.each(by, function (verseNo, line) {
+									prefix = line.surah+ ':' + line.ayah;
+									if(line.verse.indexOf( bism) != -1) line.verse = line.verse.split(bism)[1];
+									$("<p>").html( linkifyAyah( prefix, line.verse ) + suffix).appendTo( divID );
+								});
+								$('<HR/>').appendTo( divID );
+							});
+		});	
+	}
+	
+	var linkifyAyah = function(ref, ayah){
+		var response = '', loc, HTML = '<A HREF=javascript:onClickWord(\'$1\'); TARGET=_ CLASS=LINK$3 >$2</A>', SEP = '&nbsp;&nbsp;', CLASS='';
+		ayah = $.trim( ayah ).split(' ').join( SEP );
+		$.each( ayah.split( SEP ), function(wordno, word){
+			loc = ref+':'+ (1+wordno);
+			var pageno = map[ loc ], classname="NONE";
+			if(parseInt(pageno) ) classname = "MUTARADIFAT";
+			//does this location is mapped to a mutaradifat entry?? If so, emit url else, plain text.
+			response += HTML.replace(/\$1/, loc).replace(/\$2/, word).replace(/\$3/, classname) + SEP;
+		});
+		return response;
+	}
+	
+	var onClickWord = function(ref){
+		console.log(ref +' - '+ map[ ref ] );
+		var pageno = map[ ref ];
+		if( pageno ){
+			setPage( 18 + parseInt(pageno) );//go to that page number
+		}
+	}
+	paintSura(112);	
+	
+</script>
+  
+<span class=rightcolumn2>
+Surah# <input type="radio" name="group1" value="Surah# 112" checked onClick="paintSura(112);">112 &nbsp;
+<input type="radio" name="group1" value="Surah# 114"         onClick="paintSura(114);">114 <BR/>
+<BR/><BR/>Data: (u can ignore this)<BR/><textarea id=mapping rows=15 cols=15>
+112:1:3	818
+112:1:4	138
+112:2:2	256
+112:3:1	862
+112:3:2	396
+112:3:4	396
+112:4:1	862
+112:4:2	900
+112:4:4	890
+112:4:5	714
+
+114:1:2	289
+114:1:3	279
+114:1:4	71
+114:2:1	172
+114:3:1	818
+114:4:2	206
+114:4:3	485
+114:4:4	392|326
+114:5:2	485
+114:5:4	483
+</textarea>
+</span>
+
+<script>
+	//$.ready(function(){
+		var mapping = $('#mapping').val(), arr; //map already declared above., map = {};
+		if(mapping){
+			mapping = mapping.split('\n');
+			for(var j=0; j<mapping.length; ++j){
+				if(mapping[j]){
+					arr = mapping[j].split('\t');
+					if(arr && arr.length >=1){
+						map[ arr[0] ] = arr[1]; //console.log(arr[0] +' - '+ arr[1] );
+					}
+				}
+			}
+			console.log(map);
+		}
+	//});
+//	paintSura(114, "#demo-2");
+  </script>
+
+
+<script type='text/javascript' src='http://www.scribd.com/javascripts/scribd_api.js'></script>
+<div id='embedded_doc' class=leftcolumn><a href="http://www.scribd.com">Scribd</a></div>
+<script type="text/javascript">
+	var url = 'http://abdurrahman.org/tawheed/asmawasifat/Names-of-Allah-with-Evidences.pdf';
+	url = 'http://samplepdf.com/sample.pdf';
+	var scribd_doc;
+	if(EMBED_PDF) scribd_doc  = scribd.Document.getDoc(//url, 'pub-29863482405429045887'); //
+											82681420, 'key-6w25dij9keuw0vv8keu'); //(2659, 'key-6vhdaqehjkeob'); 
+  //password 2152gm9f7r5guird0e4x
+
+  var onDocReady = function(e){
+	//alert('document pdf ready');
+    scribd_doc.api.setPage(274); 
+  }
+
+  var setPage = function(pg){
+	if(scribd_doc)
+		scribd_doc.api.setPage(pg);
+  }
+  
+	if(EMBED_PDF){
+	  scribd_doc.addParam('jsapi_version', 1);
+	  scribd_doc.addEventListener('docReady', onDocReady);//scribd_doc.write('embedded_doc');
+
+      // Parameters
+      scribd_doc.addParam('height', 785);
+      scribd_doc.addParam('width', 530);
+      scribd_doc.addParam('auto_size', true);
+      scribd_doc.addParam('mode', 'list');
+      scribd_doc.addParam('jsapi_version', 2);
+
+      // Attach event listeners
+      scribd_doc.addEventListener('docReady', onDocReady);
+      //scribd_doc.addEventListener('pageChanged', onPageChanged);
+
+      // Write the instance
+      scribd_doc.write('embedded_doc');
+	}
+	  </script>
+  
+<div class="clear rightcolumn">
+	<SPAN style="text-align:center; valign:center;">
+		<A ID=top HREF=http://www.scribd.com/doc/82681420/Mutaradifatul-Quran TARGET=_><IMG SRC='images/mutaradifat.jpg' /></A>
+	</SPAN>
+</div>
+</body>
+</html>

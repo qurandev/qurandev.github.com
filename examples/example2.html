@@ -1,0 +1,59 @@
+Example:  Build Quran List. Translation list. Reciter list. <BR>
+<A HREF=http://docs.globalquran.com/API:Data/Quran_List>
+http://docs.globalquran.com/API:Data/Quran_List
+</A><HR>
+<!DOCTYPE html>
+<html>
+<head>
+  <style>#demo-1{ color:lightBlue; }</style>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+  <div id="demo-1"></div>
+  <div id="demo-2"></div>
+  <div id="demo-3"></div>
+<script>
+$.ajaxSetup({ cache: true, jsonpCallback: 'quranData' }); // define ajax setup
+$.getJSON("http://api.globalquran.com/quran?jsoncallback=?", {
+    format: "jsonp"
+}, function(data)
+{    
+    /* Quran List */
+    $('#demo-1').append('Select Quran: ');
+    $("<select>").attr('id', 'quranList').appendTo("#demo-1");
+    $("<option>").attr('selected', 'selected').html('Select Quran').appendTo('#quranList');
+    $.each(data.quranList, function(quranID, by)
+    {
+	if (by.format == 'text' && by.type == 'quran')
+            $("<option>").val(quranID).html(by.english_name+' '+by.native_name).appendTo('#quranList');
+    });
+
+	
+   /* Translation List */
+    $('#demo-2').append('Select Translation: ');
+    $("<select>").attr('id', 'transList').appendTo("#demo-2");
+    $("<option>").attr('selected', 'selected').html('Select Translation').appendTo('#transList');
+    $.each(data.quranList, function(quranID, by)
+    {
+	if (by.format == 'text' && by.type == 'translation')
+            $("<option>").val(quranID).html(by.english_name+' '+by.native_name).appendTo('#transList');
+    });
+	
+	
+	 /* Recitor List */
+    $('#demo-3').append('Select Recitor: ');
+    $("<select>").attr('id', 'recitorList').appendTo("#demo-3");
+    $("<option>").attr('selected', 'selected').html('Select Translation').appendTo('#recitorList');
+    $.each(data.quranList, function(quranID, by)
+    {
+	if (by.format == 'audio')
+            $("<option>").val(quranID).html(by.english_name+' '+by.native_name).appendTo('#recitorList');
+    });
+
+});
+
+
+
+</script>
+</body>
+</html>

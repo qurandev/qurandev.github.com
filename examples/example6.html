@@ -1,0 +1,28 @@
+Example: Loads the verse number 10, which also can be wrote as 2:3
+<BR><A HREF=http://docs.globalquran.com/API:Data/Ayah>http://docs.globalquran.com/API:Data/Ayah</A><HR>
+<!DOCTYPE html>
+<html>
+<head>
+  <style>#demo-1{ color:lightBlue; }</style>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+  <div id="demo-1">
+
+</div>
+<script>
+$.ajaxSetup({ cache: true, jsonpCallback: 'quranData' }); // define ajax setup
+$.getJSON("http://api.globalquran.com/ayah/10/quran-simple?jsoncallback=?", {
+    format : "jsonp"
+}, function(data)
+{    
+    $.each(data.quran, function(i, by)
+    {
+	$.each(by, function (verseNo, line) {
+            $("<p>").html(line.surah+':'+line.ayah+' '+line.verse).appendTo("#demo-1");
+	});
+    });
+});
+</script>
+</body>
+</html>

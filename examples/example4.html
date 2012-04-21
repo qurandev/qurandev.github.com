@@ -1,0 +1,28 @@
+Example: Loads the last juz 30.<BR><A HREF=http://docs.globalquran.com/API:Data/Juz>
+http://docs.globalquran.com/API:Data/Juz</A><HR>
+<!DOCTYPE html>
+<html>
+<head>
+  <style>#demo-1{ color:lightBlue; }</style>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+  <div id="demo-1">
+
+</div>
+<script>
+$.ajaxSetup({ cache: true, jsonpCallback: 'quranData' }); // define ajax setup
+$.getJSON("http://api.globalquran.com/juz/30/quran-simple?jsoncallback=?", {
+    format : "jsonp"
+}, function(data)
+{    
+    $.each(data.quran, function(i, by)
+    {
+	$.each(by, function (verseNo, line) {
+            $("<p>").html(line.surah+':'+line.ayah+' '+line.verse).appendTo("#demo-1");
+	});
+    });
+});
+</script>
+</body>
+</html>

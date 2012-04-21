@@ -1,0 +1,79 @@
+Example: Loads the last quran page 604 with all the extra data list.<BR>
+<A HREF=http://docs.globalquran.com/API:Data/Getting_All_With_One_Call>http://docs.globalquran.com/API:Data/Getting_All_With_One_Call</A><HR>
+<!DOCTYPE html>
+<html>
+<head>
+  <style>#demo-1{ color:lightBlue; }</style>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+  <div id="demo-1">
+
+</div>
+<script>
+$.ajaxSetup({ cache: true, jsonpCallback: 'quranData' }); // define ajax setup
+$.getJSON("http://api.globalquran.com/all/page/604/quran-simple?jsoncallback=?", {
+    format: "jsonp"
+}, function(data) {
+    
+    /* user country */
+    if (data.languageCountryList)
+    {
+        $.each(data.languageCountryList, function(langCode, lang)
+        {
+            $("<h4>").html('You are from: '+lang.country_english_name+' '+lang.country_native_name+' and your default language is '+data.languageList[data.languageSelected].english_name).appendTo("#demo-1");
+	    return false;
+	});
+    }
+	
+    /* language list */
+    $('#demo-1').append('Select Language: ');
+    $("<select>").attr('id', 'langList').appendTo("#demo-1");
+    $("<option>").attr('selected', 'selected').html('Select Language').appendTo('#langList');
+    $.each(data.languageList, function(langCode, lang)
+    {
+        $("<option>").val(langCode).html(lang.english_name+' '+lang.native_name).appendTo('#langList');
+    });
+	
+    /* Quran List */
+    $('#demo-1').append('<br />Select Quran: ');
+    $("<select>").attr('id', 'quranList').appendTo("#demo-1");
+    $("<option>").attr('selected', 'selected').html('Select Quran').appendTo('#quranList');
+    $.each(data.quranList, function(quranID, by)
+    {
+        if (by.format == 'text' && by.type == 'quran')
+	$("<option>").val(quranID).html(by.english_name+' '+by.native_name).appendTo('#quranList');
+    });
+	
+	
+    /* Translation List */
+    $('#demo-1').append('<br />Select Translation: ');
+    $("<select>").attr('id', 'transList').appendTo("#demo-1");
+    $("<option>").attr('selected', 'selected').html('Select Translation').appendTo('#transList');
+    $.each(data.quranList, function(quranID, by)
+    {
+	if (by.format == 'text' && by.type == 'translation')
+	$("<option>").val(quranID).html(by.english_name+' '+by.native_name).appendTo('#transList');
+    });
+	
+    /* Recitor List */
+    $('#demo-1').append('<br />Select Recitor: ');
+    $("<select>").attr('id', 'recitorList').appendTo("#demo-1");
+    $("<option>").attr('selected', 'selected').html('Select Translation').appendTo('#recitorList');
+    $.each(data.quranList, function(quranID, by)
+    {
+        if (by.format == 'audio')
+	$("<option>").val(quranID).html(by.english_name+' '+by.native_name).appendTo('#recitorList');
+    });
+	
+    /* quran data */
+    $.each(data.quran, function(i, by)
+    {
+        $.each(by, function (verseNo, line) {
+	    $("<p>").html(line.surah+':'+line.ayah+' '+line.verse).appendTo("#demo-1");
+	});
+    });
+});
+</script>
+</body>
+</html>
