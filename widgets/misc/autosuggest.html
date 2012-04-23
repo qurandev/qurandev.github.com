@@ -1,0 +1,45 @@
+<script src="http://code.jquery.com/jquery-latest.js" language="javascript" type="text/javascript" ></script>
+<!--<script src='http://xregexp.com/xregexp.js' ></script>
+<script src="http://GlobalQuran.com/javascript/GlobalQuran.js?v=3.4"></script>
+-->
+<script src="js/jquery.mailcheck.min.js"></script>
+
+
+<input id="email" name="email" type="text" value="me@hotnail.com" />
+
+<input id="lemma" name="lemma" type="text" value="bst" />
+
+
+<script>
+var domains = ['hotmail.com', 'gmail.com', 'aol.com'];
+$('#email').on('blur', function() {
+  $(this).mailcheck({
+    domains: domains,   // optional
+    suggested: function(element, suggestion) {
+      console.log(element);
+	  console.log(suggestion);// callback code
+	  alert(JSON.stringify( suggestion ) );
+    },
+    empty: function(element) {
+      console.log(element);// callback code
+    }
+  });
+});
+
+var lemmas = ['bst', 'basit', 'baSiT'];
+$('#lemma').on('blur', function() {
+  $(this).mailcheck({
+    domains: lemmas,   // optional
+    suggested: function(element, suggestion) {
+      console.log(element);
+	  console.log(suggestion);// callback code
+	  alert(JSON.stringify( suggestion ) );
+    },
+    empty: function(element) {
+      console.log(element);// callback code
+	  alert(element);
+    }
+  });
+});
+
+</script>

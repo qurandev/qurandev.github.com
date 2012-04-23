@@ -1,0 +1,54 @@
+﻿<html>
+  <head>
+    <title>d3 experiment</title>
+    <script type="text/javascript" src="js/d3.v2.min.js"
+            Xsrc="https://raw.github.com/mbostock/d3/master/d3.v2.min.js">
+    </script>
+    <style type="text/css">
+      .box {
+        background-color: skyblue;
+        width: 24px;
+        height: 18px;
+        padding: 4px;
+        margin: 1px;
+      }
+    </style>
+  </head>
+  <body>
+	<script type='text/javascript'>
+		var data = [32, 57, 112],
+		dataEnter = data.concat(293),
+		dataExit = data.slice(0, 2),
+		w = 360,
+		h = 180,
+		x = d3.scale.ordinal().domain([57, 32, 112]).rangePoints([0, w], 1),
+		y = d3.scale.ordinal().domain(data).rangePoints([0, h], 2);
+	</script>
+
+	<script>
+		var w=800, h=500, data = [4, 5, 8, 12, 17], data2 = [1, 3, 5, 7], data3 = [12, 17,19], strs = ["الرَّحْمٰن", "رَبٌّ", "الرَّحْمٰن", "الرَّحْمٰن"];
+		var body = d3.select('body');
+		var svg = body.append('svg').attr('width', w).attr('height', h);
+		var x, y, r; 
+		x = y= r = function() {
+		  return Math.random() * w;
+		}
+		var g = svg
+				.selectAll('g').data( strs )
+				.enter().append('g')
+				.attr("class", "data")
+				.attr("transform", function(d, i) { return "translate(" + 20 * (i + 1) + ",20)"; });
+	  
+		g.append('circle')
+			.style("fill", "steelblue")
+			//.attr('cx', x)
+			//.attr('cy', y)
+			.attr('r', 20);
+
+		g.append('text')
+			.attr('dy', '6em')
+			//.attr('text-anchor', "middle")
+			.text(String);
+	</script>
+  </body>
+</html>

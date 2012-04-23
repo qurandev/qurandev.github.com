@@ -1,0 +1,154 @@
+﻿<script src="lib/jquery-1.7.min.js" language="javascript" type="text/javascript" ></script>
+<script src="js/GlobalQuran.js?v=3.4"></script>
+<script src='js/xregexp.js' ></script>
+
+<script>
+var gq = {
+	ds1: [], ds2: [], ds3: [], ds4: [], dsroot: [], dslem: [],
+	loadedEMPTYQURANJSON: false, 
+	loadedPercent: 0,
+	loadedPart1: false,	loadedPart2: false, loadedPart3: false,
+	loaded: false,
+
+	cookdata: function(){ 
+		console.log('cookdata called'); 
+		if(gq.loaded) return; var parts = [gq.MANZIL1, gq.MANZIL234, gq.MANZIL56, gq.MANZIL7], test = true;
+		$.each(parts, function(manzilno, MANZIL){
+			if(typeof(MANZIL) == 'undefined' || MANZIL.length < 500) test = false;
+		}); if(test) gq.loaded = true; else return;
+		var words = [], tokens = [], tmp = [], lines;
+		$.each(parts, function(manzilno, MANZIL){
+			if( MANZIL ){
+				$.each(MANZIL.slice(1), function(lineno, line){ lines = {};
+					$.each(words = line.split('★'), function(wordno, word){
+						$.each(tokens = word.split('⚓'), function(tokenno, token){ if(token){ 
+							token = $.trim(token); lines[tokenno] ? (lines[tokenno].push(token) ): (lines[tokenno] = [token]) };
+						});					
+					});
+					gq.ds1.push( lines[0].join(' ') ); gq.ds2.push( lines[1].join('$') ); 
+					//N|LEM:{som|ROOT:smw|M|GEN PN|LEM:{ll~ah|ROOT:Alh|GEN ADJ|LEM:r~aHoma`n|ROOT:rHm|MS|GEN ADJ|LEM:r~aHiym|ROOT:rHm|MS|GEN
+					var line2, line = lines[2].join(' '); gq.ds3.push( line ); 
+					line2 = line.replace(/\|LEM:[^\|]*/g, '').replace(/\|ROOT:[^\|]*/g, ''); gq.ds4.push( line2 );
+
+					var tokens = ['LEM:', 'ROOT:'], ds = ['', ''];
+					$.each(tokens, function(tokenno, token){
+						$.each(lines[2], function(lineno, line){
+							if(line.indexOf(token) == -1){ ds[tokenno] += '- '; }
+							else{ line = line.split( token )[1];
+								if(!line.indexOf('|') == -1){ alert('no pipe sep: ' + line); debugger; }//check for | ??
+								line = line.split('|')[0]; 
+								ds[tokenno] += line + ' ';//console.log(data + data1); 
+							}
+						});
+					});
+					//TODO: put back this. gq.dslem.push( $.trim(ds[0] ) ); gq.dsroot.push( $.trim(ds[1] ) );
+					gq.dslem.push( (ds[0] ) ); gq.dsroot.push( (ds[1] ) );
+				});
+			};
+		});
+	},
+	
+	search: function(_keyword){
+		var regexp, result = {}, keyword = escapeRegex(_keyword); result[ _keyword ] = {};
+		regexp = new RegExp(".*(?:" + keyword + ").*", "g");
+		result[_keyword]["buck"] = gq.search2(keyword, regexp, prefixLineno(gq.ds1) );		
+		regexp = new RegExp(".*(?:" + BuckToBare(keyword) + ").*", "g");
+		result[_keyword]["bare"] = gq.search2(keyword, regexp, prefixLineno( BuckToBare( gq.ds1.join('\n') ).split('\n') ) );
+
+		regexp = new RegExp(".*(?:" + keyword + ").*", "g");
+		result[_keyword]["lem"] = gq.search2(keyword, regexp, prefixLineno(gq.dslem) );		
+
+		regexp = new RegExp(".*(?:" + keyword + ").*", "g");
+		result[_keyword]["root"] = gq.search2(keyword, regexp, prefixLineno(gq.dsroot) );		
+		
+		regexp = new RegExp(".*(?:" + keyword + ").*", "gi"); //RegExp(".*" + escapeRegex(token) + ".*", "gi");
+		result[_keyword]["word"] = gq.search2(keyword, regexp, prefixLineno(gq.ds2) );
+		
+		regexp = new RegExp(".*(?:" + keyword + ").*", "gi");
+		result[_keyword]["corpusFULL"] = gq.search2(keyword, regexp, prefixLineno(gq.ds3) );
+		
+		regexp = new RegExp(".*(?:" + keyword + ").*", "gi");
+		result[_keyword]["corpus"] = gq.search2(keyword, regexp, prefixLineno(gq.ds4) );
+		
+		console.log( JSON.stringify( result ) );
+		return result;
+	},
+	
+	search2: function(word, regexp, DATA){ var o = {}, results, timeBaseline = new Date().getTime(), timeDone;
+		results = DATA.match(regexp); o["n"] = (!results) ? 0 : results.length; 
+		if(results) $.each(results, function(hitno, hit){
+			results[hitno] = results[hitno].split('|')[0];
+		}); timeDone = new Date().getTime(); o["t"] = timeDone - timeBaseline;
+		o["d"] = results; return o;
+	}
+
+}
+var prefixLineno = function(DATAarr){ if(!DATAarr) return; var out = []; 
+	$.each(DATAarr, function(lineno, line){
+		out.push(lineno + '|'+ line);
+	});
+	return out.join('\n');
+}
+
+var escapeRegex = function (str) {
+        return str.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
+var BuckToBare = function(str){ if(!str) return;
+	str = str.replace(/[{`><]/g, 'A').replace(/[\&]/g, 'w').replace(/[}]/g, 'y').replace( /[\FNK#aeiou~\^]/g, '');
+	return str;
+}
+
+//if(gq && gq.cookdata) gq.cookdata(); else debugger;
+
+/*		//console.log(JSON.stringify(gq.ds1.join('\n')) ); console.log(JSON.stringify(gq.ds2.join('\n')) ); console.log(JSON.stringify(gq.ds3.join('\n')) );
+		gq.data = {}; gq.data.quran = {}; gq.data.quran['quran-corpus'] = {};
+		if(!gq.loadedPart1 && typeof(gq.MANZIL1) != 'undefined' && gq.MANZIL1.length > 0){
+			for(var i=1, position = parseInt( gq.MANZIL1[0] ); i <= gq.MANZIL1.length; ++i, ++position){
+				if(!gq.data.quran['quran-corpus'][ position ]) { gq.data.quran['quran-corpus'][position] = {}; }
+				gq.data.quran['quran-corpus'][ position ].verse = gq.MANZIL1[ i ];
+			}
+		}
+		if(!gq.loadedPart1 && typeof(gq.MANZIL7) != 'undefined' && gq.MANZIL7.length > 0){
+			for(var i=1, position = parseInt( gq.MANZIL7[0] ); i <= gq.MANZIL7.length; ++i, ++position){
+				if(!gq.data.quran['quran-corpus'][ position ]) { gq.data.quran['quran-corpus'][position] = {}; }
+				gq.data.quran['quran-corpus'][ position ].verse = gq.MANZIL7[ i ];
+			}
+			gq.loadedPart1 = true; 
+			//layout.message('', '1: '+(gq.loadedPercent+33)+ '% loaded');  $.growlUI('', 'Quran data loaded ' + (gq.loadedPercent+33)+ '%');
+			console.log('quran: loadedPart1. loadedPercent: ' + (gq.loadedPercent + 33 + '%') ); //part1 includes MANZIL1 and 7
+		} 
+		if(!gq.loadedPart2 && typeof(gq.MANZIL56) != 'undefined' && gq.MANZIL56.length > 0){
+			for(var i=1, position = parseInt( gq.MANZIL56[0] ); i <= gq.MANZIL56.length; ++i, ++position){
+				if(!gq.data.quran['quran-corpus'][ position ]) { gq.data.quran['quran-corpus'][position] = {}; }
+				gq.data.quran['quran-corpus'][ position ].verse = gq.MANZIL56[ i ];
+			}
+			gq.loadedPart2 = true; 
+			//layout.message('', '2: '+ (gq.loadedPercent+33)+ '% loaded');  $.growlUI('', 'Quran data loaded ' + (gq.loadedPercent+33)+ '%');
+			console.log('quran: loadedPart2. loadedPercent: ' + (gq.loadedPercent + 33 + '%') ); //part2 includes MANZIL5, 6
+			//if(gq.surah() >= 26 && gq.surah() <= 49 ) gq.custom.unblockui(); //repaint the page, if the current surah is in this manzil
+		} 
+
+		if(!gq.loadedPart3 && typeof(gq.MANZIL234) != 'undefined' && gq.MANZIL234.length > 0){
+			for(var i=1, position = parseInt( gq.MANZIL234[0] ); i <= gq.MANZIL234.length; ++i, ++position){
+				if(!gq.data.quran['quran-corpus'][ position ]) { gq.data.quran['quran-corpus'][position] = {}; }
+				gq.data.quran['quran-corpus'][ position ].verse = gq.MANZIL234[ i ];
+			}
+			gq.loadedPart3 = true; 
+			//layout.message('', '3: '+ (gq.loadedPercent+34)+ '% loaded'); $.growlUI('', 'Quran data loaded ' + (gq.loadedPercent+34)+ '%');
+			console.log('quran: loadedPart3. loadedPercent: ' + (gq.loadedPercent + 34 + '%') );  //part3 includes MANZIL2, 3, 4
+			//if(gq.surah() >= 5 && gq.surah() <= 25 ) gq.custom.unblockui(); //repaint the page if within this manzil
+			//cook up the strings too... gq.strings (this needed for the count statistics only)
+			//gq.stringsGenerate();		
+		} 
+
+		gq.loadedPercent = 0; if(gq.loadedPart1) gq.loadedPercent += 33; if(gq.loadedPart2) gq.loadedPercent += 33; if(gq.loadedPart3) gq.loadedPercent += 34; 
+		console.log('Total data loadedPercent: ' + gq.loadedPercent + '%. '); // + 'data cooked with ' + gq.strings.length +' strings');
+
+	}*/
+
+
+</script>
+
+<script src=../corpus/javascript/manzil1,7.js></script>
+<script src=../corpus/javascript/manzil5,6.js></script>
+<script src=../corpus/javascript/manzil2,3,4.js></script>
