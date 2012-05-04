@@ -1,257 +1,137 @@
-﻿<script src="lib/jquery-1.7.min.js" language="javascript" type="text/javascript" ></script>
+﻿corpusdata.html
+
+<script src="lib/jquery-1.7.min.js" language="javascript" type="text/javascript" ></script>
 <script src="js/GlobalQuran.js?v=3.4"></script>
-<script type="text/javascript" src="lib/jquery.cookie.js"></script>
-<script type="text/javascript" src="lib/jquery.hotkeys.js"></script>
-<script type="text/javascript" src="js/jquery.jstree.js"></script>
 <script src='js/xregexp.js' ></script>
 
 <script>
 var gq = {
-	ds1: [], ds2: [], ds3: [], ds4: [], dsroot: [], dslem: [],
-	loadedEMPTYQURANJSON: false, 
-	loadedPercent: 0,
-	loadedPart1: false,	loadedPart2: false, loadedPart3: false,
-	loaded: false,
+    ds1: [], ds2: [], ds3: [], ds4: [], dsroot: [], dslem: [],
+    loadedEMPTYQURANJSON: false, 
+    loadedPercent: 0,
+    loadedPart1: false,    loadedPart2: false, loadedPart3: false,
+    loaded: false,
 
-	cookdata: function(){ 
-		console.log('cookdata called'); 
-		if(gq.loaded) return; var parts = [gq.MANZIL1, gq.MANZIL234, gq.MANZIL56, gq.MANZIL7], test = true;
-		$.each(parts, function(manzilno, MANZIL){
-			if(typeof(MANZIL) == 'undefined' || MANZIL.length < 500) test = false;
-		}); if(test) gq.loaded = true; else return;
-		var words = [], tokens = [], tmp = [], lines;
-		$.each(parts, function(manzilno, MANZIL){
-			if( MANZIL ){
-				$.each(MANZIL.slice(1), function(lineno, line){ lines = {};
-					$.each(words = line.split('★'), function(wordno, word){
-						$.each(tokens = word.split('⚓'), function(tokenno, token){ if(token){ 
-							token = $.trim(token); lines[tokenno] ? (lines[tokenno].push(token) ): (lines[tokenno] = [token]) };
-						});					
-					});
-					gq.ds1.push( lines[0].join(' ') ); gq.ds2.push( lines[1].join('$') ); 
-					//N|LEM:{som|ROOT:smw|M|GEN PN|LEM:{ll~ah|ROOT:Alh|GEN ADJ|LEM:r~aHoma`n|ROOT:rHm|MS|GEN ADJ|LEM:r~aHiym|ROOT:rHm|MS|GEN
-					var line2, line = lines[2].join(' '); gq.ds3.push( line ); 
-					line2 = line.replace(/\|LEM:[^\|]*/g, '').replace(/\|ROOT:[^\|]*/g, ''); gq.ds4.push( line2 );
+    cookdata: function(type, _DATA){ //NOTE: CURRENTLY parameters are not being used in existing code. REFACTOR NEEDED!!
+        console.log('cookdata called - ' + type + '\t' + (_DATA ? _DATA.length : '-') ); 
+        if(gq.loaded) return; var parts = [gq.MANZIL1, gq.MANZIL234, gq.MANZIL56, gq.MANZIL7], test = true;
+        $.each(parts, function(manzilno, MANZIL){
+            if(typeof(MANZIL) == 'undefined' || MANZIL.length < 500) test = false;
+        }); if(test) gq.loaded = true; else return;
+        var words = [], tokens = [], tmp = [], lines;
+        $.each(parts, function(manzilno, MANZIL){
+            if( MANZIL ){
+                $.each(MANZIL.slice(1), function(lineno, line){ lines = {};
+                    $.each(words = line.split('★'), function(wordno, word){
+                        $.each(tokens = word.split('⚓'), function(tokenno, token){ if(token){ 
+                            token = $.trim(token); lines[tokenno] ? (lines[tokenno].push(token) ): (lines[tokenno] = [token]) };
+                        });                    
+                    });
+                    gq.ds1.push( lines[0].join(' ') ); gq.ds2.push( lines[1].join('$') ); 
+                    //N|LEM:{som|ROOT:smw|M|GEN PN|LEM:{ll~ah|ROOT:Alh|GEN ADJ|LEM:r~aHoma`n|ROOT:rHm|MS|GEN ADJ|LEM:r~aHiym|ROOT:rHm|MS|GEN
+                    var line2, line = lines[2].join(' '); gq.ds3.push( line ); 
+                    line2 = line.replace(/\|LEM:[^\|]*/g, '').replace(/\|ROOT:[^\|]*/g, ''); gq.ds4.push( line2 );
 
-					var tokens = ['LEM:', 'ROOT:'], ds = ['', ''];
-					$.each(tokens, function(tokenno, token){
-						$.each(lines[2], function(lineno, line){
-							if(line.indexOf(token) == -1){ ds[tokenno] += '- '; }
-							else{ line = line.split( token )[1];
-								if(!line.indexOf('|') == -1){ alert('no pipe sep: ' + line); debugger; }//check for | ??
-								line = line.split('|')[0]; 
-								ds[tokenno] += line + ' ';//console.log(data + data1); 
-							}
-						});
-					});
-					//TODO: put back this. gq.dslem.push( $.trim(ds[0] ) ); gq.dsroot.push( $.trim(ds[1] ) );
-					gq.dslem.push( (ds[0] ) ); gq.dsroot.push( (ds[1] ) );
-				});
-			};
-		});
-	},
-	
-	search: function(_keyword){
-		var regexp, result = {}, keyword = escapeRegex(_keyword), timeBaseline = new Date().getTime(), timeDone; result[ _keyword ] = {};
-		regexp = new RegExp(".*(?:" + keyword + ").*", "g");
-		result[_keyword]["buck"] = gq.search2(keyword, regexp, prefixLineno(gq.ds1) );		
-		regexp = new RegExp(".*(?:" + BuckToBare(keyword) + ").*", "g");
-		result[_keyword]["bare"] = gq.search2(keyword, regexp, prefixLineno( BuckToBare( gq.ds1.join('\n') ).split('\n') ) );
+                    var tokens = ['LEM:', 'ROOT:'], ds = ['', ''];
+                    $.each(tokens, function(tokenno, token){
+                        $.each(lines[2], function(lineno, line){
+                            if(line.indexOf(token) == -1){ ds[tokenno] += '- '; }
+                            else{ line = line.split( token )[1];
+                                if(!line.indexOf('|') == -1){ alert('no pipe sep: ' + line); debugger; }//check for | ??
+                                line = line.split('|')[0]; 
+                                ds[tokenno] += line + ' ';//console.log(data + data1); 
+                            }
+                        });
+                    });
+                    //TODO: put back this. gq.dslem.push( $.trim(ds[0] ) ); gq.dsroot.push( $.trim(ds[1] ) );
+                    gq.dslem.push( (ds[0] ) ); gq.dsroot.push( (ds[1] ) );
+                });
+            };
+        });
+    },
+    
+    display: function(_keyword, type, obj){ 
+        $('#'+ type).val( _keyword +'\n' + (!obj ? '-' : JSON.stringify(obj) ) );
+        //!obj[_keyword][type] ? "-" : obj[type].d );
+    },
 
-		regexp = new RegExp(".*(?:" + keyword + ").*", "g");
-		result[_keyword]["lem"] = gq.search2(keyword, regexp, prefixLineno(gq.dslem) );		
+    typesArray: ["buck", "bare", "lem", "root", "word", "corpus"],
+    
+    displayReset: function(){ 
+        $.each(gq.typesArray, function(typeno, type){
+            $('#'+type).val('...');
+        });
+    },
+    
+    search: function(_keyword){ gq.displayReset(); if( (!_keyword) || (_keyword.length <= 2) ) return; 
+        var regexp, result = {}, type, obj, keyword = escapeRegex(_keyword); result[ _keyword ] = {};
+        type = "buck"; regexp = new RegExp(".*(?:" + keyword + ").*", "g");
+        obj = result[_keyword][ type ] = gq.search2(keyword, regexp, prefixLineno(gq.ds1) ); gq.display(_keyword, type, obj);
+        type = "bare"; regexp = new RegExp(".*(?:" + BuckToBare(keyword) + ").*", "g");
+        obj = result[_keyword][type] = gq.search2(keyword, regexp, prefixLineno( BuckToBare( gq.ds1.join('\n') ).split('\n') ) );  gq.display(_keyword, type, obj);
 
-		regexp = new RegExp(".*(?:" + keyword + ").*", "g");
-		result[_keyword]["root"] = gq.search2(keyword, regexp, prefixLineno(gq.dsroot) );		
-		
-		regexp = new RegExp(".*(?:" + keyword + ").*", "gi"); //RegExp(".*" + escapeRegex(token) + ".*", "gi");
-		result[_keyword]["word"] = gq.search2(keyword, regexp, prefixLineno(gq.ds2) );
-		
-		//regexp = new RegExp(".*(?:" + keyword + ").*", "gi");
-		//result[_keyword]["corpusFULL"] = gq.search2(keyword, regexp, prefixLineno(gq.ds3) );
-		
-		regexp = new RegExp(".*(?:" + keyword + ").*", "gi");
-		result[_keyword]["corpus"] = gq.search2(keyword, regexp, prefixLineno(gq.ds4) );
-		timeDone = new Date().getTime(); result['t'] = timeDone - timeBaseline;
-		console.log( JSON.stringify( result ) );
-		return result;
-	},
-	
-	search2: function(word, regexp, DATA){ var o = {}, results, timeBaseline = new Date().getTime(), timeDone;
-		results = DATA.match(regexp); o["n"] = (!results) ? 0 : results.length; 
-		if(results) $.each(results, function(hitno, hit){
-			results[hitno] = parseInt( results[hitno].split('|')[0] );
-		}); timeDone = new Date().getTime(); o["t"] = timeDone - timeBaseline;
-		o["d"] = results; return o;
-	}
+        type = "lem"; regexp = new RegExp(".*(?:" + keyword + ").*", "g");
+        obj = result[_keyword][type] = gq.search2(keyword, regexp, prefixLineno(gq.dslem) ); gq.display(_keyword, type, obj);
+
+        type = "root"; regexp = new RegExp(".*(?:" + keyword + ").*", "g");
+        obj = result[_keyword][ type ] = gq.search2(keyword, regexp, prefixLineno(gq.dsroot) ); gq.display(_keyword, type, obj);
+        
+        type = "word"; regexp = new RegExp(".*(?:" + keyword + ").*", "gi"); //RegExp(".*" + escapeRegex(token) + ".*", "gi");
+        obj = result[_keyword][ type ] = gq.search2(keyword, regexp, prefixLineno(gq.ds2) ); gq.display(_keyword, type, obj);
+        
+        //type = "corpusFULL"; regexp = new RegExp(".*(?:" + keyword + ").*", "gi");
+        //obj = result[_keyword][ type ] = gq.search2(keyword, regexp, prefixLineno(gq.ds3) ); gq.display(_keyword, type, obj);
+        
+        type = "corpus"; regexp = new RegExp(".*(?:" + keyword + ").*", "gi");
+        obj = result[_keyword][ type ] = gq.search2(keyword, regexp, prefixLineno(gq.ds4) ); gq.display(_keyword, type, obj);
+        
+        console.log( JSON.stringify( result ) );
+        return result;
+    },
+    
+    search2: function(word, regexp, DATA){ var o = {}, results, timeBaseline = new Date().getTime(), timeDone;
+        results = DATA.match(regexp); o["n"] = (!results) ? 0 : results.length; 
+        if(results) $.each(results, function(hitno, hit){
+            results[hitno] = parseInt( results[hitno].split('|')[0] );
+        }); timeDone = new Date().getTime(); o["t"] = timeDone - timeBaseline;
+        o["d"] = results; return o;
+    }
 
 }
 var prefixLineno = function(DATAarr){ if(!DATAarr) return; var out = []; 
-	$.each(DATAarr, function(lineno, line){
-		out.push(lineno + '|'+ line);
-	});
-	return out.join('\n');
+    $.each(DATAarr, function(lineno, line){
+        out.push(lineno + '|'+ line);
+    });
+    return out.join('\n');
 }
 
 var escapeRegex = function (str) {
         return str.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
 var BuckToBare = function(str){ if(!str) return;
-	str = str.replace(/[{`><]/g, 'A').replace(/[\&]/g, 'w').replace(/[}]/g, 'y').replace( /[\FNK#aeiou~\^]/g, '');
-	return str;
+    str = str.replace(/[{`><]/g, 'A').replace(/[\&]/g, 'w').replace(/[}]/g, 'y').replace( /[\FNK#aeiou~\^]/g, '');
+    return str;
 }
 
-//if(gq && gq.cookdata) gq.cookdata(); else debugger;
-
-/*		//console.log(JSON.stringify(gq.ds1.join('\n')) ); console.log(JSON.stringify(gq.ds2.join('\n')) ); console.log(JSON.stringify(gq.ds3.join('\n')) );
-		gq.data = {}; gq.data.quran = {}; gq.data.quran['quran-corpus'] = {};
-		if(!gq.loadedPart1 && typeof(gq.MANZIL1) != 'undefined' && gq.MANZIL1.length > 0){
-			for(var i=1, position = parseInt( gq.MANZIL1[0] ); i <= gq.MANZIL1.length; ++i, ++position){
-				if(!gq.data.quran['quran-corpus'][ position ]) { gq.data.quran['quran-corpus'][position] = {}; }
-				gq.data.quran['quran-corpus'][ position ].verse = gq.MANZIL1[ i ];
-			}
-		}
-		if(!gq.loadedPart1 && typeof(gq.MANZIL7) != 'undefined' && gq.MANZIL7.length > 0){
-			for(var i=1, position = parseInt( gq.MANZIL7[0] ); i <= gq.MANZIL7.length; ++i, ++position){
-				if(!gq.data.quran['quran-corpus'][ position ]) { gq.data.quran['quran-corpus'][position] = {}; }
-				gq.data.quran['quran-corpus'][ position ].verse = gq.MANZIL7[ i ];
-			}
-			gq.loadedPart1 = true; 
-			//layout.message('', '1: '+(gq.loadedPercent+33)+ '% loaded');  $.growlUI('', 'Quran data loaded ' + (gq.loadedPercent+33)+ '%');
-			console.log('quran: loadedPart1. loadedPercent: ' + (gq.loadedPercent + 33 + '%') ); //part1 includes MANZIL1 and 7
-		} 
-		if(!gq.loadedPart2 && typeof(gq.MANZIL56) != 'undefined' && gq.MANZIL56.length > 0){
-			for(var i=1, position = parseInt( gq.MANZIL56[0] ); i <= gq.MANZIL56.length; ++i, ++position){
-				if(!gq.data.quran['quran-corpus'][ position ]) { gq.data.quran['quran-corpus'][position] = {}; }
-				gq.data.quran['quran-corpus'][ position ].verse = gq.MANZIL56[ i ];
-			}
-			gq.loadedPart2 = true; 
-			//layout.message('', '2: '+ (gq.loadedPercent+33)+ '% loaded');  $.growlUI('', 'Quran data loaded ' + (gq.loadedPercent+33)+ '%');
-			console.log('quran: loadedPart2. loadedPercent: ' + (gq.loadedPercent + 33 + '%') ); //part2 includes MANZIL5, 6
-			//if(gq.surah() >= 26 && gq.surah() <= 49 ) gq.custom.unblockui(); //repaint the page, if the current surah is in this manzil
-		} 
-
-		if(!gq.loadedPart3 && typeof(gq.MANZIL234) != 'undefined' && gq.MANZIL234.length > 0){
-			for(var i=1, position = parseInt( gq.MANZIL234[0] ); i <= gq.MANZIL234.length; ++i, ++position){
-				if(!gq.data.quran['quran-corpus'][ position ]) { gq.data.quran['quran-corpus'][position] = {}; }
-				gq.data.quran['quran-corpus'][ position ].verse = gq.MANZIL234[ i ];
-			}
-			gq.loadedPart3 = true; 
-			//layout.message('', '3: '+ (gq.loadedPercent+34)+ '% loaded'); $.growlUI('', 'Quran data loaded ' + (gq.loadedPercent+34)+ '%');
-			console.log('quran: loadedPart3. loadedPercent: ' + (gq.loadedPercent + 34 + '%') );  //part3 includes MANZIL2, 3, 4
-			//if(gq.surah() >= 5 && gq.surah() <= 25 ) gq.custom.unblockui(); //repaint the page if within this manzil
-			//cook up the strings too... gq.strings (this needed for the count statistics only)
-			//gq.stringsGenerate();		
-		} 
-
-		gq.loadedPercent = 0; if(gq.loadedPart1) gq.loadedPercent += 33; if(gq.loadedPart2) gq.loadedPercent += 33; if(gq.loadedPart3) gq.loadedPercent += 34; 
-		console.log('Total data loadedPercent: ' + gq.loadedPercent + '%. '); // + 'data cooked with ' + gq.strings.length +' strings');
-
-	}*/
-
-function roughSizeOfObject( value, level ) {
-    if(level == undefined) level = 0;
-    var bytes = 0;
-
-    if ( typeof value === 'boolean' ) {
-        bytes = 4;
-    }
-    else if ( typeof value === 'string' ) {
-        bytes = value.length * 2;
-    }
-    else if ( typeof value === 'number' ) {
-        bytes = 8;
-    }
-    else if ( typeof value === 'object' ) {
-        if(value['__visited__']) return 0;
-        value['__visited__'] = 1;
-        for( i in value ) {
-            bytes += i.length * 2;
-            bytes+= 8; // an assumed existence overhead
-            bytes+= roughSizeOfObject( value[i], 1 )
-        }
-    }
-
-    if(level == 0){
-        clear__visited__(value);
-    }
-    return bytes;
-}
-
-function clear__visited__(value){
-    if(typeof value == 'object'){
-        delete value['__visited__'];
-        for(var i in value){
-            clear__visited__(value[i]);
-        }
-    }
-}
-
-//roughSizeOfObject(a);
 </script>
 
-<script src=../corpus/javascript/manzil1,7.js></script>
-<script src=../corpus/javascript/manzil5,6.js></script>
-<script src=../corpus/javascript/manzil2,3,4.js></script>
+<H4>&nbsp;&nbsp;</H4>
+<input id=keyword onkeyup="gq.search($('#keyword').val() )" value=rHm /><BR/><BR/>
+<textarea id=buck rows=30 columns=100></textarea>
+<textarea id=bare rows=30 columns=100></textarea>
+<textarea id=lem rows=30 columns=100></textarea>
+<textarea id=word rows=30 columns=100></textarea>
+<textarea id=corpus rows=30 columns=100></textarea>
+<textarea id=corpusFULL rows=30 columns=100></textarea>
+<script src=data/manzil1,7.js></script>
+<script src=data/manzil5,6.js></script>
+<script src=data/manzil2,3,4.js></script>
 
-
-<div id="container" class="demo jstree jstree-0 jstree-default jstree-focused" style="height: 398px; "></div>
-<div id="container2" class="demo jstree jstree-0 jstree-default jstree-focused" style="height: 398px; "></div>
-
-<script>
-
-var o = {"**":{"buck":{"n":0,"t":489,"d":null},"bare":{"n":0,"t":210,"d":null},"lem":{"n":0,"t":268,"d":null},"root":{"n":5,"t":88,"d":[1580,2540,3833,4395,4559]},"word":{"n":1682,"t":338,"d":[10,13,15,16,23,24,26,27,29,31,32,33,35,36,38,41,43,54,55,56,57,58,61,62,66,67,70,71,72,73,76,79,80,81,82,84,85,86,87,89,90,91,93,94,95,96,97,98,99,100,103,105,107,109,111,112,113,114,115,116,122,124,126,129,133,136,138,139,140,143,144,146,147,149,150,151,154,155,156,158,160,162,163,164,165,167,168,169,170,171,172,173,174,176,177,178,179,180,183,184,185,189,190,191,192,193,194,196,197,199,202,203,210,215,216,217,219,220,221,222,223,225,226,227,228,229,231,234,235,236,237,238,239,240,241,242,243,245,248,249,251,252,253,255,256,257,259,260,261,262,264,265,266,272,275,278,279,281,282,285,286,287,288,292,295,296,299,303,305,310,311,315,320,321,322,323,324,329,330,342,343,346,347,353,354,356,357,360,365,366,367,369,370,371,373,378,381,383,385,386,387,389,390,391,393,395,397,398,399,404,405,409,429,432,433,434,435,436,437,438,440,444,445,446,447,448,452,456,462,464,468,471,472,473,475,476,478,479,491,493,495,496,497,498,500,501,503,504,507,509,511,514,515,516,517,518,520,522,524,526,527,528,529,531,537,538,539,540,544,545,546,550,551,552,553,555,556,557,559,560,561,562,564,569,570,571,573,574,575,576,577,580,582,583,584,585,586,587,590,591,592,594,596,597,600,603,605,607,609,610,611,615,617,619,622,623,624,625,626,628,631,633,635,636,637,638,639,640,644,645,647,650,654,655,656,657,658,660,661,662,663,665,666,667,668,670,672,673,674,676,677,680,681,682,683,684,688,689,691,692,693,694,695,696,699,700,702,707,709,711,712,713,714,715,716,717,719,720,722,725,727,728,732,735,736,737,739,740,741,743,744,745,747,748,752,753,755,756,757,759,760,761,762,763,764,765,769,770,771,772,773,774,775,776,777,778,780,783,784,785,787,794,795,798,803,805,807,813,816,817,820,821,822,823,824,826,827,828,830,831,834,838,839,841,842,844,847,858,859,864,868,869,872,875,878,879,880,881,886,892,895,896,899,900,907,909,913,916,918,921,922,923,925,926,927,928,930,931,932,933,934,935,936,939,940,941,944,946,947,948,949,956,964,969,970,975,979,981,982,983,986,990,991,994,996,997,1002,1003,1004,1006,1009,1010,1013,1014,1015,1020,1024,1025,1026,1027,1030,1034,1040,1042,1045,1053,1054,1056,1057,1065,1066,1068,1081,1082,1084,1086,1091,1096,1099,1101,1102,1103,1104,1106,1107,1108,1109,1110,1111,1113,1122,1125,1126,1131,1137,1138,1139,1140,1141,1142,1145,1146,1147,1150,1151,1159,1160,1161,1164,1166,1169,1174,1175,1179,1182,1183,1186,1188,1189,1190,1191,1193,1196,1198,1200,1201,1202,1203,1204,1207,1211,1212,1213,1215,1219,1221,1222,1223,1224,1225,1226,1227,1229,1230,1231,1234,1237,1239,1240,1241,1242,1243,1246,1248,1249,1250,1251,1252,1253,1255,1258,1259,1260,1261,1262,1263,1264,1265,1266,1267,1268,1269,1270,1271,1272,1273,1274,1277,1278,1280,1282,1283,1284,1285,1286,1289,1293,1294,1302,1303,1304,1305,1306,1307,1308,1313,1314,1317,1319,1323,1326,1327,1328,1330,1331,1333,1334,1339,1340,1341,1343,1347,1350,1351,1353,1355,1357,1358,1361,1365,1366,1369,1374,1376,1377,1378,1379,1381,1382,1384,1386,1388,1390,1391,1400,1401,1402,1405,1407,1408,1412,1413,1414,1415,1416,1418,1420,1421,1422,1423,1425,1427,1429,1431,1432,1434,1437,1438,1439,1440,1441,1442,1444,1445,1447,1451,1453,1457,1458,1465,1467,1469,1470,1471,1472,1473,1475,1479,1480,1481,1485,1486,1487,1489,1490,1492,1499,1500,1503,1505,1506,1514,1515,1517,1521,1525,1526,1527,1528,1529,1534,1541,1543,1545,1550,1553,1560,1561,1563,1569,1573,1574,1579,1580,1581,1583,1585,1588,1590,1591,1595,1597,1598,1599,1601,1604,1607,1608,1610,1613,1616,1618,1630,1635,1636,1643,1644,1645,1646,1649,1653,1655,1659,1661,1662,1663,1671,1672,1674,1675,1678,1682,1683,1685,1686,1687,1688,1689,1691,1694,1695,1704,1706,1710,1712,1716,1717,1718,1720,1722,1723,1726,1727,1731,1734,1736,1737,1738,1739,1744,1745,1746,1748,1752,1753,1755,1758,1760,1763,1765,1766,1770,1771,1773,1774,1776,1780,1783,1786,1793,1796,1800,1801,1811,1828,1829,1834,1855,1858,1879,1901,1918,1920,1921,1923,1924,1926,1930,1931,1933,1935,1936,1938,1941,1943,1945,1948,1950,1951,1961,1963,1973,1975,1976,1986,1990,1992,1993,2002,2004,2006,2008,2010,2012,2014,2016,2018,2019,2029,2030,2033,2036,2045,2054,2061,2068,2072,2084,2086,2097,2098,2122,2125,2129,2132,2135,2138,2139,2141,2143,2153,2154,2156,2158,2163,2165,2166,2169,2178,2179,2180,2181,2182,2184,2189,2197,2208,2215,2219,2221,2222,2225,2229,2232,2233,2241,2246,2253,2254,2256,2258,2266,2276,2277,2280,2284,2286,2287,2295,2297,2298,2299,2307,2308,2313,2315,2316,2325,2330,2369,2384,2394,2427,2428,2432,2433,2437,2438,2441,2446,2457,2461,2462,2468,2481,2493,2495,2506,2507,2510,2511,2512,2516,2523,2527,2533,2542,2548,2549,2558,2566,2567,2569,2580,2587,2591,2595,2596,2599,2606,2609,2610,2612,2613,2619,2632,2634,2638,2641,2643,2646,2647,2652,2654,2656,2661,2665,2666,2667,2670,2671,2672,2678,2690,2691,2692,2696,2703,2712,2714,2716,2722,2723,2735,2740,2741,2749,2755,2758,2763,2772,2777,2792,2795,2797,2799,2800,2801,2802,2803,2805,2807,2808,2810,2811,2812,2815,2820,2821,2822,2823,2824,2825,2826,2827,2828,2830,2834,2835,2837,2840,2845,2848,2849,2851,2853,2857,2871,2872,2886,2895,2896,2902,2909,2911,2912,2921,2922,2924,2941,2948,2953,2954,2957,2971,2972,2986,2990,3007,3024,3124,3128,3138,3141,3158,3164,3170,3176,3178,3182,3194,3197,3198,3199,3200,3201,3205,3213,3218,3221,3226,3231,3245,3251,3263,3264,3266,3274,3278,3280,3283,3287,3288,3289,3290,3294,3297,3299,3300,3303,3304,3309,3314,3317,3322,3323,3327,3328,3329,3332,3333,3341,3342,3347,3350,3356,3357,3358,3361,3363,3364,3380,3381,3383,3385,3387,3402,3406,3411,3412,3416,3417,3437,3444,3446,3450,3451,3455,3456,3457,3459,3460,3462,3467,3474,3477,3479,3484,3485,3489,3495,3498,3501,3505,3506,3507,3516,3517,3525,3528,3533,3535,3536,3537,3538,3541,3544,3547,3549,3550,3551,3553,3554,3555,3556,3557,3559,3560,3562,3565,3567,3568,3569,3570,3571,3572,3573,3577,3580,3581,3582,3583,3584,3585,3587,3588,3589,3591,3592,3593,3594,3601,3602,3605,3606,3614,3617,3621,3627,3628,3636,3645,3646,3650,3651,3658,3659,3660,3661,3662,3663,3669,3672,3677,3684,3686,3690,3697,3699,3700,3703,3704,3713,3727,3732,3734,3735,3749,3751,3763,3764,3778,3810,3835,3889,3903,3913,3917,3939,3941,3970,3972,3974,3980,3986,3992,3993,3998,4000,4004,4012,4017,4021,4060,4061,4063,4064,4065,4066,4071,4072,4075,4077,4078,4079,4080,4082,4083,4086,4092,4093,4094,4095,4100,4102,4104,4107,4111,4112,4114,4118,4122,4123,4125,4126,4135,4137,4142,4144,4147,4151,4152,4153,4154,4163,4165,4166,4167,4177,4182,4185,4187,4193,4198,4199,4206,4210,4214,4217,4222,4225,4227,4231,4233,4237,4238,4242,4259,4260,4265,4267,4268,4269,4274,4277,4279,4280,4285,4286,4287,4292,4294,4295,4298,4299,4302,4304,4308,4314,4315,4317,4318,4322,4324,4330,4331,4339,4344,4345,4347,4350,4365,4369,4375,4376,4383,4410,4443,4450,4453,4455,4467,4477,4482,4488,4489,4494,4495,4503,4506,4513,4514,4517,4519,4521,4526,4527,4528,4530,4532,4533,4537,4539,4541,4542,4544,4545,4547,4548,4551,4553,4554,4559,4560,4564,4567,4569,4570,4573,4576,4577,4578,4585,4586,4588,4589,4592,4594,4595,4597,4598,4600,4602,4603,4605,4606,4607,4608,4609,4611,4612,4613,4614,4617,4618,4619,4621,4622,4623,4624,4645,4666,4690,4705,4708,4720,4726,4727,4733,4749,4761,4762,4764,4769,4789,4806,4809,4815,4835,4841,4849,4858,4882,4956,4962,5029,5048,5063,5078,5080,5084,5085,5086,5087,5090,5095,5096,5099,5102,5103,5104,5106,5107,5108,5109,5110,5111,5112,5113,5114,5115,5116,5117,5118,5119,5121,5124,5125,5127,5128,5131,5132,5133,5134,5135,5136,5138,5139,5140,5143,5150,5153,5155,5157,5158,5159,5161,5162,5164,5165,5167,5168,5172,5176,5178,5179,5180,5182,5185,5186,5191,5192,5193,5196,5197,5198,5203,5204,5212,5217,5218,5219,5220,5221,5222,5223,5226,5227,5229,5230,5231,5234,5235,5236,5237,5238,5239,5245,5249,5254,5258,5260,5268,5273,5284,5300,5331,5355,5377,5404,5419,5433,5443,5453,5457,5458,5468,5472,5473,5487,5524,5525,5550,5596,5597,5601,5611,5620,5651,5736,5819,5828,5889,5923,5941,5942,5954,5990,5997,5999,6002,6007,6008,6011,6013,6014,6019,6036,6037,6038,6060,6103,6130,6133,6137,6150,6184,6189,6207,6216,6218,6224]},"corpus":{"n":0,"t":589,"d":null}},"t":2479};
-
-$(function () {
-
-	var tdata = [];
-	var arr = o["**"].word.d;
-	$.each(arr, function(a, aa){
-		tdata.push( {"data": '' + aa} );
-	});
-	console.log( tdata );
-	
-	$("#container").jstree({ 
-		"json_data" : {
-			"data" : tdata
-		},
-		"plugins" : [ "themes", "json_data", "ui" ]
-	}).bind("select_node.jstree", function (e, data) { alert(jQuery.data(data.rslt.obj[0], "id")); });
-
-	$("#container2").jstree({ 
-		"json_data" : {
-			"data" : [
-				{ 
-					"data" : "A node", 
-					"metadata" : { id : 23 },
-					"children" : [ "Child 1", "A Child 2" ]
-				},
-				{ 
-					"attr" : { "id" : "li.node.id1" }, 
-					"data" : { 
-						"title" : "Long format demo", 
-						"attr" : { "href" : "#" } 
-					} 
-				}
-			]
-		},
-		"plugins" : [ "themes", "json_data", "ui" ]
-	}).bind("select_node.jstree", function (e, data) { alert(jQuery.data(data.rslt.obj[0], "id")); });
-});
-
-
-//jQuery(function($) {
-//  $('#container').jstree(
-//  )});
-
-  
-//Interacting with the tree:
-
-/* METHOD ONE */
-//jQuery("#container")
-//  .jstree("operation_name" [, argument_1, argument_2, ...]);
-
-/* METHOD TWO */
-//jQuery.jstree._reference(needle)
-//  .operation_name([ argument_1, argument_2, ...]);
-</script>
+<script src=data/qRoot.txt_script.js></script>
+<script src=data/qLem.txt_script.js></script>
+<script src=data/qTranslit.txt_script.js></script>
+<script src=data/qWord.txt_script.js></script>
+<script src=data/qCorpus.txt_script.js></script>
+<script src=data/qBare.txt_script.js></script>
+<script src=data/qBuck.txt_script.js></script>
+​

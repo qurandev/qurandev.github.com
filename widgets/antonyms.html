@@ -1,0 +1,925 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Antonyms</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/jquery-ui.css" rel="stylesheet">
+    <link href="/css/global.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+  </head>
+
+  <body>
+  
+  
+  	<div class="mainbar">
+      <div class="mainbar-inner">
+        <div class="container">
+          <a class="btn btn-mainbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+         
+          <div class="nav-collapse">
+            <ul class="nav pull-right">
+              <li><a href="http://blog.globalquran.com/forums/">Feedback</a></li>
+              <li><a href="http://labs.globalquran.com"><img src="http://labs.quran.im/img/favicon.png" width="18" /> Back to Lab</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+<script src="http://code.jquery.com/jquery-latest.js" language="javascript" type="text/javascript" ></script>
+<script src="http://GlobalQuran.com/javascript/GlobalQuran.js?v=3.4"></script>
+
+<style>
+.goog-char-picker-hovercard {
+	border: solid 5px #FC3;
+	min-width: 64px;
+	max-width: 200px;
+	height: 64px;
+	padding: 16px;
+	background-color: white;
+	text-align: center;
+}
+
+.goog-char-picker-char-zoom {
+	font-size: xx-large;
+}
+
+.goog-char-picker-unicode {
+}
+
+.unicodecharlink{
+	text-decoration: none;
+}
+#arabic {
+	display:block;
+	width: 80%;
+	height: 200px;
+}
+#resultMissingChar {
+	display:block;
+	margin: 2em;
+}
+.arabic{
+	font-size: 2.8em;
+}
+</style>
+<script>
+var BuckToBare = function(str){ if(!str) return;
+	str = str.replace(/[{`><]/g, 'A').replace(/[\&]/g, 'w').replace(/[}]/g, 'y').replace( /[\FNK#aeiou~\^]/g, '');
+	return str;
+}
+
+var isArabic = function (word){ if(!word) return false; 
+	var regex = /^[\u0600-\u06ff]*$/, result=null;
+	$.each(word.split(''), function(a, token){
+		if(token){token = $.trim(token);
+			if(token != "-") //lets ignore hyphen
+				result == null ? result = regex.test( token ) : result = result && regex.test(token);
+		}
+	});
+	return result;
+	//var arabic = ArToEn(word).trim();
+	//return ('' != arabic && word.trim().length == arabic.length );
+}
+
+var isEnglish = function (word){ if(!word) return; var eng = EnToAr(word).trim();
+	return ('' != eng && word.trim().length == eng.length );
+}
+
+var EnToAr = function(word){
+	if(!word) return null;
+	initializeMapper();
+	var ar = '', l, letter, found=false;
+	try{
+		var wordArr = word.split(''); //split into letters.	//lookup from english to arabic letter. and return it.
+		for(l=0; l<wordArr.length; ++l){
+			letter = wordArr[l]; found = false;
+			for(n=1; n<_buckArr.length; ++n){
+				if(letter == _buckArr[n]){
+					ar += _charsArr[n]; found=true;
+					break;
+				}
+			}
+			if(!found)  ar += ''; //letter; //' ??'+letter+'?? ';
+		}
+	}catch(ex){
+		debugger;
+		ar = '-err: ' + ex + ex.message + ex.lineno;
+	}
+	return ar;
+}
+
+var ArToEn = function(word){
+	if(!word) return null;
+	initializeMapper();
+	var ar = '', l, letter, found=false;
+	try{
+		var wordArr = word.split(''); //split into letters.	//lookup from english to arabic letter. and return it.
+		for(l=0; l<wordArr.length; ++l){
+			letter = wordArr[l]; found = false;
+			for(n=1; n<_charsArr.length; ++n){
+				if(letter == _charsArr[n]){
+					ar += _buckArr[n]; found=true;
+					break;
+				}
+			}
+			if(!found){  ar += '?'; console.log('No mapping found:\t' + letter + ''); 
+			}
+		}
+	}catch(ex){
+		debugger;
+		ar = '-err: ' + ex + ex.message + ex.lineno;
+	}
+	return ar;
+}
+
+var _charsArr, _buckArr, bInitialized = false;
+var initializeMapper = function(){
+	if(bInitialized) return;
+	var qBare = null, qBuck = null;		
+	var stopletters = "ۚۖۛۗۙ";
+	var chars='آ ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن ه و ي آ';
+	var buck = 'A A b t v j H x d * r z s $ S D T Z E g f q k l m n h w y A';
+	var buckArr, charsArr;
+	var ext = new Array();
+	var map = { };
+	charsArr = chars.split(' ');
+	buckArr  = buck.split(' ');
+	//mISSING CHARACTERS:		// أ إ ئ ء ة ؤ
+	charsArr.push( 'ى' ); buckArr.push( 'Y' );
+	charsArr.push( 'أ' ); buckArr.push( '>' );
+	charsArr.push( 'إ' ); buckArr.push( '<' );	//charsArr.push( ' ' ); buckArr.push( ' ' ); //charsArr.push( '' ); buckArr.push( '' );
+	charsArr.push( 'ئ' ); buckArr.push( '}' );
+	charsArr.push( 'ء' ); buckArr.push( '\'' ); //buckArr.push( '\'' );
+	//charsArr.push( 'ة' ); buckArr.push( 'P' );
+	charsArr.push( 'ؤ' ); buckArr.push( '&' );
+	//missing characters for harakath.
+	charsArr.push( '\u0652' ); buckArr.push( 'o' );
+	charsArr.push( '\u064e' ); buckArr.push( 'a' );
+	charsArr.push( '\u0650' ); buckArr.push( 'i' );
+	charsArr.push( '\u064f' ); buckArr.push( 'u' );
+	charsArr.push( '\u064b' ); buckArr.push( 'F' );
+	charsArr.push( '\u064d' ); buckArr.push( 'K' );
+	charsArr.push( '\u064c' ); buckArr.push( 'N' );
+	charsArr.push( '\u0626' ); buckArr.push( '}' );
+	charsArr.push( '\u0640' ); buckArr.push( '_' );
+	charsArr.push( '\u0651' ); buckArr.push( '~' );
+	charsArr.push( '\u0653' ); buckArr.push( '^' );
+	charsArr.push( '\u0654' ); buckArr.push( '#' );
+	charsArr.push( '\u0671' ); buckArr.push( '{' );
+	charsArr.push( '\u0670' ); buckArr.push( '`' );
+	charsArr.push( '\u06e5' ); buckArr.push( ',' );
+	charsArr.push( '\u06e6' ); buckArr.push( '.' );
+	charsArr.push( 'ة' ); buckArr.push( 'p' );
+	charsArr.push( '\u06df' ); buckArr.push( '@' );
+	charsArr.push( '\u06e2' ); buckArr.push( '[' );
+	charsArr.push( '\u06ed' ); buckArr.push( ']' );
+	charsArr.push( '\u0621' ); buckArr.push( '\'' );
+	charsArr.push( '\u06DC' ); buckArr.push( ':' );
+	charsArr.push( '\u06E0' ); buckArr.push( '\"' );
+	charsArr.push( ' ' ); buckArr.push( ' ' );
+	charsArr.push( ';' ); buckArr.push( ';' );
+	charsArr.push( '\n' ); buckArr.push( '\n' );
+/*	
+	charsArr.push( 'ع' ); buckArr.push( '3' ); //ayn //support for arabi/chat letters
+	charsArr.push( 'ء' ); buckArr.push( '2' ); //hamza
+	charsArr.push( 'ح' ); buckArr.push( '7' ); //HAA
+	charsArr.push( 'خ' ); buckArr.push( '5' ); //KHAA
+	charsArr.push( 'ص' ); buckArr.push( '9' ); //Saad
+	charsArr.push( 'ط' ); buckArr.push( '6' ); //Thaw
+
+	charsArr.push( charsArr[2] ); buckArr.push( 'B' ); //Support for Capital letters
+	charsArr.push( charsArr[4] ); buckArr.push( 'V' );
+	charsArr.push( charsArr[5] ); buckArr.push( 'J' );
+	charsArr.push( charsArr[10] ); buckArr.push( 'R' );
+	charsArr.push( charsArr[19] ); buckArr.push( 'G' );
+	charsArr.push( charsArr[21] ); buckArr.push( 'Q' );
+	charsArr.push( charsArr[23] ); buckArr.push( 'L' );
+	charsArr.push( charsArr[24] ); buckArr.push( 'M' );
+	charsArr.push( charsArr[27] ); buckArr.push( 'W' );
+	charsArr.push( 'ة' ); buckArr.push( 'P' );
+	
+	//For IndoPak script extra letters
+	charsArr.push( 'ی' ); buckArr.push( 'y' );
+	charsArr.push( 'ۃ' ); buckArr.push( 'p' );
+	charsArr.push( 'ہ' ); buckArr.push( 'h' );
+	charsArr.push( 'ی' ); buckArr.push( 'Y' );
+	charsArr.push( 'ک' ); buckArr.push( 'k' );
+	charsArr.push( 'ۤ ' ); buckArr.push( '?' );
+	charsArr.push( 'ۤۚ ' ); buckArr.push( '?' );
+	charsArr.push( 'ۡ ' ); buckArr.push( '?' );
+	charsArr.push( 'ۚ ' ); buckArr.push( '?' );
+	charsArr.push( 'ۤ ' ); buckArr.push( '?' );
+*/
+	_charsArr = charsArr; _buckArr = buckArr;
+	bInitialized = true;
+}		
+initializeMapper();
+</script>
+<script>
+var _text, _buck, _map, _mapdiff;
+var uniqueChars = function(text){ if(!text) return;
+	_map = {};
+	$.each(text.split(''), function(a, chr){
+		if(!_map[ chr ]) _map[ chr ] = 0;
+		_map[ chr ] += 1;
+	});
+	var length = 0, chars, charslen = 0;
+	length = text.length;
+	chars = Object.keys( _map ); if(chars) charslen = chars.length;
+	console.log('text analyzed - length ' + length + ' bytes. # of unique chars found: ' + charslen + '\n' + JSON.stringify( _map ) );
+	console.log( _map );
+	return _map;
+}
+
+var notInBuck = function(map){
+	var mapdiff = {};
+	$.each(Object.keys( map ), function(a, chr){
+		if(ArToEn(chr) && ArToEn(chr).length == 1 && ArToEn(chr) != '?'){
+		}
+		else{
+			mapdiff[chr] = '';
+		}
+	});
+	console.log(Object.keys(mapdiff).length + ' characters out of ' + Object.keys(map).length + ' not in buck!\n' + JSON.stringify(mapdiff) );
+	$('#result').html( '<span class="badge badge-error">'+Object.keys(mapdiff).length + '</span> characters out of <span class="badge badge-inverse">' + Object.keys(map).length + '</span> not in buck!\n' + JSON.stringify(mapdiff) );
+	console.log(mapdiff);
+	return mapdiff;
+}
+
+function reset ()
+{
+	$('#arabic').val('');
+	$('#result,#resultMissingChar').html('');
+}
+
+$('document').ready(function(){
+	$('.reset').live('click', function() {
+		reset();
+	});
+	
+	$('.compare').live('click', function() {
+		$('#result,#resultMissingChar').html('');
+		//initializeUI(); onBuckInit();
+		var dataisland1 = $('#arabic');
+		_text = dataisland1.val();
+		if (_text == '')
+			return false;
+		//_buck = ArToEn( _text );
+		//console.log( _buck );
+		_map = uniqueChars( _text );
+		_mapdiff = notInBuck( _map);
+
+
+		var TEMPLATE = '<A class=unicodecharlink HREF="http://www.fileformat.info/info/unicode/char/search.htm?q=$CHAR"><span id="preview" class="goog-char-picker-hovercard"><span id="zoom" class="goog-char-picker-char-zoom">$CHAR</span><span id="unicode" class="goog-char-picker-unicode">U+$CODE</span></span></A> &nbsp;&nbsp;&nbsp;&nbsp;';
+
+		$.each( Object.keys( _mapdiff ), function(a, ch){ 
+			console.log( ch + '\t\tx ' + ch.charCodeAt(0).toString(16) +'\t\t'+ _map[ ch ] ); 
+			$('#resultMissingChar').append( ''+TEMPLATE.replace(/\$CHAR/g, ch).replace(/\$CODE/g, ch.charCodeAt(0).toString(16) ) );
+		});
+	});
+	
+	$('#arabic').live('click', function() {		
+		$(this).select();
+	});
+	
+	format();
+});
+	var format = function(){
+		var raw = $('#arabic').val(), formatted = $('#formatted'), result = '';
+		//result = EnToAr( raw );
+		if(raw){
+			$.each( raw.split('\n'), function(lineno, line){
+				if(isEnglish(line) ){
+					result += '<span class=arabic dir=rtl>' + EnToAr(line) + '</span>' + '\n';
+				}else{
+					result += line + '\n';
+				}
+			});
+		}
+		result = '<PRE>' + result + '</PRE>'
+		formatted.html( result );
+		return result;
+	}
+</script>
+ <div class="container">
+<h1>Antonyms from Mutaradifaat-ul-Quran book </h1>
+<p>Check whether the Antonyms need any corrections (page 978 onwards).</p>
+<br />
+<p>Reference: <A TARGET=_ HREF=http://dl.dropbox.com/u/9306130/Mutaradifaat-ul-Quran.pdf>Book PDF link</A></p>
+<br />
+
+<div class="row">
+	<div class="span4">
+	  <h2>Raw</h2>
+	  <p id="raw">&nbsp;</p>
+	<textarea id="arabic">
+Antonyms 2:
+
+(thaa:)
+
+vbt   zAl zal~a zalaya
+thabt (firm) - zalla (slip)
+
+Aavobata   mHA mHw
+athbata - ?maHa'/maHw?
+
+vaqula   xaf~a
+thaqula  (heavily firm) - khaffa (light)
+
+vqyl    xfyf
+thaqeel - khafeef
+
+vwAb    E*Ab
+thawaab (payback reward) - adhaab (punishment)
+
+
+(JIIM:)
+
+jbr qdr
+Jabr (Overpowering [ghalbah] or iSlaaH [decided]) - Qadr (Control)
+
+jdyd qdym
+Jadeed (New) - Qadeem (Old)
+
+jazaEa Sabara
+Jaza3a (being without Stability [bei qaraar hona]) - Sabara (to be Patient and Tied down to something)
+
+jz' kl
+Juz' (portion/share/piece) - kul (all)
+
+jalasa qaAma
+Jalasa (sit down temporarily) - Qaama (Stand upright)
+
+jlw xfY
+Jaluw / Jaliy (to expose Light onto something [often beautiful]) - Kh-F-Y (ya has no dots)
+
+jamaEa far~aq
+Jama3a (gather / join) - farraq (divide / split)
+
+tjm~E tfr~q
+taJamma3 (to become One, Joined) - taFarraq (to become Divided and Unjoined)
+
+AijotimAE Ainti$Ar
+ijtima'a (Gathered / ikhatta) - intishaar
+
+AijmAE AixtilAf
+iJmaa3 (to become Joined in Agreement) - iKhtilaaf (to become Divided in disagreements)
+
+jin~ Ains
+Jinn (that being which is Hidden from view) - Ins (that being which is Seeable.)
+
+janafa Hanafa
+Janafa (to be Attracted once) - Hanafa (to not get Attracted)
+
+jwE $bE
+Juw3 / Jaa3 (hunger) - shb3 (to not be hungry)
+
+jwf mHd~b
+Juwn (to be empty from inbetween) - muHaddab (to not be empty from inbetween)
+
+jahara Aasar~
+Jahara (to make Apparent through speech) - asarr (to keep hidden in speech)
+
+jahal Ealima
+Jahal (to be ignorant (to not know)) - 3alima (to Know)
+
+jAhl EAlm
+Jaahil  (one who is ignorant) - 3aalim (one who Knows (is knowledgable))
+
+mjhwl mErwf
+maJhuwl (unrecognisable) - ma3ruwf (recognisable)
+
+
+(HAA:)
+
+Hab~a karih
+Habba (Love) - karih (to not like / dislike)
+
+Hub~ bgD
+Hubb / muHabbah (Loving) - BughD (extreme hate)
+
+Hdb mjwf
+Hadb / muhaddb (to be prominent from inbetween) - maJuwn (to be empty from inbetween)
+
+P978
+
+
+2ND ANTONYMS PAGE (P.979)
+
+Hadava Eadama
+Hadatha - 3adama
+
+Hdyv qdym
+Hadeeth (a new thing/event/statement) - Qadeem (an old thing/event/statement)
+
+Har~ Zil~ ZlAl
+Harr / Haruwr (sunlight - duuwp) - Dhilla / Dhilaal (Darkness/es)
+
+Hr~k sakana rakada
+Harrak (to Move) - sakana and rakada (to be Still/paused)
+
+Hrkt skwn
+Harkat (movement) - sukuwn (stillness/pause)
+
+Har~am Hl~l Hl~
+Harrama / Haraam (forbidden) - Hilla / Halaal (allowed / permissible)
+
+AiHrAm AHlAl
+iHraam (to apply the Prohibition ) - iHlaal (to apply the Allowed/Permissible)
+
+mHrwm mrzwq
+maHruwm (the one who has been Forbidden from something) - maRzuwq (the one who has been Provided with something)
+
+Hazana fariHa
+Hazana (he was Sad) - fariHa (to be extremely Joyous/happy)
+
+Hasana saA^'a
+Hasana (good) - saa'a (bad)
+
+Hasuna qabuHa
+Hasuna (beautiful) - QabuHa (ugly)
+
+AaHosana AasaA^'
+aHsana (to do good / perfection) - asaaa'a (to do bad)
+
+Hasanap say~i}ap
+Hasanah (a good deed) / Siiy'ah (a bad deed)
+
+HaDara bdw
+HaDara (to be Present [in a city]) - bdw (to be a bedouin [absent/ghayb?])
+
+HADr bAd gA}b
+HaaDir (to be present (a citizen)) - baad (to be absent).
+
+HafiZ nasiya
+HfAZt AaDaAEa
+(HafiDha:)
+1 - keep and be aware of - Nasiya (to Forget)
+2 - to guard - iDaa3a (to leave/abandon without guarding)
+
+Haq~ bATl
+Haq~ DlAl
+(Haqq:)
+1 - Haqq  (truth) - BaaTil (falsehood)
+2 - Haqq (way) - Dalaal (wrong way)
+
+Hal~a Eaqada
+Halla (open a knot) - 3aqada (tie a knot)
+
+AaHal~a Hr~m
+aHalla (make Permissible/Allowed) - Harram (make Forbidden)
+
+Hal~ala AaHorama
+Hallala (open the Forbidden [iHraam]) - aHrama (make Forbidden [by tying it.])
+
+Hlm safira
+Hilm (stay steadfast/patient) - safira
+
+Hamiyom gas~aAq
+Hameem (hot or dirty water) - Ghassaaq
+
+HyAt mwt
+Hayaat (Life) - mawt (death)
+
+
+(KHAA:)
+
+xabiyv Tay~ib
+Khabeeth (impure/disgusting) - Tayyib (pure)
+
+xaraba Eamara
+Kharaba (spoil,not functioning properly) - 3amara (to be living, working properly).
+
+xaraja daxala walaja
+Kharaja (leave/exit) - dakhala (enter)
+
+xasira rabiHa
+Khasira (lose) - rabiHa (profit/benefit/prosper)
+
+xaf~a vafula
+Khaffa (light in weight)  - thaqal (heavy in weight)
+
+xfyf vqyl
+Khafiyf (light) - thaqiyl (heavy)
+
+xafaDa rafaEa
+KhafaDa (to Lower) - rafa3a (to Elevate/Raise)
+
+xfy badaA Ealan jal`Y
+Kh-f-Y [Khafaa] (ya without dots)
+1 -(to become invisible (unseeable)) - Badaa
+2 - Jalaa (to expose by shining light [literally or metaphorically] onto something).
+
+xalaSa xalaTa
+KhalaSa (to be Exclusively pure/incontaminated) - khalaTa (to be Mixed/one thing contaminating with another)
+
+xalafa salafa
+Khalafa (to be Behind) - salafa (to be Before)
+
+AxtlAf AtfAq AjmAE
+iKhtilaaf (difference) - ijmaa3 (connection/unity)
+
+xlf qdAm
+Khalf (after) - qidaam (before)
+
+xwn AmAnt
+Khawn / khiyaanat (treachery) - amaanat (safety)
+
+xwf Amn
+Khawf (fear) - amn (safety/peace)
+
+xyb AafolaHa
+Khayb / khaaba - aFlaHa (he is Successful)
+
+xyr $r~
+Khayr (goodness) - sharr (evil)
+	</textarea>
+	</div>
+	<div class="span8">
+	  <h2>Formatted</h2>
+	  <p id="formatted">&nbsp;</p>
+	</div>
+</div>
+
+<button class="btn btn-large btn-warning compare">Compare</button> <button class="btn btn-large reset">Reset</button>
+
+<br /><br />
+<p>
+<div id="result"></div>
+</p>
+<div id="resultMissingChar"></div>
+<br />
+
+
+<BR>
+
+<!--
+<div id="preview" style="left: 49px; top: 471px; visibility: visible; " class="goog-char-picker-hovercard"><div id="zoom" class="goog-char-picker-char-zoom">ۣ</div><div id="unicode" class="goog-char-picker-unicode">U+06E3</div></div> -->
+
+
+	<hr>
+
+      <footer>      	
+      	<div class="pull-right">
+      		<a href="http://blog.globalquran.com/forums/">Feedback</a> . 
+      		<a href="http://blog.globalquran.com/forums/">Report Bug</a> . 
+      		<a href="http://blog.globalquran.com/about-us/">About us</a> .
+      		<a href="http://blog.globalquran.com/contact-us/">Contact us</a>
+      	</div>
+        <p>&copy; GlobalQuran.com 2012</p>
+      </footer>
+
+    </div> <!-- /container -->
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/js/jquery.js"></script>
+    <script src="/js/jquery-ui.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/global.js"></script>
+
+	<script id=antonyms3 type=text/html>
+3 Antonyms:
+
+(daal:)
+
+dubur qubul
+dubur (back) - qubul (face to face)
+
+AdbAr AqbAl
+idbaar - iqbaal
+
+daxala xaraja
+dakhala (to enter, come inside) - kharaja (to exit, come out)
+
+drjAt drkAt
+darajaat - darakaat
+
+dwrh dwlp
+duwrah - dawlah
+
+
+(LETTER dhaa:)
+
+*akar nasiya
+dhakara (to Remember) - nasiya (to Forget)
+
+*akarN  >unvaY`
+dhakar (male) - unthaay (silent dotless Ya) (female)
+
+*al~ Eaz~a
+dhalla (humble/humiliation) - 3azza (authority)
+
+A*l~ AEzn
+adhilla (he is Humble) - a3izza (authoritative)
+
+*l*t Ez~t Ezyz
+dhillat (dhaliyl. disgraced) - 3izzat. 3aziyz
+
+*am~a mzmt  Hmd mdH
+dhamma (muzammath. burayi bayaan karna ) - Hamd/madH (praise and appreciation)
+
+
+(LETTER RAA:)
+
+rabiHa xasira
+RabiHa (prosper) - khasira (loss)
+
+ryw >arobaY` maHaqa
+Rbw (from this comes the word Rabb and taRbbiyyah - to Care for, Lookafter and Sustain) - maHaqa (to Abandon and not give care to).
+
+rajaA rjw ya}isa
+- Rajaa (Rjw) (to Hope and Expect something..) - (?yadusa?)
+
+raHaba xasa>a
+RaHaba (Welcome) - khasa'a (not welcome)
+
+ra$ada gawaY`
+Rashada (to be Guided [after misguidance]) - ghawaa (silent Ya) (to be Misguided [after guidance])
+
+ru$d gY~
+Rushd (guidance) - ghay (misguidance)
+
+raDiYa kariha
+raDiya saxaTa
+RaDiya (to be Pleased/Satisfied) - kariha (to be Displeased)
+
+raTaba yabasa
+RaTaba - ?yabasa?
+
+ragaba rahoba
+Raghaba (he was Pleading) - Rahaba (he was Fearing)
+
+rafaEa xafaDa
+Rafa3a (to Elevate/Raise) - khafaDa (to Lower)
+
+rifq Eunof
+Rifq (gentleness and kindness) - 3unf (toughness and harshness)
+
+raq~ riq~ap qasowp giloZap
+Raqqa (the subtelty and [spiritual/emotional]) softness of the heart)
+- Qaswah (hard heart [emotionless, lack of spiritual heart]).
+
+rdH rwAH gdw gdwp
+RwH / RwaaH (?Relaxation?) - ghdw / ghdwh / ghidaah / ghidaawah
+
+raHaba ragaba
+Rahaba - Raghaba
+
+
+
+LETTER zaa:
+
+zaAda naqaSa
+zaada (to Increase) - naqaSa
+
+AazodaAd AagaADa
+azdaa - aghaaDa
+
+zfyr $hyq
+zafeer - shaheeq
+
+zalq vabata
+zalq - thabata
+
+zal~a vabata
+zalla - thabata
+
+
+PAGE 3 (P980)
+Aasobaga qaSara
+aSbagha (to Complete/Full something) - QaSara (to Shorten something)
+
+satar ka$af
+satar ( - kashaf (Unveiled)
+
+sar~ faDaHa
+sarra (to make Happy) - faDa3a
+
+sar~aA^' ba>osaA^'
+sarraa' - ba'saaa'
+
+Aasar~a AEln AZhr
+asarra (to keep Secret) - a3lan / aDhhar (to make Apparent)
+
+saraEa baTala
+sara3a (to do Quickly) - baTa-a (alif fat-ha at end) (to do Slowly)
+
+srf AsrAf AqtAr
+srf (israaf) (to waste extravagantly) - iQtaar
+
+safira Halum
+safiha  (to be hasty/rushing in a response) - Halum
+
+saEada $q`Y >a$oqaY
+sa3ada (to be blessed/of good luck/happy) - shiqaa (ya dotless at end)
+(unblessed/ of bad luck/miserable)
+
+saEiyd $aqiY~u
+sa3eed (one who is Happy) / shaqiyy (one who is Miserable)
+
+sfl Asfl >aEolaY`
+sfl [low] (asfal) (Lower/Lowest) - a3laa (Higher/Highest) [masculine
+maximizing meanings (ism al taFDeel).]]
+
+sufolY` ElyA
+suflaa (Lower/Lowest) / 3ulyaa (Higher/Highest) [feminine maximizing
+meanings (ism al taFDeel)]
+
+salof xalof
+saluf (forefathers/predecessors) - khalaf (later people who come after)
+
+salama Aslm kafara
+salama - kafara
+
+salAm hlAkt
+salaam / salaamat (peace) / halaakat (violent destruction)
+
+smn smAn EjAf
+smn (samaan - fat) - 3ujaaf (thin)
+
+smw smA' ArD
+smw / samaa' (the sky / loftiness) - arD (the Earth / lowness)
+
+swd Aswd AbyD
+swd (aswad - black) - aByaD (white)
+
+sawdA' bayDA'
+sawdaa' (black) - bayDaa' (white)
+
+swg sAg gaS~a
+swgh ([something] to easily go down the throat) - ghaSSa
+
+AstwA' tfAwt
+istiwaa' (balanced [baraabir] and above [mawaafiq]) - tafaawut
+
+
+(LETTER SHIIN:)
+$_#m ymn mymnp
+sha'm (the Left) - ymn/maymanah (the Right)
+
+$at~a Aal~af
+Shatta (shattered) / allaf (united)
+
+$itA' Sayf
+shitaa' (the Cold weather) - Sayf (the Hot weather)
+
+$Ahd  gaA^}ib
+Shaahid (to be Present) - ghaa'ib (to be Hidden)
+
+$r~ xyr
+Sharr (evil) - Khayr (goodness)
+
+Aa$raAr AbrAr
+iShraar (evil people) - iBraar (good/righteous people)
+
+$rq Ai$rAq E$y~A
+Shrq (ishraaq) - sun glow (when the sun glows in the early morning) -
+'3ashiyyan (3-sh-ya (with shadda on ya) (when the sun is setting)
+
+m$rq mgrb
+maShriq (east/place of sun rise) - maGhrib (west/place of sunset)
+
+$rqyp grbyp
+Sharqiyyah (east) - gharbiyyah (west)
+
+$gl faraga
+Shughl (to be busy in something) - Faragha (to be free (not busy) from something)
+
+$q~Y sEyd
+Shaqiyy (bad luck/miserable one) - sa3eed (good luck/ happy one)
+
+$iqwap sEAdt
+Shiqwah (bad luck/bad destined) - sa3aadah (good luck/good destined)
+
+$akar kafar
+Shakar (to be Thankful for favours and blessings) - kafar (to be
+Ungrateful to favours and blessings)
+
+$mAl ymyn
+Shimaal (the Left) - Yameen (the Right)
+
+$hyq zfyr
+Shaheeq () - zafeer
+
+$hwl nfwr
+Shahwah (Desire for something) - nufoor (strong Dislike/aversion for something)
+
+
+(LETTER SAAD:)
+
+SbH ASbH AmsA
+SubH / aSbaH - to physically Rise - ahsaa
+
+Sabara jazaEa
+Sabara (he was Patient/tied onto something) - Jaza3a
+
+Sadara warada
+Sadara (to Return back after completing [faarigh] something) - warada
+
+Sadaqa ka*iba
+Sadaqa (he spoke Truthfully) - kadhiba (he Lied)
+
+Sdyq Edw~
+Sadeeq (close Friend) - 3aduwun (waw shadda) (Enemy)
+
+Sd~q ka*~b
+Saddaqa (to Confirm the Truthfulness of something) - kadhdhaba (to make something a Lie)
+
+SrSr smwm
+SarSar - samuwm
+
+SaEada nazala
+Sa3ada (to Physically Rise) - nazala (to physically be Sent Down)
+
+SaEaqa AfAq
+Sa3aqa (he Fainted) - aFaaq (to get Up/rise)
+
+SAEiqh SAqEp
+Saa3iqah (Aasmani kadak) - Saaqa3ath
+
+Sagara kabara
+Saghara (he was Small) - kabara (he was Big)
+
+Sgyr kbyr Akbr
+Sagheer (small) / aSghar (most smallest) - kabeer (big) / aKbar (biggest)
+
+SgAr Ez~t
+Sighaar (humiliated) - 3izzah (Authority/Respected)
+
+SalaHa qsd
+SalaHa - qasada
+
+AaSolaHa Aafosada
+aSlaHa (Connect/Unite [people/things]) - aFsada (to cause Corruption/disunite people.)
+
+SAlH mfsd
+SaaliH (good doer) - muFsid (bad doer / corrupter)
+
+Samata naTaqa
+Samata (remaining Quiet) - naDhaQa
+
+SwAb xaTa>a xaTa_#
+Sawaab - khaTa'a
+
+Sayof $itA'
+Sayf (the Hot weather) - shitaa'
+
+
+(LETTER DAAD:)
+
+DaHik bakY`
+DaHika (to Laugh) - bukaa (with ya dotless at end) (to Cry)
+
+Dr~ nfE
+Darra (Harm) - naf3a (Benefit)
+
+Dar~aA' sw~A'
+Darraa' (Annoyance)  - sirraa' (Joy)
+
+DuEuf qw~t
+Du3f (weakness) - Quwwat (strength)
+
+DaEiyof qwY
+Da3eef (weak) - Qawiy (strong)
+
+Dl~ AihtdY
+Dalla (Lost) - ihtidaa (dotless ya at end) (Guided)
+
+DlAl hdAyt
+Dalaal (Misguidance) - hidaayat (gyidance)
+
+ADAE HafiZ
+iDaa3 (leave/abandon) - HafiDh (guard/preserve)
+
+DAq raHub
+Daaq (tang honaa) - raHub
+	</script>
+<!-- 
+$('#arabic').val(  $('#antonyms3').html()  ); format();
+-->
+<input type="radio" name="group1" value="Antonyms 2" checked="" onclick="paintSura(112);">Antonyms 2  
+<input type="radio" name="group1" value="Antonyms 3" checked="" onclick="paintSura(112);">Antonyms 3  
+
+  </body>
+</html>
