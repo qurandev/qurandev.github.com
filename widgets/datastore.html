@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Antonyms</title>
+    <title>Visualize Quran DataStore contents</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -18,7 +18,7 @@
     <![endif]-->
 
     <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="shortcut icon" href="../img/favicon.jpg">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
@@ -54,9 +54,34 @@
 		.small{
 			font-size:0.8em !important;
 		}
-
+		.arabic{
+			font-size: 2.8em;
+		}
+		div#results{
+			max-height: 400px;
+			overflow: auto;
+		}
   </style>
-  <script src="lib/jquery-1.7.min.js" Xsrc="http://code.jquery.com/jquery-latest.js"></script>
+ <!-- <script src="lib/jquery-1.7.min.js" Xsrc="http://code.jquery.com/jquery-latest.js"></script> -->
+    <script src="lib/jquery-1.7.min.js"></script>
+	<script src="js/GlobalQuran.js?v=3.4"></script>
+	
+	<script>
+		var DATASET_ANTONYMS = {};
+		var gq = {
+			cookdata: function(type, _DATA){ console.log(type);
+				DATASET_ANTONYMS[type] = _DATA;
+				console.log( JSON.stringify( _DATA ) );
+			}
+		}
+		//gq.cookdata(type, _DATA);
+	</script>
+	<script src="data/antonyms1.txt_script.js"></script>
+	<script src="data/antonyms2.txt_script.js"></script>
+	<script src="data/antonyms3.txt_script.js"></script>
+	<script src="data/antonyms4.txt_script.js"></script>
+	<script src="data/antonyms5.txt_script.js"></script>
+	<script src="data/antonyms6.txt_script.js"></script>
 </head>
 <body>
   	<div class="mainbar">
@@ -71,7 +96,7 @@
           <div class="nav-collapse">
             <ul class="nav pull-right">
               <li><a href="http://blog.globalquran.com/forums/">Feedback</a></li>
-              <li><a href="http://labs.globalquran.com"><img src="http://labs.quran.im/img/favicon.png" width="18" /> Back to Lab</a></li>
+              <li><a href="http://labs.globalquran.com"><img src="../img/favicon.jpg" width="18" /> Back to Lab</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -1250,6 +1275,41 @@ var fnAccessQArabicFormatter = function(data){
 	return html;
 }
 
+var fnOppositesFormatter = function(value){
+	var html = '', arr, select = '<select id=opposites onchange=oppositeSelected(this)>';
+	if (!value || $.trim(value) == '') return "-";
+	$.each(value, function(itemno, item){ 
+		select += (new Option(itemno, item, false, false)).outerHTML;
+	});
+	select += "</select><div id=oppositeInfo>&nbsp;</div>";
+	html = select;
+	setTimeout('oppositeSelected()', 20);
+	return html;
+}
+
+var oppositeSelected = function(data){
+	var selectedData = $('#opposites > option:selected').val();
+	html = oppositeFormat( selectedData );
+	$('#oppositeInfo').html( html );
+}
+
+var oppositeFormat = function(raw){
+	var result = '';
+	if(raw){
+		$.each( raw.split('\n'), function(lineno, line){
+			if(isEnglish(line) ){
+				result += '<span class=arabic dir=rtl>' + EnToAr(line) + '</span>' + '\n';
+			}else{
+				result += line + '\n';
+			}
+		});
+	}
+	result = '<PRE>' + result + '</PRE>'
+	return result;
+}
+
+
+
 var fnAttributesFormatter = function(value){
 	var html = '', arr, select = '<select id=attributes onchange=attributeSelected(this)>';
 	if (!value || $.trim(value) == '') return "-";
@@ -1264,9 +1324,9 @@ var fnAttributesFormatter = function(value){
 
 var attributeSelected = function(data){
 	var selected = $('#attributes > option:selected').val();
-	console.log( selected ); console.log( DATASETS[ "Attributes of Allah" ].data[ selected ] );
+	//console.log( selected ); console.log( DATASETS[ "Attributes of Allah" ].data[ selected ] );
 	if(!selected) return;
-	var data = DATASETS[ "Attributes of Allah" ].data[ selected ], dataArr = data.split(';'); console.log(dataArr);
+	var data = DATASETS[ "Attributes of Allah" ].data[ selected ], dataArr = data.split(';'); //console.log(dataArr);
 	dataArr[1] = arabicLemsFormatter( dataArr[1] );
 	dataArr[2] = arabicRootsFormatter( dataArr[2] );
 	dataArr[3] = arabicLemsFormatter( dataArr[3] );
@@ -1386,7 +1446,8 @@ var obj,
 		"Antonyms info": {"data": ANTONYMS_METADATA},
 		"Sarf Sagheer": {"data": SARF_SAGHEER},
 		"Near Synonyms, Antonyms": {"data": NEAR_SYNONYMS},
-		"Access Q Arabic": {"data": ACCESS_Q_ARABIC, "formatter": fnAccessQArabicFormatter},						
+		"Access Q Arabic": {"data": ACCESS_Q_ARABIC, "formatter": fnAccessQArabicFormatter},
+		"Antonyms (from Mutaradifaat)": {"data": DATASET_ANTONYMS, "formatter": fnOppositesFormatter},
 };
 var getLength = function(obj){
 	var length = -1;
