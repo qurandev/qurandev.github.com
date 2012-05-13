@@ -163,7 +163,7 @@ var CORPUS = {
 			});
 			sarfSagheer += '&nbsp;&nbsp;<A HREF=http://www.scribd.com/embeds/89383169/content?start_page=1&view_mode=slideshow&access_key=key-26c3dogrsa7rabyiehvm&secret_password=1u076toxw5hnczujpoly TARGET=_>(ref)</A>&nbsp;&nbsp;<span style="font-size:0.61em;"><A HREF=' + verbConj + ' target=_>(conj.)</a></span>';
 		}
-		return sarfFound ? '<BR/>Sarf: ' + sarfSagheer + '<BR/>': '';
+		return sarfFound ? '<span style=color:purple;font-weight:bold;>Sarf:</span> ' + sarfSagheer + '<BR/>': '';
 	},
 	
 	FORM_MAPPING: { "(I)": "1", "(II)": "2", "(III)": "3", "(IV)": "4", "(V)": "5",
@@ -213,7 +213,7 @@ var CORPUS = {
 	},
 	
 	UIgetMiscLink:		function(misc, linkname, linkprefix){
-		return '<span style=font-size:8px;color:#C0C0C0;#F0F0F0; >' + (linkprefix?linkprefix : 'Misc: ') + escapeMisc(misc) + '</span>';
+		return '<span class=misc style=display:none;font-size:8px;color:#C0C0C0;#F0F0F0; >' + (linkprefix?linkprefix : 'Misc: ') + escapeMisc(misc) + '</span>';
 	},
 	
 	UIgetWordGrammarDisplay: function(refAndData)
