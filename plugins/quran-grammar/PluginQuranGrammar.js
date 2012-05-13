@@ -72,12 +72,11 @@ var CORPUS = {
 	},
 	
 	UIgetNearSynonyms: function(lemma){
-		var nearsynonyms = '', synonymFound = false, antonyms='', antonymFound = false; //, lemmaBare = BuckToBare(lemma);
-		//var regexp = RegExp( '\\b' + escapeForRegex(lemma) /*+ '\\b'*/);
+		var nearsynonyms = '', synonymFound = false, antonyms='', antonymFound = false, more = '';
 		if(NEAR_SYNONYMS && NEAR_SYNONYMS_METADATA){
 			$.each(NEAR_SYNONYMS, function(lineno, line){
 				if( /*regexp.test( line ) CHECK FOR EXACT WORD only using regex.. */ 
-					(' ' + line + ' ').indexOf(' ' + lemma +' ') != -1  /*|| BuckToBare(line).indexOf(lemmaBare) != -1*/ ){ //console.log(lemma + '\t\t' + line);
+					(' ' + line + ' ').indexOf(' ' + lemma +' ') != -1){
 					if(line.split('||').length <= 1){
 						synonymFound = true; nearsynonyms = '';
 						nearsynonyms += EnToAr(line);
@@ -86,16 +85,15 @@ var CORPUS = {
 						antonyms += EnToAr(line);
 					}					
 					if( NEAR_SYNONYMS_METADATA[lineno]){
-						//nearsynonyms = NEAR_SYNONYMS_METADATA[a].split('|')[0] + nearsynonyms + NEAR_SYNONYMS_METADATA[a].split('|')[1];
-						nearsynonyms =  NEAR_SYNONYMS_METADATA[lineno].topic + '<BR/>' + nearsynonyms + '<BR/>' +  
-										(NEAR_SYNONYMS_METADATA[lineno].info ? NEAR_SYNONYMS_METADATA[lineno].info + '<BR/>' : '') + 
-										CORPUS.UIgetNearSynonymsPageLink( lemma, NEAR_SYNONYMS_METADATA[lineno].page ); 
+						nearsynonyms =  NEAR_SYNONYMS_METADATA[lineno].topic + '&nbsp;' + nearsynonyms + '&nbsp;' +
+										CORPUS.UIgetNearSynonymsPageLink( lemma, NEAR_SYNONYMS_METADATA[lineno].page );
+						more = (NEAR_SYNONYMS_METADATA[lineno].info ? ' (<A HREF=../widgets/datastore.html?synonyms='+lineno +' TARGET=_ >more</A>) ' : ''); 
 					}else nearsynonyms += '<BR/>Refer book for details. (User contributions welcome!)<BR/>' + CORPUS.UIgetNearSynonymsPageLink( 1 ) + '&nbsp; (Pls type summary & submit via feedback.)'; 
 				}
 			});
 		}
-		return (synonymFound ? '<BR/><font color=green><b>near-Synonyms</b></font>: ' + nearsynonyms + '<BR/>' : '') +
-			   (antonymFound ? '<BR/><font color=maroon><b>Antonyms</b></font>: ' + antonyms + '<BR/>' : '');
+		return (synonymFound ? '<font color=green><b>Synonyms</b></font>' + more + ': ' + nearsynonyms + '<BR/>' : '') +
+			   (antonymFound ? '<font color=maroon><b>Antonyms</b></font>: ' + antonyms + '<BR/>' : '');
 	},
 	
 	UIgetNearSynonymsPageLink: function(lemma, pageno){
@@ -592,33 +590,11 @@ initializeMapper();
 	}
 	
 	var escapeMisc = function(input){ var output='';
-		if(!input) return; output = input.replace(/\</g, '&#171;').replace(/\>/g, '&gt;').replace(/\"/g, '&#9674;');  //&#60; for <. 9668 for left diamond like.
-		//if(input.indexOf('<') != -1 || input.indexOf('>') != -1){ console.log(input +'\t\t'+ output ); if(typeof(DEBUG) != 'undefined')debugger; }
+		if(!input) return; output = input.replace(/\</g, '&#171;').replace(/\>/g, '&gt;').replace(/\"/g, '&#9674;');
 		return output;
 	}
 
 	
-//DELETE THIS BELOW
-	CORPUS.XUIgetRefLink = function(ref){
-		if(!ref) ref='1:1:1';
-		var surano, versno, template, param='?chapter=61&verse=12', url1='http://corpus.quran.com/treebank.jsp', url2='http://corpus.quran.com/wordbyword.jsp',
-			url3='http://corpus.quran.com/wordmorphology.jsp?location=';
-		template = '<A HREF=' + url1 + ' target=_>Corpus treebank (' + ref +')</A> &nbsp;&nbsp;'+
-				   '<A HREF=' + url2 + ' target=_>wordbyword (' + ref +')</A> '+
-				   '<A HREF=' + url3 +'('+ ref +') target=_>morphology (' + ref +')</A>';
-		if(!ref || !parseInt(ref) ) return template;
-		surano = parseInt( ref.split(':')[0] ); 
-		if(ref.indexOf(':') == -1) versno = 1;
-		else versno = parseInt( ref.split(':')[1] );
-		if(!surano || !versno || surano<1 || surano > 114) return template;
-		param = '?chapter=' + surano +'&verse=' + versno;
-		url1 += param; url2 += param;
-		template = '<A HREF=' + url1 + ' target=_>Corpus treebank (' + ref +')</A> &nbsp;&nbsp;'+
-				   '<A HREF=' + url2 + ' target=_>wordbyword (' + ref +')</A>'+
-				   '<A HREF=' + url3 +'('+ ref +') target=_>morphology (' + ref +')</A>';
-		return template;
-   }
-
  
 var SARF_SAGHEER = [ //'Verbs_VerbNo,Verbs_Words_Corpus_Root_English,Verbs_Type,Verbs_class,Verbs_Sura,Verbs_Verse,Meaning-English,Meaning-Urdu,Count,perfect,Imperfect,Imperative,Active-participle,Passive-participle,Verbal-noun,root,type,class',
 '1,fEl,b1,فتح,2,24,to do,كرنا ,105,فَعَلَ, يَفْعَلُ, اِفْعَلْ , فَاعِل, مَفْعُول, فِعْل,ف ع ل ,1,فتح',
@@ -931,16 +907,15 @@ var ANTONYMS_METADATA = [
 var _PDF = "<A HREF=http://ia600705.us.archive.org/12/items/BayyinahE-bookGemsCollection-Linguisticmiracle.com/near-synonyms-nouman-ali-khan-muslimmattersorg.pdf TARGET=_>Source: NearSynonyms PDF - Nouman Ali Khan</A><BR/>";
 var NEAR_SYNONYMS_METADATA = {
 	"0": {"topic": "The Sky", "page": 83, "info": true},		
-	"1": {"topic": "God", "page": 818, "info": "Allah, ilah are the different synonyms.<BR/> See entry: ma3bood in below page. " },
+	"1": {"topic": "God", "page": 818, "info": true },
 	"2": {"topic": "One", "page": 138, "info": "aHad, waHiyd, fard, furādā different synonyms. <BR/><BR/>See related: <STRONG><A HREF=http://www.linguisticmiracle.com/gems/waheed TARGET=_>Gem/Linguistic miracle</A></STRONG><BR/><BR/> See entry: akeyla in below page. " },
 	"3": {"topic": "Self-Sufficient", "page": 256, "info": "ghaniyy and Samad are synonyms.<BR/> See entry: beniyaaz in below page. " },
 	"4": {"topic": "Not", "page": 862, "info": "lam laysa lan laa 'in maa hal balaa kallaa etc are some synonyms. lot more below.<BR/> See entry: naheen in below page. " },	
 	"5": {"topic": "Begetting", "page": 396, "info": "walada and waḍaʿa are synonyms.<BR/> See entry: jann-naa in below page. " },
 	"6": {"topic": "Become", "page": 900, "info": "kaana, aSbaHa, Sadara, aSdara, waqa3a are synonyms.<BR/> See entry: how-naa in below page. " },
 	"7": {"topic": "Equal", "page": 890, "info": "Kufuw, qariyn, aTraab, samiyy, Saffa, Saaffaat, yuḍāhiūna. <BR/>See entry: hamhaa-hangiy hona in below page. " },	
-	"8": {"topic": "Work/doing work", "info": "faEala Eamila SanaE SadaE jaraH ijtaraH tEmd amr Sha'n" },
-	"9": {"topic": "Praise & Thanks", "page": 347, "info": "Hamd, Shukr, madH. See: 'Ta3reef karna' topic in book at below page."},
-	"10": {"topic": "Settling down. Also see '(7:92:6) yaghnaw	they (had) lived'", "page": 67, "info": true},
+	"8": {"topic": "Work/doing work", "info": true },
+	"9": {"topic": "Praise & Thanks", "page": 347, "info": true},
 	"11": {"topic":"human", "page": 71, "info":  true},
 	"12": {"topic":"Go ahead", "page": 94, "info": true},	
 	"13": {"topic":"noise", "page": 100, "info": true},	
