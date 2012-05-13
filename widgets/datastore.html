@@ -69,9 +69,8 @@
 	<script>
 		var DATASET_ANTONYMS = {};
 		var gq = {
-			cookdata: function(type, _DATA){ console.log(type);
-				DATASET_ANTONYMS[type] = _DATA;
-				console.log( JSON.stringify( _DATA ) );
+			cookdata: function(type, _DATA){ //console.log(type);
+				DATASET_ANTONYMS[type] = _DATA; //console.log( JSON.stringify( _DATA ) );
 			}
 		}
 		//gq.cookdata(type, _DATA);
@@ -1275,6 +1274,36 @@ var fnAccessQArabicFormatter = function(data){
 	return html;
 }
 
+
+var fnMiraclesFormatter = function(value){
+	var html = '', arr, select = '<select id=miracles onchange=miracleSelected(this)>';
+	if (!value || $.trim(value) == '') return "-";
+	$.each(value, function(itemno, item){ 
+		select += (new Option(item.topic, 'Ayah references: <BR>' + 
+					infoFormatter(itemno) + '<HR><A TARGET=_ HREF='+item.url+'>'+ item.url +'</A><HR>', false, false)).outerHTML;
+	});
+	select += "</select><div id=miracleInfo>&nbsp;</div>";
+	html = select;
+	setTimeout('miracleSelected()', 20);
+	return html;
+}
+var miracleSelected = function(data){
+	var selectedData = $('#miracles > option:selected').val();
+	html = miracleFormat( selectedData );
+	$('#miracleInfo').html( selectedData );
+}
+var miracleFormat = function(selectedData){
+	
+}
+
+var fnSynonymsFormatter = function(value){
+ var html = 'Synonyms information available for following items: <BR><PRE><span class=arabic>';
+ $.each(value, function(itemno, item){
+	html += EnToAr(item) + '\n\n';
+ });
+ return html + '</span></PRE>';
+}
+
 var fnOppositesFormatter = function(value){
 	var html = '', arr, select = '<select id=opposites onchange=oppositeSelected(this)>';
 	if (!value || $.trim(value) == '') return "-";
@@ -1309,6 +1338,15 @@ var oppositeFormat = function(raw){
 }
 
 
+var fnArabicFormatter = function(value){
+	var html = '';
+	if (!value || $.trim(value) == '') return "-";
+	$.each(value, function(itemno, item){
+		html += item + '\n\n<HR>';
+	});
+	html = '<pre><span class=arabic>' + html + '</span></pre>'
+	return html;
+}
 
 var fnAttributesFormatter = function(value){
 	var html = '', arr, select = '<select id=attributes onchange=attributeSelected(this)>';
@@ -1437,17 +1475,18 @@ var quranData = function(data){
 
 <script>
 var obj, 
-	selectedOption = "Attributes of Allah", //"Access Q Arabic", //"Miracles", 
+	selectedOption = "Antonyms (from Mutaradifaat)",
 	DATASETS = {
-		"Miracles": {"data": AYAHS_METADATA["MIRACLES"]},
-		"Rhetorical features": {"data": AYAHS_METADATA["LITERARY_DEVICES"]},
+		"Antonyms (from Mutaradifaat)": {"data": DATASET_ANTONYMS, "formatter": fnOppositesFormatter},
+		"Near Synonyms": {"data": NEAR_SYNONYMS, "formatter": fnSynonymsFormatter},
+		"Miracles": {"data": AYAHS_METADATA["MIRACLES"], "formatter": fnMiraclesFormatter},
+		"Rhetorical features": {"data": AYAHS_METADATA["LITERARY_DEVICES"], "formatter": fnMiraclesFormatter},
 		"Attributes of Allah": {"data": DATASET_ATTRIBUTES, "formatter": fnAttributesFormatter},
 		"Synonyms info": {"data": NEAR_SYNONYMS_METADATA},
-		"Antonyms info": {"data": ANTONYMS_METADATA},
-		"Sarf Sagheer": {"data": SARF_SAGHEER},
-		"Near Synonyms, Antonyms": {"data": NEAR_SYNONYMS},
+//		"Antonyms info": {"data": ANTONYMS_METADATA},
+		"Sarf Sagheer": {"data": SARF_SAGHEER, "formatter": fnArabicFormatter},
+
 		"Access Q Arabic": {"data": ACCESS_Q_ARABIC, "formatter": fnAccessQArabicFormatter},
-		"Antonyms (from Mutaradifaat)": {"data": DATASET_ANTONYMS, "formatter": fnOppositesFormatter},
 };
 var getLength = function(obj){
 	var length = -1;
