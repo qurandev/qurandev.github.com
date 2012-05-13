@@ -341,7 +341,6 @@ var gq = {
 								verse_html += '<span class="word"><span class="ar quranText tipsWord" title="'+verse[1]+'">'+verse[0]+'</span></span>';
 							else
 								verse_html   += '<span class="word staticWord"><span class="ar quranText top first rtl tipsWord tipsGrmr" dir="rtl" ' + refHtml + '>'+ verse[0]+'</span><span class="en second ltr" dir="ltr">'+verse[1]+'</span></span>';
-								//verse_html += '<span class="word staticWord"><span class="ar quranText top first rtl" dir="rtl">'+verse[0]+'</span><span class="en second ltr" dir="ltr">'+verse[1]+'</span></span>'; 
 						}
 					}
 				});
@@ -358,7 +357,7 @@ var gq = {
 				if(text.indexOf(SEP2) != -1) 
 					words = text.split( SEP2 ); 
 				else words = text.split( SEP0 ); 
-				var verse_html = '', verse_template=''; var unicodeSupported = true, isTablet = false;
+				var verse_html = '', verse_template='', verse_template_mouseover=''; var unicodeSupported = true, isTablet = false;
 				var REFURL = "<A HREF='http://corpus.quran.com/wordmorphology.jsp?location=($1)' TARGET=_>$1</A>";
 
 				$.each(words, function(i, verse) {
@@ -373,27 +372,30 @@ var gq = {
 						token3 = verse[2] ? UI_grammarEscape( verse[2] ) : '-'; 
 						token3_1 = verse[2] ? UI_grammarEscapeUIFriendly( verse[2] ) : '-'; 
 						///UNCOMMENT THIS IF U WANT IMAGE SIDE BY SIDE FOR VERIFICATION/// 
-						token1 += wordImageLink;
+						//token1 += wordImageLink;
 						if(!verse[1]) token1 = token2 = token3 = verse[0];
 						if(verse[2])
 							refPOS = $.trim( verse[2].split('|')[0] );
-						tooltip = '<span class=hotlink grmr><span class=ref style=font-size:0.7em;color:blue;>' + 
-								  REFURL.replace(/\$1/g, ref) + '&nbsp;</span>&nbsp;&nbsp;<IMG class=MOREINFO src=images/info.png></img>' +
+						tooltip = '<span class=hotlink grmr><span>$TOKEN1</span>&nbsp;&nbsp;<span class=w2w>$TOKEN2</span><BR />'+
+									'<span class=ref style=font-size:0.7em;color:blue;>' + REFURL.replace(/\$1/g, ref) +
+									'&nbsp;</span>&nbsp;&nbsp;<IMG class=MOREINFO src=images/info.png></img>' +
 								  '<span class=grammar style=font-size:0.5em; data='+ token3 + ' >' + ( token3_1 ) + /*wordImageLink +*/ '</span></span>';
+
+						verse_template_mouseover = '<span class="word"><span class="ar quranText lineheight tipsWord POS-$POS" title="$TOOLTIP">$TOKEN1</span></span>';
 						verse_template = '<span class="word staticWord">' +
 											'<span class="ar quranText top first rtl tipsWord POS-$POS" dir="rtl" title="$TOOLTIP" >$TOKEN1</span>'+  //data-tips-position="bottom center" data-tips-dynamic="true"
 											'<span class="en second ltr" dir="ltr" style="font-size:0.5em;" >$TOKEN2</span></span>';
 						if (gq.settings.wbwDirection == 'english2arabic'){
 							if (gq.settings.wbwMouseOver)
-								verse_html += '<span class="word wordColor'+color+'"><span class="en tipsWord" title="'+verse[0]+'">'+verse[1]+'</span></span>';
+								verse_html += '<span dir=ltr class="word"><span class="en tipsWord" title="'+ token1 +'">'+ token2 +'</span></span>';
 							else
-								verse_html += '<span class="word wordColor'+color+' staticWord"><span class="en first ltr" dir="ltr">'+verse[1]+'</span><span class="ar quranText second rtl" dir="rtl">'+verse[0]+'</span></span>';
+								verse_html += '<span class="word staticWord"><span class="en first ltr" dir="ltr">'+ token2 +'</span><span class="ar quranText second rtl" dir="rtl">'+ token1 +'</span></span>';
 						}
 						else{
 							if (gq.settings.wbwMouseOver)
-								verse_html += '<span class="word wordColor'+color+'"><span class="ar quranText tipsWord" title="'+verse[1]+'">'+verse[0]+'</span></span>';
+								verse_html += verse_template_mouseover.replace(/\$TOOLTIP/, tooltip).replace(/\$TOKEN1/g, token1).replace(/\$TOKEN2/g, token2).replace(/\$POS/g, refPOS);
 							else //*** THIS IS THE TYPICAL CASE BELOW.
-								verse_html += verse_template.replace(/\$TOKEN1/, token1).replace(/\$TOKEN2/, token2).replace(/\$TOOLTIP/, tooltip).replace(/\$POS/, refPOS);
+								verse_html += verse_template.replace(/\$TOOLTIP/, tooltip).replace(/\$TOKEN1/g, token1).replace(/\$TOKEN2/g, token2).replace(/\$POS/g, refPOS);
 						}
 					}
 				});
