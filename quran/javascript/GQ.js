@@ -392,7 +392,7 @@ var gq = {
 								verse_html += '<span class="word staticWord"><span class="en first ltr" dir="ltr">'+ token2 +'</span><span class="ar quranText second rtl" dir="rtl">'+ token1 +'</span></span>';
 						}
 						else{
-							if (gq.settings.wbwMouseOver)
+							if (!gq.settings.wbwMouseOver)
 								verse_html += verse_template_mouseover.replace(/\$TOOLTIP/, tooltip).replace(/\$TOKEN1/g, token1).replace(/\$TOKEN2/g, token2).replace(/\$POS/g, refPOS);
 							else //*** THIS IS THE TYPICAL CASE BELOW.
 								verse_html += verse_template.replace(/\$TOOLTIP/, tooltip).replace(/\$TOKEN1/g, token1).replace(/\$TOKEN2/g, token2).replace(/\$POS/g, refPOS);
