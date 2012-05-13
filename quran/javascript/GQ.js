@@ -376,9 +376,9 @@ var gq = {
 						if(!verse[1]) token1 = token2 = token3 = verse[0];
 						if(verse[2])
 							refPOS = $.trim( verse[2].split('|')[0] );
-						tooltip = '<span class=hotlink grmr><span>$TOKEN1</span>&nbsp;&nbsp;<span class=w2w>$TOKEN2</span><BR />'+
+						tooltip = '<span class=hotlink grmr><span>$TOKEN1</span>&nbsp;&nbsp;<span class=w2w>$TOKEN2</span>&nbsp;'+
 									'<span class=ref style=font-size:0.7em;color:blue;>' + REFURL.replace(/\$1/g, ref) +
-									'&nbsp;</span>&nbsp;&nbsp;<IMG class=MOREINFO src=images/info.png></img>' +
+									'&nbsp;</span>&nbsp;&nbsp;<IMG class=MOREINFO src=images/info.png></img><br/>' +
 								  '<span class=grammar style=font-size:0.5em; data='+ token3 + ' >' + ( token3_1 ) + /*wordImageLink +*/ '</span></span>';
 
 						verse_template_mouseover = '<span class="word"><span class="ar quranText lineheight tipsWord POS-$POS" title="$TOOLTIP">$TOKEN1</span></span>';
