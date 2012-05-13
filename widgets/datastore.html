@@ -8,7 +8,7 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
-    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/jquery-ui.css" rel="stylesheet">
     <link href="/css/global.css" rel="stylesheet">
 
@@ -259,7 +259,7 @@ initializeMapper();
   <div class="container-fluid">
 	<H1>Visualize Quran DataStore contents</H1>
 		<div class="row-fluid">
-			<div class="span3">	 <!--Sidebar content-->
+			<div class="span3">	 <!--Sidebar content--><BR/>
 				<div id=data>
 					<select id=datasets></select>
 				</div><BR>
@@ -267,7 +267,7 @@ initializeMapper();
 				<div id=status></div><BR>
 				<strong>Raw:</strong>
 				<div id=results></div>
-			</div>
+			</div><BR/>
 			<strong>Formatted:</strong>
 			<div id=results2 class="span9">
 			  <!--Body content-->
@@ -1050,16 +1050,6 @@ Ex: To create: see 7:179. To multiply: 67:24. (ex: of a seed as well as man)\n\
 sowed & multiplied; created & multiplied.	\n\n\
 	</PRE>See: payda karna." },
 	"51": {"topic": "", "page": 1, "info": "" },
-	"52": {"topic": "", "page": 1, "info": "" },
-	"53": {"topic": "", "page": 1, "info": "" },
-	"54": {"topic": "", "page": 1, "info": "" },
-	"55": {"topic": "", "page": 1, "info": "" },
-	"56": {"topic": "", "page": 1, "info": "" },
-	"57": {"topic": "", "page": 1, "info": "" },
-	"58": {"topic": "", "page": 1, "info": "" },
-	"59": {"topic": "", "page": 1, "info": "" },
-	"60": {"topic": "", "page": 1, "info": "" },
-
 	};
 
 var LITDEV_URL = "http://qurandev.github.com/widgets/literarydevices.html";
@@ -1296,7 +1286,7 @@ var miracleFormat = function(selectedData){
 	
 }
 
-var fnSynonymsFormatter = function(value){
+var fnNearSynonymsFormatter = function(value){
  var html = 'Synonyms information available for following items: <BR><PRE><span class=arabic>';
  $.each(value, function(itemno, item){
 	html += EnToAr(item) + '\n\n';
@@ -1304,34 +1294,63 @@ var fnSynonymsFormatter = function(value){
  return html + '</span></PRE>';
 }
 
-var fnOppositesFormatter = function(value){
-	var html = '', arr, select = '<select id=opposites onchange=oppositeSelected(this)>';
+var fnSynonymsFormatter = function(value){
+	var html = '', arr, forms='', select = '<select id=synonyms onchange=synonymSelected(this)>';
+	if (!value || $.trim(value) == '') return "-";
+	$.each(value, function(itemno, item){
+		forms = DATASETS["Near Synonyms"].data[itemno];
+		select += (new Option( (1+parseInt(itemno)) +'. '+ item.topic + ' ' + EnToAr(forms), itemno, false, false)).outerHTML;
+	});
+	select += "</select><div id=synonymInfo>&nbsp;</div>";
+	html = select;
+	setTimeout('synonymSelected()', 20);
+	return html;
+}
+var synonymSelected = function(data){
+	var selectedData = $('#synonyms > option:selected').val();
+	html = synonymFormat( selectedData );
+	$('#synonymInfo').html( html );
+}
+var synonymFormat = function(raw){
+	var result = '';
+	if(raw){
+		var info = DATASETS[ "Synonyms (Mutaradifaat book)" ].data[raw];
+		var forms = DATASETS["Near Synonyms"].data[raw];
+		result += 'Forms: <span class=arabic dir=rtl>' + EnToAr(forms) + '</span>\n\n';
+		result += 'Info: '+ info.info + '\n\n';
+		result += 'Page#: ' + info.page + '\n\n';
+	}
+	result = '<PRE>' + result + '</PRE>'
+	return result;
+}
+
+
+var fnAntonymsFormatter = function(value){
+	var html = '', arr, select = '<select id=antonyms onchange=antonymSelected(this)>';
 	if (!value || $.trim(value) == '') return "-";
 	$.each(value, function(itemno, item){ 
 		select += (new Option(itemno, item, false, false)).outerHTML;
 	});
-	select += "</select><div id=oppositeInfo>&nbsp;</div>";
+	select += "</select><div id=antonymInfo>&nbsp;</div>";
 	html = select;
-	setTimeout('oppositeSelected()', 20);
+	setTimeout('antonymSelected()', 20);
 	return html;
 }
-
-var oppositeSelected = function(data){
-	var selectedData = $('#opposites > option:selected').val();
-	html = oppositeFormat( selectedData );
-	$('#oppositeInfo').html( html );
+var antonymSelected = function(data){
+	var selectedData = $('#antonyms > option:selected').val();
+	html = antonymFormat( selectedData );
+	$('#antonymInfo').html( html );
 }
-
-var oppositeFormat = function(raw){
-	var result = '';
+var antonymFormat = function(raw){
+	var result = ''; var _bucks = '';
 	if(raw){
 		$.each( raw.split('\n'), function(lineno, line){
-			if(isEnglish(line) ){
+			if(isEnglish(line) ){ _bucks += line + '\n';
 				result += '<span class=arabic dir=rtl>' + EnToAr(line) + '</span>' + '\n';
 			}else{
 				result += line + '\n';
 			}
-		});
+		});console.log(_bucks);
 	}
 	result = '<PRE>' + result + '</PRE>'
 	return result;
@@ -1362,7 +1381,6 @@ var fnAttributesFormatter = function(value){
 
 var attributeSelected = function(data){
 	var selected = $('#attributes > option:selected').val();
-	//console.log( selected ); console.log( DATASETS[ "Attributes of Allah" ].data[ selected ] );
 	if(!selected) return;
 	var data = DATASETS[ "Attributes of Allah" ].data[ selected ], dataArr = data.split(';'); //console.log(dataArr);
 	dataArr[1] = arabicLemsFormatter( dataArr[1] );
@@ -1477,12 +1495,12 @@ var quranData = function(data){
 var obj, 
 	selectedOption = "Antonyms (from Mutaradifaat)",
 	DATASETS = {
-		"Antonyms (from Mutaradifaat)": {"data": DATASET_ANTONYMS, "formatter": fnOppositesFormatter},
-		"Near Synonyms": {"data": NEAR_SYNONYMS, "formatter": fnSynonymsFormatter},
+		"Synonyms (Mutaradifaat book)": {"data": NEAR_SYNONYMS_METADATA, "formatter": fnSynonymsFormatter},
+		"Antonyms (Mutaradifaat book)": {"data": DATASET_ANTONYMS, "formatter": fnAntonymsFormatter},
+		"Near Synonyms": {"data": NEAR_SYNONYMS, "formatter": fnNearSynonymsFormatter},
 		"Miracles": {"data": AYAHS_METADATA["MIRACLES"], "formatter": fnMiraclesFormatter},
 		"Rhetorical features": {"data": AYAHS_METADATA["LITERARY_DEVICES"], "formatter": fnMiraclesFormatter},
 		"Attributes of Allah": {"data": DATASET_ATTRIBUTES, "formatter": fnAttributesFormatter},
-		"Synonyms info": {"data": NEAR_SYNONYMS_METADATA},
 //		"Antonyms info": {"data": ANTONYMS_METADATA},
 		"Sarf Sagheer": {"data": SARF_SAGHEER, "formatter": fnArabicFormatter},
 
@@ -1535,6 +1553,35 @@ select.change( function(){
 });
 select.change();
 
+</script>
+
+<!-- check if any query params. handle.-->
+<script>
+var urlParams = {};
+(function () {
+    var e,
+        a = /\+/g,  // Regex for replacing addition symbol with a space
+        r = /([^&=]+)=?([^&]*)/g,
+        d = function (s) { return decodeURIComponent(s.replace(a, " ")); },
+        q = window.location.search.substring(1);
+
+    while (e = r.exec(q))
+       urlParams[d(e[1])] = d(e[2]);
+})();
+
+var index = -1, selectedOption = '', urlParam; 
+if(Object.keys(urlParams).length > 0) urlParam = Object.keys(urlParams)[0];
+var _keys = Object.keys( DATASETS );
+if(urlParam){
+	$.each(_keys, function(keyno, key){ if(!selectedOption && key.toUpperCase().indexOf(urlParam.toUpperCase() ) != -1){ selectedOption = key; return; } } );
+	if(selectedOption){
+		select.val(selectedOption).change();
+
+		if(urlParam == "synonyms"){
+			$('#synonyms').val( urlParams[urlParam] );
+		}
+	}console.log(selectedOption);
+}
 </script>
 </body>
 </html>
