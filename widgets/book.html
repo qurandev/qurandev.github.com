@@ -111,6 +111,21 @@
 		  </div>
 		</div>
 	</div>
+<!-- check if any query params. handle.-->
+<script>
+var urlParams = {};
+(function () {
+    var e,
+        a = /\+/g,  // Regex for replacing addition symbol with a space
+        r = /([^&=]+)=?([^&]*)/g,
+        d = function (s) { return decodeURIComponent(s.replace(a, " ")); },
+        q = window.location.search.substring(1);
+
+    while (e = r.exec(q))
+       urlParams[d(e[1])] = d(e[2]);
+})();
+</script>
+
 <script>
 var GoPage = function(){
 	var pageno, mappedpageno, offset, temp, width, height, BOOKLINK = "<A HREF='$URL' TARGET=_>Link to PDF of this part</A><BR><BR><A HREF='http://archive.org/details/MutaraadifaatUlQuran-UrduToEnglishProject-10PageSplitsOfficial' TARGET=_>Link to all PDF parts.</A>", URL = "http://ia600405.us.archive.org/16/items/MutaraadifaatUlQuran-UrduToEnglishProject-10PageSplitsOfficial/Mutaradifaat-ul-Quran-COMPLETE.$PAGE.pdf#page=$OFFSET";
@@ -123,7 +138,7 @@ var GoPage = function(){
 	
 	temp = 100000 + mappedpageno;
 	temp = (temp + '').substring(1);
-	URL = URL.replace(/\$PAGE/g, temp).replace(/\$OFFSET/g, offset); console.log(mappedpageno +' ' + offset + ' ' + URL);
+	URL = URL.replace(/\$PAGE/g, temp).replace(/\$OFFSET/g, offset); console.log(pageno +' '+ mappedpageno +' ' + offset + ' ' + URL);
 	
 	height = "600px";
 	document.getElementById("divPDF").innerHTML = "<OBJECT id='objPDF' DATA='"+ URL +"' TYPE=\"application/pdf\" TITLE=\"IMAGING\" WIDTH=\"100%\" HEIGHT=\"" + height +"\"></object>";
@@ -136,6 +151,16 @@ var GoEnPage = function(){
 	$('#pageno').val( pageno - 18 );
 	GoPage();
 }
-	GoPage();
+
+ $(document).ready(function() {
+	var fields = ["pageno", "enpageno"], loaded=false;
+	$.each(fields, function(fieldno, field){
+		if(urlParams[ field ] && parseInt( urlParams[field] ) ){
+			$('#'+field).val( urlParams[field] );
+			$('#'+field).next().click(); loaded=true;
+		}
+	});
+	if(!loaded) GoPage();
+})();
 </script>
 </body>
