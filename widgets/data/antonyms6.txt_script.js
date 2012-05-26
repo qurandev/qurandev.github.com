@@ -234,3 +234,73 @@ mymnp mysrp\n\
 maYmanah (blessed / (the One of the Right)) - mash'amah (unblessed / the One of the Left)\n\
 \n\
 "; gq.cookdata(type, _DATA);
+
+
+
+type='Verbs & opposites by changing a letter - mutaradifaat-ul-quran';
+_DATA = "(Verbs which become their opposites, by changing 1 letter. From Mutaraadifatul Quran pg 972)\n\
+\n\
+batara bataka\n\
+108:3 4:119 \n\
+\n\
+baraza bariHa\n\
+2:250 18:60\n\
+\n\
+tariba tarifa\n\
+90:16 23:64\n\
+\n\
+jas~asa Has~asa\n\
+49:12 12:87\n\
+\n\
+janafa Hanafa\n\
+2:182 10:105\n\
+\n\
+Ha*~a HaD~a\n\
+7:54 107:2\n\
+\n\
+HaSada xaDada\n\
+12:47 56:28\n\
+\n\
+xalaSa xalaTa\n\
+4:145 9:102\n\
+\n\
+daraja daraka\n\
+2:228 4:34\n\
+\n\
+dawr dawl\n\
+\n\
+rataqa fataqa\n\
+21:30\n\
+\n\
+ragaba rahaba\n\
+21:90\n\
+\n\
+saraAb $araAb\n\
+24:39\n\
+\n\
+salof xalaf\n\
+19:59\n\
+\n\
+saqaTa laqaTa\n\
+12:10 51:44\n\
+\n\
+SalaHa TalaHa\n\
+\n\
+faSama qaSama\n\
+2:256 21:11\n\
+\n\
+qaT~a qad~a\n\
+12:25\n\
+\n\
+nafoHap lafoHap\n\
+21:46 23:104\n\
+\n\
+myl myd\n\
+16:15\n\
+\n\
+naA$a naAla\n\
+3:92\n\
+\n\
+haz~a ha$~a\n\
+19:25 20:18\n\
+"; gq.cookdata(type, _DATA);

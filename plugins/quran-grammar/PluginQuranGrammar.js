@@ -845,7 +845,7 @@ var NEAR_SYNONYMS = [
 "qalob fu&aAd Sador nafos",
 
 "jaAr {sotajaAra Eu*o {sotaEi*o",
-"rab~",
+"rab~  rab~aya >an[bata  >an$a>a n~a$o>ap yuna$~a&uA@  rab~  kaf~ala yakofulu kifol >akofilo kafiyl",
 "malik suloTaAn mulok malakuwot",
 "$ar~",
 "wasowaAs wasowasa waHoYN AilohaAm AiloqaA` wasowaAs hamazaat",
@@ -910,7 +910,7 @@ var NEAR_SYNONYMS_METADATA = {
 	"28": {"topic":"The heart, the chest & the self", "page": 483, "info": "qalb fu'ad Sadr nafs. See: Dil."},
 
 	"29": {"topic": "Seeking protection", "page": 289, "info": "Ajaar and istijaar. Aa3aza and isti3aza. Panah dena, panah maangna." },
-	"30": {"topic": "Lord", "page": 279, "info": "Rabb. Parvarish karna." },
+	"30": {"topic": "To nourish/bring up", "page": 279, "info": "Rabb. Parvarish karna." },
 	"31": {"topic": "King", "page": 172, "info": "Malik. Badshahi." },
 	"32": {"topic": "Evil", "page": 206, "info": "Shar. Burai." },
 	"33": {"topic": "Whisperer", "page": 485, "info": "Waswaas. dil main baat daalna." },
