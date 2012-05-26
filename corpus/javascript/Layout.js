@@ -1919,8 +1919,9 @@ var UI_dohotlink = function( obj ){
 		if(_class == 'ayah'){ 
 			var verseno = $(this).attr("data-verse");
 			if(verseno) $(this).html( UI_ayahHtml( verseno ) ); //$(this).html( URL.replace(/\$1/g, text ) );
-		}
-		else if(_class == 'ref'){ 
+		}else if(_class == 'w2w'){ 
+			$(this).html( decodeURIComponent( $(this).html() ) );
+		}else if(_class == 'ref'){ 
 			ref = $(this).text(); //$(this).html( URL.replace(/\$1/g, text ) );
 		}
 		else if(_class == 'grammar'){

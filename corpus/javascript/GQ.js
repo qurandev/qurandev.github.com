@@ -364,7 +364,7 @@ var gq = {
 					if (verse){
 						var verse = verse.split( SEP );
 					    var ref = (value?value.surah:'?') +':'+ (value?value.ayah:'?') + ':'+ (1+i);
-						var refPOS='', corpus, token1, token2, token3, token3_1, tooltip='';
+						var refPOS='', corpus, token1, token2, token2Esc, token3, token3_1, tooltip='';
 						var wordImageLink = '<span class=wordimage><img src2=http://corpus.quran.com/wordimage?id=$1 ></img></span>';
 						wordImageLink = wordImageLink.replace( /\$1/, 1 + Quran.word.number(value.surah, value.ayah, i));
 						token1 = EnToAr( verse[0] ); if(isTablet) token1 = wordImageLink;
@@ -376,7 +376,8 @@ var gq = {
 						if(!verse[1]) token1 = token2 = token3 = verse[0];
 						if(verse[2])
 							refPOS = $.trim( verse[2].split('|')[0] );
-						tooltip = '<span class=hotlink grmr><span>$TOKEN1</span>&nbsp;&nbsp;<span class=w2w>$TOKEN2</span>&nbsp;'+
+						token2Esc = encodeURIComponent(token2);
+						tooltip = '<span class=hotlink grmr><span>$TOKEN1</span>&nbsp;&nbsp;<span class=w2w>$TOKEN2ESC</span>&nbsp;'+
 									'<span class=ref style=font-size:0.7em;color:blue;>' + REFURL.replace(/\$1/g, ref) +
 									'&nbsp;</span>&nbsp;&nbsp;<IMG class=MOREINFO src=images/info.png></img><br/>' +
 								  '<span class=grammar style=font-size:0.5em; data='+ token3 + ' >' + ( token3_1 ) + /*wordImageLink +*/ '</span></span>';
@@ -393,9 +394,9 @@ var gq = {
 						}
 						else{
 							if (!gq.settings.wbwMouseOver)
-								verse_html += verse_template_mouseover.replace(/\$TOOLTIP/, tooltip).replace(/\$TOKEN1/g, token1).replace(/\$TOKEN2/g, token2).replace(/\$POS/g, refPOS);
+								verse_html += verse_template_mouseover.replace(/\$TOOLTIP/, tooltip).replace(/\$TOKEN1/g, token1).replace(/\$TOKEN2ESC/g, token2Esc).replace(/\$TOKEN2/g, token2).replace(/\$POS/g, refPOS);
 							else //*** THIS IS THE TYPICAL CASE BELOW.
-								verse_html += verse_template.replace(/\$TOOLTIP/, tooltip).replace(/\$TOKEN1/g, token1).replace(/\$TOKEN2/g, token2).replace(/\$POS/g, refPOS);
+								verse_html += verse_template.replace(/\$TOOLTIP/, tooltip).replace(/\$TOKEN1/g, token1).replace(/\$TOKEN2ESC/g, token2Esc).replace(/\$TOKEN2/g, token2).replace(/\$POS/g, refPOS);
 						}
 					}
 				});
