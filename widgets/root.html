@@ -563,7 +563,22 @@ f -&gt; "ف"        y -&gt; "ي"
 </div>
 
 </div>
-
+<script>
+var analyze = function(){
+	var dbl = '', six = '', five = '', len, taa = ''; 
+	$.each(ROOTS_DICT.split(' '), function(wordno, word){ 
+		if(/ t /.test( word ) ) taa += word + ' ';
+		if(/(.)[^\1]*\1/.test( word ) ) dbl += word + ' '; //This regex returns if the word has duplicated letter.
+		len = search(ROOTS_DICT, word); if(len) len=len.length; else len = -1;
+		if( len == 6 ) six += word + ' '; //this catches verbs with 6 variants
+		else if(len == 5) five += word + ' ';
+	}); 
+	console.log( dbl + '\n\n');
+	console.log(six + '\n\n');
+	console.log(five + '\n\n');
+	console.log(taa + '\n\n');
+}
+</script>
 
 <!-- YAMLI CODE START -->
 <script type="text/javascript" src="http://api.yamli.com/js/yamli_api.js"></script>
