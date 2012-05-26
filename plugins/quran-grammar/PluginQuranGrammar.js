@@ -45,7 +45,7 @@ var CORPUS = {
 	
 	
 	UIgetLemmaCountTillRef: function(lemma, root, gq_verse, ref){  if(gq.loadedPercent != 100) return '';
-		var tempstr = '', temparr, pattern = 'LEM\\:', count = 0, message = '', regexp, arr, lineno;
+		var tempstr = '', temparr, pattern = 'LEM\\:', count = 0, countTotal = -1, message = '', regexp, arr, lineno;
 		if(lemma){
 			try{//get verseNo from ref. ref '4:5:12'
 				lineno = Quran.verseNo.ayah( parseInt(ref.split(':')[0]), parseInt(ref.split(':')[1]) );
@@ -58,15 +58,20 @@ var CORPUS = {
 			regexp = RegExp( pattern + escapeForRegex(lemma), "g");
 			arr = tempstr.match( regexp ); if(arr) count = arr.length;
 			tempstr = ''; tempstr = null;
-			message = count>0 ? CORPUS.UIprettifyCount(1+count) +' occurence' : '<b>First</b> occurrence';	
-			if(CORPUS.UIgetLemmaCount(lemma))
-				message += ' of <b>' + CORPUS.UIgetLemmaCount(lemma) + '</b> total. ';
+			countTotal = CORPUS.UIgetLemmaCount(lemma);
+			message = count>0 ? CORPUS.UIprettifyCount(1+count, countTotal) +' occurence' : '<b>First</b> occurrence';	
+			if(countTotal)
+				message += ' of <b>' + countTotal + '</b> total. ' + CORPUS.UIprettifyCount(countTotal - count, countTotal) + ' from ending.';
+			if(message) message += '<BR/>';
 		}
-		//if(root) message  += '<small><b>' + CORPUS.UIgetRootCount(root) + '</b>x as root.</small>';
-		return '<BR/>' + message + '<BR/>';
+		return message;
 	},
 	
-	UIprettifyCount: function(number){ var suffix = '';
+	UIprettifyCount: function(number, countTotal){ var suffix = '';
+		if(countTotal){ 
+			if(number == countTotal) return '<b>last</b>';
+			else if(number == 1) return '<b>first</b>';
+		}
 		suffix = (number%10 == 1 ? 'st' : (number%10 == 2 ? 'nd' : (number%10 ==3 ? 'rd' : 'th') ) );
 		return '<b>'+number + '</b><span style=vertical-align:super;font-size:xx-small;>'+suffix + '</span>';
 	},
@@ -233,6 +238,7 @@ var CORPUS = {
 			str += '<li>';
 			if(corpus.lemma)		str += CORPUS.UIgetLemmaLink(corpus.lemma, EnToAr(corpus.lemma), 'Dict: ') + '&nbsp;';
 			if(corpus.root)			str += CORPUS.UIgetRootDecoratedLink(corpus.root, EnToAr(corpus.root), 'Root: ') + '&nbsp;'; //If u dont want colored, use UIgetRootLink
+			if(corpus.lemma || corpus.root) str += '<BR />';
 			if(corpus.lemma)		str += CORPUS.UIgetLemmaCountTillRef(corpus.lemma, corpus.root, gq.verse(), ref );
 			if(typeof(corpus.pos) != 'undefined' && corpus.pos == 'V' && corpus.root && corpus.form)
 									str += CORPUS.UIgetSarfSagheer(corpus.root, corpus.form);
