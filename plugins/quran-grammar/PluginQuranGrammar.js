@@ -62,7 +62,7 @@ var CORPUS = {
 			message = count>0 ? CORPUS.UIprettifyCount(1+count, countTotal) +' occurence' : '<b>First</b> occurrence';	
 			if(countTotal)
 				message += ' of <b>' + countTotal + '</b> total. ' + CORPUS.UIprettifyCount(countTotal - count, countTotal) + ' from ending.';
-			if(message) message += '<BR/>';
+			if(message) message = '<li>' + message + '</li>';
 		}
 		return message;
 	},
@@ -102,8 +102,8 @@ var CORPUS = {
 			}
 
 		}
-		return (synonymFound ? '<font color=green><b>Synonyms</b></font>' + more + ': ' + nearsynonyms + '<BR/>' : '') +
-			   (antonymFound ? '<font color=maroon><b>Antonyms</b></font>' + more2 + ': ' + antonyms + '<BR/>' : '')
+		return (synonymFound ? '<li><font color=green><b>Synonyms</b></font>' + more + ': ' + nearsynonyms + '</li>' : '') +
+			   (antonymFound ? '<li><font color=maroon><b>Antonyms</b></font>' + more2 + ': ' + antonyms + '</li>' : '')
 	},
 	
 	UIgetNearSynonymsPageLink: function(lemma, pageno){
@@ -162,7 +162,7 @@ var CORPUS = {
 			});
 			sarfSagheer += '&nbsp;&nbsp;<A HREF=http://www.scribd.com/embeds/89383169/content?start_page=1&view_mode=slideshow&access_key=key-26c3dogrsa7rabyiehvm&secret_password=1u076toxw5hnczujpoly TARGET=_>(ref)</A>&nbsp;&nbsp;<span style="font-size:0.61em;"><A HREF=' + verbConj + ' target=_>(conj.)</a></span>';
 		}
-		return sarfFound ? '<span style=color:purple;font-weight:bold;>Sarf:</span> ' + sarfSagheer + '<BR/>': '';
+		return sarfFound ? '<li><span style=color:purple;font-weight:bold;>Sarf:</span> ' + sarfSagheer + '</li>': '';
 	},
 	
 	FORM_MAPPING: { "(I)": "1", "(II)": "2", "(III)": "3", "(IV)": "4", "(V)": "5",
@@ -235,20 +235,23 @@ var CORPUS = {
 											(corpus.tense ? ' ' + CORPUS.TENSE_MAPPING[ corpus.tense ] + ' ' : '') + 
 											'<span style=font-size:1.3em; class=POS-'+ corpus.pos + '>'+ CORPUS.UIlookupPOS(corpus.pos) +'</span></li>';
 			if(corpus.features) 	str += '<li>' + CORPUS.UIgetFeaturesLink(corpus.features) + '</li>';
-			str += '<li>';
-			if(corpus.lemma)		str += CORPUS.UIgetLemmaLink(corpus.lemma, EnToAr(corpus.lemma), 'Dict: ') + '&nbsp;';
-			if(corpus.root)			str += CORPUS.UIgetRootDecoratedLink(corpus.root, EnToAr(corpus.root), 'Root: ') + '&nbsp;'; //If u dont want colored, use UIgetRootLink
-			if(corpus.lemma || corpus.root) str += '<BR />';
-			if(corpus.lemma)		str += CORPUS.UIgetLemmaCountTillRef(corpus.lemma, corpus.root, gq.verse(), ref );
+			
+			if(corpus.lemma || corpus.root){
+				str += '<li>';
+				if(corpus.lemma)		str += CORPUS.UIgetLemmaLink(corpus.lemma, EnToAr(corpus.lemma), 'Dict: ') + '&nbsp;';
+				if(corpus.root)			str += CORPUS.UIgetRootDecoratedLink(corpus.root, EnToAr(corpus.root), 'Root: ') + '&nbsp;'; //If u dont want colored, use UIgetRootLink
+				str += '</li>';
+			}
 			if(typeof(corpus.pos) != 'undefined' && corpus.pos == 'V' && corpus.root && corpus.form)
 									str += CORPUS.UIgetSarfSagheer(corpus.root, corpus.form);
 			if(typeof(corpus.lemma) != 'undefined' && corpus.lemma /*&& corpus.pos == 'N'*/)
 									str += CORPUS.UIgetNearSynonyms( corpus.lemma );
-			if(corpus.misc)			str += '</li><li>' + CORPUS.UIgetMiscLink(corpus.misc);// + CORPUS.UIgetRefLink(ref,'more info');
+			if(corpus.lemma)		str += CORPUS.UIgetLemmaCountTillRef(corpus.lemma, corpus.root, gq.verse(), ref );
+			if(corpus.misc)			str += '<li>' + CORPUS.UIgetMiscLink(corpus.misc) + '</li>';
 			if(corpus.features)
 				if(CORPUS.FEATURES_MAPPING[ corpus.features ])
-									str += '</li><li>' + '<IMG SRC=../plugins/quran-grammar/Images/' + [ corpus.features ] /*+ 'PERF3MS'*/ + '.gif /><BR/> ';
-			str += '</li></ul>';
+									str += '<li><IMG SRC=../plugins/quran-grammar/Images/' + [ corpus.features ] + '.gif /></li> ';
+			str += '</ul>';
 		}
 		var obj = {};
 		obj.corpus = corpus;

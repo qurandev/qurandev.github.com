@@ -23,6 +23,8 @@
 	<link rel="stylesheet" href="images/themes/default/css/print.css" media="print" />
 	<link rel="stylesheet" href="../plugins/quran-grammar/PluginQuranGrammar.css" media="print" />
 	<style type="text/css">
+		.arr{ background-color: #FC0}
+		.w2w{ background-color: greenyellow}
 		.lineheight{
 			line-height: 1.8 !important;
 		}
@@ -112,7 +114,7 @@
 		.segSilver {
 			color: rgb(180, 180, 180);
 		}
-.ui-tooltip-content{ max-height: 120px; overflow: auto; }
+.ui-tooltip-content{ max-height: 150px; max-width: 370px; overflow: auto; }
 .fancy-scrollbar::-webkit-scrollbar{height:9px;width:9px;}
 .fancy-scrollbar::-webkit-scrollbar-button:start:decrement,.fancy-scrollbar::-webkit-scrollbar-button:end:increment{background:transparent;display:none;}
 .fancy-scrollbar::-webkit-scrollbar-track-piece{background:#d0d0d0;}
@@ -610,7 +612,7 @@
 		</ul>
 	</div>
 	<!-- end content -->
-	<div id="globalFooter">
+	<div id="globalFooter"> <!--
 		<div class="copyright"> GlobalQuran.com © 2006 - 2011 ·</div>
 		<div class="globalLanguage">
 			<ul>
@@ -622,7 +624,7 @@
 			<div class="g-plusone" data-annotation="none" data-href="http://GlobalQuran.com"></div>
 			<a href="https://twitter.com/GlobalQuran" class="twitter-follow-button" data-show-screen-name="false" data-show-count="false">Follow</a>
 			<div class="supportMsg">click on like to support our project.</div>
-		</div>
+		</div> -->
 		<div class="gq nav">
 			<ul>
 				<li><a href="/">Home</a></li><li>·</li>
@@ -647,15 +649,15 @@
  -->
 <!-- for production - use GlobalQuran.js and remove following three js files -->
 <script src="javascript/Quran.js"></script>
-<script src="javascript/GQ.js"></script>
+<script src="javascript/GQ.js?0.1.1"></script>
 <script src="javascript/manzil1,7.js"></script>
-<script src="javascript/GQ-Custom.js"></script>
-<script src="javascript/Layout.js"></script>
+<script src="javascript/GQ-Custom.js?0.1.1"></script>
+<script src="javascript/Layout.js?0.1.1"></script>
 
 <script type="text/javascript">
   var PLUGIN = PLUGIN_grammar = true; var SHARE=false;//make false, to disable grammar plugin
   if(PLUGIN && PLUGIN_grammar) (function() {
-	var urlprefix = (location.href.split('#')[0]).match('.*\/'), url = urlprefix + '../plugins/quran-grammar/PluginQuranGrammar.js';
+	var urlprefix = (location.href.split('#')[0]).match('.*\/'), url = urlprefix + '../plugins/quran-grammar/PluginQuranGrammar.js?0.1.1';
 	var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
 	po.src = url; if(console) console.log(po.src);
 	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
@@ -677,6 +679,7 @@
 	layout.init();
 //]]>
 </script>
+<!--
 <script type="text/javascript">
   if(SHARE)(function() {
 	var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
@@ -701,18 +704,15 @@
   js.src = "//connect.facebook.net/en_US/all.js#appId=291496434200831&xfbml=1";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
-<!-- AddThis Button BEGIN -->
+<! -- AddThis Button BEGIN -- >
 <XXXscript type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4e753ce6632eaacf"></script>
-<!-- AddThis Button END -->
+<! -- AddThis Button END -->
 
-<!-- This used to Check to see if there is Unicode support in browser-->
+<!-- This used to Check to see if there is Unicode support in browser-- >
 <div style="visibility:hidden">
   <span id="char-to-check">&#9839;</span>
   <span id="not-renderable">&#xfffd;</span>
 </div>
-
-<!--<script src="javascript/manzil5,6.js"></script>
-<script src="javascript/manzil2,3,4.js"></script>
 -->
 <!--<script type="text/javascript" src="http://sdscdn.userreport.com/popup.min.js"></script><script type="text/javascript">try { _bvt.initSite('2a56faaf-211f-4c5c-adec-50f76e0aaa9d'); } catch(err) {}</script> -->
 </body>
