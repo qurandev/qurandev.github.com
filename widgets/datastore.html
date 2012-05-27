@@ -1662,7 +1662,7 @@ select.change( function(){
 	result.html('-- please wait. processing request.--'); result2.html('');
 	var selection = $('#datasets > option:selected').val();
 	
-	var obj = DATASETS[ selection ].data, fnFormatter = DATASETS[ selection ].formatter, length = getLength(obj), title = "<h2>Dataset selected: <B>" + selection +"</B>", str = JSON.stringify(obj);	
+	var obj = DATASETS[ selection ].data, fnFormatter = DATASETS[ selection ].formatter, length = getLength(obj), title = "<h2>" + selection, str = JSON.stringify(obj);
 	title += (length ? " <small>(Items: <b><span class='badge badge-error'>" + length + "</span></b>)</small>" : "") + "</H2><HR>";
 	
 	if(typeof(obj) == 'object'){
@@ -1715,6 +1715,15 @@ if(urlParam){
 		}
 	}console.log(selectedOption);
 }
+
+var onLabelClick = function(){
+	console.log( $(this).html() );
+	$('#datasets').val( $(this).html() );
+	$('#datasets').change();
+}
+$('#status .label').click( onLabelClick );
+$('#status .badge').click( function(){ $(this).prev('span').click(); });
+
 </script>
 </body>
 </html>
