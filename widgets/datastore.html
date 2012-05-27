@@ -1184,6 +1184,7 @@ sowed & multiplied; created & multiplied.	\n\n\
 	};
 
 var LITDEV_URL = "http://qurandev.github.com/widgets/literarydevices.html";
+var MAARIF_URL = "http://islamicstudies.info/maarif/";
 var AYAHS_METADATA = {
 	"MIRACLES": {
 		" 35:32 ": {
@@ -1342,24 +1343,36 @@ var AYAHS_METADATA = {
 		"  ": {
 			"topic": "",
 			"url": LITDEV_URL,
-		},
-		"  ": {
-			"topic": "",
-			"url": LITDEV_URL,
-		},
-		"  ": {
-			"topic": "",
-			"url": LITDEV_URL,
-		},
-		"  ": {
-			"topic": "",
-			"url": LITDEV_URL,
-		},
-		"  ": {
-			"topic": "",
-			"url": LITDEV_URL,
 		},*/
-	}
+	},
+	
+	"SABAB_ALNUZUL": {
+		" 49:1 49:5 ": {page:118, url: MAARIF_URL, embed: "book-maarif-surah49.html?page=118"},
+		" 49:9 49:10 ": {page:126, url: MAARIF_URL, embed: "book-maarif-surah49.html?page=126"},
+		" 49:13 ": {page: 143, url: MAARIF_URL, embed: "book-maarif-surah49.html?page=143"},
+		" 49:14 49:18 ": {page: 146, url: MAARIF_URL, embed: "book-maarif-surah49.html?page=146"},
+		" 59:1 59:5 ": {page: 367, url: MAARIF_URL, embed: "book-maarif-surah59.html?page=367"},
+		" 60:1 60:6 ": {page: 412, url: MAARIF_URL, embed: "book-maarif-surah60.html?page=412"},
+		" 65:1 65:7 ": {page: 505, url: MAARIF_URL, embed: "book-maarif-surah65.html?page=505"},
+		" 72:1 ": {page: 598, url: MAARIF_URL, embed: "book-maarif-surah72.html?page=598"},
+		" 77:1 77:50 ": {page: 674, url: MAARIF_URL, embed: "book-maarif-surah77.html?page=674"},
+		" 96:1 96:19 ": {page: 831, url: MAARIF_URL, embed: "book-maarif-surah96.html?page=831"},
+		" 109:1 ": {page: 899, url: MAARIF_URL, embed: "book-maarif-surah109.html?page=899"},
+		" 111:1 ": {page: 909, url: MAARIF_URL, embed: "book-maarif-surah111.html?page=909"},
+		" 113:1 ": {page: 918, url: MAARIF_URL, embed: "book-maarif-surah113.html?page=918"},
+	 " 2:221 ": { "page": 1.555, url: MAARIF_URL, embed: "book-maarif-surah2.html?page=555"},
+	 " 4:176 ": { "page": 2.650, url: MAARIF_URL, embed: "book-maarif-surah4.html?page=650"},
+	},
+	
+	"SHAN_ALNUZUL": {
+		" 2:188 ": { "page": 1.473, url: MAARIF_URL, embed: "book-maarif-surah2.html?page=473" },
+		" 3:26 3:27 ": { "page": 2.50, url: MAARIF_URL, embed: "book-maarif-surah3.html?page=50" },
+		" 3:190 3:194 ": {"page": "vol2.271", url: MAARIF_URL, embed: "book-maarif-surah3.html?page=271" },
+		" 4:69 4:70 ": {"page": "p493", url: MAARIF_URL, embed: "book-maarif-surah4.html?page=493" },
+		" 4:77 4:79 ": {"page": "p506", url: MAARIF_URL, embed: "book-maarif-surah4.html?page=506" },
+		" 4:83 ": {"page": "p518", url: MAARIF_URL, embed: "book-maarif-surah4.html?page=518" },
+		" 4:84 ": {"page": "p522", url: MAARIF_URL, embed: "book-maarif-surah4.html?page=522" },
+	},
 }
 
 </script>
@@ -1400,6 +1413,30 @@ var fnArabicFormatter = function(value){
 	return html;
 }
 
+var fnDocEmbedder = function(data){
+	var html = '', tmptxt='', tmpindex=0, tmptxt2='', select = '<select id=embed onchange=embedSelected(this)>';
+	if(!data || $.trim(data) == '') return '-';
+	$.each(data, function(itemno, item){
+		tmptxt = encodeURIComponent( JSON.stringify(item) );
+		tmptxt2 = itemno;
+		select += ('<option value="' + tmptxt + '">' + (++tmpindex + '. ' + tmptxt2) + '</option>');
+	});
+	select += "</select><div id=embedInfo>&nbsp;</div>";
+	html = select; setTimeout('embedSelected()', 20);
+	return html;
+}
+
+var embedSelected = function(){
+	var selectedData = $('#embed > option:selected').val(); 
+	selectedData = decodeURIComponent( selectedData );
+	var html = selectedData;
+	eval( 'var o = ' + selectedData );
+	if(typeof(o)!= 'undefined' && o && o.embed){
+		if(o.url){ html += '<BR>Source: <A HREF=$URL TARGET=__>$URL</A><BR>'.replace(/\$URL/g, o.url ); }
+		html += '<BR><iframe name="iframe1" id="iframe1" src="$SRC" frameborder="0" border="0" cellspacing="0" style="border-style: none;width: 100%; height: 1050px;"></iframe>'.replace(/\$SRC/g, o.embed);
+	}
+	$('#embedInfo').html( html );
+}
 
 var fnSarfSagheerFormatter = function(data){
 	if(!data) return;
@@ -1691,6 +1728,7 @@ var obj,
 	DATASETS = {
 		"Synonyms (Mutaradifaat book)": {"data": NEAR_SYNONYMS_METADATA, "formatter": fnSynonymsFormatter},
 		"Antonyms (Mutaradifaat book)": {"data": DATASET_ANTONYMS, "formatter": fnAntonymsFormatter, "length": 300},
+		"Definitions": {"data": fnDefinitionsHandler, "formatter": fnDefinitionsHandler, "length": "200+"},
 		"Near Synonyms": {"data": NEAR_SYNONYMS, "formatter": fnNearSynonymsFormatter},
 		"Miracles": {"data": AYAHS_METADATA["MIRACLES"], "formatter": fnMiraclesFormatter},
 		"Rhetorical features": {"data": AYAHS_METADATA["LITERARY_DEVICES"], "formatter": fnMiraclesFormatter},
@@ -1698,7 +1736,8 @@ var obj,
 //		"Antonyms info": {"data": ANTONYMS_METADATA},
 		"Sarf Sagheer": {"data": SARF_SAGHEER, "formatter": fnSarfSagheerFormatter},
 		"Access Q Arabic": {"data": ACCESS_Q_ARABIC, "formatter": fnAccessQArabicFormatter},
-		"Definitions": {"data": fnDefinitionsHandler, "formatter": fnDefinitionsHandler, "length": "200+"},
+		"Sabab-al-nuzul(revelation cause)": {"data": AYAHS_METADATA["SABAB_ALNUZUL"], "formatter": fnDocEmbedder},
+		"Sha'n-e-nuzul<small>(revelation context)</small>": {"data": AYAHS_METADATA["SHAN_ALNUZUL"], "formatter": fnDocEmbedder},
 };
 var getLength = function(obj, DATASET){
 	var length = -1;
