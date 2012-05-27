@@ -1380,13 +1380,80 @@ var ACCESS_Q_ARABIC = {
 </script>
 
 <script>//This section for formatters
+var fnArabicFormatter = function(value){
+	var html = '';
+	if (!value || $.trim(value) == '') return "-";
+	$.each(value, function(itemno, item){
+		html += item + '\n\n<HR>';
+	});
+	html = '<pre><span class=arabic>' + html + '</span></pre>'
+	return html;
+}
+
+
+var fnSarfSagheerFormatter = function(data){
+	if(!data) return;
+	var html = '', arr, tmptxt='', tmptxt2='', tmpindex=0, arr, select = '<select id=sarfsagheer onchange=sarfsagheerSelected(this)>';
+	$.each(data, function(itemno, item){ tmptxt2 = ''; arr = item.split(','); 
+		tmptxt = encodeURIComponent( item ); 
+		for(var j=0; j<7; ++j) tmptxt2 += arr[arr.length - 9 +j ] + '&nbsp;&nbsp;';
+		tmptxt2 = arr[6] + '&nbsp;&nbsp;' + tmptxt2;
+		select += ('<option value="' + tmptxt + '">' + (++tmpindex + '. ' + tmptxt2) + '</option>');
+	});
+	select += "</select><div id=sarfsagheerInfo>&nbsp;</div>";
+	html = select; setTimeout('sarfsagheerSelected()', 20);
+	return html;
+}
+
+var SARF_SAGHEER_INFO = 'Verbs_VerbNo,Verbs_Words_Corpus_Root_English,Verbs_Type,Verbs_class,Verbs_Sura,Verbs_Verse,Meaning-English,Meaning-Urdu,Count,perfect,Imperfect,Imperative,Active-participle,Passive-participle,Verbal-noun,root,type,class'.split(',');;
+var sarfsagheerSelected = function(){
+	var selectedData = $('#sarfsagheer > option:selected').val(); selectedData = decodeURIComponent( selectedData );
+	var html = '';//'<H3>' + $('#sarfsagheer > option:selected').html() + '</H3><HR>';
+	var refs = ["<A HREF='http://www.scribd.com/embeds/89383169/content?start_page=1&view_mode=slideshow&access_key=key-26c3dogrsa7rabyiehvm&secret_password=1u076toxw5hnczujpoly' TARGET=__>Reference Book: Arabic Verbs conjugation Dictionary</A><BR/>",
+				"<A HREF='$ACONURL' TARGET=__>ACON Verb conjugator</A><BR><BR>"];
+	if( (/\,\"(.*?)\"\,/).test( selectedData ) ){
+		var root, arr = selectedData.match( (/\,\"(.*?)\"\,/) ); console.log( arr[1] );
+		var esc = '\,\"' + encodeURIComponent( arr[1] ) + '\"\,';
+		selectedData = selectedData.replace( (/\,\"(.*?)\"\,/), esc );
+	}
+	var info='', tr1='', tr2='', map = {}, arr = selectedData.split(','), verbConj = 'http://acon.baykal.be/index.php'; //?r3=%D9%82&r2=%D9%84&r1=%D8%AE&type=III&pvowel=a&ivowel=a';;
+	console.log( arr );
+	$.each(SARF_SAGHEER_INFO, function(keyno, key){
+		map[ key ] = arr[keyno];
+	});
+	
+	var r1, r2, r3, type='';
+	root = map['Verbs_Words_Corpus_Root_English']; type = map['type']; arr= $.trim(root).split('');
+	r1 = encodeURIComponent( EnToAr( arr[0] ) ); r2 = encodeURIComponent( EnToAr( arr[1] ) ); r3 = encodeURIComponent( EnToAr( arr[2] ) ); 
+	//if(form) type = form.substring(1, form.length - 1); else type = 'I';
+	verbConj = verbConj + '?r3=' + r3 +'&r2=' + r2 + '&r1=' + r1 + '&type=' + type + '';
+	refs[1] = refs[1].replace(/\$ACONURL/g, verbConj);
+	info = '<H3><span style=background-color:yellowgreen>' + decodeURIComponent( map["Meaning-English"] ) + '</span></H3>'+
+			'<table style="border-width: 1px!important;border-color: green!important;"><TBODY>';
+	$.each( [ ["root", "class", "type"], ["perfect", "Imperfect", "Imperative"].reverse(), ["Active-participle", "Passive-participle", "Verbal-noun"].reverse() ], function( arrno, arr){
+		if(!arr) return; tr1 = '<tr>'; tr2 = '<tr>';
+		$.each( arr, function(a, tag){
+			tr1 += '<td>' + tag + '</td>'; 
+			tr2 += '<td><span class=arabic>' + map[tag] + '</span></td>';
+		}); tr1 += '</tr>'; tr2 += '</tr>';
+		info += tr2 + tr1 + "<TR><TD colspan=3>&nbsp;</TD></TR>";
+	});
+	info += '</TBODY></table>';
+	html += info + '<HR>See also:<BR>' + refs.join('') + '<HR>';
+
+	$.each(selectedData.split(','), function(itemno, item){
+		if(itemno == 6) item = decodeURIComponent( item );
+		html += SARF_SAGHEER_INFO[itemno] + ': <SPAN ID=SARF"' + itemno + '">' + item + '</SPAN><BR>';
+	});
+	$('#sarfsagheerInfo').html( html );
+}
+
 var fnAccessQArabicFormatter = function(data){
 	if(!data) return;
-	var html = '', tmptxt='',tmpindex=0, arr, select = '<select id=accessqarabic onchange=accessqarabicSelected(this)>';
+	var html = '', tmptxt='',tmpindex=0, select = '<select id=accessqarabic onchange=accessqarabicSelected(this)>';
 	$.each(Object.keys(data), function(unitno, unit){
 		tmptxt = data[unit];
 		select += ('<option value="' + tmptxt + '">' + (/*++tmpindex + '. ' +*/ unit) + '</option>');
-		arr = data[unit]; if(arr) arr = arr.split(' ');
 	});
 	select += "</select><div id=accessqarabicInfo>&nbsp;</div>";
 	html = select; setTimeout('accessqarabicSelected()', 20);
@@ -1494,16 +1561,6 @@ var antonymFormat = function(raw){
 	return result;
 }
 
-
-var fnArabicFormatter = function(value){
-	var html = '';
-	if (!value || $.trim(value) == '') return "-";
-	$.each(value, function(itemno, item){
-		html += item + '\n\n<HR>';
-	});
-	html = '<pre><span class=arabic>' + html + '</span></pre>'
-	return html;
-}
 
 var fnAttributesFormatter = function(value){
 	var html = '', arr, select = '<select id=attributes onchange=attributeSelected(this)>';
@@ -1629,8 +1686,7 @@ var obj,
 		"Rhetorical features": {"data": AYAHS_METADATA["LITERARY_DEVICES"], "formatter": fnMiraclesFormatter},
 		"Attributes of Allah": {"data": DATASET_ATTRIBUTES, "formatter": fnAttributesFormatter},
 //		"Antonyms info": {"data": ANTONYMS_METADATA},
-		"Sarf Sagheer": {"data": SARF_SAGHEER, "formatter": fnArabicFormatter},
-
+		"Sarf Sagheer": {"data": SARF_SAGHEER, "formatter": fnSarfSagheerFormatter},
 		"Access Q Arabic": {"data": ACCESS_Q_ARABIC, "formatter": fnAccessQArabicFormatter},
 };
 var getLength = function(obj){
