@@ -1382,26 +1382,33 @@ var ACCESS_Q_ARABIC = {
 <script>//This section for formatters
 var fnAccessQArabicFormatter = function(data){
 	if(!data) return;
-	var html = '', arr;
-	$.each(Object.keys(data), function(number, unit){
+	var html = '', tmptxt='',tmpindex=0, arr, select = '<select id=accessqarabic onchange=accessqarabicSelected(this)>';
+	$.each(Object.keys(data), function(unitno, unit){
+		tmptxt = data[unit];
+		select += ('<option value="' + tmptxt + '">' + (/*++tmpindex + '. ' +*/ unit) + '</option>');
 		arr = data[unit]; if(arr) arr = arr.split(' ');
-		html += '<BR>' + unit + '<BR><BR>';
-		$.each(arr, function(index, item){
-			html += item + '<SPAN ID="' + item.replace(/\:/g, '_') + '"></SPAN><BR>';
-			getAyahInfo( item );
-		});
-		html += '<HR>';
 	});
+	select += "</select><div id=accessqarabicInfo>&nbsp;</div>";
+	html = select; setTimeout('accessqarabicSelected()', 20);
 	return html;
 }
 
+var accessqarabicSelected = function(data){
+	var selectedData = $('#accessqarabic > option:selected').val();
+	var html = '<H3>' + $('#accessqarabic > option:selected').html() + '</H3><HR>';
+	$.each(selectedData.split(' '), function(index, item){
+		html += item + '<SPAN ID="' + item.replace(/\:/g, '_') + '"></SPAN><BR>';
+		getAyahInfo( item );
+	});
+	$('#accessqarabicInfo').html( html );
+}
 
 var fnMiraclesFormatter = function(value){
 	var html = '', tmptxt='', tmpindex=0, arr, select = '<select id=miracles onchange=miracleSelected(this)>';
 	if (!value || $.trim(value) == '') return "-";
 	$.each(value, function(itemno, item){ 
 		tmptxt = '<H3>' + item.topic + '</H3><HR>See: <A TARGET=_ HREF='+item.url+'>'+ item.url +'</A><HR>' + 'Ayah references: ' + infoFormatter(itemno);
-		select += ('<option value="' + tmptxt + '" Xselected="selected">' + (++tmpindex + '. ' + item.topic) + '</option>'); 
+		select += ('<option value="' + tmptxt + '">' + (++tmpindex + '. ' + item.topic) + '</option>'); 
 	});
 	select += "</select><div id=miracleInfo>&nbsp;</div>";
 	html = select;
@@ -1581,12 +1588,6 @@ var getAyahInfo = function(ref, surano, versno){ if(!AYAH_FETCH_ENABLED) return;
 	if(ref && typeof(ref) == 'string') _ref = $.trim(ref);
 	else if(surano && versno) _ref = surano +":"+ versno;
 	else return;
-	//$.ajaxSetup({ cache: true /*, jsonpCallback: 'quranData'*/ }); // define ajax setup
-	/*$.getJSON("http://api.globalquran.com/ayah/" + _ref + "/"+ "quran-simple|" + "en.sahih?jsoncallback=?", {
-		format : "jsonp"
-	}, function(data){ fnPaintAyahInfo(data);
-	}, function(data, data2, data3){ debugger; 
-	});*/
 	
 	var url = "http://api.globalquran.com/ayah/" + _ref + "/"+ "quran-simple|" + "en.sahih"; //?jsoncallback=?";
 	$.ajax({
@@ -1609,16 +1610,9 @@ var fnPaintAyahInfo = function(data){
 		});
 	}); html += '</ul>';
 	selec = $('#' + ref.replace(/\:/g, '_') );
-	if(selec){ console.log( quranData(data) +'\t'+ $(selec));
+	if(selec){ console.log( $(selec));
 		$(selec).html(html);
 	}else debugger;
-}
-
-var toProcess = [];
-var quranData = function(data){
-	toProcess.push( data );
-//	console.log( JSON.stringify( data ) );
-//	fnPaintAyahInfo(data);
 }
 
 </script>
