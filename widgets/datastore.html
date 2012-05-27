@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Visualize Quran DataStore contents</title>
+    <title>Visualize Quran Data</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -257,7 +257,7 @@ initializeMapper();
 
   <!-- <div class="container"> -->
   <div class="container-fluid">
-	<H1>Visualize Quran DataStore contents</H1>
+	<H1>Visualize Quran Data</H1>
 		<div class="row-fluid">
 			<div class="span3">	 <!--Sidebar content--><BR/>
 				<div id=data>
@@ -1379,7 +1379,17 @@ var ACCESS_Q_ARABIC = {
 }
 </script>
 
-<script>//This section for formatters
+<script>
+//This section for handlers
+var fnDefinitionsHandler = function(value){
+	var html = '';
+	if(!typeof(value) == 'function') debugger; //if (!value || $.trim(value) == '') return "-";
+	html = '<iframe name="iframe1" id="iframe1" src="dict.html" frameborder="0" border="0" cellspacing="0" style="border-style: none;width: 100%; height: 1050px;"></iframe>';
+	return html;
+}
+
+
+//This section for formatters
 var fnArabicFormatter = function(value){
 	var html = '';
 	if (!value || $.trim(value) == '') return "-";
@@ -1680,7 +1690,7 @@ var obj,
 	selectedOption = "Antonyms (from Mutaradifaat)",
 	DATASETS = {
 		"Synonyms (Mutaradifaat book)": {"data": NEAR_SYNONYMS_METADATA, "formatter": fnSynonymsFormatter},
-		"Antonyms (Mutaradifaat book)": {"data": DATASET_ANTONYMS, "formatter": fnAntonymsFormatter},
+		"Antonyms (Mutaradifaat book)": {"data": DATASET_ANTONYMS, "formatter": fnAntonymsFormatter, "length": 300},
 		"Near Synonyms": {"data": NEAR_SYNONYMS, "formatter": fnNearSynonymsFormatter},
 		"Miracles": {"data": AYAHS_METADATA["MIRACLES"], "formatter": fnMiraclesFormatter},
 		"Rhetorical features": {"data": AYAHS_METADATA["LITERARY_DEVICES"], "formatter": fnMiraclesFormatter},
@@ -1688,11 +1698,14 @@ var obj,
 //		"Antonyms info": {"data": ANTONYMS_METADATA},
 		"Sarf Sagheer": {"data": SARF_SAGHEER, "formatter": fnSarfSagheerFormatter},
 		"Access Q Arabic": {"data": ACCESS_Q_ARABIC, "formatter": fnAccessQArabicFormatter},
+		"Definitions": {"data": fnDefinitionsHandler, "formatter": fnDefinitionsHandler, "length": "200+"},
 };
-var getLength = function(obj){
+var getLength = function(obj, DATASET){
 	var length = -1;
-	if(typeof(obj) == 'object'){length = Object.keys(obj).length;
+	if(DATASET && typeof(DATASET.length) == 'number'){ return DATASET.length; }
+	else if(typeof(obj) == 'object'){length = Object.keys(obj).length;
 	}else if(typeof(obj) == 'array'){ length = obj.length; }
+	else if(typeof(obj) == 'function'){ length = DATASET.length; }
 	return length;
 }
 var select = $('#datasets');
@@ -1700,9 +1713,9 @@ var options = []; //select.attr('options');
 //$('option', select).remove();
 $.each(Object.keys( DATASETS ), function(index, item){
 	var classForCounts = (index%2==0) ? 'badge badge-error' : 'badge badge-inverse';
-	//options[options.length] = new Option(item, item);
 	$('#datasets').append(new Option(item, item, true, true));
-	$('#status').append('<span style="padding-bottom: 10px;"><span class="label label-info">'+item +'</span>&nbsp;<span class="' + classForCounts + '">' + getLength( DATASETS[item].data ) + '</span></span><BR><BR>');
+	$('#status').append('<span style="padding-bottom: 10px;"><span class="label label-info">'+item +'</span>&nbsp;<span class="' + 
+	classForCounts + '">' + getLength( DATASETS[item].data, DATASETS[item] ) + '</span></span><BR><BR>');
 });
 $('#status').html( '<pre>' + $('#status').html() + '</pre>');
 
@@ -1712,7 +1725,7 @@ select.change( function(){
 	result.html('-- please wait. processing request.--'); result2.html('');
 	var selection = $('#datasets > option:selected').val();
 	
-	var obj = DATASETS[ selection ].data, fnFormatter = DATASETS[ selection ].formatter, length = getLength(obj), title = "<h2>" + selection, str = JSON.stringify(obj);
+	var obj = DATASETS[ selection ].data, fnFormatter = DATASETS[ selection ].formatter, length = getLength(obj, DATASETS[ selection ]), title = "<h2>" + selection, str = JSON.stringify(obj);
 	title += (length ? " <small>(Items: <b><span class='badge badge-error'>" + length + "</span></b>)</small>" : "") + "</H2><HR>";
 	
 	if(typeof(obj) == 'object'){
