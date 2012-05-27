@@ -1397,11 +1397,11 @@ var fnAccessQArabicFormatter = function(data){
 
 
 var fnMiraclesFormatter = function(value){
-	var html = '', arr, select = '<select id=miracles onchange=miracleSelected(this)>';
+	var html = '', tmptxt='', tmpindex=0, arr, select = '<select id=miracles onchange=miracleSelected(this)>';
 	if (!value || $.trim(value) == '') return "-";
 	$.each(value, function(itemno, item){ 
-		select += (new Option(item.topic, 'Ayah references: <BR>' + 
-					infoFormatter(itemno) + '<HR><A TARGET=_ HREF='+item.url+'>'+ item.url +'</A><HR>', false, false)).outerHTML;
+		tmptxt = '<H3>' + item.topic + '</H3><HR>See: <A TARGET=_ HREF='+item.url+'>'+ item.url +'</A><HR>' + 'Ayah references: ' + infoFormatter(itemno);
+		select += ('<option value="' + tmptxt + '" Xselected="selected">' + (++tmpindex + '. ' + item.topic) + '</option>'); 
 	});
 	select += "</select><div id=miracleInfo>&nbsp;</div>";
 	html = select;
@@ -1426,11 +1426,12 @@ var fnNearSynonymsFormatter = function(value){
 }
 
 var fnSynonymsFormatter = function(value){
-	var html = '', arr, forms='', select = '<select id=synonyms onchange=synonymSelected(this)>';
+	var html = '', arr, tmptxt = '', forms='', select = '<select id=synonyms onchange=synonymSelected(this)>';
 	if (!value || $.trim(value) == '') return "-";
 	$.each(value, function(itemno, item){
 		forms = DATASETS["Near Synonyms"].data[itemno];
-		select += (new Option( (1+parseInt(itemno)) +'. '+ item.topic + ' ' + EnToAr(forms), itemno, false, false)).outerHTML;
+		tmptxt = (1+parseInt(itemno)) +'. '+ item.topic + ' ' + EnToAr(forms);
+		select += ('<option value="' + itemno + '">' + tmptxt + '</option>'); 
 	});
 	select += "</select><div id=synonymInfo>&nbsp;</div>";
 	html = select;
@@ -1459,7 +1460,7 @@ var fnAntonymsFormatter = function(value){
 	var html = '', arr, select = '<select id=antonyms onchange=antonymSelected(this)>';
 	if (!value || $.trim(value) == '') return "-";
 	$.each(value, function(itemno, item){ 
-		select += (new Option(itemno, item, false, false)).outerHTML;
+		select += ('<option value="' + item + '">' + itemno + '</option>'); 
 	});
 	select += "</select><div id=antonymInfo>&nbsp;</div>";
 	html = select;
@@ -1500,8 +1501,8 @@ var fnArabicFormatter = function(value){
 var fnAttributesFormatter = function(value){
 	var html = '', arr, select = '<select id=attributes onchange=attributeSelected(this)>';
 	if (!value || $.trim(value) == '') return "-";
-	$.each(value, function(itemno, item){ 
-		select += (new Option(item.split(';')[0], itemno, false, false)).outerHTML;
+	$.each(value, function(itemno, item){
+		select += ('<option value="' + itemno + '">' + ((1+itemno) +'. ' + item.split(';')[0]) + '</option>'); 
 	});
 	select += "</select><div id=attributeInfo>&nbsp;</div>";
 	html = select;
@@ -1536,8 +1537,8 @@ var infoFormatter = function(value){
 			else{ parts[1] = parseInt( parts[1] ); } //strip out any .'s or other stray chars.
 			versno = parts[1]; surano = parseInt(parts[0]);
 			var url = 'http://beta.quran.com/' + surano +'/'+ /*parseInt*/(parts[1]);
-			var html = '<a href=' + url + ' target=_>'+ tokens[k] + '</a>';
-			tokens[k] = html;
+			var htmlTmp = '<a href=' + url + ' target=_>'+ tokens[k] + '</a>';
+			tokens[k] = htmlTmp;
 			//getAyahInfo(surano, versno);
 		}
 		html += tokens.join(' ') + '\n';
