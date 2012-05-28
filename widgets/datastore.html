@@ -1373,6 +1373,12 @@ var AYAHS_METADATA = {
 		" 4:83 ": {"page": "p518", url: MAARIF_URL, embed: "book-maarif-surah4.html?page=518" },
 		" 4:84 ": {"page": "p522", url: MAARIF_URL, embed: "book-maarif-surah4.html?page=522" },
 	},
+	
+	"HADEETH": {
+		" 2:172 ": {"info": "Noble Quran: (V.2:172) Narrated An-Nu'mân bin Bashîr [radhi-yAllâhu 'anhu]: I heard Allâh's Messenger [sal-Allâhu 'alayhi wa sallam] saying, \"Both legal and illegal things are evident but in between them there are doubtful (unclear) things, and most of the people have no knowledge about them. So whoever saves himself from these unclear things, he saves his religion and his honour. And whoever indulges in these unlcear things is like a shepherd who grazes (his animals) near the Himâ (private pasture) of someone else, and at any moment he is liable to get in it. (O people!) Beware! Every king has a Himâ and the Himâ of Allâh [Subhânahu wa Ta'âla] on the earth is His illegal (forbidden) things. Beware! There is a piece of flesh in the body if it becomes good (reformed), the whole body becomes good; but if it gets spoilt, the whole body gets spoilt and that is the heart.[Sahih Al-Bukhâri, 1/52 (O.P.49)]."},
+		" 50:30 ": {"info": "Noble Quran: (V.50:30) Allâh's Statement: \"It (Hell) will say: 'Are there any more (to come)?' \"Narrated Anas [radhi-yAllâhu 'anhu]: The Prophet [sal-Allâhu 'alayhi wa sallam] said, \"The people will be thrown into the (Hell) Fire and it will say: 'Are there any more (to come)?' till Allâh will put His Foot over it and it will say: 'Qat! Qat! (Enough! Enough!)' \" [Sahih Al-Bukharî, 6/4848 (O.P.371)]"},
+		" 50:39 ": {"info": "(V.50:39) a) Narrated Qais: Jarîr said: We were with the Prophet [sal-Allâhu 'alayhi wa sallam] and he looked at the moon on a full-moon night and said: \"Certainly you will see your Lord as you see this moon and you will have no trouble in seeing Him. So if you can avoid missing (through sleep or business) a prayer before the sunrise (Fajr) and a prayer before sunset ('Asr), you must do so\". 'He then recited Allâh's Statement:\"And glorify the Praises of your Lord before the rising of the sun, and before (its) setting.\" (V.50:39). Ismâ'îl said: \"Offer those prayers and do not miss them.\" [Sahih Al-Bukhari, 1/554 (O.P.529)] b) See the footnote of (V.32:16)."},
+	},
 }
 
 </script>
@@ -1738,6 +1744,7 @@ var obj,
 		"Access Q Arabic": {"data": ACCESS_Q_ARABIC, "formatter": fnAccessQArabicFormatter},
 		"Sabab-al-nuzul(revelation cause)": {"data": AYAHS_METADATA["SABAB_ALNUZUL"], "formatter": fnDocEmbedder},
 		"Sha'n-e-nuzul<small>(revelation context)</small>": {"data": AYAHS_METADATA["SHAN_ALNUZUL"], "formatter": fnDocEmbedder},
+		"Hadeeth": {"data": AYAHS_METADATA["HADEETH"]}
 };
 var getLength = function(obj, DATASET){
 	var length = -1;
