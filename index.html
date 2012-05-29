@@ -1,5 +1,186 @@
-<html>
-<body>
-<meta HTTP-EQUIV="REFRESH" content="0; url=./widgets/index.html">
-</body>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Quran</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="stylesheets/bootstrap.css" rel="stylesheet">
+    <link href="stylesheets/jquery-ui.css" rel="stylesheet">
+    <link href="stylesheets/global.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="img/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+  </head>
+
+  <body style="padding-top:25px!important;">
+  
+  <!--
+  	<div class="mainbar">
+      <div class="mainbar-inner">
+        <div class="container">
+          <a class="btn btn-mainbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+         
+          <div class="nav-collapse">
+            <ul class="nav pull-right">
+              <li class="active"><a href="http://labs.globalquran.com"><img src="img/favicon.jpg" width="18" /> Lab</a></li>
+              <li><a href="http://v2.globalquran.com">v2</a></li>
+              <li><a href="http://docs.globalquran.com">Documentation</a></li>
+              <li><a href="http://blog.globalquran.com">Blog</a></li>
+            </ul>
+             <ul class="nav">
+              <li><a href="http://GlobalQuran.com">Quran</a></li>
+              <li><a href="http://MuslimSalat.com">Salat</a></li>
+              <li><a href="http://MuslimMarkaz.com">Markaz</a></li>
+            </ul>
+          </div><!- -/.nav-collapse - ->
+        </div>
+      </div>
+    </div>  
+
+    <div class="navbar navbar-fixed-top" style="display:none;">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">Project name</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div><!--/.nav-collapse - ->
+        </div>
+      </div>
+    </div>-->
+
+    <div class="container">
+
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <div class="hero-unit">
+        <h1>Ideas, Experiments and cool stuff!</h1>
+        <div class="pull-left" style="padding-top:10px;height:300px;overflow:hidden;"><img src="img/tubes.png" alt="Lab experiment" /></div>
+        <p style="padding-top:1em;">Experimenting with new ways to teach, learn and research Quran.<br/><br/><br/></p>
+      </div>
+	 <div class="row" style="height:112px">
+	 	<div class="pull-right">
+			<a href="https://github.com/qurandev/corpus/zipball/master" class="btn btn-large btn-inverse">Download Quran Code</a><br />
+<!--	 		<a href="https://github.com/imegah/GlobalQuran.com-code/zipball/v3.4.0" class="btn btn-large btn-inverse">Download GlobalQuran Code</a><br />-->
+	 		<div class="pull-right">Current Release: <span class="label label-important">v1.1.0</span></div>
+	 	</div>
+	 	<p class="span4"><b>All our apps are simple web apps (pure javascript+html). Runs on PC, mobile, iPad, iPhone, Android... or offline.
+		<!--GlobalQuran is a well written eco-system of UI pages, widgets, APIs, search that anyone can use on their site to embed Quran directly.</b> <br /><br />
+		This is whether you use <b>WordPress, facebook, php, just plain html+js</b> or anything else.--></p>
+	 </div>
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="span4">
+          <h2><a href="corpus">Quran with Grammar & More!</a></h2>
+           <p>
+See <strong><A HREF="widgets">Screenshots.<IMG SRC=img/favicon.jpg width=18 /></A></strong><BR>
+<UL>
+<LI> Word-by-word, grammar, translations all in 1 place.</LI>
+<LI> Ayah's tagged with Miracles & Rhetorical features.</LI>
+<LI> Context relevant info + links + teaching-aid icons.</LI>
+<LI> Offline search by Root, Noun. Synonyms/Antonyms.</LI>
+<LI> <A HREF=widgets>Widgets</A>:- simple standalone applications.</LI>
+</UL>
+<!--           <strong>stable features:</strong>
+           <ul>
+           <li>Integration of corpus grammar info, word-by-word
+meaning, Buckwalter encoded quran.</li>
+<li>corpus grammar: see root & lemma info word-by-word on mouseover. <div class="alert alert-info">Click on either to search. other grammar features like part of speech,
+verb form, tense, declension etc.</div></li>
+</ul>
+<strong>alpha features:</strong>
+<ul>
+       <li>Near Synonyms/Mutaraadifaat. sources: (1) Nouman Ali Khan's Near
+Synonyms handout, (2) Mutaraadifaat urdu book.</li>
+       <li>Newly occuring words + # of occurences of each word.</li>
+       <li>Teaching aid: see applicable hand icon which conveys
+pictographically the gender/tense/person. (see
+<a href="http://www.understandquran.com">www.understandquran.com</a>)</li>
+       <li>more features under test.</li> </ul>
+--></p>
+           <div class="progress progress-striped">
+			  <div class="bar" style="width: 80%;"></div>
+		   </div>
+		   <p class="pull-right"><span class="badge badge-info">80%</span> done - adding desktop support</p>
+          <p><a class="btn btn-info" href="/corpus/">View details &raquo;</a> <br/></p>
+        </div>
+		
+		
+        <div class="span4">
+          <h2><a href="tags">Quran Tags</a></h2>
+           <p>Motto: "Learn Quran by the Quran. <BR>
+		   Quranic words & ayahs tagged with relevant & ever-expanding info. 
+Intent is to enrich our Quran learning, raise awareness & bring us closer to Allah's book. </p>
+			<A HREF="tags/about">Learn more...</A>
+			<P>&nbsp;</P>
+           <div class="progress progress-warning progress-striped">
+			  <div class="bar" style="width: 60%;"></div>
+		   </div>
+		   <p class="pull-right"><span class="badge badge-warning">60%</span> done - adding more tags</p>
+          <p><a class="btn btn-warning" href="tags/about">View details  &raquo;</a></p>
+       </div>
+	   
+	   
+        <div class="span4">
+          <h2><a href="words">Quran Words</a></h2>
+          <p>tools to help in finding & typing Quranic words & roots. </p>
+		  * fill-in tashkeel for automatically
+		  * find variations of a word, root.
+		  * See interactive map of words & its derivatives.
+			<A HREF="words/about">Learn more...</A>
+			<P>&nbsp;</P><BR/>
+          <div class="progress progress-success progress-striped">
+			  <div class="bar" style="width: 40%;"></div>
+		   </div>
+		   <p class="pull-right"><span class="badge badge-success">40%</span> done - autocorrect arabic typos</p>
+          <p><a class="btn btn-success" href="words/about">View details  &raquo;</a></p>
+        </div>
+      </div>
+<!--
+      <hr>
+
+      <footer>      	
+      	<div class="pull-right">
+      		<a href="http://blog.globalquran.com/forums/">Feedback</a> . 
+      		<a href="http://blog.globalquran.com/forums/">Report Bug</a> . 
+      		<a href="http://blog.globalquran.com/about-us/">About us</a> .
+      		<a href="http://blog.globalquran.com/contact-us/">Contact us</a>
+      	</div>
+        <p>&copy; GlobalQuran.com 2012</p>
+      </footer>-->
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="javascripts/jquery.js"></script>
+    <script src="javascripts/jquery-ui.js"></script>
+    <script src="javascripts/bootstrap.min.js"></script>
+    <script src="javascripts/global.js"></script>
+
+  </body>
 </html>
